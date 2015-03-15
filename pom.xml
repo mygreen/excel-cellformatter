@@ -217,6 +217,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 			<groupId>net.sourceforge.jexcelapi</groupId>
 			<artifactId>jxl</artifactId>
 			<version>${jexcelapi.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		 
 		<!-- Logger -->
