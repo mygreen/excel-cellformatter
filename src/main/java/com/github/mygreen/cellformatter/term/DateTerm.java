@@ -1,0 +1,738 @@
+package com.github.mygreen.cellformatter.term;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.github.mygreen.cellformatter.lang.EraPeriod;
+
+
+/**
+ * 日時の書式の項
+ * @author T.TSUCHIE
+ *
+ */
+public abstract class DateTerm implements Term<Calendar> {
+    
+    /**
+     * 指定した桁分、ゼロサプライ（ゼロ埋め）する。
+     * <p>既に指定したサイズを超える桁数の場合は、何もしない。
+     * <p>nullや空文字の場合は、空文字を返す。
+     * @param str 対象の文字
+     * @param size 桁数
+     * @return ゼロサプライした文字列
+     */
+    private static String supplyZero(final String str, final int size) {
+        
+        if(str == null) {
+            return "";
+        }
+        final int length = str.length();
+        if(length > size) {
+            return str;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        final int appendSize = size - length;
+        for(int i=0; i < appendSize; i++) {
+            sb.append("0");
+        }
+        sb.append(str);
+        
+        return sb.toString();
+        
+    }
+    
+    /**
+     * [h] - 24時を超える時間の処理
+     */
+    public static DateTerm spHour(final String format) {
+        return new SpHourTerm(format);
+    }
+    
+    
+    /**
+     * [m] - 60分を超える時間の処理
+     */
+    public static DateTerm spMinute(final String format) {
+        return new SpMinuteTerm(format);
+    }
+    
+    /**
+     * [s] - 60秒を超える時間の処理
+     */
+    public static DateTerm spSecond(final String format) {
+        return new SpSecondTerm(format);
+    }
+    
+    /**
+     * y - 年の場合の処理
+     */
+    public static DateTerm year(final String format) {
+        return new YearTerm(format);
+    }
+    
+    /**
+     * g - 元号の名称の場合の処理
+     */
+    public static DateTerm eraName(final String format) {
+        return new EraNameTerm(format);
+    }
+    
+    /**
+     * e - 元号の年の場合の処理
+     */
+    public static DateTerm eraYear(final String format) {
+        return new EraYearTerm(format);
+    }
+    
+    /**
+     * r - 元号の名称と年の場合の処理
+     */
+    public static DateTerm eraNameYear(final String format) {
+        return new EraNameYearTerm(format);
+    }
+    
+    /**
+     * m - 月の場合の処理
+     */
+    public static DateTerm month(final String format) {
+        return new MonthTerm(format);
+    }
+    
+    /**
+     * d - 日の場合の処理
+     */
+    public static DateTerm day(final String format) {
+        return new DayTerm(format);
+    }
+    
+    /**
+     * a - 曜日の場合の処理
+     */
+    public static DateTerm week(final String format) {
+        return new WeekTerm(format);
+    }
+    
+    /**
+     * h - 時間の場合の処理
+     * @param format
+     * @param half 12時間表示かどうか
+     */
+    public static DateTerm hour(final String format, final boolean half) {
+        return new HourTerm(format, half);
+    }
+    
+    /**
+     * m - 分の場合の処理
+     */
+    public static DateTerm minute(final String format) {
+        return new MinuteTerm(format);
+    }
+    
+    /**
+     * s - 秒の場合の処理
+     */
+    public static DateTerm second(final String format) {
+        return new SecondTerm(format);
+    }
+    
+    /**
+     * q - 四半期の場合の処理
+     */
+    public static DateTerm quater(final String format) {
+        return new QuaterTerm(format);
+    }
+    
+    /**
+     * AM/PM - 午前／午後の場合の処理
+     */
+    public static DateTerm amPm(final String format) {
+        return new AmPmTerm(format);
+    }
+    
+    /**
+     * [h] - 24時を超える時間の処理
+     */
+    public static class SpHourTerm extends DateTerm {
+        
+        /** ミリ秒を時間に直すための基底 */
+        private static final long BASE = 1000*60*60;
+        
+        /** Excelのゼロ秒時の基準となる時間 （ミリ秒）*/
+        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        
+        private final String format;
+        
+        public SpHourTerm(final String format) {
+            this.format = format;
+        }
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int formatLength = format.length();
+            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            return supplyZero(String.valueOf(time), formatLength);
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * [m] - 60分を超える時間の処理
+     */
+    public static class SpMinuteTerm extends DateTerm {
+        
+        /** ミリ秒を分に直すための基底 */
+        private static final long BASE = 1000*60;
+        
+        /** Excelのゼロ秒時の基準となる時間（ミリ秒） */
+        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        
+        private final String format;
+        
+        public SpMinuteTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int formatLength = format.length();
+            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            return supplyZero(String.valueOf(time), formatLength);
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * [s] - 60秒を超える時間の処理
+     */
+    public static class SpSecondTerm extends DateTerm {
+        
+        /** ミリ秒を秒に直すための基底 */
+        private static final long BASE = 1000;
+        
+        /** Excelのゼロ秒時の基準となる時間 (ミリ秒)*/
+        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        
+        private final String format;
+        
+        public SpSecondTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int formatLength = format.length();
+            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            return supplyZero(String.valueOf(time), formatLength);
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * y - 年の場合
+     */
+    public static class YearTerm extends DateTerm {
+        
+        private final String format;
+        
+        public YearTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final String value = String.valueOf(cal.get(Calendar.YEAR));
+            final int formatLength = format.length();
+            
+            // 2桁、4桁補正する
+            if(formatLength <= 2) {
+                return supplyZero(value, 2).substring(2);
+            } else {
+                return supplyZero(value, 4);
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * g - 元号の名称の場合
+     */
+    public static class EraNameTerm extends DateTerm {
+        
+        private final String format;
+        
+        public EraNameTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final Date date = cal.getTime();
+            
+            EraPeriod period = null;
+            for(EraPeriod p : EraPeriod.PERIODS) {
+                if(p.contains(date)) {
+                    period = p;
+                    break;
+                }
+            }
+            
+            if(period == null) {
+                return "";
+            }
+            
+            final int formatLength = format.length();
+            if(formatLength == 1) {
+                return period.getAbbrevRomanName();
+                
+            } else if(formatLength == 2) {
+                return period.getAbbrevName();
+                
+            } else {
+                return period.getName();
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * e - 元号の年の場合
+     */
+    public static class EraYearTerm extends DateTerm {
+        
+        private final String format;
+        
+        public EraYearTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final Date date = cal.getTime();
+            final int formatLength = format.length();
+            
+            EraPeriod period = null;
+            for(EraPeriod p : EraPeriod.PERIODS) {
+                if(p.contains(date)) {
+                    period = p;
+                    break;
+                }
+            }
+            
+            // 不明な場合
+            if(period == null) {
+                String value = String.valueOf(cal.get(Calendar.YEAR));
+                return supplyZero(value, formatLength);
+                
+            }
+            
+            String value = String.valueOf(period.getEraYear(date));
+            return supplyZero(value, formatLength);
+            
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * r - 元号の名称と年の場合
+     */
+    public static class EraNameYearTerm extends DateTerm {
+        
+        private final String format;
+        
+        public EraNameYearTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final Date date = cal.getTime();
+            final int formatLength = format.length();
+            
+            EraPeriod period = null;
+            for(EraPeriod p : EraPeriod.PERIODS) {
+                if(p.contains(date)) {
+                    period = p;
+                    break;
+                }
+            }
+            
+            if(period == null) {
+                String value = String.valueOf(cal.get(Calendar.YEAR));
+                return supplyZero(value, formatLength);
+                
+            }
+            
+            StringBuilder sb = new StringBuilder();
+            
+            // 元号の組み立て（2桁以上の時に元号を追加）
+            if(formatLength >= 2) {
+                sb.append(period.getName());
+            }
+            
+            // 年の組み立て
+            final String strYear = String.valueOf(period.getEraYear(date));
+            sb.append(supplyZero(strYear, 2));
+            
+            return sb.toString();
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * m - 月の場合
+     */
+    public static class MonthTerm extends DateTerm {
+        
+        private final String format;
+        
+        private static final String[][] MONTH_NAMES = {
+            {"January", "Jan", "J"},
+            {"February", "Feb", "F"},
+            {"March", "Mar", "M"},
+            {"April", "Apr", "A"},
+            {"May", "May", "M"},
+            {"June", "Jun", "J"},
+            {"July", "Jul", "J"},
+            {"August", "Aug", "A"},
+            {"September", "Sep", "S"},
+            {"October", "Oct", "O"},
+            {"November", "Nov", "N"},
+            {"December", "Dec", "D"},
+            
+        };
+        
+        public MonthTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int value = cal.get(Calendar.MONTH);
+            final int formatLength = format.length();
+            
+            if(formatLength == 1) {
+                return String.valueOf(value + 1);
+                
+            } else if(formatLength == 2) {
+                return supplyZero(String.valueOf(value + 1), 2);
+                
+            } else if(formatLength == 3) {
+                // 月名の先頭3文字
+                return MONTH_NAMES[value][1];
+                
+            } else if(formatLength == 4) {
+                // 月名
+                return MONTH_NAMES[value][0];
+                
+            } else if(formatLength == 5) {
+                // 月名の先頭1文字
+                return MONTH_NAMES[value][2];
+                
+            } else {
+                return supplyZero(String.valueOf(value + 1), 2);
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * d - 日の場合
+     * ・dが3～4桁の場合は、英字の曜日。
+     */
+    public static class DayTerm extends DateTerm {
+        
+        private final String format;
+        
+        private static final String[][] WEEK_NAMES = {
+            {"Sunday", "Sun"},
+            {"Monday", "Mon"},
+            {"Tuesday", "Tue"},
+            {"Wednesday", "Wed"},
+            {"Thusday", "Thu"},
+            {"Friday", "Fri"},
+            {"Saturday", "Sat"},
+        };
+        
+        public DayTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int value = cal.get(Calendar.DAY_OF_MONTH);
+            final int formatLength = format.length();
+            
+            if(formatLength == 1) {
+                return String.valueOf(value);
+                
+            } else if(formatLength == 2) {
+                return supplyZero(String.valueOf(value), 2); 
+                
+            } else if(formatLength == 3) {
+                // 英字の曜日の先頭三桁
+                final int index = cal.get(Calendar.DAY_OF_WEEK);
+                return WEEK_NAMES[index][1];
+                
+            } else if(formatLength >= 4) {
+                // 英字の曜日
+                final int index = cal.get(Calendar.DAY_OF_WEEK);
+                return WEEK_NAMES[index][0];
+                
+            } else {
+               return supplyZero(String.valueOf(value), 2); 
+            }
+            
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * a - 日本語名称の曜日の場合
+     */
+    public static class WeekTerm extends DateTerm {
+        
+        private final String format;
+        
+        private static final String[][] WEEK_NAMES = {
+            {"日曜日", "日"},
+            {"月曜日", "月"},
+            {"火曜日", "火"},
+            {"水曜日", "水"},
+            {"木曜日", "木"},
+            {"金曜日", "金"},
+            {"土曜日", "土"},
+        };
+        
+        public WeekTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int index = cal.get(Calendar.DAY_OF_WEEK);
+            final int formatLength = format.length();
+            
+            if(formatLength <= 3) {
+                return WEEK_NAMES[index][1];
+            } else {
+                return WEEK_NAMES[index][0];
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * h - 時間の場合
+     */
+    public static class HourTerm extends DateTerm {
+        
+        private final String format;
+        
+        /**
+         * 12時間表示かどうか。
+         */
+        private final boolean half;
+        
+        public HourTerm(final String format, final boolean half) {
+            this.format = format;
+            this.half = half;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final String value;
+            if(isHalf()) {
+                value = String.valueOf(cal.get(Calendar.HOUR));
+            } else {
+                value = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
+            }
+            
+            final int formatLength = format.length();
+            return supplyZero(value, formatLength);
+            
+        }
+        
+        public boolean isHalf() {
+            return half;
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * m - 分の場合
+     */
+    public static class MinuteTerm extends DateTerm {
+        
+        private final String format;
+        
+        public MinuteTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final String value = String.valueOf(cal.get(Calendar.MINUTE));
+            final int formatLength = format.length();
+            return supplyZero(value, formatLength);
+            
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * s - 秒の場合
+     */
+    public static class SecondTerm extends DateTerm {
+        
+        private final String format;
+        
+        public SecondTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final String value = String.valueOf(cal.get(Calendar.SECOND));
+            final int formatLength = format.length();
+            return supplyZero(value, formatLength);
+            
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * AM/PM - 午前/午後の場合
+     */
+    public static class AmPmTerm extends DateTerm {
+        
+        private final String format;
+        
+        private static final String[][] AM_PM_NAMES = {
+                {"AM", "A", "a", "am"},
+                {"PM", "P", "p", "pm"},
+        };
+        
+        public AmPmTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int index = cal.get(Calendar.AM_PM) == Calendar.AM ? 0 : 1;
+            if(format.equals("AM/PM")) {
+                return AM_PM_NAMES[index][0];
+                
+            } else if(format.equals("A/P")) {
+                return AM_PM_NAMES[index][1];
+                
+            } else if(format.equals("am/pm")) {
+                return AM_PM_NAMES[index][2];
+                
+            } else if(format.equals("a/p")) {
+                return AM_PM_NAMES[index][3];
+                
+            } else {
+                return AM_PM_NAMES[index][0];
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * q - 四半期の場合
+     */
+    public static class QuaterTerm extends DateTerm {
+        
+        private final String format;
+        
+        public QuaterTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal) {
+            
+            final int index = (cal.get(Calendar.MONTH) + 1) / 3;
+            
+            // ロケールによって変わる
+            return String.format("第%d四半期", index);
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+}
