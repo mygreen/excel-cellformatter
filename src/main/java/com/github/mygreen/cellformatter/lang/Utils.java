@@ -27,6 +27,15 @@ public class Utils {
     }
     
     /**
+     * 値がnullかつ空文字でないか判定する。
+     * @param str
+     * @return
+     */
+    public static boolean isNotEmpty(final String str) {
+        return !isEmpty(str);
+    }
+    
+    /**
      * 辞書の逆順で並び替える
      * @param array
      * @return

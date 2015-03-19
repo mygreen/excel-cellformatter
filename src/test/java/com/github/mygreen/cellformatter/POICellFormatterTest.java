@@ -75,6 +75,42 @@ public class POICellFormatterTest {
     }
     
     @Test
+    public void testFormatExcel2010_compatible() {
+        
+        File file = new File("src/test/data/cell_format_2010_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatExcel2010_compatible_test() {
+        
+        File file = new File("src/test/data/cell_format_2010_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
     public void testFormatExcel2007() {
         
         File file = new File("src/test/data/cell_format_2007.xlsx");
@@ -229,9 +265,9 @@ public class POICellFormatterTest {
             final String test = testCase.equals(testResult) ? "○" : "×";
             
             // セルのスタイル情報の取得
-            final CellStyle cellStyle = testCaseCell.getCellStyle();
-            final short formatIndex = cellStyle.getDataFormat();
-            final String formatPattern = cellStyle.getDataFormatString();
+            CommonCell commonTestCase = new POICell(testCaseCell);
+            final short formatIndex = commonTestCase.getFormatIndex();
+            final String formatPattern = commonTestCase.getFormatPattern();
             final boolean poiDate = testCaseCell.getCellType() == Cell.CELL_TYPE_NUMERIC && DateUtil.isCellDateFormatted(testCaseCell);
             
             System.out.printf("[%3s] [%s] [%s] : actual=\"%s\" : exprected=\"%s\" \t%d\t%s\t%b\n",

@@ -2,12 +2,12 @@ package com.github.mygreen.cellformatter;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.github.mygreen.cellformatter.callback.Callback;
+import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.term.Term;
 
 
@@ -16,7 +16,7 @@ import com.github.mygreen.cellformatter.term.Term;
  * @author T.TSUCHIE
  *
  */
-public class ConditionDateFormatter extends ConditionFormatter<Date> {
+public class ConditionDateFormatter extends ConditionFormatter<Calendar> {
     
     /**
      * Excelでの基準日である「1900年1月1日」の値。
@@ -44,23 +44,19 @@ public class ConditionDateFormatter extends ConditionFormatter<Date> {
      * @return
      */
     @Override
-    public boolean isMatch(final Date date) {
-        final long value = date.getTime() - ZERO_TIME;
+    public boolean isMatch(final Calendar cal) {
+        final long value = cal.getTime().getTime() - ZERO_TIME;
         return getOperator().isMatch(value);
     }
     
     @Override
-    public String format(final Date date, final Locale locale) {
-        
-        final Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        
-        //TODO: ロケール、タイムゾーンの設定
+    public String format(final Calendar cal, final Locale locale) {
+        ArgUtils.notNull(cal, "cal");
         
         // 各項の処理
         StringBuilder sb = new StringBuilder();
         for(Term<Calendar> term : terms) {
-            sb.append(applyFormatCallback(date, term.format(cal)));
+            sb.append(applyFormatCallback(cal, term.format(cal)));
         }
         
         String value = sb.toString();
@@ -69,12 +65,12 @@ public class ConditionDateFormatter extends ConditionFormatter<Date> {
     }
     
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private String applyFormatCallback(final Date date, final String str) {
+    private String applyFormatCallback(final Calendar cal, final String str) {
         
         String value = str;
         
         for(Callback callback : getCallbacks()) {
-            value = callback.call(date, value);
+            value = callback.call(cal, value);
         }
         
         return value;

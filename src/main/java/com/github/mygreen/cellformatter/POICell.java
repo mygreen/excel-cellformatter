@@ -1,6 +1,6 @@
 package com.github.mygreen.cellformatter;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -68,8 +68,11 @@ public class POICell implements CommonCell {
     }
     
     @Override
-    public Date getDateCellValue() {
-        return cell.getDateCellValue();
+    public Calendar getDateCellValue() {
+        // TimeZoneは、デフォルト。
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(cell.getDateCellValue());
+        return cal;
     }
     
 }

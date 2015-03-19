@@ -6,7 +6,6 @@ import jxl.Cell;
 import jxl.CellType;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
-import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
@@ -14,7 +13,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
  * @author T.TSUCHIE
  *
  */
-public class JxlCellFormatter {
+public class JXLCellFormatter {
     
     private FormatterResolver formatterResolver = new FormatterResolver();
     
@@ -26,22 +25,22 @@ public class JxlCellFormatter {
         
         ArgUtils.notNull(cell, "cell");
         
-        if(cell.getType().equals(CellType.EMPTY)) {
+        if(cell.getType() == CellType.EMPTY) {
             return "";
             
-        } else if(cell.getType().equals(CellType.STRING_FORMULA)) {
+        } else if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
             return cell.getContents();
             
-        } else if(cell.getType().equals(CellType.BOOLEAN) || cell.getType().equals(CellType.BOOLEAN_FORMULA)) {
+        } else if(cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA) {
             return cell.getContents().toUpperCase();
         
-        } else if(cell.getType().equals(CellType.ERROR) || cell.getType().equals(CellType.FORMULA_ERROR)) {
+        } else if(cell.getType() == CellType.ERROR || cell.getType() == CellType.FORMULA_ERROR) {
             return "";
             
-        } else if(cell.getType().equals(CellType.DATE) || cell.getType().equals(CellType.DATE_FORMULA)) {
+        } else if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
             return getFormatCellValue(cell, locale);
             
-        } else if(cell.getType().equals(CellType.NUMBER) || cell.getType().equals(CellType.NUMBER_FORMULA)) {
+        } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
             return getFormatCellValue(cell, locale);
             
         } else {
@@ -58,13 +57,15 @@ public class JxlCellFormatter {
      */
     private String getFormatCellValue(final Cell cell, final Locale locale) {
         
-        final JxlCell jxlCell = new JxlCell(cell);
+        final JXLCell jxlCell = new JXLCell(cell);
+        final short formatIndex = jxlCell.getFormatIndex();
         final String formatPattern = jxlCell.getFormatPattern();
-        if(Utils.isEmpty(formatPattern)) {
-            return cell.getContents();
-        }
         
-        if(formatterResolver.canResolve(formatPattern)) {
+        if(formatterResolver.canResolve(formatIndex)) {
+            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);
+            return cellFormatter.format(jxlCell, locale);
+            
+        } else if(formatterResolver.canResolve(formatPattern)) {
             final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);
             return cellFormatter.format(jxlCell, locale);
             

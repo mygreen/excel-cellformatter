@@ -269,6 +269,11 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
             
         }
         
+        if(noTermChar.length() > 0) {
+            list.add(Token.factor(noTermChar.toString()));
+            noTermChar = new StringBuilder();   
+        }
+        
         return list;
         
     }

@@ -178,6 +178,7 @@ public class POICellFormatter {
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
             formatterResolver.registerFormatter(formatPattern, cellFormatter);
             return cellFormatter.format(poiCell, locale);
+            
         }
     }
     

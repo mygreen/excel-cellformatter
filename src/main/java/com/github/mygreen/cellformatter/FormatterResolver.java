@@ -30,20 +30,38 @@ public class FormatterResolver {
     private Map<String, CellFormatter> patternFormatterMap = new ConcurrentHashMap<>();
     
     public FormatterResolver() {
-        init();
+        clearFormat();
+        
+        registerDefaultFormat();
     }
     
     /**
-     * キャッシュ初期化する。
-     * <p>インデックス付きの書式を登録する。
+     * キャッシュを初期化する。
      */
-    protected void init() {
+    public synchronized void clearFormat() {
         
         // インデックス番号指定のフォーマッタの初期化
         indexFormatterMap.clear();
         
-        // ビルドインフォーマットなどを登録する
+        // パターン指定の指定のフォーマッタの初期化
+        patternFormatterMap.clear();
         
+
+    }
+    
+    /**
+     * キャッシュに初期値データを登録する。
+     * ・ロケールによって切り替わるフォーマットや、間違った組み込みフォーマットの場合を登録しておく。
+     */
+    public synchronized void registerDefaultFormat() {
+        
+        // 間違ったフォーマット
+        registerFormatter((short)5, createFormatter("¥#,##0;¥-#,##0"));
+        registerFormatter((short)6, createFormatter("¥#,##0;[Red]¥-#,##0"));
+        registerFormatter((short)7, createFormatter("¥#,##0.00;¥-#,##0.00"));
+        registerFormatter((short)8, createFormatter("¥#,##0.00;[Red]¥-#,##0.00"));
+        
+        // ロケールによって変わるフォーマット
         registerFormatter((short)14, new LocaleSwitchFormatter(new CustomFormatter("m/d/yy"))
                 .register(createFormatter("yyyy/m/d"), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
         
@@ -56,15 +74,24 @@ public class FormatterResolver {
         registerFormatter((short)32, createFormatter("h\"時\"mm\"分\""));
         registerFormatter((short)33, createFormatter("h\"時\"mm\"分\"ss\"秒\""));
         
+        // 間違ったフォーマットの訂正
+        registerFormatter((short)37, createFormatter("#,##0;-#,##0"));
+        registerFormatter((short)38, createFormatter("#,##0;[Red]-#,##0"));
+        registerFormatter((short)39, createFormatter("#,##0.00;-#,##0.00"));
+        registerFormatter((short)40, createFormatter("#,##0.00;[Red]-#,##0.00"));
+        
+        registerFormatter((short)41, createFormatter("_ * #,##0_ ;_ * \\-#,##0_ ;_ * \"-\"_ ;_ @_"));
+        registerFormatter((short)42, createFormatter("_ \"¥\"* #,##0_ ;_ \"¥\"* \\-#,##0_ ;_ \"¥\"* \"-\"_ ;_ @_ "));
+        registerFormatter((short)43, createFormatter("_ * #,##0.00_ ;_ * (#,##0.00);_ * \"-\"??_ ;_ @_ "));
+        registerFormatter((short)44, createFormatter("_ \"¥\"* #,##0.00_ ;_ $* (#,##0.00);_ $* \"-\"??_ ;_ @_ "));
+        
+        // インデックス番号のみあり、フォーマットがない場合
         registerFormatter((short)55, createFormatter("yyyy\"年\"m\"月\""));
         registerFormatter((short)56, createFormatter("m\"月\"d\"日\""));
         registerFormatter((short)57, createFormatter("[$-411]ge\\.m\\.d;@"));
         registerFormatter((short)58, createFormatter("[$-411]ggge\"年\"m\"月\"d\"日\";@"));
         
-        
-        // パターン指定の指定のフォーマッタの初期化
-        patternFormatterMap.clear();
-        
+        // ロケールによって変わるフォーマット
         registerFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy", new LocaleSwitchFormatter(new CustomFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy"))
             .register(createFormatter("yyyy\"年\"m\"月\"d\"日\""), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
         

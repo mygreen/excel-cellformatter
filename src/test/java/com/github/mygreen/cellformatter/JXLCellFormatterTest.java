@@ -31,7 +31,7 @@ import org.junit.Test;
  * @author T.TSUCHIE
  *
  */
-public class JxlCellFormatterTest {
+public class JXLCellFormatterTest {
     
     @Before
     public void setUp() throws Exception {
@@ -45,7 +45,7 @@ public class JxlCellFormatterTest {
     public void testFormatExcel2010_compatible() {
         
         File file = new File("src/test/data/cell_format_2010_compatible.xls");
-        JxlCellFormatter cellFormatter = new JxlCellFormatter();
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
             List<Sheet> sheetList = loadSheet(file);
             for(Sheet sheet : sheetList) {
@@ -63,7 +63,7 @@ public class JxlCellFormatterTest {
     public void testFormatExcel2010_compatible_test() {
         
         File file = new File("src/test/data/cell_format_2010_compatible.xls");
-        JxlCellFormatter cellFormatter = new JxlCellFormatter();
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
@@ -81,7 +81,7 @@ public class JxlCellFormatterTest {
     public void testFormatExcel2000() {
         
         File file = new File("src/test/data/cell_format_2000.xls");
-        JxlCellFormatter cellFormatter = new JxlCellFormatter();
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
             List<Sheet> sheetList = loadSheet(file);
             for(Sheet sheet : sheetList) {
@@ -99,7 +99,7 @@ public class JxlCellFormatterTest {
     public void testFormatExcel2000_test() {
         
         File file = new File("src/test/data/cell_format_2000.xls");
-        JxlCellFormatter cellFormatter = new JxlCellFormatter();
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
@@ -127,11 +127,13 @@ public class JxlCellFormatterTest {
             
             final Workbook workbook = Workbook.getWorkbook(in, settings);
             
-            
             final int sheetNum = workbook.getNumberOfSheets();
             for(int i=0; i < sheetNum; i++) {
                 
                 final Sheet sheet = workbook.getSheet(i);
+                
+                
+                
                 final String sheetName = sheet.getName();
                 if(!sheetName.startsWith("書式")) {
                     continue;
@@ -181,7 +183,7 @@ public class JxlCellFormatterTest {
         return list;
     }
     
-    private void assertSheet(final Sheet sheet, final JxlCellFormatter cellFormatter) {
+    private void assertSheet(final Sheet sheet, final JXLCellFormatter cellFormatter) {
         
         System.out.printf("======== START : [%s] =========\n", sheet.getName());
         
@@ -214,7 +216,7 @@ public class JxlCellFormatterTest {
             final String test = testCase.equals(testResult) ? "○" : "×";
             
             // セルのスタイル情報の取得
-            JxlCell jxlTestCase = new JxlCell(testCaseCell);
+            JXLCell jxlTestCase = new JXLCell(testCaseCell);
             final int formatIndex = jxlTestCase.getFormatIndex();
             final String formatPattern = jxlTestCase.getFormatPattern();
             final boolean poiDate = testCaseCell.getType().equals(CellType.DATE);
