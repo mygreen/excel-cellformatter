@@ -23,6 +23,7 @@ import jxl.read.biff.BiffException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -99,6 +100,44 @@ public class JXLCellFormatterTest {
     public void testFormatExcel2000_test() {
         
         File file = new File("src/test/data/cell_format_2000.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    @Ignore
+    public void testFormatLibre() {
+        
+        File file = new File("src/test/data/cell_format_libre.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    @Ignore
+    public void testFormatLibre_test() {
+        
+        File file = new File("src/test/data/cell_format_libre.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
@@ -216,7 +255,7 @@ public class JXLCellFormatterTest {
             final String test = testCase.equals(testResult) ? "○" : "×";
             
             // セルのスタイル情報の取得
-            JXLCell jxlTestCase = new JXLCell(testCaseCell);
+            final CommonCell jxlTestCase = new JXLCell(testCaseCell);
             final int formatIndex = jxlTestCase.getFormatIndex();
             final String formatPattern = jxlTestCase.getFormatPattern();
             final boolean poiDate = testCaseCell.getType().equals(CellType.DATE);

@@ -1,5 +1,8 @@
 package com.github.mygreen.cellformatter.term;
 
+import java.util.Locale;
+
+import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
@@ -22,7 +25,7 @@ public class AsteriskTerm<T> implements Term<T> {
     }
     
     @Override
-    public String format(final T number) {
+    public String format(final T number, final MSLocale formatLocale, final Locale runtimeLocale) {
         return EMPTY;
     }
     

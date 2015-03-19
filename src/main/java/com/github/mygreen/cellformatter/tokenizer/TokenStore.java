@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
@@ -96,6 +97,19 @@ public class TokenStore {
      * @return
      */
     public boolean containsInFactor(final String search) {
+        return containsInFactor(search, false);
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列を含むかどうか。
+     * @param search
+     * @return
+     */
+    public boolean containsInFactorIgnoreCase(final String search) {
+        return containsInFactor(search, true);
+    }
+    
+    public boolean containsInFactor(final String search, final boolean ignoreCase) {
         
         for(Token token : tokens) {
             if(!(token instanceof Token.Factor)) {
@@ -103,9 +117,16 @@ public class TokenStore {
             }
             
             final Token.Factor factor = token.asFactor();
-            if(factor.getValue().contains(search)) {
-                return true;
+            if(ignoreCase) {
+                if(Utils.containsIgnoreCase(factor.getValue(), search)) {
+                    return true;
+                }
+            } else {
+                if(factor.getValue().contains(search)) {
+                    return true;
+                }
             }
+            
         }
         
         return false;
@@ -117,6 +138,24 @@ public class TokenStore {
      * @return
      */
     public boolean containsAnyInFactor(final String[] searchChars) {
+        return containsAnyInFactor(searchChars, false);
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列の何れかを含むかどうか。
+     * @param searchChars
+     * @return
+     */
+    public boolean containsAnyInFactorIgnoreCase(final String[] searchChars) {
+        return containsAnyInFactor(searchChars, true);
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列の何れかを含むかどうか。
+     * @param searchChars
+     * @return
+     */
+    private boolean containsAnyInFactor(final String[] searchChars, final boolean ignoreCase) {
         
         for(Token token : tokens) {
             if(!(token instanceof Token.Factor)) {
@@ -124,11 +163,10 @@ public class TokenStore {
             }
             
             final Token.Factor factor = token.asFactor();
-            for(String search : searchChars) {
-                if(factor.getValue().contains(search)) {
-                    return true;
-                }
+            if(Utils.containsAny(factor.getValue(), searchChars, ignoreCase)) {
+                return true;
             }
+            
         }
         
         return false;

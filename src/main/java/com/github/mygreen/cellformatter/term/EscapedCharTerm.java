@@ -1,6 +1,9 @@
 package com.github.mygreen.cellformatter.term;
 
+import java.util.Locale;
+
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
@@ -19,7 +22,7 @@ public class EscapedCharTerm<T> implements Term<T> {
     }
     
     @Override
-    public String format(final T value) {
+    public String format(final T value, final MSLocale formatLocale, final Locale runtimeLocale) {
         return token.getChar();
     }
     

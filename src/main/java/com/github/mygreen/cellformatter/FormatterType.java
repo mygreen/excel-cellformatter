@@ -14,6 +14,10 @@ public enum FormatterType {
     
     /** 日時のフォーマッタ */
     Date,
+    
+    /** テキストのフォーマッタ */
+    Text,
+    
     ;
     
 }

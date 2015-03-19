@@ -68,10 +68,10 @@ public abstract class ConditionFormatter<T> {
     /**
      * ロケールを指定して値フォーマットする。
      * @param value
-     * @param locale
+     * @param runtimeLocale 実行時のロケール
      * @return
      */
-    public abstract String format(T value, Locale locale);
+    public abstract String format(T value, Locale runtimeLocale);
     
     /**
      * 種類が'日時'のフォーマッタかどうか。
@@ -90,6 +90,14 @@ public abstract class ConditionFormatter<T> {
     }
     
     /**
+     * 種類が'テキスト'のフォーマッタかどうか。
+     * @return
+     */
+    public boolean isTextFormatter() {
+        return getType() == FormatterType.Text;
+    }
+    
+    /**
      * 自身のインスタンスを{@link ConditionDateFormatter}として取得する。
      * @return
      * @throws ClassCastException インスタンスのタイプが一致しない場合。
@@ -105,6 +113,15 @@ public abstract class ConditionFormatter<T> {
      */
     public ConditionNumberFormatter asNumberFormatter() {
         return (ConditionNumberFormatter)this;
+    }
+    
+    /**
+     * 自身のインスタンスを{@link ConditionTextFormatter}として取得する。
+     * @return
+     * @throws ClassCastException インスタンスのタイプが一致しない場合。
+     */
+    public ConditionTextFormatter asTextFormatter() {
+        return (ConditionTextFormatter)this;
     }
     
     /**

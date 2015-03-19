@@ -15,11 +15,11 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 
 
 /**
- * 書式を解析して{@link TextFormatter}のインスタンスを作成するクラス。
+ * 書式を解析して{@link ConditionTextFormatter}のインスタンスを作成するクラス。
  * @author T.TSUCHIE
  *
  */
-public class TextFormatterFactory {
+public class ConditionTextFormatterFactory extends ConditionFormatterFactory<ConditionTextFormatter> {
     
     /**
      * テキストの書式かどうか判定する。
@@ -31,19 +31,39 @@ public class TextFormatterFactory {
     }
     
     /**
-     * {@link TextFormatter}のインスタンスを作成する。
+     * {@link ConditionTextFormatter}のインスタンスを作成する。
      * @param store
      * @return
      * @throws IllegalArgumentException store is null.
      */
-    public TextFormatter create(final TokenStore store) {
+    public ConditionTextFormatter create(final TokenStore store) {
         ArgUtils.notNull(store, "store");
         
-        final TextFormatter formatter = new TextFormatter(store.getConcatenatedToken());
+        final ConditionTextFormatter formatter = new ConditionTextFormatter(store.getConcatenatedToken());
         
         for(Token token : store.getTokens()) {
             
-            if(token instanceof Token.Word) {
+            if(token instanceof Token.Condition) {
+                // 条件の場合
+                final Token.Condition conditionToken = token.asCondition();
+                final String condition = conditionToken.getCondition();
+                formatter.addCondition(condition);
+                
+                if(isConditionOperator(conditionToken)) {
+                    setupConditionOperator(formatter, conditionToken);
+                    
+                } else if(isConditionLocale(conditionToken)) {
+                    setupConditionLocale(formatter, conditionToken);
+                    
+                } else if(isConditionDb(conditionToken)) {
+                    setupConditionDBNum(formatter, conditionToken);
+                    
+                } else if(isConditionColor(conditionToken)) {
+                    setupConditionColor(formatter, conditionToken);
+                    
+                }
+                
+            } else if(token instanceof Token.Word) {
                 formatter.addTerm(new WordTerm<String>(token.asWord()));
                 
             } else if(token instanceof Token.EscapedChar) {

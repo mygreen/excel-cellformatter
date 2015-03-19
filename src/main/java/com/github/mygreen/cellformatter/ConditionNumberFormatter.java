@@ -44,7 +44,7 @@ public class ConditionNumberFormatter extends ConditionFormatter<Double> {
     }
     
     @Override
-    public String format(final Double number, final Locale locale) {
+    public String format(final Double number, final Locale runtimeLocale) {
         
         final FormattedNumber numObj = numberFactory.create(number);
         
@@ -55,7 +55,7 @@ public class ConditionNumberFormatter extends ConditionFormatter<Double> {
         }
         
         for(Term<FormattedNumber> term : terms) {
-            sb.append(term.format(numObj));
+            sb.append(term.format(numObj, getLocale(), runtimeLocale));
         }
         
         //TODO: 項目ごとに特殊条件の処理を行う。

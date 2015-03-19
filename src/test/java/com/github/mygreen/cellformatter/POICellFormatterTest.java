@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -168,6 +169,44 @@ public class POICellFormatterTest {
     public void testFormatExcel2000_test() {
         
         File file = new File("src/test/data/cell_format_2000.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    @Ignore
+    public void testFormatLibre() {
+        
+        File file = new File("src/test/data/cell_format_libre.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    @Ignore
+    public void testFormatLibre_test() {
+        
+        File file = new File("src/test/data/cell_format_libre.xls");
         POICellFormatter cellFormatter = new POICellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);

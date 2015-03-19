@@ -1,10 +1,12 @@
 package com.github.mygreen.cellformatter.term;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import com.github.mygreen.cellformatter.lang.EraPeriod;
+import com.github.mygreen.cellformatter.lang.MSLocale;
+import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
@@ -108,10 +110,17 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * a - 曜日の場合の処理
+     * aまたはn - 曜日の名称場合の処理
      */
-    public static DateTerm week(final String format) {
-        return new WeekTerm(format);
+    public static DateTerm weekName(final String format) {
+        return new WeekName(format);
+    }
+    
+    /**
+     * ww - 年の週番号
+     */
+    public static DateTerm weekNumber(final String format) {
+        return new WeekNumberTerm(format);
     }
     
     /**
@@ -160,7 +169,7 @@ public abstract class DateTerm implements Term<Calendar> {
         private static final long BASE = 1000*60*60;
         
         /** Excelのゼロ秒時の基準となる時間 （ミリ秒）*/
-        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        private static final long ZERO_TIME = Utils.getExcelZeroDate();
         
         private final String format;
         
@@ -169,10 +178,10 @@ public abstract class DateTerm implements Term<Calendar> {
         }
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int formatLength = format.length();
-            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -191,7 +200,7 @@ public abstract class DateTerm implements Term<Calendar> {
         private static final long BASE = 1000*60;
         
         /** Excelのゼロ秒時の基準となる時間（ミリ秒） */
-        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        private static final long ZERO_TIME = Utils.getExcelZeroDate();
         
         private final String format;
         
@@ -200,10 +209,10 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int formatLength = format.length();
-            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -222,7 +231,7 @@ public abstract class DateTerm implements Term<Calendar> {
         private static final long BASE = 1000;
         
         /** Excelのゼロ秒時の基準となる時間 (ミリ秒)*/
-        private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+        private static final long ZERO_TIME = Utils.getExcelZeroDate();
         
         private final String format;
         
@@ -231,10 +240,10 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int formatLength = format.length();
-            final long time = (long) (ZERO_TIME - cal.getTime().getTime() / BASE);
+            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -256,7 +265,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final String value = String.valueOf(cal.get(Calendar.YEAR));
             final int formatLength = format.length();
@@ -287,7 +296,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final Date date = cal.getTime();
             
@@ -333,7 +342,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final Date date = cal.getTime();
             final int formatLength = format.length();
@@ -376,7 +385,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final Date date = cal.getTime();
             final int formatLength = format.length();
@@ -443,7 +452,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int value = cal.get(Calendar.MONTH);
             final int formatLength = format.length();
@@ -478,6 +487,34 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
+     * 曜日のインデックスを取得する。
+     * ・日曜始まりで、0から始まる。
+     * @param cal
+     * @return
+     */
+    private static int getWeekIndex(final Calendar cal) {
+        final int val = cal.get(Calendar.DAY_OF_WEEK);
+        switch(val) {
+            case Calendar.SUNDAY:
+                return 0;
+            case Calendar.MONDAY:
+                return 1;
+            case Calendar.TUESDAY:
+                return 2;
+            case Calendar.WEDNESDAY:
+                return 3;
+            case Calendar.THURSDAY:
+                return 4;
+            case Calendar.FRIDAY:
+                return 5;
+            case Calendar.SATURDAY:
+                return 6;
+        }
+        
+        return 0;
+    }
+    
+    /**
      * d - 日の場合
      * ・dが3～4桁の場合は、英字の曜日。
      */
@@ -500,7 +537,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int value = cal.get(Calendar.DAY_OF_MONTH);
             final int formatLength = format.length();
@@ -513,12 +550,12 @@ public abstract class DateTerm implements Term<Calendar> {
                 
             } else if(formatLength == 3) {
                 // 英字の曜日の先頭三桁
-                final int index = cal.get(Calendar.DAY_OF_WEEK);
+                final int index = getWeekIndex(cal);
                 return WEEK_NAMES[index][1];
                 
             } else if(formatLength >= 4) {
                 // 英字の曜日
-                final int index = cal.get(Calendar.DAY_OF_WEEK);
+                final int index = getWeekIndex(cal);
                 return WEEK_NAMES[index][0];
                 
             } else {
@@ -534,9 +571,10 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * a - 日本語名称の曜日の場合
+     * aまたはn - 日本語名称の曜日の場合
+     * 
      */
-    public static class WeekTerm extends DateTerm {
+    public static class WeekName extends DateTerm {
         
         private final String format;
         
@@ -550,21 +588,62 @@ public abstract class DateTerm implements Term<Calendar> {
             {"土曜日", "土"},
         };
         
-        public WeekTerm(final String format) {
+        public WeekName(final String format) {
             this.format = format;
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final int index = cal.get(Calendar.DAY_OF_WEEK);
+            final int index = getWeekIndex(cal);
             final int formatLength = format.length();
             
-            if(formatLength <= 3) {
-                return WEEK_NAMES[index][1];
+            if(Utils.startsWithIgnoreCase(format, "n")) {
+                // Libreの時
+                if(formatLength == 1) {
+                    return WEEK_NAMES[index][1];
+                } else {
+                    return WEEK_NAMES[index][0];
+                }
             } else {
-                return WEEK_NAMES[index][0];
+                if(formatLength <= 3) {
+                    return WEEK_NAMES[index][1];
+                } else {
+                    return WEEK_NAMES[index][0];
+                }
             }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * ww - 年の週番号を取得する。
+     * 
+     */
+    public static class WeekNumberTerm extends DateTerm {
+        
+        private final String format;
+        
+        public WeekNumberTerm(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+            
+            
+            if(format.equalsIgnoreCase("ww")) {
+                final int val = cal.get(Calendar.WEEK_OF_YEAR);;
+                return String.valueOf(val);
+                
+            } else {
+                return format;
+            }
+           
         }
         
         public String getFormat() {
@@ -591,7 +670,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final String value;
             if(isHalf()) {
@@ -627,7 +706,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final String value = String.valueOf(cal.get(Calendar.MINUTE));
             final int formatLength = format.length();
@@ -653,7 +732,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final String value = String.valueOf(cal.get(Calendar.SECOND));
             final int formatLength = format.length();
@@ -674,38 +753,47 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        private static final String[][] AM_PM_NAMES = {
-                {"AM", "A", "a", "am"},
-                {"PM", "P", "p", "pm"},
-        };
+        private final String am;
+        
+        private final String pm;
         
         public AmPmTerm(final String format) {
             this.format = format;
+            
+            String[] split = format.split("/");
+            if(split.length >= 2) {
+                this.am = split[0];
+                this.pm = split[1];
+            } else {
+                this.am = "AM";
+                this.pm = "PM";
+            }
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final int index = cal.get(Calendar.AM_PM) == Calendar.AM ? 0 : 1;
-            if(format.equals("AM/PM")) {
-                return AM_PM_NAMES[index][0];
-                
-            } else if(format.equals("A/P")) {
-                return AM_PM_NAMES[index][1];
-                
-            } else if(format.equals("am/pm")) {
-                return AM_PM_NAMES[index][2];
-                
-            } else if(format.equals("a/p")) {
-                return AM_PM_NAMES[index][3];
+            final int val = cal.get(Calendar.AM_PM);
+            if(formatLocale == MSLocale.JAPANESE) {
+                return val == Calendar.AM ? "午前" : "午後";
                 
             } else {
-                return AM_PM_NAMES[index][0];
+                return val == Calendar.AM ? am : pm;
+                
             }
+            
         }
         
         public String getFormat() {
             return format;
+        }
+        
+        public String getAm() {
+            return am;
+        }
+        
+        public String getPm() {
+            return pm;
         }
         
     }
@@ -722,12 +810,61 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final int index = (cal.get(Calendar.MONTH) + 1) / 3;
+            final int index = cal.get(Calendar.MONTH) / 3;
+            final boolean single = format.length() == 1;
             
-            // ロケールによって変わる
-            return String.format("第%d四半期", index);
+            final boolean japaneseLocale = isJapaneseLocale(formatLocale, runtimeLocale);
+            
+            switch(index) {
+                case 0:
+                    if(single) {
+                        return "Q1";
+                    } else if(japaneseLocale) {
+                        return "第１四半期";
+                    } else {
+                        return "1st quater";
+                    }
+                case 1:
+                    if(single) {
+                        return "Q2";
+                    } else if(japaneseLocale) {
+                        return "第２四半期";
+                    } else {
+                        return "2nd quater";
+                    }
+                case 2:
+                    if(single) {
+                        return "Q3";
+                    } else if(japaneseLocale) {
+                        return "第３四半期";
+                    } else {
+                        return "3rd quater";
+                    }
+                case 3:
+                    if(single) {
+                        return "Q4";
+                    } else if(japaneseLocale) {
+                        return "第４四半期";
+                    } else {
+                        return "4th quater";
+                    }
+                default:
+                    return "";
+            }
+        }
+        
+        private boolean isJapaneseLocale(final MSLocale formatLocale, final Locale runtimeLocale) {
+            
+            if(formatLocale == MSLocale.JAPANESE) {
+                return true;
+                
+            } else if(runtimeLocale != null && runtimeLocale.getLanguage().equals("ja")) {
+                return true;
+            }
+            
+            return false;
         }
         
         public String getFormat() {

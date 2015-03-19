@@ -14,7 +14,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
  */
 public class CustomFormatterFactory {
     
-    private TextFormatterFactory textFormatterFactory = new TextFormatterFactory();
+    private ConditionTextFormatterFactory textFormatterFactory = new ConditionTextFormatterFactory();
     
     private ConditionDateFormatterFactory dateFormatterFactory = new ConditionDateFormatterFactory();
     

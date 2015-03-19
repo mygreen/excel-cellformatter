@@ -147,7 +147,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                         }
                         
                     } else if(item instanceof Token.Factor) {
-                        if(item.getValue().startsWith("E")) {
+                        if(Utils.startsWithIgnoreCase(item.getValue(), "E")) {
                             formatter.addTerm(NumberTerm.exponnet(item));
                             
                         } else if(item.getValue().equals("General")) {
@@ -196,8 +196,8 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
             
             String matchChars = null;
             for(String chars : SORTED_NUMBER_TERM_CHARS) {
-                if(item.startsWith(chars, idx)) {
-                    matchChars = chars;
+                if(Utils.startsWithIgnoreCase(item, chars, idx)) {
+                    matchChars = item.substring(idx, idx + chars.length());
                     break;
                 }
             }
@@ -216,14 +216,14 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                     noTermChar = new StringBuilder();
                 }
                 
-                if(equalsAny(matchChars, DIGITS_START_CHARS)) {
+                if(Utils.equalsAny(matchChars, DIGITS_START_CHARS)) {
                     // 数字として切り出す。
                     StringBuilder digits = new StringBuilder();
                     digits.append(matchChars);
                     
                     for(int i=idx+1; i < itemLength; i++) {
                         final String str = String.valueOf(item.charAt(i));
-                        if(equalsAny(str, DIGITS_CHARS)) {
+                        if(Utils.equalsAny(str, DIGITS_CHARS)) {
                             digits.append(str);
                         } else {
                             break;
@@ -234,10 +234,10 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                     idx += digits.length();
                     
                 } else {
-                    if(equalsAny(matchChars, FORMAT_CHARS)) {
+                    if(Utils.equalsAny(matchChars, FORMAT_CHARS)) {
                         list.add(Token.formatter(matchChars));
                         
-                    } else if(equalsAny(matchChars, SYMBOL_CHARS)) {
+                    } else if(Utils.equalsAny(matchChars, SYMBOL_CHARS)) {
                         if(matchChars.equals(".")) {
                             list.add(Token.SYMBOL_DOT);
                             
@@ -516,18 +516,6 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
         
         final NumberTerm.SymbolTerm symbolTerm = (NumberTerm.SymbolTerm) term;
         return symbolTerm.getToken().equals(symbol);
-        
-    }
-    
-    private static boolean equalsAny(final String str, String[] searchChars) {
-        
-        for(String search : searchChars) {
-            if(str.equals(search)) {
-                return true;
-            }
-        }
-        
-        return false;
         
     }
     

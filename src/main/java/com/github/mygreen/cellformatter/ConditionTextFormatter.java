@@ -1,6 +1,7 @@
 package com.github.mygreen.cellformatter;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.github.mygreen.cellformatter.term.Term;
@@ -12,28 +13,36 @@ import com.github.mygreen.cellformatter.term.Term;
  * @author T.TSUCHIE
  *
  */
-public class TextFormatter {
-    
-    /**
-     * 書式のパターン
-     */
-    private final String pattern;
+public class ConditionTextFormatter extends ConditionFormatter<String> {
     
     /**
      * テキストの書式の項
      */
     private List<Term<String>> terms = new CopyOnWriteArrayList<>();
     
-    public TextFormatter(final String pattern) {
-        this.pattern = pattern;
+    public ConditionTextFormatter(final String pattern) {
+        super(pattern);
     }
     
-    public String format(final String value) {
+    @Override
+    public FormatterType getType() {
+        return FormatterType.Text;
+    }
+    
+    /**
+     * 常にtrueを返す。
+     */
+    @Override
+    public boolean isMatch(String value) {
+        return true;
+    }
+    
+    public String format(final String value, final Locale runtimeLocale) {
         
         final StringBuilder sb = new StringBuilder();
         
         for(Term<String> term : terms) {
-            sb.append(term.format(value));
+            sb.append(term.format(value, getLocale(), runtimeLocale));
         }
         
         return sb.toString();
@@ -54,14 +63,6 @@ public class TextFormatter {
      */
     public void addTerm(Term<String> term) {
         this.terms.add(term);
-    }
-    
-    /**
-     * 書式のパターンを取得する。
-     * @return
-     */
-    public String getPattern() {
-        return pattern;
     }
     
 }

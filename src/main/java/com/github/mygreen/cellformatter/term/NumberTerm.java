@@ -2,7 +2,9 @@ package com.github.mygreen.cellformatter.term;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
+import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.number.FormattedNumber;
 import com.github.mygreen.cellformatter.number.PartType;
 import com.github.mygreen.cellformatter.tokenizer.Token;
@@ -61,7 +63,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         };
         
         @Override
-        public String format(final FormattedNumber number) {
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             return formatter.get().format(Math.abs(number.getValue()));
         }
         
@@ -187,7 +189,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         private static final String ZEOR = "0";
         
         @Override
-        public String format(final FormattedNumber number) {
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             String num = getNumber(number);
             if(num.isEmpty()) {
@@ -207,7 +209,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
     public static class SharpTerm extends FormattedTerm {
         
         @Override
-        public String format(final FormattedNumber number) {
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             String num = getNumber(number);
             return num;
         }
@@ -224,7 +226,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         private static final String SPACE = " ";
         
         @Override
-        public String format(final FormattedNumber number) {
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             String num = getNumber(number);
             if(num.isEmpty()) {
                 return SPACE;
@@ -249,22 +251,39 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
          */
         private final Token token;
         
+        /**
+         * 指数の記号。
+         * ・パターンによって、大文字、小文字がある。
+         */
+        private final String exponentSymbol;
+        
         public ExponentTerm(final Token token) {
             this.token = token;
+            
+            final String vale = token.getValue();
+            if(vale.startsWith("E")) {
+                this.exponentSymbol = "E";
+            } else {
+                this.exponentSymbol = "e";
+            }
         }
         
         @Override
-        public String format(final FormattedNumber number) {
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             if(number.asExponent().isExponentPositive()) {
-                return "E+";
+                return exponentSymbol + "+";
             } else {
-                return "E-";
+                return exponentSymbol + "-";
             }
         }
         
         public Token getToken() {
             return token;
+        }
+        
+        public String getExponentSymbol() {
+            return exponentSymbol;
         }
         
     }
@@ -284,7 +303,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         }
         
         @Override
-        public String format(final FormattedNumber value) {
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
             return token.getValue();
         }
         
@@ -303,7 +322,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         }
         
         @Override
-        public String format(final FormattedNumber value) {
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
             return token.getValue();
         }
         

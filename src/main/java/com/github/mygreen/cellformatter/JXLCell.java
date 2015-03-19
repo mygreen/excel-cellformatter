@@ -39,13 +39,13 @@ public class JXLCell implements CommonCell {
      * ・間違っているものを対象とする。
      * ・環境によって変わるものは、FormattterResolverで変換する
      */
-    private static Map<Short, String> BUILT_IN_FORMAT = new ConcurrentHashMap<>();
+    private static Map<Short, String> BUILT_IN_FORMATS = new ConcurrentHashMap<>();
     static {
         // 通貨（記号あり）
-        BUILT_IN_FORMAT.put((short)5, "$#,##0_);($#,##0)");
-        BUILT_IN_FORMAT.put((short)6, "$#,##0_);[Red]($#,##0)");
-        BUILT_IN_FORMAT.put((short)7, "$#,##0.00);($#,##0.00)");
-        BUILT_IN_FORMAT.put((short)8, "$#,##0.00_);[Red]($#,##0.00)");
+        BUILT_IN_FORMATS.put((short)5, "$#,##0_);($#,##0)");
+        BUILT_IN_FORMATS.put((short)6, "$#,##0_);[Red]($#,##0)");
+        BUILT_IN_FORMATS.put((short)7, "$#,##0.00);($#,##0.00)");
+        BUILT_IN_FORMATS.put((short)8, "$#,##0.00_);[Red]($#,##0.00)");
         
 //        BUILT_IN_FORMAT.put((short)5, "¥#,##0_);(¥#,##0)");
 //        BUILT_IN_FORMAT.put((short)6, "¥#,##0_);[Red](¥#,##0)");
@@ -54,19 +54,19 @@ public class JXLCell implements CommonCell {
         
         // 日付
         // システムのロケールによって変わる
-        BUILT_IN_FORMAT.put((short)14, "m/d/yy");
+        BUILT_IN_FORMATS.put((short)14, "m/d/yy");
         
         // 通貨（記号なし）
-        BUILT_IN_FORMAT.put((short)37, "#,##0_);(#,##0)");
-        BUILT_IN_FORMAT.put((short)38, "#,##0_);[Red](#,##0)");
-        BUILT_IN_FORMAT.put((short)39, "#,##0.00_);(#,##0.00)");
-        BUILT_IN_FORMAT.put((short)40, "#,##0.00_);[Red](#,##0.00)");
+        BUILT_IN_FORMATS.put((short)37, "#,##0_);(#,##0)");
+        BUILT_IN_FORMATS.put((short)38, "#,##0_);[Red](#,##0)");
+        BUILT_IN_FORMATS.put((short)39, "#,##0.00_);(#,##0.00)");
+        BUILT_IN_FORMATS.put((short)40, "#,##0.00_);[Red](#,##0.00)");
         
         // 会計（記号あり）
-        BUILT_IN_FORMAT.put((short)41, "_(* #,##0_);_(* (#,##0);_(* \"-\"_);_(@_)");
-        BUILT_IN_FORMAT.put((short)42, "_($* #,##0_);_($* (#,##0);_($* \"-\"_);_(@_)");
-        BUILT_IN_FORMAT.put((short)43, "_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)");
-        BUILT_IN_FORMAT.put((short)44, "_($* #,##0.00_);_($* (#,##0.00);_($* \"-\"??_);_(@_)");
+        BUILT_IN_FORMATS.put((short)41, "_(* #,##0_);_(* (#,##0);_(* \"-\"_);_(@_)");
+        BUILT_IN_FORMATS.put((short)42, "_($* #,##0_);_($* (#,##0);_($* \"-\"_);_(@_)");
+        BUILT_IN_FORMATS.put((short)43, "_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)");
+        BUILT_IN_FORMATS.put((short)44, "_($* #,##0.00_);_($* (#,##0.00);_($* \"-\"??_);_(@_)");
         
     }
     
@@ -145,8 +145,8 @@ public class JXLCell implements CommonCell {
         
         // 変換対象のビルトインフォーマットの場合
         final short formatIndex = getFormatIndex(cellStyle);
-        if(BUILT_IN_FORMAT.containsKey(formatIndex)) {
-            return BUILT_IN_FORMAT.get(formatIndex);
+        if(BUILT_IN_FORMATS.containsKey(formatIndex)) {
+            return BUILT_IN_FORMATS.get(formatIndex);
         }
         
         // セルのフォーマットの取得

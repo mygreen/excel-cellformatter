@@ -1,6 +1,5 @@
 package com.github.mygreen.cellformatter;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -8,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.term.Term;
 
 
@@ -19,9 +19,9 @@ import com.github.mygreen.cellformatter.term.Term;
 public class ConditionDateFormatter extends ConditionFormatter<Calendar> {
     
     /**
-     * Excelでの基準日である「1900年1月1日」の値。
+     * Excelでの基準日である「1900年1月0日」の値。
      */
-    private static final long ZERO_TIME = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+    private static final long ZERO_TIME = Utils.getExcelZeroDate();
     
     /**
      * 日時の各項
@@ -50,13 +50,13 @@ public class ConditionDateFormatter extends ConditionFormatter<Calendar> {
     }
     
     @Override
-    public String format(final Calendar cal, final Locale locale) {
+    public String format(final Calendar cal, final Locale runtimeLocale) {
         ArgUtils.notNull(cal, "cal");
         
         // 各項の処理
         StringBuilder sb = new StringBuilder();
         for(Term<Calendar> term : terms) {
-            sb.append(applyFormatCallback(cal, term.format(cal)));
+            sb.append(applyFormatCallback(cal, term.format(cal, getLocale(), runtimeLocale)));
         }
         
         String value = sb.toString();

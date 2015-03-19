@@ -83,7 +83,7 @@ public class FormatterResolver {
         registerFormatter((short)41, createFormatter("_ * #,##0_ ;_ * \\-#,##0_ ;_ * \"-\"_ ;_ @_"));
         registerFormatter((short)42, createFormatter("_ \"¥\"* #,##0_ ;_ \"¥\"* \\-#,##0_ ;_ \"¥\"* \"-\"_ ;_ @_ "));
         registerFormatter((short)43, createFormatter("_ * #,##0.00_ ;_ * (#,##0.00);_ * \"-\"??_ ;_ @_ "));
-        registerFormatter((short)44, createFormatter("_ \"¥\"* #,##0.00_ ;_ $* (#,##0.00);_ $* \"-\"??_ ;_ @_ "));
+        registerFormatter((short)44, createFormatter("_ \"¥\"* #,##0.00_ ;_ \"¥\"* -#,##0.00_ ;_ \"¥\"* \"-\"??_ ;_ @_ "));
         
         // インデックス番号のみあり、フォーマットがない場合
         registerFormatter((short)55, createFormatter("yyyy\"年\"m\"月\""));

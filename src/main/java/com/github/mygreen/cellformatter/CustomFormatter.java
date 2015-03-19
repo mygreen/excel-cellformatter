@@ -41,7 +41,7 @@ public class CustomFormatter extends CellFormatter {
     /**
      * テキスト用のフォーマッタ
      */
-    private TextFormatter textFormatter;
+    private ConditionTextFormatter textFormatter;
     
     /**
      * 条件付きのフォーマッタ
@@ -131,11 +131,11 @@ public class CustomFormatter extends CellFormatter {
         return false;
     }
     
-    public TextFormatter getTextFormatter() {
+    public ConditionTextFormatter getTextFormatter() {
         return textFormatter;
     }
     
-    public void setTextFormatter(TextFormatter textFormatter) {
+    public void setTextFormatter(ConditionTextFormatter textFormatter) {
         this.textFormatter = textFormatter;
     }
     

@@ -26,22 +26,32 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 public class ConditionDateFormatterFactory extends ConditionFormatterFactory<ConditionDateFormatter> {
     
     /**
-     * 日時で使用するフォーマット用の文字
-     * ・書式の種類の判定に使用する。
+     * 日時の書式かどうかを決定するためのキーワード。
      */
-    private static final String[] DATE_CHARS = {
+    private static final String[] DATE_DECISTION_CHARS = {
         "y", "m", "d",
-        "g", "e", "a", "r",
+        "g", /*"e",*/ "a", "r",
         "h", "s",
-        "AM/PM", "A/P", "am/pm", "a/p",
-        "qq",
+        "am/pm", "a/p",
+        "q", "n", "ww",   // libre
     };
     
     /**
-     * {@link #DATE_CHARS}を、検索用に並び替えたもの。
+     * 日時で使用するフォーマット用の文字
+     */
+    private static final String[] DATE_TERM_CHARS = {
+        "y", "m", "d",
+        "g", "e", "a", "r",
+        "h", "s",
+        "am/pm", "a/p",
+        "q", "n", "ww", // libre
+    };
+    
+    /**
+     * {@link #DATE_TERM_CHARS}を、検索用に並び替えたもの。
      * ・フォーマットのキーワードを①文字列の長い順、辞書順に並び変え、比較していく。
      */
-    private static final List<String> SORTED_DATE_CHARS = Utils.reverse(DATE_CHARS);
+    private static final List<String> SORTED_DATE_CHARS = Utils.reverse(DATE_TERM_CHARS);
     
     /**
      * 日時の書式かどうか判定する。
@@ -54,7 +64,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
             return false;
         }
         
-        return store.containsAnyInFactor(DATE_CHARS);
+        return store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS);
     }
     
     /**
@@ -84,13 +94,13 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                 
                 if(PATTERN_CONDITION_TIME.matcher(token.getValue()).matches()) {
                     // [h][m][s]などの特別な時刻
-                    if(condition.startsWith("h")) {
+                    if(Utils.startsWithIgnoreCase(condition, "h")) {
                         formatter.addTerm(DateTerm.spHour(condition));
                         
-                    } else if(condition.startsWith("m")) {
+                    } else if(Utils.startsWithIgnoreCase(condition, "m")) {
                         formatter.addTerm(DateTerm.spMinute(condition));
                         
-                    } else if(condition.startsWith("s")) {
+                    } else if(Utils.startsWithIgnoreCase(condition, "s")) {
                         formatter.addTerm(DateTerm.spSecond(condition));
                         
                     }
@@ -127,40 +137,46 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                     
                     if(item instanceof Token.Formatter) {
                         final String formatterItem = item.asFormatter().getValue();
-                        if(formatterItem.startsWith("y")) {
+                        
+                        if(Utils.equalsAnyIgnoreCase(formatterItem, new String[]{"am/pm", "a/p"})) {
+                            formatter.addTerm(DateTerm.amPm(formatterItem));
+                            
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "ww")) {
+                            formatter.addTerm(DateTerm.weekNumber(formatterItem));
+                            
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "y")) {
                             formatter.addTerm(DateTerm.year(formatterItem));
                             
-                        } else if(formatterItem.startsWith("g")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "g")) {
                             formatter.addTerm(DateTerm.eraName(formatterItem));
                             
-                        } else if(formatterItem.startsWith("e")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "e")) {
                             formatter.addTerm(DateTerm.eraYear(formatterItem));
                             
-                        } else if(formatterItem.startsWith("r")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "r")) {
                             formatter.addTerm(DateTerm.eraNameYear(formatterItem));
                             
-                        } else if(formatterItem.startsWith("m")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "m")) {
                             // 月か分かの判定は、全ての書式を組み立て後に行う。
                             formatter.addTerm(DateTerm.month(formatterItem));
                             
-                        } else if(formatterItem.startsWith("d")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "d")) {
                             formatter.addTerm(DateTerm.day(formatterItem));
                             
-                        } else if(formatterItem.startsWith("a")) {
-                            formatter.addTerm(DateTerm.week(formatterItem));
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "a")) {
+                            formatter.addTerm(DateTerm.weekName(formatterItem));
                             
-                        } else if(formatterItem.startsWith("h")) {
-                            final boolean halfHour = store.containsAnyInFactor(new String[]{"AM/PM", "A/P", "am/pm", "a/p"});
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "n")) {
+                            formatter.addTerm(DateTerm.weekName(formatterItem));
+                            
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "h")) {
+                            final boolean halfHour = store.containsAnyInFactorIgnoreCase(new String[]{"am/pm", "a/p"});
                             formatter.addTerm(DateTerm.hour(formatterItem, halfHour));
                             
-                        } else if(formatterItem.startsWith("s")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "s")) {
                             formatter.addTerm(DateTerm.second(formatterItem));
                             
-                        } else if(formatterItem.equalsIgnoreCase("AM/PM")
-                                || formatterItem.equalsIgnoreCase("A/P")) {
-                            formatter.addTerm(DateTerm.amPm(formatterItem));
-                            
-                        } else if(formatterItem.startsWith("q")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "q")) {
                             formatter.addTerm(DateTerm.quater(formatterItem));
                             
                         } else {
@@ -203,8 +219,8 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
             
             String matchChars = null;
             for(String chars : SORTED_DATE_CHARS) {
-                if(item.startsWith(chars, idx)) {
-                    matchChars = chars;
+                if(Utils.startsWithIgnoreCase(item, chars, idx)) {
+                    matchChars = item.substring(idx, idx + chars.length());
                     break;
                 }
             }
@@ -223,7 +239,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                 StringBuilder termChar = new StringBuilder();
                 // 文字が異なるまで、探していく
                 while(idx < itemLength) {
-                    if(item.startsWith(matchChars, idx)) {
+                    if(Utils.startsWithIgnoreCase(item, matchChars, idx)) {
                         termChar.append(matchChars);
                         idx += matchChars.length();
                     } else {

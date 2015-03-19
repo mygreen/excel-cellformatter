@@ -1,6 +1,9 @@
 package com.github.mygreen.cellformatter.term;
 
+import java.util.Locale;
+
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
@@ -28,7 +31,7 @@ public abstract class TextTerm implements Term<String> {
         }
         
         @Override
-        public String format(final String value) {
+        public String format(final String value, final MSLocale formatLocale, final Locale runtimeLocale) {
             return value == null ? "" : value;
         }
         
