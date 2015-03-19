@@ -48,7 +48,7 @@ public abstract class ConditionFormatterFactory<F> {
     /**
      * インデックス形式の色の条件式のパターン
      */
-    private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[色([0-9]+)\\]");
+    private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[色|Color([0-9]+)\\]");
     
     /**
      * 演算子の条件式かどうか。
