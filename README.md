@@ -28,7 +28,7 @@ final Workbook workbook = Workbook.getWorkbook(in, settings);
 
 Cell cell = /* セルの値の取得 */;
 
-JxlCellFormatter cellFormatter = new JxlCellFormatter();
+JXLCellFormatter cellFormatter = new JXLCellFormatter();
 String contents = cellForrmatter.format(cell);
 
 ```
