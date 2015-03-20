@@ -126,10 +126,10 @@ public class EraPeriod {
     public int getEraYear(final Date date) {
         ArgUtils.notNull(date, "date");
         
-        final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("GMT-0"));
+        final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         startCal.setTime(startDate);
         
-        final Calendar dateCal = Calendar.getInstance(TimeZone.getTimeZone("GMT-0"));
+        final Calendar dateCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         dateCal.setTime(date);
         
         final int diff = dateCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;
@@ -149,23 +149,39 @@ public class EraPeriod {
      * 元号のローマ字の省略名を設定する。
      * @param abbrevRomanName
      */
-    public void setAbbrevRomanName(String abbrevRomanName) {
+    void setAbbrevRomanName(String abbrevRomanName) {
         this.abbrevRomanName = abbrevRomanName;
     }
     
+    /**
+     * 元号の日本語名の省略名を取得する。
+     * @return
+     */
     public String getAbbrevName() {
         return abbrevName;
     }
     
-    public void setAbbrevName(String abbrevName) {
+    /**
+     * 元号の日本語名の省略名を設定する。
+     * @return
+     */
+    void setAbbrevName(String abbrevName) {
         this.abbrevName = abbrevName;
     }
     
+    /**
+     * 元号の名称を取得する
+     * @return
+     */
     public String getName() {
         return name;
     }
     
-    public void setName(String name) {
+    /**
+     * 元号の名称を設定する
+     * @return
+     */
+    void setName(String name) {
         this.name = name;
     }
     
@@ -173,7 +189,7 @@ public class EraPeriod {
         return startDate;
     }
     
-    public void setStartDate(Date startDate) {
+    void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
@@ -181,7 +197,7 @@ public class EraPeriod {
         return endDate;
     }
     
-    public void setEndDate(Date endDate) {
+    void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
     
