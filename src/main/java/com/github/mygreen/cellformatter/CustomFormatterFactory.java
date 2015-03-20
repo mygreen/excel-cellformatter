@@ -100,6 +100,11 @@ public class CustomFormatterFactory {
             
         }
         
+        // フォーマッタが1つしか内場合は、補正する。
+        if(formatter.getConditionFormatters().size() == 1) {
+           formatter.getConditionFormatters().get(0).setOperator(ConditionOperator.ALL);
+        }
+        
         return formatter;
     }
     

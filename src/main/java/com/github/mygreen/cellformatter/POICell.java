@@ -1,6 +1,6 @@
 package com.github.mygreen.cellformatter;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -53,13 +53,19 @@ public class POICell implements CommonCell {
     }
     
     @Override
-    public boolean isString() {
-        return cell.getCellType() == Cell.CELL_TYPE_STRING;
+    public boolean isText() {
+        return cell.getCellType() == Cell.CELL_TYPE_STRING || cell.getCellType() == Cell.CELL_TYPE_BOOLEAN;
     }
     
     @Override
-    public String getStringCellValue() {
-        return cell.getStringCellValue();
+    public String getTextCellValue() {
+        if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+            return cell.getStringCellValue();
+            
+        } else if(cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
+            return Boolean.toString(cell.getBooleanCellValue()).toUpperCase();
+        }
+        return "";
     }
     
     @Override
@@ -68,11 +74,9 @@ public class POICell implements CommonCell {
     }
     
     @Override
-    public Calendar getDateCellValue() {
-        // TimeZoneは、デフォルト。
-        final Calendar cal = Calendar.getInstance();
-        cal.setTime(cell.getDateCellValue());
-        return cal;
+    public Date getDateCellValue() {
+        final Date date = cell.getDateCellValue();
+        return date;
     }
     
 }

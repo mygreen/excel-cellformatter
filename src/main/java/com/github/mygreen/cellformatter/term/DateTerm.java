@@ -355,8 +355,8 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final Date date = cal.getTime();
             final int formatLength = format.length();
+            final Date date = cal.getTime();
             
             EraPeriod period = null;
             for(EraPeriod p : EraPeriod.PERIODS) {
@@ -398,8 +398,8 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final Date date = cal.getTime();
             final int formatLength = format.length();
+            final Date date = cal.getTime();
             
             EraPeriod period = null;
             for(EraPeriod p : EraPeriod.PERIODS) {

@@ -2,17 +2,20 @@ package com.github.mygreen.cellformatter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
+import jxl.BooleanCell;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
+import jxl.LabelCell;
 import jxl.NumberCell;
-import jxl.StringFormulaCell;
 import jxl.biff.FormatRecord;
 import jxl.biff.XFRecord;
 import jxl.format.CellFormat;
@@ -68,6 +71,8 @@ public class JXLCell implements CommonCell {
         BUILT_IN_FORMATS.put((short)43, "_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)");
         BUILT_IN_FORMATS.put((short)44, "_($* #,##0.00_);_($* (#,##0.00);_($* \"-\"??_);_(@_)");
         
+        // 経過時間
+        BUILT_IN_FORMATS.put((short)46, "[h]:mm:ss");
     }
     
     private final Cell cell;
@@ -164,18 +169,24 @@ public class JXLCell implements CommonCell {
     }
     
     @Override
-    public boolean isString() {
-        return cell.getType().equals(CellType.LABEL) || cell.getType().equals(CellType.STRING_FORMULA);
+    public boolean isText() {
+        return cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA
+                || cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA;
     }
     
     @Override
-    public String getStringCellValue() {
+    public String getTextCellValue() {
         
-        if(isString()) {
-            return ((StringFormulaCell) cell).getString();
+        if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
+            return ((LabelCell) cell).getString();
+            
+        } else if(cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA) {
+            return Boolean.toString(((BooleanCell) cell).getValue()).toUpperCase();
+            
         } else {
             return cell.getContents();
         }
+        
     }
     
     @Override
@@ -188,27 +199,39 @@ public class JXLCell implements CommonCell {
         }
     }
     
+    private static final long DATE_19000101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+    
     @Override
-    public Calendar getDateCellValue() {
+    public Date getDateCellValue() {
         
         // JExcel APIの場合は、TimeZoneを考慮していないため、TimeZoneはGMT+0にする。
         if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
-            final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-            cal.setTime(((DateCell) cell).getDate());
-            return cal;
+            Date date = ((DateCell) cell).getDate();
+            return adjustDate(date);
             
         } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
             final double num = getNumberCellValue();
             final Date date = convertJavaDate(num, false);
-            final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-            cal.setTime(date);
-            return cal;
+            return adjustDate(date);
             
         } else {
             final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTimeInMillis(0);
-            return cal;
+            return new Date(0);
         }
+    }
+    
+    private Date adjustDate(final Date date) {
+        
+        // JExcelAPIは、タイムゾーンに分が考慮された時差がふくまれているため、補正する。
+        Date adjustDate = new Date(date.getTime() - TimeZone.getDefault().getRawOffset());
+        
+        // 1900年以前の場合は、18900-12-30となるため、１日進めて補正をかける
+        if(adjustDate.getTime() < DATE_19000101) {
+            adjustDate = new Date(adjustDate.getTime() + TimeUnit.DAYS.toMillis(1));
+        }
+        
+        return adjustDate;
     }
     
     // The number of days between 1 Jan 1900 and 1 March 1900. Excel thinks

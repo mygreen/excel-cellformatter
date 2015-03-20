@@ -167,7 +167,9 @@ public class DaijiCallback implements Callback<Object> {
             String item;
             if(c == '1' && (0 < i && i < 2)) {
                 // 10の位以上で、かつ1の場合、数字部分は省略し、桁数のみにする。
-                item = DIGITS_4_MAP[i];
+//                item = DIGITS_4_MAP[i];
+                //Excelの場合は、12の場合も、「壱拾弐」と1を省略さない。
+                item = replaceSimple(String.valueOf(c)) + DIGITS_4_MAP[i];
             } else {
                 item = replaceSimple(String.valueOf(c)) + DIGITS_4_MAP[i];
             }

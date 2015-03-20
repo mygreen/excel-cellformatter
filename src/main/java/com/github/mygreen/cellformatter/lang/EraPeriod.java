@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 
 /**
@@ -70,9 +69,8 @@ public class EraPeriod {
             setName("平成");
             setStartDate(Timestamp.valueOf("1989-01-08 00:00:00.000"));
             
-            // 無期限
+            // 終了日がないため、無期限とする
             setEndDate(null);
-            
         }
     };
             
@@ -126,11 +124,29 @@ public class EraPeriod {
     public int getEraYear(final Calendar cal) {
         ArgUtils.notNull(cal, "cal");
         
-        final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        final Calendar startCal = Calendar.getInstance();
         startCal.setTime(startDate);
         
         final int diff = cal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;
         return diff;
+        
+    }
+    
+    @Override
+    public String toString() {
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(EraPeriod.class.getSimpleName()).append("[").append(getName()).append("]");
+        if(startDate != null) {
+            sb.append("[start=").append(Utils.formatDate(startDate)).append("]");
+        }
+        
+        if(endDate != null) {
+            sb.append("[end=").append(Utils.formatDate(endDate)).append("]");
+        }
+
+        
+        return sb.toString();
         
     }
     
@@ -182,16 +198,8 @@ public class EraPeriod {
         this.name = name;
     }
     
-    public Date getStartDate() {
-        return startDate;
-    }
-    
     void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-    
-    public Date getEndDate() {
-        return endDate;
     }
     
     void setEndDate(Date endDate) {

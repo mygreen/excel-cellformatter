@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
@@ -52,11 +53,10 @@ public class POICellFormatter {
                 return getMergedCellValue(cell, locale);
                 
             case Cell.CELL_TYPE_BOOLEAN:
-                return Boolean.toString(cell.getBooleanCellValue()).toUpperCase();
+                return getOtherCellValue(cell, locale);
                 
             case Cell.CELL_TYPE_STRING:
-                //TODO: 文字列のフォーマット
-                return cell.getRichStringCellValue().toString();
+                return getOtherCellValue(cell, locale);
                 
             case Cell.CELL_TYPE_NUMERIC:
                 return getNumericCellValue(cell, locale);
@@ -147,6 +147,42 @@ public class POICellFormatter {
     }
     
     /**
+     * 数値以外ののフォーマット
+     * @return
+     */
+    private String getOtherCellValue(final Cell cell, final Locale locale) {
+        
+        final int cellType = cell.getCellType();
+        if(!(cellType != Cell.CELL_TYPE_STRING || cellType != Cell.CELL_TYPE_BOOLEAN)) {
+            throw new IllegalArgumentException(String.format("cell type should be String or Boolean, but %d.", cellType));
+        }
+        
+        // セルの書式の取得。
+        final POICell poiCell = new POICell(cell);
+        final short formatIndex = poiCell.getFormatIndex();
+        final String formatPattern = poiCell.getFormatPattern();
+        
+        if(formatterResolver.canResolve(formatIndex)) {
+            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);
+            return cellFormatter.format(poiCell, locale);
+            
+        } else if(formatterResolver.canResolve(formatPattern)) {
+            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);
+            return cellFormatter.format(poiCell, locale);
+            
+        } else if(Utils.isNotEmpty(formatPattern)) {
+            final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
+            formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            return cellFormatter.format(poiCell, locale);
+            
+        } else {
+            // 書式を持たない場合は、そのまま返す。
+            return poiCell.getTextCellValue();
+        }
+        
+    }
+    
+    /**
      * 数値型のセルの値を取得する。
      * <p>書式付きの数字か日付のどちらかの場合がある。
      * @param cell
@@ -157,7 +193,7 @@ public class POICellFormatter {
         
         final int cellType = cell.getCellType();
         if(cellType != Cell.CELL_TYPE_NUMERIC) {
-            throw new IllegalArgumentException(String.format("cell type should be FORMULA, but %d.", cellType));
+            throw new IllegalArgumentException(String.format("cell type should be NUMERIC, but %d.", cellType));
         }
         
         // セルの書式の取得。

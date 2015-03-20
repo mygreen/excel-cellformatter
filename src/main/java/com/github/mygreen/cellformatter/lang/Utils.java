@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -234,14 +235,14 @@ public class Utils {
     
     /**
      * Excelの日付の開始日。
-     * ・数値が0の時、「1900/1/0 0:00:00」 。この値は、1900年1月1日から、2日（48時間）を引いた値。
+     * ・数値が0の時、「1900/1/0 0:00:00」 。この値は、1900年1月1日から、1日（24時間）を引いた値。
      *  
      * @return
      */
     public static long getExcelZeroDate() {
         
         long time = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
-        time -= 2*(1000*60*60*24);
+        time -= 1*TimeUnit.DAYS.toMillis(1);
         
         return time;
         
@@ -269,7 +270,7 @@ public class Utils {
     }
     
     public static String formatDate(final Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         return format.format(date);
     }
     

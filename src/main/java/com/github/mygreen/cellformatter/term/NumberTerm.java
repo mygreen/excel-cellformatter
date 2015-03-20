@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import com.github.mygreen.cellformatter.lang.MSLocale;
+import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.number.FormattedNumber;
 import com.github.mygreen.cellformatter.number.PartType;
 import com.github.mygreen.cellformatter.tokenizer.Token;
@@ -285,7 +286,12 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             if(number.asExponent().isExponentPositive()) {
-                return exponentSymbol + "+";
+                if(Utils.startsWithIgnoreCase(getToken().getValue(), "E-")) {
+                    // 指数がマイナスの場合は、正の時に符号は付与しない。
+                    return exponentSymbol;
+                } else {
+                    return exponentSymbol + "+";
+                }
             } else {
                 return exponentSymbol + "-";
             }

@@ -1,9 +1,14 @@
 package com.github.mygreen.cellformatter;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.lang.ArgUtils;
@@ -16,7 +21,9 @@ import com.github.mygreen.cellformatter.term.Term;
  * @author T.TSUCHIE
  *
  */
-public class ConditionDateFormatter extends ConditionFormatter<Calendar> {
+public class ConditionDateFormatter extends ConditionFormatter<Date> {
+    
+    private static final Logger logger = LoggerFactory.getLogger(ConditionDateFormatter.class);
     
     /**
      * Excelでの基準日である「1900年1月0日」の値。
@@ -44,14 +51,22 @@ public class ConditionDateFormatter extends ConditionFormatter<Calendar> {
      * @return
      */
     @Override
-    public boolean isMatch(final Calendar cal) {
-        final long value = cal.getTime().getTime() - ZERO_TIME;
+    public boolean isMatch(final Date date) {
+        final long value = date.getTime() - ZERO_TIME;
+        
+        if(logger.isDebugEnabled()) {
+            logger.debug("isMatch::date={}, zeroTime={}, diff={}",
+                    Utils.formatDate(date), Utils.formatDate(new Date(ZERO_TIME)), value);
+        }
+        
         return getOperator().isMatch(value);
     }
     
     @Override
-    public String format(final Calendar cal, final Locale runtimeLocale) {
-        ArgUtils.notNull(cal, "cal");
+    public String format(final Date date, final Locale runtimeLocale) {
+        ArgUtils.notNull(date, "date");
+        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.setTime(date);
         
         // 各項の処理
         StringBuilder sb = new StringBuilder();

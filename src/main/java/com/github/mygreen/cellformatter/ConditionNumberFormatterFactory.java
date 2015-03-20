@@ -42,7 +42,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
     };
     
     public static final String[] OTHER_CHARS = {
-        "E", "E+", "E-",
+        "E+", "E-",
         "General",
     };
     

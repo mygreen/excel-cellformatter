@@ -66,11 +66,11 @@ public class CustomFormatter extends CellFormatter {
     @Override
     public String format(final CommonCell cell, final Locale locale) {
         
-        if(cell.isString()) {
+        if(cell.isText()) {
             if(textFormatter != null) {
-                return textFormatter.format(cell.getStringCellValue());
+                return textFormatter.format(cell.getTextCellValue());
             }  else {
-                return cell.getStringCellValue();
+                return cell.getTextCellValue();
             }
             
         } else {
@@ -89,7 +89,7 @@ public class CustomFormatter extends CellFormatter {
             
         }
         
-        return "";
+        throw new NoMatchConditionFormatterException();
         
     }
     

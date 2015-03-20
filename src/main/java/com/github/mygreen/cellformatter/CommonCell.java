@@ -1,6 +1,6 @@
 package com.github.mygreen.cellformatter;
 
-import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -28,13 +28,13 @@ public interface CommonCell {
      * 文字列型のセルからどうか。
      * @return
      */
-    boolean isString();
+    boolean isText();
     
     /**
      * 文字列型のセルとして値を取得する。
      * @return
      */
-    String getStringCellValue();
+    String getTextCellValue();
     
     /**
      * 数値型のセルとして値を取得する。
@@ -44,8 +44,7 @@ public interface CommonCell {
     
     /**
      * 日時型のセルとして値を取得する。
-     * @return タイムゾーンを考慮し{@link Calendar}のオブジェクトを取得する。
      */
-    Calendar getDateCellValue();
+    Date getDateCellValue();
     
 }

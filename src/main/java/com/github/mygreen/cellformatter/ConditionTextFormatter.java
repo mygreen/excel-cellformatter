@@ -37,6 +37,7 @@ public class ConditionTextFormatter extends ConditionFormatter<String> {
         return true;
     }
     
+    @Override
     public String format(final String value, final Locale runtimeLocale) {
         
         final StringBuilder sb = new StringBuilder();
