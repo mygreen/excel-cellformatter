@@ -373,7 +373,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 
             }
             
-            String value = String.valueOf(period.getEraYear(date));
+            final String value = String.valueOf(period.getEraYear(cal));
             return supplyZero(value, formatLength);
             
         }
@@ -423,7 +423,7 @@ public abstract class DateTerm implements Term<Calendar> {
             }
             
             // 年の組み立て
-            final String strYear = String.valueOf(period.getEraYear(date));
+            final String strYear = String.valueOf(period.getEraYear(cal));
             sb.append(supplyZero(strYear, 2));
             
             return sb.toString();
@@ -442,7 +442,7 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        private static final String[][] MONTH_NAMES = {
+        static final String[][] MONTH_NAMES = {
             {"January", "Jan", "J"},
             {"February", "Feb", "F"},
             {"March", "Mar", "M"},
@@ -824,6 +824,20 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
+        static final String QUATER_NAMES[][] = {
+            {"1st quater", "Q1"}, 
+            {"2nd quater", "Q2"}, 
+            {"3rd quater", "Q3"}, 
+            {"4th quater", "Q4"}, 
+        };
+        
+        static final String QUATER_NAMES_JA[] = {
+            "第１四半期",
+            "第２四半期",
+            "第３四半期",
+            "第４四半期",
+        };
+        
         public QuaterTerm(final String format) {
             this.format = format;
         } 
@@ -832,46 +846,17 @@ public abstract class DateTerm implements Term<Calendar> {
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final int index = cal.get(Calendar.MONTH) / 3;
-            final boolean single = format.length() == 1;
             
-            final boolean japaneseLocale = isJapaneseLocale(formatLocale, runtimeLocale);
-            
-            switch(index) {
-                case 0:
-                    if(single) {
-                        return "Q1";
-                    } else if(japaneseLocale) {
-                        return "第１四半期";
-                    } else {
-                        return "1st quater";
-                    }
-                case 1:
-                    if(single) {
-                        return "Q2";
-                    } else if(japaneseLocale) {
-                        return "第２四半期";
-                    } else {
-                        return "2nd quater";
-                    }
-                case 2:
-                    if(single) {
-                        return "Q3";
-                    } else if(japaneseLocale) {
-                        return "第３四半期";
-                    } else {
-                        return "3rd quater";
-                    }
-                case 3:
-                    if(single) {
-                        return "Q4";
-                    } else if(japaneseLocale) {
-                        return "第４四半期";
-                    } else {
-                        return "4th quater";
-                    }
-                default:
-                    return "";
+            if(format.length() == 1) {
+                return QUATER_NAMES[index][1];
+                
+            } else if(isJapaneseLocale(formatLocale, runtimeLocale)) {
+                return QUATER_NAMES_JA[index];
+                
+            } else {
+                return QUATER_NAMES[index][0];
             }
+            
         }
         
         /**

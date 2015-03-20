@@ -119,20 +119,17 @@ public class EraPeriod {
     
     /**
      * 指定した日時が、開始日時から経過した年を取得する。
-     * @param date
+     * @param cal
      * @return
      * @throws IllegalArgumentException date is null.
      */
-    public int getEraYear(final Date date) {
-        ArgUtils.notNull(date, "date");
+    public int getEraYear(final Calendar cal) {
+        ArgUtils.notNull(cal, "cal");
         
         final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         startCal.setTime(startDate);
         
-        final Calendar dateCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-        dateCal.setTime(date);
-        
-        final int diff = dateCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;
+        final int diff = cal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;
         return diff;
         
     }
