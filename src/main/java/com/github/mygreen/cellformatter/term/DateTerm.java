@@ -533,12 +533,12 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        private static final String[][] WEEK_NAMES = {
+        static final String[][] WEEK_NAMES = {
             {"Sunday", "Sun"},
             {"Monday", "Mon"},
             {"Tuesday", "Tue"},
             {"Wednesday", "Wed"},
-            {"Thusday", "Thu"},
+            {"Thursday", "Thu"},
             {"Friday", "Fri"},
             {"Saturday", "Sat"},
         };
@@ -560,14 +560,22 @@ public abstract class DateTerm implements Term<Calendar> {
                 return supplyZero(String.valueOf(value), 2); 
                 
             } else if(formatLength == 3) {
-                // 英字の曜日の先頭三桁
+                // 曜日の省略名
                 final int index = getWeekIndex(cal);
-                return WEEK_NAMES[index][1];
+                if(formatLocale == MSLocale.JAPANESE) {
+                    return WeekName.WEEK_NAMES[index][1];
+                } else {
+                    return WEEK_NAMES[index][1];
+                }
                 
             } else if(formatLength >= 4) {
-                // 英字の曜日
+                // 曜日の正式名
                 final int index = getWeekIndex(cal);
-                return WEEK_NAMES[index][0];
+                if(formatLocale == MSLocale.JAPANESE) {
+                    return WeekName.WEEK_NAMES[index][0];
+                } else {
+                    return WEEK_NAMES[index][0];
+                }
                 
             } else {
                return supplyZero(String.valueOf(value), 2); 
@@ -589,7 +597,7 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        private static final String[][] WEEK_NAMES = {
+        static final String[][] WEEK_NAMES = {
             {"日曜日", "日"},
             {"月曜日", "月"},
             {"火曜日", "火"},
@@ -866,6 +874,12 @@ public abstract class DateTerm implements Term<Calendar> {
             }
         }
         
+        /**
+         * 日本語のロケールかチェックする
+         * @param formatLocale 書式上のロケール
+         * @param runtimeLocale 実行時のロケール
+         * @return
+         */
         private boolean isJapaneseLocale(final MSLocale formatLocale, final Locale runtimeLocale) {
             
             if(formatLocale == MSLocale.JAPANESE) {
