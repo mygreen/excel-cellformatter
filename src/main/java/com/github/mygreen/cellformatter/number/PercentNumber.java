@@ -14,8 +14,12 @@ import java.text.DecimalFormat;
  */
 public class PercentNumber extends DecimalNumber {
     
+    public PercentNumber(final double value, final int decimalScale, final int permilles) {
+        super(value, decimalScale, permilles);
+    }
+    
     public PercentNumber(final double value, final int decimalScale) {
-        super(value, decimalScale);
+        this(value, decimalScale, 0);
     }
     
     @Override
@@ -43,7 +47,13 @@ public class PercentNumber extends DecimalNumber {
         
         final DecimalFormat format = new DecimalFormat(sb.toString());
         format.setRoundingMode(RoundingMode.HALF_UP);
-        String str = format.format(Math.abs(getValue()));
+        
+        double num = Math.abs(getValue());
+        if(getPermilles() > 0) {
+            num /= Math.pow(1000, getPermilles());
+        }
+        
+        String str = format.format(num);
         
         // パーセントの除去
         str = str.substring(0, str.length()-1);

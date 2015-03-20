@@ -13,8 +13,8 @@ public abstract class NumberFactory {
      * @param scale
      * @return
      */
-    public static DecimalNumberFactory decimalNumber(int scale) {
-        return new DecimalNumberFactory(scale);
+    public static DecimalNumberFactory decimalNumber(int scale, boolean useSeparator, final int permilles) {
+        return new DecimalNumberFactory(scale, useSeparator, permilles);
     }
     
     /**
@@ -22,8 +22,8 @@ public abstract class NumberFactory {
      * @param scale
      * @return
      */
-    public static PercentNumberFactory percentNumber(int scale) {
-        return new PercentNumberFactory(scale);
+    public static PercentNumberFactory percentNumber(int scale, boolean useSeparator, final int permilles) {
+        return new PercentNumberFactory(scale, useSeparator, permilles);
     }
     
     /**
@@ -31,8 +31,8 @@ public abstract class NumberFactory {
      * @param scale
      * @return
      */
-    public static ExponentNumberFactory exponentNumber(int scale) {
-        return new ExponentNumberFactory(scale);
+    public static ExponentNumberFactory exponentNumber(int scale, boolean useSeparator) {
+        return new ExponentNumberFactory(scale, useSeparator);
     }
     
     /**
@@ -42,7 +42,8 @@ public abstract class NumberFactory {
      * @param wholeType
      * @return
      */
-    public static FractionNumberFactory fractionNumber(final int denominator, final boolean exactDenom, final boolean wholeType) {
+    public static FractionNumberFactory fractionNumber(final int denominator,
+            final boolean exactDenom, final boolean wholeType) {
         return new FractionNumberFactory(denominator, exactDenom, wholeType);
     }
     
@@ -57,13 +58,21 @@ public abstract class NumberFactory {
         
         private int scale;
         
-        public DecimalNumberFactory(final int scale) {
+        private boolean useSeparator;
+        
+        private int permilles;
+        
+        public DecimalNumberFactory(final int scale, final boolean useSeparator, final int permilles) {
             this.scale = scale;
+            this.useSeparator = useSeparator;
+            this.permilles = permilles;
         }
         
         @Override
         public FormattedNumber create(double value) {
-            return new DecimalNumber(value, scale);
+            FormattedNumber number = new DecimalNumber(value, scale, permilles);
+            number.setUseSeparator(useSeparator);
+            return number;
         }
         
     }
@@ -72,13 +81,18 @@ public abstract class NumberFactory {
         
         private int scale;
         
-        public ExponentNumberFactory(final int scale) {
+        private boolean useSeparator;
+        
+        public ExponentNumberFactory(final int scale, final boolean useSeparator) {
             this.scale = scale;
+            this.useSeparator = useSeparator;
         }
         
         @Override
         public FormattedNumber create(double value) {
-            return new ExponentNumber(value, scale);
+            FormattedNumber number = new ExponentNumber(value, scale);
+            number.setUseSeparator(useSeparator);
+            return number;
         }
         
     }
@@ -87,13 +101,21 @@ public abstract class NumberFactory {
         
         private int scale;
         
-        public PercentNumberFactory(final int scale) {
+        private boolean useSeparator;
+        
+        private int permilles;
+        
+        public PercentNumberFactory(final int scale, final boolean useSeparator, final int permilles) {
             this.scale = scale;
+            this.useSeparator = useSeparator;
+            this.permilles = permilles;
         }
         
         @Override
         public FormattedNumber create(double value) {
-            return new PercentNumber(value, scale);
+            FormattedNumber number = new PercentNumber(value, scale, permilles);
+            number.setUseSeparator(useSeparator);
+            return number;
         }
         
     }

@@ -34,11 +34,24 @@ public class DecimalNumber extends FormattedNumber {
      */
     protected String decimalPart;
     
-    public DecimalNumber(final double value, final int scale) {
+    /**
+     * 千分率（パーミル）の次数。
+     * ・0のとき、何もしない。
+     * ・1のとき、1000で割る。
+     * ・2のとき、1000^2で割る。
+     */
+    protected int permilles;
+    
+    public DecimalNumber(final double value, final int scale, final int permilles) {
         super(value);
         this.scale = scale > 0 ? scale : 0;
+        this.permilles = permilles > 0 ? permilles : 0;
         
         init();
+    }
+    
+    public DecimalNumber(final double value, final int scale) {
+        this(value, scale, 0);
     }
     
     /**
@@ -65,7 +78,13 @@ public class DecimalNumber extends FormattedNumber {
         
         final DecimalFormat format = new DecimalFormat(sb.toString());
         format.setRoundingMode(RoundingMode.HALF_UP);
-        String str = format.format(Math.abs(getValue()));
+        
+        double num = Math.abs(getValue());
+        if(getPermilles() > 0) {
+            num /= Math.pow(1000, getPermilles());
+        }
+        
+        String str = format.format(num);
         
         // 数値を小数部と整数部に分割する。
         setupIntegerAndDecimalPart(str);
@@ -123,7 +142,14 @@ public class DecimalNumber extends FormattedNumber {
             return "";
         }
         
-        return String.valueOf(integerPart.charAt(length - digit));
+        String num = String.valueOf(integerPart.charAt(length - digit));
+        if(isUseSeparator()) {
+            if(digit >= 4 && (digit-1) % 3 == 0) {
+                num += ",";
+            }
+        }
+        
+        return num;
         
     }
     
@@ -139,7 +165,25 @@ public class DecimalNumber extends FormattedNumber {
             return "";
         }
         
-        return integerPart.substring(0, (length - digit + 1));
+        String num = integerPart.substring(0, (length - digit + 1));
+        if(isUseSeparator() && digit >= 4) {
+            // 区切り文字を入れるために分割する。
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i < num.length(); i++) {
+                char c = num.charAt(i);
+                sb.append(c);
+                
+                // 現在の処理中の桁数
+                int itemDigit = length -i;
+                if((itemDigit >= 3) && (itemDigit -1) % 3 == 0) {
+                    sb.append(",");
+                }
+            }
+            
+            num = sb.toString();
+        }
+        
+        return num;
         
     }
     
@@ -167,6 +211,8 @@ public class DecimalNumber extends FormattedNumber {
         
     }
     
+    
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -184,6 +230,14 @@ public class DecimalNumber extends FormattedNumber {
         }
         
         return sb.toString();
+    }
+    
+    /**
+     * 千分率（パーミル）の次数を取得する
+     * @return
+     */
+    public int getPermilles() {
+        return permilles;
     }
     
 }

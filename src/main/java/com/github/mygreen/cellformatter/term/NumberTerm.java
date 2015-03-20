@@ -37,6 +37,10 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         return new ExponentTerm(token);
     }
     
+    public static SeparatorTerm separator(final Token.Symbol token) {
+        return new SeparatorTerm(token);
+    }
+    
     public static SymbolTerm symbol(final Token.Symbol token) {
         return new SymbolTerm(token);
     }
@@ -84,7 +88,8 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         /** 書式の部分の最後かどうか */
         protected boolean lastPart;
         
-        //TODO: 数値の区切り",,"の場合、自動的に区切るようにする。
+        /** 桁の区切り文字を出力するかどうか */
+        protected boolean outSepearator;
         
         public FormattedTerm index(final int index) {
             this.index = index;
@@ -176,6 +181,14 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         
         public void setLastPart(boolean lastPart) {
             this.lastPart = lastPart;
+        }
+        
+        public boolean isOutSepearator() {
+            return outSepearator;
+        }
+        
+        public void setOutSepearator(boolean outSepearator) {
+            this.outSepearator = outSepearator;
         }
         
     }
@@ -284,6 +297,29 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         
         public String getExponentSymbol() {
             return exponentSymbol;
+        }
+        
+    }
+    
+    /**
+     * 桁区切り文字の処理
+     * ・区切り文字の挿入は、数値の出力時の行う。
+     */
+    public static class SeparatorTerm extends NumberTerm {
+        
+        private final Token.Symbol token;
+        
+        public SeparatorTerm(final Token.Symbol token) {
+            this.token = token;
+        }
+        
+        @Override
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
+            return "";
+        }
+        
+        public Token.Symbol getToken() {
+            return token;
         }
         
     }

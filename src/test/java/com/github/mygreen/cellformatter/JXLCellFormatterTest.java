@@ -165,7 +165,6 @@ public class JXLCellFormatterTest {
             settings.setLocale(Locale.JAPANESE);
             
             final Workbook workbook = Workbook.getWorkbook(in, settings);
-            
             final int sheetNum = workbook.getNumberOfSheets();
             for(int i=0; i < sheetNum; i++) {
                 

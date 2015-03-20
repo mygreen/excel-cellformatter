@@ -112,6 +112,43 @@ public class POICellFormatterTest {
     }
     
     @Test
+    public void testFormat2010_custom() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormat2010_custom_test() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    
+    @Test
     public void testFormatExcel2007() {
         
         File file = new File("src/test/data/cell_format_2007.xlsx");

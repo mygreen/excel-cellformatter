@@ -20,11 +20,6 @@ public abstract class Token {
     public static final Symbol SYMBOL_COLON = new Symbol(",");
     
     /**
-     * 数値の桁数の区切り文字',,'の記号
-     */
-    public static final Symbol SYMBOL_DOUBLE_COLON = new Symbol(",,");
-    
-    /**
      * 数値の百分率'%'の記号
      */
     public static final Symbol SYMBOL_PERCENT = new Symbol("%");

@@ -32,7 +32,7 @@ public class FormatterResolver {
     public FormatterResolver() {
         clearFormat();
         
-        registerDefaultFormat();
+//        registerDefaultFormat();
     }
     
     /**

@@ -25,7 +25,7 @@ public class CustomFormatter extends CellFormatter {
         final ConditionNumberFormatter conditionFormatter = new ConditionNumberFormatter("General");
         conditionFormatter.addTerm(NumberTerm.general());
         conditionFormatter.setOperator(ConditionOperator.ALL);
-        conditionFormatter.setNumberFactory(NumberFactory.decimalNumber(0));
+        conditionFormatter.setNumberFactory(NumberFactory.decimalNumber(0, false, 0));
         
         final CustomFormatter formatter = new CustomFormatter("");
         formatter.addConditionFormatter(conditionFormatter);

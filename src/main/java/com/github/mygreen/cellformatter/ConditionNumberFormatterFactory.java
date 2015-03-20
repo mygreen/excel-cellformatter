@@ -37,7 +37,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
     };
     
     public static final String[] SYMBOL_CHARS = {
-        ".", ",", ",,",
+        ".", ",",
         "%", "/",
     };
     
@@ -159,7 +159,12 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                         }
                         
                     } else if(item instanceof Token.Symbol) {
-                        formatter.addTerm(NumberTerm.symbol(item.asSymbol()));
+                        if(item == Token.SYMBOL_COLON) {
+                            formatter.addTerm(NumberTerm.separator(item.asSymbol()));
+                            
+                        } else {
+                            formatter.addTerm(NumberTerm.symbol(item.asSymbol()));
+                        }
                         
                     } else if(item instanceof Token.Digits) {
                         formatter.addTerm(NumberTerm.digits(item.asDigits()));
@@ -244,9 +249,6 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                         } else if(matchChars.equals(",")) {
                             list.add(Token.SYMBOL_COLON);
                             
-                        } else if(matchChars.equals(",,")) {
-                            list.add(Token.SYMBOL_DOUBLE_COLON);
-                            
                         } else if(matchChars.equals("%")) {
                             list.add(Token.SYMBOL_PERCENT);
                             
@@ -295,7 +297,6 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
     }
     
     private void setupFormatAsFraction(final ConditionNumberFormatter formatter) {
-        //todo;
         
         final int termSize = formatter.getTerms().size();
         
@@ -493,16 +494,63 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
             
         }
         
+        // 桁区切りの判定処理
+        boolean useSeparator = false;
+        boolean inIntegerPater = false;
+        for(Term<FormattedNumber> term : formatter.getTerms()) {
+            if(term instanceof NumberTerm.FormattedTerm) {
+                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
+                // 整数の書式でかつ途中の書式の場合
+                if(formattedTerm.getPartType().equals(PartType.Integer)) {
+                    if(formattedTerm.isLastPart() && formattedTerm.getIndex() > 1) {
+                        inIntegerPater = true;
+                    } else if(formattedTerm.getIndex() <= 1) {
+                        inIntegerPater = false;
+                    }
+                }
+            }
+            
+            if(term instanceof NumberTerm.SeparatorTerm) {
+                if(inIntegerPater) {
+                    useSeparator = true;
+                }
+                
+            }
+        }
+        
+        // 最後の書式の直後の区切り文字の判定
+        int indexLastFormatterdTerm = -1;
+        for(int i=0; i < termSize; i++) {
+            final Term<FormattedNumber> term = formatter.getTerms().get(termSize-i-1);
+            if(term instanceof NumberTerm.FormattedTerm) {
+                indexLastFormatterdTerm = termSize-i-1;
+                break;
+            }
+        }
+        
+        int countLastColon = 0;
+        if(indexLastFormatterdTerm >= 0 && indexLastFormatterdTerm+1 < termSize) {
+            // 最後の書式の直後の連続するカンマの個数をカウントする
+            for(int i=indexLastFormatterdTerm+1; i < termSize; i++) {
+                final Term<FormattedNumber> term = formatter.getTerms().get(i);
+                if(term instanceof NumberTerm.SeparatorTerm) {
+                    countLastColon++;
+                } else {
+                    break;
+                }
+            }
+        }
+        
         if(countExponentTerm > 0) {
             // 指数の場合
-            formatter.setNumberFactory(NumberFactory.exponentNumber(countDecimalTerm));
+            formatter.setNumberFactory(NumberFactory.exponentNumber(countDecimalTerm, useSeparator));
             
         } else if(foundPercentTerm) {
             // 百分率の場合
-            formatter.setNumberFactory(NumberFactory.percentNumber(countDecimalTerm));
+            formatter.setNumberFactory(NumberFactory.percentNumber(countDecimalTerm, useSeparator, countLastColon));
             
         } else {
-            formatter.setNumberFactory(NumberFactory.decimalNumber(countDecimalTerm));
+            formatter.setNumberFactory(NumberFactory.decimalNumber(countDecimalTerm, useSeparator, countLastColon));
             
         }
         

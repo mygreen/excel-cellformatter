@@ -16,6 +16,11 @@ public abstract class FormattedNumber {
      */
     protected final double value;
     
+    /**
+     * 桁の区切を利用するかどうか。
+     */
+    protected boolean useSeparator;
+    
     public FormattedNumber(final double value) {
         this.value = value;
     }
@@ -66,5 +71,13 @@ public abstract class FormattedNumber {
     
     public FractionNumber asFraction() {
         return (FractionNumber) this;
+    }
+    
+    public boolean isUseSeparator() {
+        return useSeparator;
+    }
+    
+    public void setUseSeparator(boolean useSeparator) {
+        this.useSeparator = useSeparator;
     }
 }
