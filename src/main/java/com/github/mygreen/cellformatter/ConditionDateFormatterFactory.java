@@ -54,6 +54,11 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
     private static final List<String> SORTED_DATE_CHARS = Utils.reverse(DATE_TERM_CHARS);
     
     /**
+     * 経過時間の時刻のパターン
+     */
+    private static final Pattern PATTERN_ELAPSED_TIME = Pattern.compile("\\[([h]+|[m]+|[s]+)\\]", Pattern.CASE_INSENSITIVE);
+    
+    /**
      * 日時の書式かどうか判定する。
      * @param store
      * @return
@@ -64,13 +69,26 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
             return false;
         }
         
-        return store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS);
+        if(store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS)) {
+            return true;
+        }
+        
+        // [h][m][s]の形式のチェック
+        for(Token token : store.getTokens()) {
+            if(!(token instanceof Token.Condition)) {
+                continue;
+            }
+            
+            final Token.Condition condition = token.asCondition();
+            final String value = condition.getValue();
+            if(PATTERN_ELAPSED_TIME.matcher(value).matches()) {
+                return true;
+            }
+            
+        }
+        
+        return false;
     }
-    
-    /**
-     * 特別な意味の時刻のパターン
-     */
-    private static final Pattern PATTERN_CONDITION_TIME = Pattern.compile("\\[([h]+|[m]+|[s]+)\\]");
     
     /**
      * {@link ConditionDateFormatter}インスタンスを作成する。
@@ -92,16 +110,16 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                 final String condition = conditionToken.getCondition();
                 formatter.addCondition(condition);
                 
-                if(PATTERN_CONDITION_TIME.matcher(token.getValue()).matches()) {
-                    // [h][m][s]などの特別な時刻
+                if(PATTERN_ELAPSED_TIME.matcher(token.getValue()).matches()) {
+                    // [h][m][s]などの経過時刻のパターン
                     if(Utils.startsWithIgnoreCase(condition, "h")) {
-                        formatter.addTerm(DateTerm.spHour(condition));
+                        formatter.addTerm(DateTerm.elapsedHour(condition));
                         
                     } else if(Utils.startsWithIgnoreCase(condition, "m")) {
-                        formatter.addTerm(DateTerm.spMinute(condition));
+                        formatter.addTerm(DateTerm.elapsedMinute(condition));
                         
                     } else if(Utils.startsWithIgnoreCase(condition, "s")) {
-                        formatter.addTerm(DateTerm.spSecond(condition));
+                        formatter.addTerm(DateTerm.elapsedSecond(condition));
                         
                     }
                 } else if(isConditionOperator(conditionToken)) {
@@ -110,8 +128,8 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                 } else if(isConditionLocale(conditionToken)) {
                     setupConditionLocale(formatter, conditionToken);
                     
-                } else if(isConditionDb(conditionToken)) {
-                    setupConditionDBNum(formatter, conditionToken);
+                } else if(isConditionDbNum(conditionToken)) {
+                    setupConditionDbNum(formatter, conditionToken);
                     
                 } else if(isConditionColor(conditionToken)) {
                     setupConditionColor(formatter, conditionToken);
@@ -310,7 +328,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
             }
             
             if(beforeTerm != null) {
-                if(beforeTerm instanceof DateTerm.HourTerm || beforeTerm instanceof DateTerm.SpHourTerm) {
+                if(beforeTerm instanceof DateTerm.HourTerm || beforeTerm instanceof DateTerm.ElapsedHourTerm) {
                     return true;
                 }
             }
@@ -329,7 +347,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
             }
             
             if(afterTerm != null) {
-                if(afterTerm instanceof DateTerm.SecondTerm || afterTerm instanceof DateTerm.SpSecondTerm) {
+                if(afterTerm instanceof DateTerm.SecondTerm || afterTerm instanceof DateTerm.ElapsedSecondTerm) {
                     return true;
                 }
             }

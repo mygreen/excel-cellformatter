@@ -131,6 +131,10 @@ public class CustomFormatter extends CellFormatter {
         return false;
     }
     
+    /**
+     * テキストのフォーマットを取得する。
+     * @return
+     */
     public ConditionTextFormatter getTextFormatter() {
         return textFormatter;
     }

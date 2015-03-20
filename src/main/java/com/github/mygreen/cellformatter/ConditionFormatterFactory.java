@@ -3,6 +3,9 @@ package com.github.mygreen.cellformatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.mygreen.cellformatter.callback.DaijiCallback;
 import com.github.mygreen.cellformatter.callback.KansujiCallback;
 import com.github.mygreen.cellformatter.callback.Callback;
@@ -22,6 +25,8 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
  * @param <F> 組み立てるフォーマッタクラス
  */
 public abstract class ConditionFormatterFactory<F> {
+    
+    protected static Logger logger = LoggerFactory.getLogger(ConditionFormatterFactory.class);
     
     /**
      * 条件付き書式を組み立てる
@@ -48,7 +53,7 @@ public abstract class ConditionFormatterFactory<F> {
     /**
      * インデックス形式の色の条件式のパターン
      */
-    private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[色|Color([0-9]+)\\]");
+    private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[(色|Color)([0-9]+)\\]");
     
     /**
      * 演算子の条件式かどうか。
@@ -73,7 +78,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @param token
      *
      */
-    protected boolean isConditionDb(final Token.Condition token) {
+    protected boolean isConditionDbNum(final Token.Condition token) {
         return PATTERN_CONDITION_DBNUM.matcher(token.getValue()).matches();
     }
     
@@ -128,15 +133,13 @@ public abstract class ConditionFormatterFactory<F> {
                 conditionOperator = new ConditionOperator.LessEqual(condition);
                 break;
             default:
+                logger.warn("unknown operator : {}", operator);
                 conditionOperator = ConditionOperator.ALL;
                 break;
             
         }
         
-        if(conditionOperator != null) {
-            formatter.setOperator(conditionOperator);
-        }
-        
+        formatter.setOperator(conditionOperator);
         return conditionOperator;
     }
     
@@ -176,7 +179,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @return
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
-    protected Callback<?> setupConditionDBNum(final ConditionFormatter<?> formatter, final Token.Condition token) {
+    protected Callback<?> setupConditionDbNum(final ConditionFormatter<?> formatter, final Token.Condition token) {
         
         final Matcher matcher = PATTERN_CONDITION_DBNUM.matcher(token.getValue());
         if(!matcher.matches()) {
@@ -226,7 +229,8 @@ public abstract class ConditionFormatterFactory<F> {
             throw new IllegalArgumentException("not match condition:" + token.getValue());
         }
         
-        final String number = matcher.group(1);
+        final String prefix = matcher.group(1);
+        final String number = matcher.group(2);
         final short index = Short.valueOf(number);
         color = MSColor.valueOfIndexColor(index);
         

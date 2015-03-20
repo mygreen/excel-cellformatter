@@ -37,10 +37,6 @@ public abstract class ConditionOperator {
      */
     public static ConditionOperator ZERO = new Equal(0.0);
     
-    public static ConditionOperator equal(double condition) {
-        return new Equal(condition);
-    }
-    
     /**
      * 条件に一致するかどうか。
      * @param value

@@ -1,10 +1,12 @@
 package com.github.mygreen.cellformatter.lang;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 
@@ -244,4 +246,31 @@ public class Utils {
         return time;
         
     }
+    
+    private static final long date19000301 = Timestamp.valueOf("1900-03-01 00:00:00.000").getTime();
+    
+    private static final long date1900101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+    
+    /**
+     * 基準日を取得する。
+     * ・1900/2/28までは、-1日。1900/3/1以降は、-2日。
+     * @param date
+     * @return
+     */
+    public static long getExcelZeroDate(final Date date) {
+        
+        if(date19000301 <= date.getTime()) {
+            // 1900-03-1以降
+            return date1900101 - 2*(1000*60*60*24);
+        } else {
+            return date1900101 - 1*(1000*60*60*24);
+        }
+        
+    }
+    
+    public static String formatDate(final Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
+    
 }

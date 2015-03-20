@@ -30,14 +30,6 @@ public class TokenStore {
     }
     
     /**
-     * トークンを全て追加する。
-     * @param tokens
-     */
-    public void addAll(final List<Token> tokens) {
-        getTokens().addAll(tokens);
-    }
-    
-    /**
      * トークンを取得する。
      * @return
      */
@@ -180,7 +172,7 @@ public class TokenStore {
         final int size = tokens.size();
         for(int i=0; i < size; i++) {
             final Token token = tokens.get(i);
-            sb.append(String.format("[i]%s(%s)",
+            sb.append(String.format("[%d]%s(%s)",
                     i,
                     token.getClass().getSimpleName(),
                     token.getValue()));

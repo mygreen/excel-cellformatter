@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.mygreen.cellformatter.lang.EraPeriod;
 import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.lang.Utils;
@@ -15,6 +18,8 @@ import com.github.mygreen.cellformatter.lang.Utils;
  *
  */
 public abstract class DateTerm implements Term<Calendar> {
+    
+    protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);
     
     /**
      * 指定した桁分、ゼロサプライ（ゼロ埋め）する。
@@ -46,25 +51,25 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * [h] - 24時を超える時間の処理
+     * [h] - 24時を超える経過時間の処理
      */
-    public static DateTerm spHour(final String format) {
-        return new SpHourTerm(format);
+    public static DateTerm elapsedHour(final String format) {
+        return new ElapsedHourTerm(format);
     }
     
     
     /**
-     * [m] - 60分を超える時間の処理
+     * [m] - 60分を超える経過時間の処理
      */
-    public static DateTerm spMinute(final String format) {
-        return new SpMinuteTerm(format);
+    public static DateTerm elapsedMinute(final String format) {
+        return new ElapsedMinuteTerm(format);
     }
     
     /**
-     * [s] - 60秒を超える時間の処理
+     * [s] - 60秒を超える経過時間の処理
      */
-    public static DateTerm spSecond(final String format) {
-        return new SpSecondTerm(format);
+    public static DateTerm elapsedSecond(final String format) {
+        return new ElapsedSecondTerm(format);
     }
     
     /**
@@ -161,27 +166,29 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * [h] - 24時を超える時間の処理
+     * [h] - 24時を超える経過時間の処理
      */
-    public static class SpHourTerm extends DateTerm {
+    public static class ElapsedHourTerm extends DateTerm {
         
         /** ミリ秒を時間に直すための基底 */
         private static final long BASE = 1000*60*60;
         
-        /** Excelのゼロ秒時の基準となる時間 （ミリ秒）*/
-        private static final long ZERO_TIME = Utils.getExcelZeroDate();
-        
         private final String format;
         
-        public SpHourTerm(final String format) {
+        public ElapsedHourTerm(final String format) {
             this.format = format;
         }
         
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
+            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            if(logger.isInfoEnabled()) {
+                logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+            }
+            
             final int formatLength = format.length();
-            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
+            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -192,27 +199,29 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * [m] - 60分を超える時間の処理
+     * [m] - 60分を超える経過時間の処理
      */
-    public static class SpMinuteTerm extends DateTerm {
+    public static class ElapsedMinuteTerm extends DateTerm {
         
         /** ミリ秒を分に直すための基底 */
         private static final long BASE = 1000*60;
         
-        /** Excelのゼロ秒時の基準となる時間（ミリ秒） */
-        private static final long ZERO_TIME = Utils.getExcelZeroDate();
-        
         private final String format;
         
-        public SpMinuteTerm(final String format) {
+        public ElapsedMinuteTerm(final String format) {
             this.format = format;
         } 
         
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
+            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            if(logger.isInfoEnabled()) {
+                logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+            }
+            
             final int formatLength = format.length();
-            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
+            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -223,27 +232,29 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * [s] - 60秒を超える時間の処理
+     * [s] - 60秒を超える経過時間の処理
      */
-    public static class SpSecondTerm extends DateTerm {
+    public static class ElapsedSecondTerm extends DateTerm {
         
         /** ミリ秒を秒に直すための基底 */
         private static final long BASE = 1000;
         
-        /** Excelのゼロ秒時の基準となる時間 (ミリ秒)*/
-        private static final long ZERO_TIME = Utils.getExcelZeroDate();
-        
         private final String format;
         
-        public SpSecondTerm(final String format) {
+        public ElapsedSecondTerm(final String format) {
             this.format = format;
         } 
         
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
+            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            if(logger.isInfoEnabled()) {
+                logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+            }
+            
             final int formatLength = format.length();
-            final long time = (long) ((cal.getTime().getTime() - ZERO_TIME) / BASE);
+            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             return supplyZero(String.valueOf(time), formatLength);
         }
         

@@ -55,8 +55,8 @@ public class ConditionTextFormatterFactory extends ConditionFormatterFactory<Con
                 } else if(isConditionLocale(conditionToken)) {
                     setupConditionLocale(formatter, conditionToken);
                     
-                } else if(isConditionDb(conditionToken)) {
-                    setupConditionDBNum(formatter, conditionToken);
+                } else if(isConditionDbNum(conditionToken)) {
+                    setupConditionDbNum(formatter, conditionToken);
                     
                 } else if(isConditionColor(conditionToken)) {
                     setupConditionColor(formatter, conditionToken);

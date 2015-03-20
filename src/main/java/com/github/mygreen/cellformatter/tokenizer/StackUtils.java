@@ -36,6 +36,7 @@ public class StackUtils {
      */
     public static boolean equalsAnyBottomElement(final LinkedList<String> stack, final String[] strs) {
         
+        ArgUtils.notNull(stack, "stack");
         ArgUtils.notEmpty(strs, "strs");
         
         if(stack.isEmpty()) {

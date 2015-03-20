@@ -107,8 +107,8 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                 } else if(isConditionLocale(conditionToken)) {
                     setupConditionLocale(formatter, conditionToken);
                     
-                } else if(isConditionDb(conditionToken)) {
-                    setupConditionDBNum(formatter, conditionToken);
+                } else if(isConditionDbNum(conditionToken)) {
+                    setupConditionDbNum(formatter, conditionToken);
                     
                 } else if(isConditionColor(conditionToken)) {
                     setupConditionColor(formatter, conditionToken);

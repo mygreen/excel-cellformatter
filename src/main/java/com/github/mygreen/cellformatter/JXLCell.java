@@ -206,7 +206,7 @@ public class JXLCell implements CommonCell {
             
         } else {
             final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-            cal.setTimeInMillis(0);;
+            cal.setTimeInMillis(0);
             return cal;
         }
     }
