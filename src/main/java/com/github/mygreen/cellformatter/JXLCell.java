@@ -204,7 +204,6 @@ public class JXLCell implements CommonCell {
     @Override
     public Date getDateCellValue() {
         
-        // JExcel APIの場合は、TimeZoneを考慮していないため、TimeZoneはGMT+0にする。
         if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
             Date date = ((DateCell) cell).getDate();
             return adjustDate(date);
@@ -215,9 +214,7 @@ public class JXLCell implements CommonCell {
             return adjustDate(date);
             
         } else {
-            final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-            cal.setTimeInMillis(0);
-            return new Date(0);
+            return new Date(Utils.getExcelZeroDate());
         }
     }
     
