@@ -182,7 +182,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -215,7 +215,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -248,7 +248,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getExcelZeroDate(cal.getTime());
+            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
