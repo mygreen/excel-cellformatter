@@ -79,6 +79,42 @@ public class JXLCellFormatterTest {
     }
     
     @Test
+    public void testFormatExcel2010_custom_compatible() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatExcel2010_custom_compatible_test() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
     public void testFormatExcel2000() {
         
         File file = new File("src/test/data/cell_format_2000.xls");
@@ -162,7 +198,7 @@ public class JXLCellFormatterTest {
             
             // 文字コードを「ISO8859_1」にしないと文字化けする
             settings.setEncoding("ISO8859_1");
-            settings.setLocale(Locale.JAPANESE);
+//            settings.setLocale(Locale.JAPANESE);
             
             final Workbook workbook = Workbook.getWorkbook(in, settings);
             final int sheetNum = workbook.getNumberOfSheets();

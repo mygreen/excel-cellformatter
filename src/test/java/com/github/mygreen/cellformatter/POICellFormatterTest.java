@@ -112,7 +112,7 @@ public class POICellFormatterTest {
     }
     
     @Test
-    public void testFormat2010_custom() {
+    public void testFormatExcel2010_custom() {
         
         File file = new File("src/test/data/cell_format_2010_custom.xlsx");
         POICellFormatter cellFormatter = new POICellFormatter();
@@ -130,9 +130,45 @@ public class POICellFormatterTest {
     }
     
     @Test
-    public void testFormat2010_custom_test() {
+    public void testFormatExcel2010_custom_test() {
         
         File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatExcel2010_custom_compatible() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatExcel2010_custom_compatible_test() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
         POICellFormatter cellFormatter = new POICellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
@@ -344,10 +380,17 @@ public class POICellFormatterTest {
             CommonCell commonTestCase = new POICell(testCaseCell);
             final short formatIndex = commonTestCase.getFormatIndex();
             final String formatPattern = commonTestCase.getFormatPattern();
-            final boolean poiDate = testCaseCell.getCellType() == Cell.CELL_TYPE_NUMERIC && DateUtil.isCellDateFormatted(testCaseCell);
+//            final boolean poiDate = testCaseCell.getCellType() == Cell.CELL_TYPE_NUMERIC && DateUtil.isCellDateFormatted(testCaseCell);
+            CellFormatter formatter = cellFormatter.getFormatterResolver().getFormatter(commonTestCase.getFormatPattern());
+            boolean isDateFormatter = false;
+            boolean isNumberFormatter = false;
+            if(formatter instanceof CustomFormatter) {
+                isDateFormatter = ((CustomFormatter) formatter).isDateFormatter();
+                isNumberFormatter = ((CustomFormatter) formatter).isNumberFormatter();
+            }
             
-            System.out.printf("[%3s] [%s] [%s] : actual=\"%s\" : exprected=\"%s\" \t%d\t%s\t%b\n",
-                    no, description, test, testCase, testResult, formatIndex, formatPattern, poiDate);
+            System.out.printf("[%3s] [%s] [%s] : actual=\"%s\" : exprected=\"%s\" \t%d\t%s\tdateFormmat=%b\tnumberFormat=%b\n",
+                    no, description, test, testCase, testResult, formatIndex, formatPattern, isDateFormatter, isNumberFormatter);
             
             assertThat(String.format("[%s] [%s]", no, description), testCase, is(testResult));
         }
