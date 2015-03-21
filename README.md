@@ -31,12 +31,17 @@ final Workbook workbook = Workbook.getWorkbook(in, settings);
 Cell cell = /* セルの値の取得 */;
 
 JXLCellFormatter cellFormatter = new JXLCellFormatter();
+
 String contents = cellForrmatter.format(cell);
 
 // ロケールに依存する書式の場合
 contents = cellForrmatter.format(cell, Locale.US);
 
+// 1904年始まりのシートの場合
+contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(sheet));
+
 ```
 
-### JExcelAPIの場合で使用する注意事項
+### JExcelAPIを使用する際の注意事項
 - Excelファイルの読み込み時に、文字コードを「ISO8859_1」にする必要がある。指定しない場合は、書式のパターンが文字化けする。Windows-31jでも文字化けする。
+- 1904年始まりのファイルの設定の場合、メソッド「JXLUtils.isDateStart1904(...)」で調べる。
