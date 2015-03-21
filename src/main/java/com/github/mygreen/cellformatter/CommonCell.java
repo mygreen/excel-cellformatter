@@ -4,7 +4,8 @@ import java.util.Date;
 
 
 /**
- * 共通のセルのインタフェース
+ * 共通のセルのインタフェース。
+ * POI、JExcelAPIなどのライブラリ管の違いを吸収するためのもの。
  * @author T.TSUCHIE
  *
  */
@@ -25,8 +26,9 @@ public interface CommonCell {
     String getFormatPattern();
     
     /**
-     * 文字列型のセルからどうか。
-     * @return
+     * 文字列型のセルかどうか。
+     * 非数値型の文字列、Boolean型の場合にtrueを返す。
+     * @return 
      */
     boolean isText();
     

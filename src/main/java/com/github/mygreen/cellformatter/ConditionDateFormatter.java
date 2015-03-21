@@ -28,7 +28,7 @@ public class ConditionDateFormatter extends ConditionFormatter<Date> {
     /**
      * Excelでの基準日である「1900年1月0日」の値。
      */
-    private static final long ZERO_TIME = Utils.getExcelZeroDate();
+    private static final long ZERO_TIME = Utils.getExcelZeroDateTime();
     
     /**
      * 日時の各項

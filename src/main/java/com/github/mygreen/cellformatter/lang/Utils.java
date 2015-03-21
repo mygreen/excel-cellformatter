@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- *
+ * ライブラリのユーティリティクラス。
  * @author T.TSUCHIE
  *
  */
@@ -234,41 +234,26 @@ public class Utils {
     }
     
     /**
-     * Excelの日付の開始日。
+     * '1900-01-01 00:00:00.000'の時間（単位はミリ秒）
+     */
+    public static final long TIME_19000101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
+    
+    /**
+     * Excelの日付の開始日の時間の取得（単位はミリ秒）
      * ・数値が0の時、「1900/1/0 0:00:00」 。この値は、1900年1月1日から、1日（24時間）を引いた値。
      *  
      * @return
      */
-    public static long getExcelZeroDate() {
-        
-        long time = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
-        time -= 1*TimeUnit.DAYS.toMillis(1);
-        
-        return time;
-        
+    public static long getExcelZeroDateTime() {
+        return TIME_19000101 - 1*TimeUnit.DAYS.toMillis(1);
     }
     
-    private static final long date19000301 = Timestamp.valueOf("1900-03-01 00:00:00.000").getTime();
-    
-    private static final long date1900101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
-    
     /**
-     * 経過時間を計算するときの基準日を取得する。
-     * ・1900/2/28までは、-1日。1900/3/1以降は、-2日。
+     * 日時オブジェクトを、文字列としてフォーマットする。
+     * 書式は、「yyyy-MM-dd HH:mm:ss.SSS」
      * @param date
      * @return
      */
-    public static long getElapsedZeroTime(final Date date) {
-        
-        if(date19000301 <= date.getTime()) {
-            // 1900-03-1以降
-            return date1900101 - TimeUnit.DAYS.toMillis(2);
-        } else {
-            return date1900101 - TimeUnit.DAYS.toMillis(1);
-        }
-        
-    }
-    
     public static String formatDate(final Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         return format.format(date);

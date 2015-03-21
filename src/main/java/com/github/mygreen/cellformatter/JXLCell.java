@@ -213,7 +213,7 @@ public class JXLCell implements CommonCell {
             return adjustDate(date);
             
         } else {
-            return new Date(Utils.getExcelZeroDate());
+            return new Date(Utils.getExcelZeroDateTime());
         }
     }
     
@@ -230,27 +230,14 @@ public class JXLCell implements CommonCell {
         return adjustDate;
     }
     
-    // The number of days between 1 Jan 1900 and 1 March 1900. Excel thinks
-    // the day before this was 29th Feb 1900, but it was 28th Feb 1900.
-    // I guess the programmers thought nobody would notice that they
-    // couldn't be bothered to program this dating anomaly properly
-    private static final int nonLeapDay = 61;
-    
-    // The number of days between 01 Jan 1900 and 01 Jan 1970 - this gives
-    // the UTC offset
-    private static final int utcOffsetDays = 25569;
-
-    // The number of days between 01 Jan 1904 and 01 Jan 1970 - this gives
-    // the UTC offset using the 1904 date system
-    private static final int utcOffsetDays1904 = 24107;
-    
-    // The number of milliseconds in  a day
-    private static final long secondsInADay = 24 * 60 * 60;
-    private static final long msInASecond = 1000;
-//    private static final long msInADay = secondsInADay * msInASecond;
-    
-    // jxl.read.biff.DateRecordを参照
-    private Date convertJavaDate(final double value, final boolean date1904 ) {
+    /**
+     * 数値を日時に変換する処理。
+     * <p>JExcelAPIの「jxl.read.biff.DateRecord」を参照。
+     * @param value
+     * @param date1904 Excelの基準日が1904年かどうか
+     * @return
+     */
+    private Date convertJavaDate(final double value, final boolean date1904) {
         
         double numValue = value;
         boolean time;
@@ -274,5 +261,12 @@ public class JXLCell implements CommonCell {
         
     }
     
+    // convertJavaDate内で使用する定数。
+    private static final int nonLeapDay = 61;
+    private static final int utcOffsetDays = 25569;
+    private static final int utcOffsetDays1904 = 24107;
+    private static final long secondsInADay = 24 * 60 * 60;
+    private static final long msInASecond = 1000;
+
     
 }

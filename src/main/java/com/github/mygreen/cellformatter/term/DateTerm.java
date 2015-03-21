@@ -1,8 +1,10 @@
 package com.github.mygreen.cellformatter.term;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,30 @@ public abstract class DateTerm implements Term<Calendar> {
         return sb.toString();
         
     }
+    
+    /**
+     * 1900-03-01の時間（単位はミリ秒）
+     */
+    private static final long TIME_19000301 = Timestamp.valueOf("1900-03-01 00:00:00.000").getTime();
+    
+    /**
+     * 経過時間を計算するときの基準日を取得する。
+     * ・1900/2/28までは、-1日。1900/3/1以降は、-2日。
+     * @param date
+     * @return
+     */
+    private static long getElapsedZeroTime(final Date date) {
+        
+        if(TIME_19000301 <= date.getTime()) {
+            // 1900-03-01以降
+            return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(2);
+        } else {
+            return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(1);
+        }
+        
+    }
+    
+    
     
     /**
      * [h] - 24時を超える経過時間の処理
@@ -182,7 +208,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -215,7 +241,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -248,7 +274,7 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            final long zeroTime = Utils.getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime());
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
