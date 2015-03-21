@@ -6,8 +6,6 @@ import java.text.DecimalFormat;
 
 /**
  * 指数表現の数値。
- * @since 0.4
- * @version 0.4
  * @author T.TSUCHIE
  *
  */

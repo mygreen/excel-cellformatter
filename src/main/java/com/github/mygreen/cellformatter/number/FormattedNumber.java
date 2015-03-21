@@ -4,8 +4,6 @@ package com.github.mygreen.cellformatter.number;
 
 /**
  * 書式を表現するための数値。
- * @version 0.4
- * @since 0.4
  * @author T.TSUCHIE
  *
  */

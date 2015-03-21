@@ -8,8 +8,6 @@ import java.text.DecimalFormat;
  * 小数表現を含む数値を表現するクラス。
  * <p>{@link ConditionNumberFormatter}でフォーマットする際に利用する。
  * 
- * @version 0.4
- * @since 0.4
  * @author T.TSUCHIE
  *
  */

@@ -4,8 +4,6 @@ package com.github.mygreen.cellformatter.number;
 /**
  * 分数を表現するクラス。
  * <p>POIのSimpleFraction、Commons-MathのFractionを参照。
- * @version 0.4
- * @since 0.4
  * @author T.TSUCHIE
  *
  */

@@ -10,7 +10,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * <p>色はパレットが指定可能。
  * <p>Excelの色パレット一覧：<a href="http://dmcritchie.mvps.org/excel/colors.htm">Color Palette and the 56 Excel ColorIndex Colors</a>
  * 
- * @since 0.4
  * @author T.TSUCHIE
  *
  */

@@ -3,8 +3,6 @@ package com.github.mygreen.cellformatter.number;
 
 /**
  * 数値の部分を表現するクラス。
- * @version 0.4
- * @since 0.4
  * @author T.TSUCHIE
  *
  */

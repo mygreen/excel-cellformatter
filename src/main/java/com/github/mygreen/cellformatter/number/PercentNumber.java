@@ -7,8 +7,6 @@ import java.text.DecimalFormat;
 /**
  * 百分率の数値を表現するクラス。
  * 
- * @version 0.4
- * @since 0.4
  * @author T.TSUCHIE
  *
  */
