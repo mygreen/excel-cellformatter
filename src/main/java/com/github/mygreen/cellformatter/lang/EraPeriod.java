@@ -197,12 +197,36 @@ public class EraPeriod {
         this.name = name;
     }
     
+    /**
+     * 開始日を取得する
+     * @return
+     */
+    public Date getStartDate() {
+        return startDate;
+    }
+    
+    /**
+     * 開始日を設定する
+     * @param startDate
+     */
     void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
     
+    /**
+     * 終了日を設定する
+     * @param endDate
+     */
     void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+    
+    /**
+     * 終了日を取得する
+     * @return
+     */
+    public Date getEndDate() {
+        return endDate;
     }
     
 }
