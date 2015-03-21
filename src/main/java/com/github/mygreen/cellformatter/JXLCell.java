@@ -236,10 +236,10 @@ public class JXLCell implements CommonCell {
     
     private Date adjustDate(final Date date) {
         
-        // JExcelAPIは、タイムゾーンに分が考慮された時差がふくまれているため、補正する。
+        // JExcelAPIは、タイムゾーンの時差が加算されているため補正する。
         Date adjustDate = new Date(date.getTime() - TimeZone.getDefault().getRawOffset());
         
-        // 1900年以前の場合は、18900-12-30となるため、１日進めて補正をかける
+        // 1900年以前の場合は、1899-12-30となるため、１日進めて補正をかける
         if(adjustDate.getTime() < DATE_19000101) {
             adjustDate = new Date(adjustDate.getTime() + TimeUnit.DAYS.toMillis(1));
         }
