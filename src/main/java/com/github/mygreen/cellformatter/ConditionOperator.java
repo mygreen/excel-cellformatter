@@ -11,7 +11,7 @@ package com.github.mygreen.cellformatter;
 public abstract class ConditionOperator {
     
     /**
-     * 全ての条件（条件なし）
+     * 全ての値に一致する条件。常にtrueを返す。
      */
     public static ConditionOperator ALL = new ConditionOperator() {
         
@@ -23,22 +23,22 @@ public abstract class ConditionOperator {
     };
     
     /**
-     * 正の値
+     * 正の値に一致する条件。(>0.0)
      */
     public static ConditionOperator POSITIVE = new GreaterThan(0.0);
     
     /**
-     * 負の値
+     * 負の値に一致する条件（<0.0）
      */
     public static ConditionOperator NEGATIVE = new LessThan(0.0);
     
     /**
-     * ゼロの値
+     * ゼロの値に一致する条件（=0.0）
      */
     public static ConditionOperator ZERO = new Equal(0.0);
     
     /**
-     * 条件に一致するかどうか。
+     * 指定した値が条件に一致するかどうか。
      * @param value
      * @return
      */
