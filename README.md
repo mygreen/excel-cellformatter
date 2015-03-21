@@ -1,7 +1,18 @@
 # excel-cellformatter
 Excelのセルの書式を解析してフォーマットするライブラリ。
 
-# 使い方
+# ダウンロード
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.github.mygreen</groupId>
+        <artifactId>excel-cellformatter</artifactId>
+        <version>0.1</version>
+    </dependency>
+</dependencies>
+```
+
+# 簡単な使い方
 ## POIの場合
 
 ```java
@@ -45,3 +56,7 @@ contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(sheet));
 ### JExcelAPIを使用する際の注意事項
 - Excelファイルの読み込み時に、文字コードを「ISO8859_1」にする必要がある。指定しない場合は、書式のパターンが文字化けする。Windows-31jでも文字化けする。
 - 1904年始まりのファイルの設定の場合、メソッド「JXLUtils.isDateStart1904(...)」で調べる。
+
+
+# ドキュメント
+準備中
