@@ -3,7 +3,6 @@ package com.github.mygreen.cellformatter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;

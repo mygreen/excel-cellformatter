@@ -144,7 +144,6 @@ public class EraPeriod {
         if(endDate != null) {
             sb.append("[end=").append(Utils.formatDate(endDate)).append("]");
         }
-
         
         return sb.toString();
         
