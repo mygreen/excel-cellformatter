@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * セルのフォーマッタを解決するクラス。
+ * <p>解析したフォーマットをキャッシュし、性能を向上する。
  * @author T.TSUCHIE
  *
  */
@@ -29,6 +30,10 @@ public class FormatterResolver {
      */
     private Map<String, CellFormatter> patternFormatterMap = new ConcurrentHashMap<>();
     
+    /**
+     * インスタンスを作成する。
+     * <p>ビルドインフォーマットなどのキャッシュ情報を予め登録する。
+     */
     public FormatterResolver() {
         clearFormat();
         
@@ -46,7 +51,6 @@ public class FormatterResolver {
         // パターン指定の指定のフォーマッタの初期化
         patternFormatterMap.clear();
         
-
     }
     
     /**

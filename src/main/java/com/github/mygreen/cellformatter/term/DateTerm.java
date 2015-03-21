@@ -74,8 +74,6 @@ public abstract class DateTerm implements Term<Calendar> {
         
     }
     
-    
-    
     /**
      * [h] - 24時を超える経過時間の処理
      */
@@ -141,14 +139,21 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * aまたはn - 曜日の名称場合の処理
+     * a - 曜日の名称場合の処理
      */
     public static DateTerm weekName(final String format) {
         return new WeekName(format);
     }
     
     /**
-     * ww - 年の週番号
+     * n - 曜日の名称場合の処理（OpenOffice用）
+     */
+    public static DateTerm weekNameForOO(final String format) {
+        return new WeekNameForOO(format);
+    }
+    
+    /**
+     * ww - 年の週番号（OpenOffice用）
      */
     public static DateTerm weekNumber(final String format) {
         return new WeekNumberTerm(format);
@@ -178,7 +183,7 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * q - 四半期の場合の処理
+     * q - 四半期の場合の処理（OpenOffice用）
      */
     public static DateTerm quater(final String format) {
         return new QuaterTerm(format);
@@ -589,7 +594,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 // 曜日の省略名
                 final int index = getWeekIndex(cal);
                 if(formatLocale == MSLocale.JAPANESE) {
-                    return WeekName.WEEK_NAMES[index][1];
+                    return WeekName.WEEK_NAMES_JA[index][1];
                 } else {
                     return WEEK_NAMES[index][1];
                 }
@@ -598,7 +603,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 // 曜日の正式名
                 final int index = getWeekIndex(cal);
                 if(formatLocale == MSLocale.JAPANESE) {
-                    return WeekName.WEEK_NAMES[index][0];
+                    return WeekName.WEEK_NAMES_JA[index][0];
                 } else {
                     return WEEK_NAMES[index][0];
                 }
@@ -616,14 +621,14 @@ public abstract class DateTerm implements Term<Calendar> {
     }
     
     /**
-     * aまたはn - 日本語名称の曜日の場合
+     * a- 日本語名称の曜日の場合
      * 
      */
     public static class WeekName extends DateTerm {
         
         private final String format;
         
-        static final String[][] WEEK_NAMES = {
+        static final String[][] WEEK_NAMES_JA = {
             {"日曜日", "日"},
             {"月曜日", "月"},
             {"火曜日", "火"},
@@ -643,19 +648,41 @@ public abstract class DateTerm implements Term<Calendar> {
             final int index = getWeekIndex(cal);
             final int formatLength = format.length();
             
-            if(Utils.startsWithIgnoreCase(format, "n")) {
-                // Libreの時
-                if(formatLength == 1) {
-                    return WEEK_NAMES[index][1];
-                } else {
-                    return WEEK_NAMES[index][0];
-                }
+            if(formatLength <= 3) {
+                return WEEK_NAMES_JA[index][1];
             } else {
-                if(formatLength <= 3) {
-                    return WEEK_NAMES[index][1];
-                } else {
-                    return WEEK_NAMES[index][0];
-                }
+                return WEEK_NAMES_JA[index][0];
+            }
+        }
+        
+        public String getFormat() {
+            return format;
+        }
+        
+    }
+    
+    /**
+     * n- OpenOffice用の日本語名称の曜日の場合
+     * 
+     */
+    public static class WeekNameForOO extends DateTerm {
+        
+        private final String format;
+        
+        public WeekNameForOO(final String format) {
+            this.format = format;
+        } 
+        
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+            
+            final int index = getWeekIndex(cal);
+            final int formatLength = format.length();
+            
+            if(formatLength <= 2) {
+                return WeekName.WEEK_NAMES_JA[index][1];
+            } else {
+                return WeekName.WEEK_NAMES_JA[index][0];
             }
         }
         
@@ -680,14 +707,8 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
             
-            
-            if(format.equalsIgnoreCase("ww")) {
-                final int val = cal.get(Calendar.WEEK_OF_YEAR);;
-                return String.valueOf(val);
-                
-            } else {
-                return format;
-            }
+            final int val = cal.get(Calendar.WEEK_OF_YEAR);
+            return String.valueOf(val);
            
         }
         

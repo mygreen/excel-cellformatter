@@ -151,7 +151,6 @@ public class JXLCellFormatterTest {
     }
     
     @Test
-    @Ignore
     public void testFormatLibre() {
         
         File file = new File("src/test/data/cell_format_libre.xls");
@@ -170,7 +169,6 @@ public class JXLCellFormatterTest {
     }
     
     @Test
-    @Ignore
     public void testFormatLibre_test() {
         
         File file = new File("src/test/data/cell_format_libre.xls");

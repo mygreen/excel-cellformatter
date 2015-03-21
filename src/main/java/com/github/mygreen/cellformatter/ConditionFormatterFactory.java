@@ -26,7 +26,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
  */
 public abstract class ConditionFormatterFactory<F> {
     
-    protected static Logger logger = LoggerFactory.getLogger(ConditionFormatterFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(ConditionFormatterFactory.class);
     
     /**
      * 条件付き書式を組み立てる

@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.term.AsteriskTerm;
@@ -25,26 +28,44 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
  */
 public class ConditionDateFormatterFactory extends ConditionFormatterFactory<ConditionDateFormatter> {
     
+    private static Logger logger = LoggerFactory.getLogger(ConditionDateFormatterFactory.class);
+    
     /**
      * 日時の書式かどうかを決定するためのキーワード。
      */
     private static final String[] DATE_DECISTION_CHARS = {
-        "y", "m", "d",
-        "g", /*"e",*/ "a", "r",
-        "h", "s",
+        "yy", "yyyy",
+        "m", "mm", "mmm", "mmmm", "mmmmm",
+        "d", "dd", "ddd", "dddd",
+        "g", "gg", "ggg",
+        /*"e",*/ "ee",  // e単体だと指数と区別がつかないので除外する。
+        "aaa", "aaaa",
+        "r", "rr",
+        "h", "hh",
+        "s", "ss",
         "am/pm", "a/p",
-        "q", "n", "ww",   // libre
+        "q", "qq",    // OpenOffice用
+        "nn", "nnn",  // OpenOffice用
+        "ww",         // OpenOffice用
     };
     
     /**
      * 日時で使用するフォーマット用の文字
      */
     private static final String[] DATE_TERM_CHARS = {
-        "y", "m", "d",
-        "g", "e", "a", "r",
-        "h", "s",
+        "yy", "yyyy",
+        "m", "mm", "mmm", "mmmm", "mmmmm",
+        "d", "dd", "ddd", "dddd",
+        "g", "gg", "ggg",
+        "e", "ee",
+        "aaa", "aaaa",
+        "r", "rr",
+        "h", "hh",
+        "s", "ss",
         "am/pm", "a/p",
-        "q", "n", "ww", // libre
+        "q", "qq",  // OpenOffice用
+        "nn",       // OpenOffice用
+        "ww",       // OpenOffice用
     };
     
     /**
@@ -162,7 +183,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "ww")) {
                             formatter.addTerm(DateTerm.weekNumber(formatterItem));
                             
-                        } else if(Utils.startsWithIgnoreCase(formatterItem, "y")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "yy")) {
                             formatter.addTerm(DateTerm.year(formatterItem));
                             
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "g")) {
@@ -181,11 +202,11 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "d")) {
                             formatter.addTerm(DateTerm.day(formatterItem));
                             
-                        } else if(Utils.startsWithIgnoreCase(formatterItem, "a")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "aaa")) {
                             formatter.addTerm(DateTerm.weekName(formatterItem));
                             
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "n")) {
-                            formatter.addTerm(DateTerm.weekName(formatterItem));
+                            formatter.addTerm(DateTerm.weekNameForOO(formatterItem));
                             
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "h")) {
                             final boolean halfHour = store.containsAnyInFactorIgnoreCase(new String[]{"am/pm", "a/p"});
@@ -199,6 +220,9 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                             
                         } else {
                             // ここには到達しない
+                            if(logger.isWarnEnabled()) {
+                                logger.warn("unknown date format terms '{}'.", formatterItem);
+                            }
                             formatter.addTerm(new OtherTerm<Calendar>(item));
                         }
                         
@@ -254,19 +278,8 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                     noTermChar = new StringBuilder();
                 }
                 
-                StringBuilder termChar = new StringBuilder();
-                // 文字が異なるまで、探していく
-                while(idx < itemLength) {
-                    if(Utils.startsWithIgnoreCase(item, matchChars, idx)) {
-                        termChar.append(matchChars);
-                        idx += matchChars.length();
-                    } else {
-                        break;
-                    }
-                    
-                }
-                
-                list.add(Token.formatter(termChar.toString()));
+                list.add(Token.formatter(matchChars));
+                idx += matchChars.length();
                 
             }
         }
