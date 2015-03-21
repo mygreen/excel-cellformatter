@@ -1,9 +1,17 @@
 package com.github.mygreen.cellformatter;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 
+import org.apache.poi.hssf.model.InternalWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 
@@ -14,6 +22,8 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
  *
  */
 public class POICell implements CommonCell {
+    
+    private static Logger logger = LoggerFactory.getLogger(POICell.class);
     
     private final Cell cell;
     
@@ -77,6 +87,49 @@ public class POICell implements CommonCell {
     public Date getDateCellValue() {
         final Date date = cell.getDateCellValue();
         return date;
+    }
+    
+    @Override
+    public boolean isDateStart1904() {
+        
+        final Workbook workbook = cell.getSheet().getWorkbook();
+        if(workbook instanceof HSSFWorkbook) {
+            try {
+                Method method = HSSFWorkbook.class.getDeclaredMethod("getWorkbook");
+                method.setAccessible(true);
+                
+                InternalWorkbook iw = (InternalWorkbook) method.invoke(workbook);
+                return iw.isUsing1904DateWindowing();
+                
+            } catch(NoSuchMethodException | SecurityException e) {
+                logger.warn("fail access method HSSFWorkbook.getWorkbook.", e);
+                return false;
+            } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                logger.warn("fail invoke method HSSFWorkbook.getWorkbook.", e);
+                return false;
+            }
+            
+        } else if(workbook instanceof XSSFWorkbook) {
+            try {
+                Method method = XSSFWorkbook.class.getDeclaredMethod("isDate1904");
+                method.setAccessible(true);
+                
+                boolean value = (boolean) method.invoke(workbook);
+                return value;
+                
+            } catch(NoSuchMethodException | SecurityException e) {
+                logger.warn("fail access method XSSFWorkbook.isDate1904.", e);
+                return false;
+            } catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                logger.warn("fail invoke method XSSFWorkbook.isDate1904.", e);
+                return false;
+            }
+            
+        } else {
+            logger.warn("unknown workbook type.", workbook.getClass().getName());
+        }
+        
+        return false;
     }
     
 }

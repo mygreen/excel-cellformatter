@@ -1,7 +1,8 @@
 package com.github.mygreen.cellformatter;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +14,6 @@ import java.util.List;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,7 +21,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -278,6 +277,42 @@ public class POICellFormatterTest {
     public void testFormatLibre_test() {
         
         File file = new File("src/test/data/cell_format_libre.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormat_date1904() {
+        
+        File file = new File("src/test/data/cell_format_date1904.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatLibre_date1904_test() {
+        
+        File file = new File("src/test/data/cell_format_date1904.xls");
         POICellFormatter cellFormatter = new POICellFormatter();
         try {
             List<Sheet> sheetList = loadSheetForTest(file);

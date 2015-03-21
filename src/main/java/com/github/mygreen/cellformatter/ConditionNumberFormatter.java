@@ -17,7 +17,7 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
  * @author T.TSUCHIE
  *
  */
-public class ConditionNumberFormatter extends ConditionFormatter<Double> {
+public class ConditionNumberFormatter extends ConditionFormatter {
     
     /**
      * 各書式の項
@@ -39,13 +39,16 @@ public class ConditionNumberFormatter extends ConditionFormatter<Double> {
     }
     
     @Override
-    public boolean isMatch(final Double value) {
+    public boolean isMatch(final CommonCell cell) {
+        final double value = cell.getNumberCellValue();
         return getOperator().isMatch(value);
     }
     
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public String format(final Double number, final Locale runtimeLocale) {
+    public String format(final CommonCell cell, final Locale runtimeLocale) {
         
+        final double number = cell.getNumberCellValue();
         final FormattedNumber numObj = numberFactory.create(number);
         
         final StringBuilder sb = new StringBuilder();

@@ -38,9 +38,9 @@ public class POICellFormatter {
     }
     
     /**
-     * セルの値を文字列として取得する
+     * ロケールを指定してセルの値を文字列として取得する
      * @param cell 取得対象のセル
-     * @param locale
+     * @param locale ロケール
      * @return フォーマットした文字列
      * @throws IllegalArgumentException cell is null.
      */

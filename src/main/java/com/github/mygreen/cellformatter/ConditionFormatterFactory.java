@@ -101,7 +101,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @return
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
-    protected ConditionOperator setupConditionOperator(final ConditionFormatter<?> formatter, final Token.Condition token) {
+    protected ConditionOperator setupConditionOperator(final ConditionFormatter formatter, final Token.Condition token) {
         
         final Matcher matcher = PATTERN_CONDITION_OPERATOR.matcher(token.getValue());
         if(!matcher.matches()) {
@@ -150,7 +150,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @return
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
-    protected MSLocale setupConditionLocale(final ConditionFormatter<?> formatter, final Token.Condition token) {
+    protected MSLocale setupConditionLocale(final ConditionFormatter formatter, final Token.Condition token) {
         
         final Matcher matcher = PATTERN_CONDITION_LOCALE.matcher(token.getValue());
         if(!matcher.matches()) {
@@ -179,7 +179,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @return
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
-    protected Callback<?> setupConditionDbNum(final ConditionFormatter<?> formatter, final Token.Condition token) {
+    protected Callback<?> setupConditionDbNum(final ConditionFormatter formatter, final Token.Condition token) {
         
         final Matcher matcher = PATTERN_CONDITION_DBNUM.matcher(token.getValue());
         if(!matcher.matches()) {
@@ -214,7 +214,7 @@ public abstract class ConditionFormatterFactory<F> {
      * @return
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
-    protected MSColor setupConditionColor(final ConditionFormatter<?> formatter, final Token.Condition token) {
+    protected MSColor setupConditionColor(final ConditionFormatter formatter, final Token.Condition token) {
         
         // 名前指定の場合
         MSColor color = MSColor.valueOfKnownColor(token.getCondition());
@@ -229,7 +229,7 @@ public abstract class ConditionFormatterFactory<F> {
             throw new IllegalArgumentException("not match condition:" + token.getValue());
         }
         
-        final String prefix = matcher.group(1);
+//        final String prefix = matcher.group(1);
         final String number = matcher.group(2);
         final short index = Short.valueOf(number);
         color = MSColor.valueOfIndexColor(index);

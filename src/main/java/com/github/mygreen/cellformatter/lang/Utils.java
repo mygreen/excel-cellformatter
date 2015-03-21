@@ -239,13 +239,23 @@ public class Utils {
     public static final long TIME_19000101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
     
     /**
+     * '1904-01-01 00:00:00.000'の時間（単位はミリ秒）
+     */
+    public static final long TIME_19040101 = Timestamp.valueOf("1904-01-01 00:00:00.000").getTime();
+    
+    /**
      * Excelの日付の開始日の時間の取得（単位はミリ秒）
-     * ・数値が0の時、「1900/1/0 0:00:00」 。この値は、1900年1月1日から、1日（24時間）を引いた値。
-     *  
+     * ・数値が0の時、「1900-1-0 00:00:00」 。この値は、1900年1月1日から、1日（24時間）を引いた値。
+     * ・ただし、1904年始まりの場合は、1904-1-1 0:00:00を返す。
+     * @param isStartDate1904 1904年始まりかどうか。
      * @return
      */
-    public static long getExcelZeroDateTime() {
-        return TIME_19000101 - 1*TimeUnit.DAYS.toMillis(1);
+    public static long getExcelZeroDateTime(boolean isStartDate1904) {
+        if(isStartDate1904) {
+            return TIME_19040101;
+        } else {
+            return TIME_19000101 - 1*TimeUnit.DAYS.toMillis(1);
+        }
     }
     
     /**

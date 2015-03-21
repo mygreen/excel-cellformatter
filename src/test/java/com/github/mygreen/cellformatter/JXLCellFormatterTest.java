@@ -23,8 +23,9 @@ import jxl.read.biff.BiffException;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import com.github.mygreen.cellformatter.lang.JXLUtils;
 
 /**
  * JExcelAPI用のフォーマッタのテスタ
@@ -186,6 +187,42 @@ public class JXLCellFormatterTest {
         
     }
     
+    @Test
+    public void testFormat_date1904() {
+        
+        File file = new File("src/test/data/cell_format_date1904.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheet(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormat_date1904_test() {
+        
+        File file = new File("src/test/data/cell_format_date1904.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
     private List<Sheet> loadSheet(final File file) throws IOException, BiffException {
         
         final List<Sheet> list = new ArrayList<>();
@@ -196,7 +233,6 @@ public class JXLCellFormatterTest {
             
             // 文字コードを「ISO8859_1」にしないと文字化けする
             settings.setEncoding("ISO8859_1");
-//            settings.setLocale(Locale.JAPANESE);
             
             final Workbook workbook = Workbook.getWorkbook(in, settings);
             final int sheetNum = workbook.getNumberOfSheets();
@@ -214,6 +250,8 @@ public class JXLCellFormatterTest {
                 list.add(sheet);
                 
             }
+            
+//            System.out.println(JXLUtils.isDateStart1904(workbook));
         }
         
         return list;
@@ -282,13 +320,14 @@ public class JXLCellFormatterTest {
                 break;
             }
             
-            final String testCase = cellFormatter.format(testCaseCell, Locale.JAPANESE);
+            final boolean startDate1904 = JXLUtils.isDateStart1904(sheet);
+            final String testCase = cellFormatter.format(testCaseCell, Locale.JAPANESE, startDate1904);
             final String testResult = testResultCell.getContents();
             
             final String test = testCase.equals(testResult) ? "○" : "×";
             
             // セルのスタイル情報の取得
-            final CommonCell jxlTestCase = new JXLCell(testCaseCell);
+            final CommonCell jxlTestCase = new JXLCell(testCaseCell, startDate1904);
             final int formatIndex = jxlTestCase.getFormatIndex();
             final String formatPattern = jxlTestCase.getFormatPattern();
             final boolean poiDate = testCaseCell.getType().equals(CellType.DATE);

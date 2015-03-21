@@ -18,7 +18,7 @@ import com.github.mygreen.cellformatter.lang.MSLocale;
  * @author T.TSUCHIE
  *
  */
-public abstract class ConditionFormatter<T> {
+public abstract class ConditionFormatter {
     
     /** 元の書式のパターン */
     protected final String pattern;
@@ -51,27 +51,27 @@ public abstract class ConditionFormatter<T> {
     /**
      * 値が条件に一致するかどうか。
      * <p>{@link ConditionOperator}に一致するかどうか。
-     * @param value
+     * @param cell
      * @return
      */
-    public abstract boolean isMatch(T value);
+    public abstract boolean isMatch(CommonCell cell);
     
     /**
      * 値をフォーマットする。
-     * @param value
+     * @param cell
      * @return
      */
-    public String format(T value) {
-        return format(value, Locale.getDefault());
+    public String format(CommonCell cell) {
+        return format(cell, Locale.getDefault());
     }
     
     /**
      * ロケールを指定して値フォーマットする。
-     * @param value
+     * @param cell
      * @param runtimeLocale 実行時のロケール
      * @return
      */
-    public abstract String format(T value, Locale runtimeLocale);
+    public abstract String format(CommonCell cell, Locale runtimeLocale);
     
     /**
      * 種類が'日時'のフォーマッタかどうか。
@@ -95,33 +95,6 @@ public abstract class ConditionFormatter<T> {
      */
     public boolean isTextFormatter() {
         return getType() == FormatterType.Text;
-    }
-    
-    /**
-     * 自身のインスタンスを{@link ConditionDateFormatter}として取得する。
-     * @return
-     * @throws ClassCastException インスタンスのタイプが一致しない場合。
-     */
-    public ConditionDateFormatter asDateFormatter() {
-        return (ConditionDateFormatter)this;
-    }
-    
-    /**
-     * 自身のインスタンスを{@link ConditionNumberFormatter}として取得する。
-     * @return
-     * @throws ClassCastException インスタンスのタイプが一致しない場合。
-     */
-    public ConditionNumberFormatter asNumberFormatter() {
-        return (ConditionNumberFormatter)this;
-    }
-    
-    /**
-     * 自身のインスタンスを{@link ConditionTextFormatter}として取得する。
-     * @return
-     * @throws ClassCastException インスタンスのタイプが一致しない場合。
-     */
-    public ConditionTextFormatter asTextFormatter() {
-        return (ConditionTextFormatter)this;
     }
     
     /**

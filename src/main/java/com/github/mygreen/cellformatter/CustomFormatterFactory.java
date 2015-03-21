@@ -66,7 +66,7 @@ public class CustomFormatterFactory {
                 hasConditionFirst = !formatter.getConditionFormatters().get(0).getOperator().equals(ConditionOperator.POSITIVE);
             }
             
-            ConditionFormatter<?> conditionFormatter;
+            final ConditionFormatter conditionFormatter;
             if(dateFormatterFactory.isDatePattern(storeItem)) {
                 conditionFormatter = dateFormatterFactory.create(storeItem);
                 

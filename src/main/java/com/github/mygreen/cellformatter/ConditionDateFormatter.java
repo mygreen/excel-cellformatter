@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
+import com.github.mygreen.cellformatter.term.DateTerm;
 import com.github.mygreen.cellformatter.term.Term;
 
 
@@ -21,14 +22,9 @@ import com.github.mygreen.cellformatter.term.Term;
  * @author T.TSUCHIE
  *
  */
-public class ConditionDateFormatter extends ConditionFormatter<Date> {
+public class ConditionDateFormatter extends ConditionFormatter {
     
     private static final Logger logger = LoggerFactory.getLogger(ConditionDateFormatter.class);
-    
-    /**
-     * Excelでの基準日である「1900年1月0日」の値。
-     */
-    private static final long ZERO_TIME = Utils.getExcelZeroDateTime();
     
     /**
      * 日時の各項
@@ -47,31 +43,41 @@ public class ConditionDateFormatter extends ConditionFormatter<Date> {
     /**
      * 値が条件に一致するかどうか。
      * <p>Excelの1900年1月1日を基準に、ミリ秒に直して判定する。
-     * @param date
+     * @param cell
      * @return
      */
     @Override
-    public boolean isMatch(final Date date) {
-        final long value = date.getTime() - ZERO_TIME;
+    public boolean isMatch(final CommonCell cell) {
+        final long zeroTime = Utils.getExcelZeroDateTime(cell.isDateStart1904());
+        final Date date = cell.getDateCellValue();
+        final long value = date.getTime() - zeroTime;
         
         if(logger.isDebugEnabled()) {
             logger.debug("isMatch::date={}, zeroTime={}, diff={}",
-                    Utils.formatDate(date), Utils.formatDate(new Date(ZERO_TIME)), value);
+                    Utils.formatDate(date), Utils.formatDate(new Date(zeroTime)), value);
         }
         
         return getOperator().isMatch(value);
     }
     
     @Override
-    public String format(final Date date, final Locale runtimeLocale) {
-        ArgUtils.notNull(date, "date");
+    public String format(final CommonCell cell, final Locale runtimeLocale) {
+        ArgUtils.notNull(cell, "date");
+        
+        final Date date = cell.getDateCellValue();
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         cal.setTime(date);
         
         // 各項の処理
         StringBuilder sb = new StringBuilder();
         for(Term<Calendar> term : terms) {
-            sb.append(applyFormatCallback(cal, term.format(cal, getLocale(), runtimeLocale)));
+            final String formatValue;
+            if(term instanceof DateTerm) {
+                formatValue = ((DateTerm) term).format(cal, getLocale(), runtimeLocale, cell.isDateStart1904());
+            } else {
+                formatValue = term.format(cal, getLocale(), runtimeLocale);
+            }
+            sb.append(applyFormatCallback(cal, formatValue));
         }
         
         String value = sb.toString();

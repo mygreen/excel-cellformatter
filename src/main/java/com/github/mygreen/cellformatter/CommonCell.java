@@ -49,4 +49,11 @@ public interface CommonCell {
      */
     Date getDateCellValue();
     
+    /**
+     * 日時の開始日が1904年かどうか。
+     * 通常は、1900年始まり。
+     * @return
+     */
+    boolean isDateStart1904();
+    
 }

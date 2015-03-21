@@ -46,7 +46,7 @@ public class CustomFormatter extends CellFormatter {
     /**
      * 条件付きのフォーマッタ
      */
-    private List<ConditionFormatter<?>> conditionFormatters = new CopyOnWriteArrayList<>();
+    private List<ConditionFormatter> conditionFormatters = new CopyOnWriteArrayList<>();
     
     /**
      * 書式を指定してインスタンスを作成する。
@@ -64,11 +64,11 @@ public class CustomFormatter extends CellFormatter {
      * @return
      */
     @Override
-    public String format(final CommonCell cell, final Locale locale) {
+    public String format(final CommonCell cell, final Locale runtimeLocale) {
         
         if(cell.isText()) {
             if(textFormatter != null) {
-                return textFormatter.format(cell.getTextCellValue());
+                return textFormatter.format(cell, runtimeLocale);
             }  else {
                 return cell.getTextCellValue();
             }
@@ -76,17 +76,10 @@ public class CustomFormatter extends CellFormatter {
         } else {
             
             for(ConditionFormatter formatter : conditionFormatters) {
-                
-                if(formatter.isNumberFormatter() && formatter.isMatch(cell.getNumberCellValue())) {
-                    return formatter.asNumberFormatter().format(cell.getNumberCellValue());
-                    
-                } else if(formatter.isDateFormatter() && formatter.isMatch(cell.getDateCellValue())) {
-                    return formatter.asDateFormatter().format(cell.getDateCellValue());
-                    
+                if(formatter.isMatch(cell)) {
+                    return formatter.format(cell, runtimeLocale);
                 }
-                
             }
-            
         }
         
         throw new NoMatchConditionFormatterException();
@@ -107,7 +100,7 @@ public class CustomFormatter extends CellFormatter {
      * @return
      */
     public boolean isDateFormatter() {
-        for(ConditionFormatter<?> formatter : conditionFormatters) {
+        for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isDateFormatter()) {
                 return true;
             }
@@ -122,7 +115,7 @@ public class CustomFormatter extends CellFormatter {
      * @return
      */
     public boolean isNumberFormatter() {
-        for(ConditionFormatter<?> formatter : conditionFormatters) {
+        for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isNumberFormatter()) {
                 return true;
             }
@@ -143,11 +136,11 @@ public class CustomFormatter extends CellFormatter {
         this.textFormatter = textFormatter;
     }
     
-    public void addConditionFormatter(ConditionFormatter<?> formatter) {
+    public void addConditionFormatter(ConditionFormatter formatter) {
         this.conditionFormatters.add(formatter);
     }
     
-    public List<ConditionFormatter<?>> getConditionFormatters() {
+    public List<ConditionFormatter> getConditionFormatters() {
         return conditionFormatters;
     }
     

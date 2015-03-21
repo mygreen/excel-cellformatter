@@ -23,6 +23,14 @@ public abstract class DateTerm implements Term<Calendar> {
     
     protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);
     
+    @Override
+    public String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale) {
+        // このメソッドは実質呼ばれない。
+        return format(value, formatLocale, runtimeLocale, false);
+    }
+    
+    public abstract String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale, boolean isStartDate1904);
+    
     /**
      * 指定した桁分、ゼロサプライ（ゼロ埋め）する。
      * <p>既に指定したサイズを超える桁数の場合は、何もしない。
@@ -61,15 +69,20 @@ public abstract class DateTerm implements Term<Calendar> {
      * 経過時間を計算するときの基準日を取得する。
      * ・1900/2/28までは、-1日。1900/3/1以降は、-2日。
      * @param date
+     * @param isStartDate1904
      * @return
      */
-    private static long getElapsedZeroTime(final Date date) {
+    private static long getElapsedZeroTime(final Date date, final boolean isStartDate1904) {
         
-        if(TIME_19000301 <= date.getTime()) {
-            // 1900-03-01以降
-            return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(2);
+        if(isStartDate1904) {
+            return Utils.getExcelZeroDateTime(isStartDate1904);
         } else {
-            return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(1);
+            if(TIME_19000301 <= date.getTime()) {
+                // 1900-03-01以降
+                return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(2);
+            } else {
+                return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(1);
+            }
         }
         
     }
@@ -211,9 +224,9 @@ public abstract class DateTerm implements Term<Calendar> {
         }
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
-            final long zeroTime = getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -244,9 +257,9 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
-            final long zeroTime = getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -277,9 +290,9 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
-            final long zeroTime = getElapsedZeroTime(cal.getTime());
+            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
                 logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
@@ -307,7 +320,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final String value = String.valueOf(cal.get(Calendar.YEAR));
             final int formatLength = format.length();
@@ -338,7 +351,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final Date date = cal.getTime();
             
@@ -384,7 +397,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int formatLength = format.length();
             final Date date = cal.getTime();
@@ -427,7 +440,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int formatLength = format.length();
             final Date date = cal.getTime();
@@ -494,7 +507,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int value = cal.get(Calendar.MONTH);
             final int formatLength = format.length();
@@ -579,7 +592,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int value = cal.get(Calendar.DAY_OF_MONTH);
             final int formatLength = format.length();
@@ -643,7 +656,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int index = getWeekIndex(cal);
             final int formatLength = format.length();
@@ -674,7 +687,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int index = getWeekIndex(cal);
             final int formatLength = format.length();
@@ -705,7 +718,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int val = cal.get(Calendar.WEEK_OF_YEAR);
             return String.valueOf(val);
@@ -736,7 +749,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final String value;
             if(isHalf()) {
@@ -772,7 +785,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final String value = String.valueOf(cal.get(Calendar.MINUTE));
             final int formatLength = format.length();
@@ -798,7 +811,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final String value = String.valueOf(cal.get(Calendar.SECOND));
             final int formatLength = format.length();
@@ -837,7 +850,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int val = cal.get(Calendar.AM_PM);
             if(formatLocale == MSLocale.JAPANESE) {
@@ -890,7 +903,7 @@ public abstract class DateTerm implements Term<Calendar> {
         } 
         
         @Override
-        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale) {
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int index = cal.get(Calendar.MONTH) / 3;
             

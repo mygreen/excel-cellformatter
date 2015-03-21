@@ -13,7 +13,7 @@ import com.github.mygreen.cellformatter.term.Term;
  * @author T.TSUCHIE
  *
  */
-public class ConditionTextFormatter extends ConditionFormatter<String> {
+public class ConditionTextFormatter extends ConditionFormatter {
     
     /**
      * テキストの書式の項
@@ -33,13 +33,14 @@ public class ConditionTextFormatter extends ConditionFormatter<String> {
      * 常にtrueを返す。
      */
     @Override
-    public boolean isMatch(String value) {
+    public boolean isMatch(CommonCell cell) {
         return true;
     }
     
     @Override
-    public String format(final String value, final Locale runtimeLocale) {
+    public String format(final CommonCell cell, final Locale runtimeLocale) {
         
+        final String value = cell.getTextCellValue();
         final StringBuilder sb = new StringBuilder();
         
         for(Term<String> term : terms) {

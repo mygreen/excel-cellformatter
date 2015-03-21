@@ -36,6 +36,9 @@ public class JXLCell implements CommonCell {
     
     private static Logger logger = LoggerFactory.getLogger(JXLCell.class);
     
+    /** 日付の始まりが1904年開始かどうか */
+    private final boolean dateStart1904;
+    
     /**
      * 変換対象の組み込みフォーマット
      * ・間違っているものを対象とする。
@@ -76,9 +79,23 @@ public class JXLCell implements CommonCell {
     
     private final Cell cell;
     
+    /**
+     * セルを渡してインスタンスを作成する。
+     * @param cell
+     */
     public JXLCell(final Cell cell) {
+        this(cell, false);
+    }
+    
+    /**
+     * 
+     * @param cell
+     * @param dateStart1904 日付の開始が1904年始まりかどうか。Workbookまたはシートから取得する。
+     */
+    public JXLCell(final Cell cell, final boolean dateStart1904) {
         ArgUtils.notNull(cell, "cell");
         this.cell = cell;
+        this.dateStart1904 = dateStart1904;
     }
     
     public Cell getCell() {
@@ -209,11 +226,11 @@ public class JXLCell implements CommonCell {
             
         } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
             final double num = getNumberCellValue();
-            final Date date = convertJavaDate(num, false);
+            final Date date = convertJavaDate(num, isDateStart1904());
             return adjustDate(date);
             
         } else {
-            return new Date(Utils.getExcelZeroDateTime());
+            return new Date(Utils.getExcelZeroDateTime(isDateStart1904()));
         }
     }
     
@@ -267,6 +284,11 @@ public class JXLCell implements CommonCell {
     private static final int utcOffsetDays1904 = 24107;
     private static final long secondsInADay = 24 * 60 * 60;
     private static final long msInASecond = 1000;
-
+    
+    @Override
+    public boolean isDateStart1904() {
+        // JExcelAPIの場合は、Workbookからでないと取得できないため、コンストラクタで渡す。
+        return dateStart1904;
+    }
     
 }

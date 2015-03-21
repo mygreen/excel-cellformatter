@@ -6,6 +6,7 @@ import jxl.Cell;
 import jxl.CellType;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.JXLUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
 
 
@@ -18,31 +19,62 @@ public class JXLCellFormatter {
     
     private FormatterResolver formatterResolver = new FormatterResolver();
     
+    /**
+     * セルの値をフォーマットする。
+     * @param cell
+     * @return
+     */
     public String format(final Cell cell) {
-        return format(cell, Locale.getDefault());
+        return format(cell, false);
     }
     
+    /**
+     * セルの値をフォーマットする。
+     * @param cell
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。{@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return
+     */
+    public String format(final Cell cell, final boolean isStartDate1904) {
+        return format(cell, Locale.getDefault(), false);
+    }
+    
+    /**
+     * ロケールを指定してセルの値をフォーマットする。
+     * @param cell
+     * @param locale
+     * @return
+     */
     public String format(final Cell cell, final Locale locale) {
-        
+        return format(cell, locale, false);
+    }
+    
+    /**
+     * ロケールを指定してセルの値をフォーマットする。
+     * @param cell
+     * @param locale
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。{@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return
+     */
+    public String format(final Cell cell, final Locale locale, final boolean isStartDate1904) {        
         ArgUtils.notNull(cell, "cell");
         
         if(cell.getType() == CellType.EMPTY) {
             return "";
             
         } else if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
-            return getOtherCellValue(cell, locale);
+            return getOtherCellValue(cell, locale, isStartDate1904);
             
         } else if(cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA) {
-            return getOtherCellValue(cell, locale);
+            return getOtherCellValue(cell, locale, isStartDate1904);
         
         } else if(cell.getType() == CellType.ERROR || cell.getType() == CellType.FORMULA_ERROR) {
             return "";
             
         } else if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
-            return getNumericCellValue(cell, locale);
+            return getNumericCellValue(cell, locale, isStartDate1904);
             
         } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
-            return getNumericCellValue(cell, locale);
+            return getNumericCellValue(cell, locale, isStartDate1904);
             
         } else {
             return cell.getContents();
@@ -54,11 +86,12 @@ public class JXLCellFormatter {
      * 数値型以外のセルの値を取得する
      * @param cell
      * @param locale
+     * @param isStartDate1904
      * @return
      */
-    private String getOtherCellValue(final Cell cell, final Locale locale) {
+    private String getOtherCellValue(final Cell cell, final Locale locale, final boolean isStartDate1904) {
         
-        final JXLCell jxlCell = new JXLCell(cell);
+        final JXLCell jxlCell = new JXLCell(cell, isStartDate1904);
         final short formatIndex = jxlCell.getFormatIndex();
         final String formatPattern = jxlCell.getFormatPattern();
         
@@ -85,11 +118,12 @@ public class JXLCellFormatter {
      * 数値型のセルの値を取得する。
      * @param cell
      * @param locale
+     * @param isStartDate1904
      * @return
      */
-    private String getNumericCellValue(final Cell cell, final Locale locale) {
+    private String getNumericCellValue(final Cell cell, final Locale locale, final boolean isStartDate1904) {
         
-        final JXLCell jxlCell = new JXLCell(cell);
+        final JXLCell jxlCell = new JXLCell(cell, isStartDate1904);
         final short formatIndex = jxlCell.getFormatIndex();
         final String formatPattern = jxlCell.getFormatPattern();
         
