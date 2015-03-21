@@ -15,20 +15,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class MSColor {
     
+    /** 名前付きの色 - 黒 */
     public static final MSColor BLACK = new MSColor("Black", "黒", (short)1);
     
+    /** 名前付きの色 - 白 */
     public static final MSColor WHITE = new MSColor("White", "白", (short)2);
     
+    /** 名前付きの色 - 赤 */
     public static final MSColor RED = new MSColor("Red", "赤", (short)3);
     
+    /** 名前付きの色 - 緑 */
     public static final MSColor GREEN = new MSColor("Green", "緑", (short)4);
     
+    /** 名前付きの色 - 青 */
     public static final MSColor BLUE = new MSColor("Blue", "青", (short)5);
     
+    /** 名前付きの色 - 黄 */
     public static final MSColor YELLOW = new MSColor("Yellow", "黄", (short)6);
     
+    /** 名前付きの色 - 紫 */
     public static final MSColor MAGENTA = new MSColor("Magenta", "紫", (short)7);
     
+    /** 名前付きの色 - 水 */
     public static final MSColor CYAN = new MSColor("Cyan", "水", (short)8);
     
     private static List<MSColor> KNOWN_COLORS;
