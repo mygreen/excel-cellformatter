@@ -148,4 +148,77 @@ public class MSLocale {
         this.locale = locale;
     }
     
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + ((country == null) ? 0 : country.hashCode());
+        result = prime * result + ((hexValue == null) ? 0 : hexValue.hashCode());
+        result = prime * result + ((language == null) ? 0 : language.hashCode());
+        result = prime * result + ((locale == null) ? 0 : locale.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + value;
+        return result;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null) {
+            return false;
+        }
+        if(!(obj instanceof MSLocale)) {
+            return false;
+        }
+        MSLocale other = (MSLocale) obj;
+        if(code == null) {
+            if(other.code != null) {
+                return false;
+            }
+        } else if(!code.equals(other.code)) {
+            return false;
+        }
+        if(country == null) {
+            if(other.country != null) {
+                return false;
+            }
+        } else if(!country.equals(other.country)) {
+            return false;
+        }
+        if(hexValue == null) {
+            if(other.hexValue != null) {
+                return false;
+            }
+        } else if(!hexValue.equals(other.hexValue)) {
+            return false;
+        }
+        if(language == null) {
+            if(other.language != null) {
+                return false;
+            }
+        } else if(!language.equals(other.language)) {
+            return false;
+        }
+        if(locale == null) {
+            if(other.locale != null) {
+                return false;
+            }
+        } else if(!locale.equals(other.locale)) {
+            return false;
+        }
+        if(name == null) {
+            if(other.name != null) {
+                return false;
+            }
+        } else if(!name.equals(other.name)) {
+            return false;
+        }
+        if(value != other.value) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -35,7 +35,7 @@ public class FractionNumber extends FormattedNumber {
     }
     
     /**
-     * 分母の値を指定した分数を作成する。
+     * 分母の値を指定した分数を作成する。その際に、仮分数として作成する。
      * @param value
      * @param exactDenom 分母の値
      * @return
@@ -48,7 +48,7 @@ public class FractionNumber extends FormattedNumber {
      * 分母の値を指定した分数を作成する。
      * @param value
      * @param exactDenom 分母の値
-     * @param wholeType
+     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。
      * @return
      */
     public static FractionNumber createExactDenominator(final double value, int exactDenom, boolean wholeType) {
@@ -62,7 +62,7 @@ public class FractionNumber extends FormattedNumber {
     }
     
     /**
-     * 分母の最大値を指定した分数を作成する。
+     * 分母の最大値を指定した分数を作成する。その際に、仮分数として作成する。
      * @param value
      * @param maxDenom
      * @return
@@ -74,8 +74,8 @@ public class FractionNumber extends FormattedNumber {
     /**
      * 分母の最大値を指定した分数を作成する。
      * @param value
-     * @param maxDenom
-     * @param wholeType
+     * @param maxDenom 分母の最大値。
+     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。
      * @return
      */
     public static FractionNumber createMaxDenominator(final double value, int maxDenom, boolean wholeType) {

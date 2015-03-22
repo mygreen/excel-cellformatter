@@ -119,7 +119,7 @@ public class EraPeriod {
      * 指定した日時が、開始日時から経過した年を取得する。
      * @param cal
      * @return
-     * @throws IllegalArgumentException date is null.
+     * @throws IllegalArgumentException cal is null.
      */
     public int getEraYear(final Calendar cal) {
         ArgUtils.notNull(cal, "cal");
