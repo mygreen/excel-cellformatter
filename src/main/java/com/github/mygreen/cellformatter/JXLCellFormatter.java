@@ -12,12 +12,18 @@ import com.github.mygreen.cellformatter.lang.Utils;
 
 /**
  * JExcel APIのセルのフォーマッタ
+ * @version 0.2
  * @author T.TSUCHIE
  *
  */
 public class JXLCellFormatter {
     
     private FormatterResolver formatterResolver = new FormatterResolver();
+    
+    /**
+     * パースしたフォーマッタをキャッシングするかどうか。
+     */
+    private boolean cache = true;
     
     /**
      * セルの値をフォーマットする。
@@ -105,7 +111,9 @@ public class JXLCellFormatter {
             
         } else if(Utils.isNotEmpty(formatPattern)) {
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
-            formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            if(isCache()) {
+                formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            }
             return cellFormatter.format(jxlCell, locale);
             
         } else {
@@ -151,6 +159,22 @@ public class JXLCellFormatter {
     
     public void setFormatterResolver(FormatterResolver formatterResolver) {
         this.formatterResolver = formatterResolver;
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか。
+     * @return
+     */
+    public boolean isCache() {
+        return cache;
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか設定する。
+     * @param cache true:キャッシュする。
+     */
+    public void setCache(boolean cache) {
+        this.cache = cache;
     }
     
 }

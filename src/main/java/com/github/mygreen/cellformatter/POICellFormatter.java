@@ -21,12 +21,18 @@ import com.github.mygreen.cellformatter.lang.Utils;
  *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html"></a></li>
  *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html">POIでセルの値をとるのは大変　日付編</a></li>
  *   
+ * @version 0.2
  * @author T.TSUCHIE
  *
  */
 public class POICellFormatter {
     
     private FormatterResolver formatterResolver = new FormatterResolver();
+    
+    /**
+     * パースしたフォーマッタをキャッシングするかどうか。
+     */
+    private boolean cache = true;
     
     /**
      * セルの値を文字列として取得する
@@ -210,9 +216,11 @@ public class POICellFormatter {
             return cellFormatter.format(poiCell, locale);
             
         } else {
-            // キャッシュに登録する。
+            // キャッシュに存在しない場合
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
-            formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            if(isCache()) {
+                formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            }
             return cellFormatter.format(poiCell, locale);
             
         }
@@ -224,5 +232,21 @@ public class POICellFormatter {
     
     public void setFormatterResolver(FormatterResolver formatterResolver) {
         this.formatterResolver = formatterResolver;
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか。
+     * @return
+     */
+    public boolean isCache() {
+        return cache;
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか設定する。
+     * @param cache true:キャッシュする。
+     */
+    public void setCache(boolean cache) {
+        this.cache = cache;
     }
 }
