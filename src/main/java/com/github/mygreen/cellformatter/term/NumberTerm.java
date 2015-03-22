@@ -200,14 +200,14 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
      */
     public static class ZeroTerm extends FormattedTerm {
         
-        private static final String ZEOR = "0";
+        private static final String ZERO = "0";
         
         @Override
         public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             String num = getNumber(number);
             if(num.isEmpty()) {
-                return ZEOR;
+                return ZERO;
             }
             
             return num;
