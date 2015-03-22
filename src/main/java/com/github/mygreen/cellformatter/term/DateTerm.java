@@ -29,6 +29,14 @@ public abstract class DateTerm implements Term<Calendar> {
         return format(value, formatLocale, runtimeLocale, false);
     }
     
+    /**
+     * 値をフォーマットする。
+     * @param value フォーマット対象の値。
+     * @param formatLocale 書式中に指定されたロケール。
+     * @param runtimeLocale 実行時にしていされたロケール。
+     * @param isStartDate1904 日時が1904年始まりかどうか。
+     * @return フォーマットされた文字列。nullは返さない。
+     */
     public abstract String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale, boolean isStartDate1904);
     
     /**
@@ -231,8 +239,8 @@ public abstract class DateTerm implements Term<Calendar> {
                 logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
             
-            final int formatLength = format.length();
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
+            final int formatLength = format.length();
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -264,8 +272,8 @@ public abstract class DateTerm implements Term<Calendar> {
                 logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
             
-            final int formatLength = format.length();
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
+            final int formatLength = format.length();
             return supplyZero(String.valueOf(time), formatLength);
         }
         
@@ -297,8 +305,8 @@ public abstract class DateTerm implements Term<Calendar> {
                 logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
             }
             
-            final int formatLength = format.length();
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
+            final int formatLength = format.length();
             return supplyZero(String.valueOf(time), formatLength);
         }
         
