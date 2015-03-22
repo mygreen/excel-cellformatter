@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 共通のセルのインタフェース。
- * POI、JExcelAPIなどのライブラリ管の違いを吸収するためのもの。
+ * POI、JExcelAPIなどのライブラリ間の違いを吸収するためのもの。
  * @author T.TSUCHIE
  *
  */
