@@ -6,7 +6,7 @@ package com.github.mygreen.cellformatter.number;
  * @author T.TSUCHIE
  *
  */
-public enum PartType {
+public enum NumberPartType {
     
     /** 整数部分 */
     Integer,

@@ -7,7 +7,7 @@ import java.util.Locale;
 import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.number.FormattedNumber;
-import com.github.mygreen.cellformatter.number.PartType;
+import com.github.mygreen.cellformatter.number.NumberPartType;
 import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
@@ -84,7 +84,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         protected int index;
         
         /** 書式の部分 */
-        protected PartType partType;
+        protected NumberPartType partType;
         
         /** 書式の部分の最後かどうか */
         protected boolean lastPart;
@@ -97,7 +97,7 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
             return this;
         }
         
-        public FormattedTerm partType(final PartType partType) {
+        public FormattedTerm partType(final NumberPartType partType) {
             this.partType = partType;
             return this;
         }
@@ -168,11 +168,11 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
             this.index = index;
         }
         
-        public PartType getPartType() {
+        public NumberPartType getPartType() {
             return partType;
         }
         
-        public void setPart(PartType partType) {
+        public void setPart(NumberPartType partType) {
             this.partType = partType;
         }
         

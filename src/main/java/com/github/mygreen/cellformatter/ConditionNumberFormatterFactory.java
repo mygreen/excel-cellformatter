@@ -11,7 +11,7 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.number.FormattedNumber;
 import com.github.mygreen.cellformatter.number.NumberFactory;
-import com.github.mygreen.cellformatter.number.PartType;
+import com.github.mygreen.cellformatter.number.NumberPartType;
 import com.github.mygreen.cellformatter.term.AsteriskTerm;
 import com.github.mygreen.cellformatter.term.EscapedCharTerm;
 import com.github.mygreen.cellformatter.term.NumberTerm;
@@ -315,7 +315,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
         // 分子、帯分数の情報の設定
         boolean wholeType = false;
         if(slashIndex > 0) {
-            PartType partType = PartType.Numerator;
+            NumberPartType partType = NumberPartType.Numerator;
             int countNumeratorTerm = 0;
             int countWholeNumberTerm = 0;
             boolean foundFirst = false;
@@ -327,11 +327,11 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                     final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
                     formattedTerm.setPart(partType);
                     
-                    if(partType.equals(PartType.Numerator)) {
+                    if(partType.equals(NumberPartType.Numerator)) {
                         countNumeratorTerm++;
                         formattedTerm.setIndex(countNumeratorTerm);
                         
-                    } else if(partType.equals(PartType.WholeNumber)) {
+                    } else if(partType.equals(NumberPartType.WholeNumber)) {
                         countWholeNumberTerm++;
                         formattedTerm.setIndex(countWholeNumberTerm);
                     }
@@ -343,7 +343,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                 } else {
                     // 連続する書式の間に他の文字が入る場合は、帯分数として処理する。
                     if(foundFirst) {
-                        partType = PartType.WholeNumber;
+                        partType = NumberPartType.WholeNumber;
                     }
                 }
                 
@@ -366,7 +366,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                 final Term<FormattedNumber> term = formatter.getTerms().get(i);
                 if(term instanceof NumberTerm.FormattedTerm) {
                     final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
-                    formattedTerm.setPart(PartType.Denominator);
+                    formattedTerm.setPart(NumberPartType.Denominator);
                     
                     countDenominatorTerm++;
                     formattedTerm.setIndex(countDenominatorTerm);
@@ -403,15 +403,15 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
             if(term instanceof NumberTerm.FormattedTerm) {
                 final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
                 
-                if(formattedTerm.getPartType().equals(PartType.WholeNumber) && !foundFistWholeNumber) {
+                if(formattedTerm.getPartType().equals(NumberPartType.WholeNumber) && !foundFistWholeNumber) {
                     formattedTerm.setLastPart(true);
                     foundFistWholeNumber = true;
                     
-                } else if(formattedTerm.getPartType().equals(PartType.Numerator) && !foundFistNumerator) {
+                } else if(formattedTerm.getPartType().equals(NumberPartType.Numerator) && !foundFistNumerator) {
                     formattedTerm.setLastPart(true);
                     foundFistNumerator = true;
                     
-                } else if(formattedTerm.getPartType().equals(PartType.Denominator) && !foundFistDenominator) {
+                } else if(formattedTerm.getPartType().equals(NumberPartType.Denominator) && !foundFistDenominator) {
                     formattedTerm.setLastPart(true);
                     foundFistDenominator = true;
                 }
@@ -425,7 +425,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
     
     private void setupFormatAsDecimal(final ConditionNumberFormatter formatter) {
         
-        PartType partType = PartType.Integer;
+        NumberPartType partType = NumberPartType.Integer;
         boolean foundFirst = false;
         int countDecimalTerm = 0;   // 小数部分の書式のカウント
         boolean foundPercentTerm = false;
@@ -436,18 +436,18 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                 foundPercentTerm = true;
                 
             } else if(isSymbolTerm(term, Token.SYMBOL_DOT)) {
-                partType = PartType.Decimal;
+                partType = NumberPartType.Decimal;
                 foundFirst = false;
                 
             } else if(term instanceof NumberTerm.ExponentTerm) {
-                partType = PartType.Exponent;
+                partType = NumberPartType.Exponent;
                 foundFirst = false;
                 
             } else if(term instanceof NumberTerm.FormattedTerm) {
                 final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
                 formattedTerm.setPart(partType);
                 
-                if(partType.equals(PartType.Decimal)) {
+                if(partType.equals(NumberPartType.Decimal)) {
                     // 小数部分の場合のインデックス番号を振る
                     countDecimalTerm++;
                     formattedTerm.setIndex(countDecimalTerm);
@@ -474,18 +474,18 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                 
                 final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
                 
-                if(formattedTerm.getPartType().equals(PartType.Decimal)) {
+                if(formattedTerm.getPartType().equals(NumberPartType.Decimal)) {
                     // 小数部分の場合、はじめに見つかったものが、最後の桁
                     if(!foundFirst) {
                         formattedTerm.setLastPart(true);
                         foundFirst = true;
                     }
                     
-                } else if(formattedTerm.getPartType().equals(PartType.Integer)) {
+                } else if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {
                     countIntegerTerm++;
                     formattedTerm.setIndex(countIntegerTerm);
                     
-                } else if(formattedTerm.getPartType().equals(PartType.Exponent)) {
+                } else if(formattedTerm.getPartType().equals(NumberPartType.Exponent)) {
                     countExponentTerm++;
                     formattedTerm.setIndex(countExponentTerm);
                 }
@@ -501,7 +501,7 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
             if(term instanceof NumberTerm.FormattedTerm) {
                 final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;
                 // 整数の書式でかつ途中の書式の場合
-                if(formattedTerm.getPartType().equals(PartType.Integer)) {
+                if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {
                     if(formattedTerm.isLastPart() && formattedTerm.getIndex() > 1) {
                         inIntegerPater = true;
                     } else if(formattedTerm.getIndex() <= 1) {
