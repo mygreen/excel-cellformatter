@@ -10,8 +10,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * Microsoftで使用しているロケール。
  * <p>インスタンスを作成する際には、{@link MSLocaleBuilder}を使用する。
- * <p><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a>
- * <p><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx">Locale IDs Assigned by Microsoft</a>
+ * <p><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" taret="_blank">ロケール ID (LCID) の一覧</a>
+ * <p><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" taret="_blank">Locale IDs Assigned by Microsoft</a>
  * 
  * @author T.TSUCHIE
  *
@@ -33,7 +33,7 @@ public class MSLocale {
     /**
      * 定義されている有効なロケール
      */
-    public static List<MSLocale> KNOWN_LOCALES;
+    public static final List<MSLocale> KNOWN_LOCALES;
     static {
         KNOWN_LOCALES = Collections.unmodifiableList(new CopyOnWriteArrayList<MSLocale>(
                 Arrays.asList(JAPANESE, US, UK)));

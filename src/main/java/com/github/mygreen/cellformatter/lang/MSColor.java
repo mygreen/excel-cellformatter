@@ -39,7 +39,10 @@ public class MSColor {
     /** 名前付きの色 - 水 */
     public static final MSColor CYAN = new MSColor("Cyan", "水", (short)8);
     
-    private static List<MSColor> KNOWN_COLORS;
+    /**
+     * 名前付きの色のリスト
+     */
+    public static final List<MSColor> KNOWN_COLORS;
     static{
         KNOWN_COLORS = Collections.unmodifiableList(new CopyOnWriteArrayList<MSColor>(
                 Arrays.asList(BLACK, WHITE, RED, GREEN, BLUE, YELLOW, MAGENTA, CYAN)));
@@ -55,10 +58,10 @@ public class MSColor {
     private final short index;
     
     /**
-     * 
-     * @param name
-     * @param aliasName
-     * @param index
+     * 色の名称、インデックスを指定してインスタンスを作成する。
+     * @param name 色の名称(ex. white)
+     * @param aliasName 色の別名（日本語名など） 白
+     * @param index 色のインデックス番号
      */
     public MSColor(final String name, final String aliasName, final short index) {
         this.name = name;
@@ -67,8 +70,8 @@ public class MSColor {
     }
     
     /**
-     * インデックスを指定してインスタンスを取得する。
-     * @param index
+     * インデックスを指定してインスタンスを作成する。
+     * @param index 色のインデックス番号
      */
     public MSColor(final short index) {
         this(null, null, index);
@@ -84,7 +87,7 @@ public class MSColor {
     
     /**
      * 色の別名の取得。日本語名称などを返す。
-     * @return の別名がない場合は、nullを返す。
+     * @return 別名がない場合は、nullを返す。
      */
     public String getAliasName() {
         return aliasName;
@@ -119,7 +122,7 @@ public class MSColor {
     
     /**
      * インデックス番号を指定して色を作成する。
-     * <p>木との色の場合は、そのインスタンスを返す。
+     * <p>名前付きの既知の色の場合は、そのインスタンスを返す。
      * @param index
      * @return
      */
