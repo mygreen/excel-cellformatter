@@ -47,13 +47,7 @@ public class POICell implements CommonCell {
         final DataFormat dataFormat = cell.getSheet().getWorkbook().createDataFormat();
         final short formatIndex = getFormatIndex();
         
-        String formatPattern = null;
-        try {
-            formatPattern = dataFormat.getFormat(formatIndex);
-        } catch(Exception e) {
-            formatPattern = "";
-        }
-        
+        String formatPattern = dataFormat.getFormat(formatIndex);
         if(formatPattern == null) {
             formatPattern = "";
         }

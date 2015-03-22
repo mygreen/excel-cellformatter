@@ -37,7 +37,8 @@ public class POICellFormatter {
     /**
      * セルの値を文字列として取得する
      * @param cell 取得対象のセル
-     * @return
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
      */
     public String format(final Cell cell) {
         return format(cell, Locale.getDefault());
@@ -45,8 +46,9 @@ public class POICellFormatter {
     
     /**
      * ロケールを指定してセルの値を文字列として取得する
-     * @param cell 取得対象のセル
-     * @param locale ロケール
+     * @param cell フォーマット対象のセル
+     * @param locale locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
      * @return フォーマットした文字列
      * @throws IllegalArgumentException cell is null.
      */

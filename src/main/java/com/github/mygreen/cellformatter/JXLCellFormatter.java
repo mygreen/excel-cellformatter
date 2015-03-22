@@ -11,7 +11,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
- * JExcel APIのセルのフォーマッタ
+ * JExcel APIのセルのフォーマッタ。
  * @version 0.2
  * @author T.TSUCHIE
  *
@@ -27,39 +27,25 @@ public class JXLCellFormatter {
     
     /**
      * セルの値をフォーマットする。
-     * @param cell
-     * @return
-     */
-    public String format(final Cell cell) {
-        return format(cell, false);
-    }
-    
-    /**
-     * セルの値をフォーマットする。
-     * @param cell
-     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。{@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
-     * @return
+     * @param cell フォーマット対象のセル
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
      */
     public String format(final Cell cell, final boolean isStartDate1904) {
-        return format(cell, Locale.getDefault(), false);
+        return format(cell, Locale.getDefault(), isStartDate1904);
     }
     
     /**
      * ロケールを指定してセルの値をフォーマットする。
-     * @param cell
-     * @param locale
-     * @return
-     */
-    public String format(final Cell cell, final Locale locale) {
-        return format(cell, locale, false);
-    }
-    
-    /**
-     * ロケールを指定してセルの値をフォーマットする。
-     * @param cell
-     * @param locale
-     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。{@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
-     * @return
+     * @param cell フォーマット対象のセル
+     * @param locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
      */
     public String format(final Cell cell, final Locale locale, final boolean isStartDate1904) {        
         ArgUtils.notNull(cell, "cell");

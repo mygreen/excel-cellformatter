@@ -81,16 +81,9 @@ public class JXLCell implements CommonCell {
     
     /**
      * セルを渡してインスタンスを作成する。
-     * @param cell
-     */
-    public JXLCell(final Cell cell) {
-        this(cell, false);
-    }
-    
-    /**
-     * 
-     * @param cell
+     * @param cell フォーマット対象のセルのインスタンス。
      * @param dateStart1904 日付の開始が1904年始まりかどうか。Workbookまたはシートから取得する。
+     * @throws IllegalArgumentException cell is null.
      */
     public JXLCell(final Cell cell, final boolean dateStart1904) {
         ArgUtils.notNull(cell, "cell");
@@ -98,6 +91,10 @@ public class JXLCell implements CommonCell {
         this.dateStart1904 = dateStart1904;
     }
     
+    /**
+     * JExcelAPIの元々のセルのインスタンスを取得する。
+     * @return
+     */
     public Cell getCell() {
         return cell;
     }
