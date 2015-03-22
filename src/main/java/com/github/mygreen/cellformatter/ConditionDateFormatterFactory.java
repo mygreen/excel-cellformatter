@@ -129,7 +129,6 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                 // 条件の場合
                 final Token.Condition conditionToken = token.asCondition();
                 final String condition = conditionToken.getCondition();
-                formatter.addCondition(condition);
                 
                 if(PATTERN_ELAPSED_TIME.matcher(token.getValue()).matches()) {
                     // [h][m][s]などの経過時刻のパターン
@@ -143,7 +142,12 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                         formatter.addTerm(DateTerm.elapsedSecond(condition));
                         
                     }
-                } else if(isConditionOperator(conditionToken)) {
+                    continue;
+                }
+                
+                formatter.addCondition(condition);
+                
+                if(isConditionOperator(conditionToken)) {
                     setupConditionOperator(formatter, conditionToken);
                     
                 } else if(isConditionLocale(conditionToken)) {
@@ -180,10 +184,10 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                         if(Utils.equalsAnyIgnoreCase(formatterItem, new String[]{"am/pm", "a/p"})) {
                             formatter.addTerm(DateTerm.amPm(formatterItem));
                             
-                        } else if(Utils.startsWithIgnoreCase(formatterItem, "ww")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "w")) {
                             formatter.addTerm(DateTerm.weekNumber(formatterItem));
                             
-                        } else if(Utils.startsWithIgnoreCase(formatterItem, "yy")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "y")) {
                             formatter.addTerm(DateTerm.year(formatterItem));
                             
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "g")) {
@@ -202,7 +206,7 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "d")) {
                             formatter.addTerm(DateTerm.day(formatterItem));
                             
-                        } else if(Utils.startsWithIgnoreCase(formatterItem, "aaa")) {
+                        } else if(Utils.startsWithIgnoreCase(formatterItem, "a")) {
                             formatter.addTerm(DateTerm.weekName(formatterItem));
                             
                         } else if(Utils.startsWithIgnoreCase(formatterItem, "n")) {
