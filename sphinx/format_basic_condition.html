@@ -1,0 +1,495 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>条件式について &mdash; Excel-CellFormatter 0.2 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Excel-CellFormatter 0.2 ドキュメント" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">プロジェクト情報</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">1.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">1.3. JExcelAPIの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">2. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">2.1. キャッシュの制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">3. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">3.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">3.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">3.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id11">3.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">3.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id20">3.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id21">3.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id26">3.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">4. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">4.1. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">4.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">4.3. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">4.4. 漢数字／大字変換のロジック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">5. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">5.1. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">5.2. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/format_basic_condition.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>条件式について<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>条件式には複数の種類があり、基本的に書式を拡張するために使用します。</p>
+<ul class="simple">
+<li>書式は、大括弧&#8221;[&#8221;, &#8220;]&#8221;で囲みます。</li>
+<li>比較演算子（[&gt;80]）</li>
+<li>色（[色名]）</li>
+<li>ロケール（[$-ロケールコード]）</li>
+<li>特殊な数値表示（[DBNum&lt;値&gt;]）</li>
+</ul>
+<div class="section" id="id2">
+<h2>条件式（比較演算子）について<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>セクションごとに一致させる条件を比較演算子で指定することができます。</p>
+<table border="1" class="docutils">
+<caption>比較演算子の種類</caption>
+<colgroup>
+<col width="15%" />
+<col width="20%" />
+<col width="20%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">演算子</th>
+<th class="head">名称</th>
+<th class="head">名称（英字）</th>
+<th class="head">使用例</th>
+<th class="head">結果</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>=</td>
+<td>等しい</td>
+<td>equal</td>
+<td>[=2]</td>
+<td>2と等しい。</td>
+</tr>
+<tr class="row-odd"><td>&lt;&gt;</td>
+<td>等しくない</td>
+<td>not equal</td>
+<td>[&lt;&gt;2]</td>
+<td>2以外。</td>
+</tr>
+<tr class="row-even"><td>&gt;</td>
+<td>大きい</td>
+<td>greater than</td>
+<td>[&gt;2]</td>
+<td>2より大きい。</td>
+</tr>
+<tr class="row-odd"><td>&lt;</td>
+<td>小さい</td>
+<td>less than</td>
+<td>[&lt;2]</td>
+<td>2より小さい。</td>
+</tr>
+<tr class="row-even"><td>&gt;=</td>
+<td>以上</td>
+<td>greater equal</td>
+<td>[&gt;=2]</td>
+<td>2以上。</td>
+</tr>
+<tr class="row-odd"><td>&lt;=</td>
+<td>以下</td>
+<td>less equal</td>
+<td>[&lt;=2]</td>
+<td>2以下。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2>色の条件について<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>色は名前付きの8色の他、番号で指定可能で、全56色を指定できます。</p>
+<p>Excel2003までは、Excelでの色のパレットは56色だったことに由来します。</p>
+<table border="1" class="docutils">
+<caption>色の書式記号</caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="15%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">書式記号</th>
+<th class="head">説明</th>
+<th class="head">使用例</th>
+<th class="head">表示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>[&lt;色名&gt;]</td>
+<td><div class="first last line-block">
+<div class="line">色の名前（8色）を指定します。</div>
+<div class="line">OSなどの言語環境によって色名の指定方法が変わります。日本語環境の場合は、日本語名で指定します。</div>
+<div class="line">指定可能な色の名前は、下記を参照してください。</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">[青]##,###.0#</div>
+<div class="line">[赤]hh:mm a/p</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">12345.12 -&gt; 1,2345.12</div>
+<div class="line">11:45:34 -&gt; 11:45 a</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>[色&lt;番号&gt;]</td>
+<td><div class="first last line-block">
+<div class="line">色の番号（1から56番）を指定します。</div>
+<div class="line">色の見本については、外部サイトの <a class="reference external" href="http://dmcritchie.mvps.org/excel/colors.htm">Color Palette and the 56 Excel ColorIndex Colors</a> を参照してください。</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">[色10]##,###.0#</div>
+<div class="line">[色7]hh:mm a/p</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">12345.12 -&gt; 1,2345.12</div>
+<div class="line">11:45:34 -&gt; 11:45 a</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>名前付きの色</caption>
+<colgroup>
+<col width="30%" />
+<col width="20%" />
+<col width="20%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">色名（英語）</th>
+<th class="head">色名（日本語）</th>
+<th class="head">色番号</th>
+<th class="head">RGB</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Black</td>
+<td>黒</td>
+<td>1</td>
+<td>#000000</td>
+</tr>
+<tr class="row-odd"><td>White</td>
+<td>白</td>
+<td>2</td>
+<td>#FFFFFF</td>
+</tr>
+<tr class="row-even"><td>Red</td>
+<td>赤</td>
+<td>3</td>
+<td>#FF0000</td>
+</tr>
+<tr class="row-odd"><td>Green</td>
+<td>緑</td>
+<td>4</td>
+<td>#00FF00</td>
+</tr>
+<tr class="row-even"><td>Blue</td>
+<td>青</td>
+<td>5</td>
+<td>#0000FF</td>
+</tr>
+<tr class="row-odd"><td>Yellow</td>
+<td>黄</td>
+<td>6</td>
+<td>#FFFF00</td>
+</tr>
+<tr class="row-even"><td>Magenta</td>
+<td>紫</td>
+<td>7</td>
+<td>#FF00FF</td>
+</tr>
+<tr class="row-odd"><td>Cyan</td>
+<td>水</td>
+<td>8</td>
+<td>#00FFFF</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>Excel内部における色の保持の仕方</p>
+<p>日本語環境のExcelでは色を書式上で指定する際には、日本語の色名で指定しますが、内部的には英字名で保持しています。</p>
+<p class="last">そのため、POIやJExcelAPIなどのライブラリで書式を取得すると英字名で取得されます。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>色で違いを表現する場合の注意事項</p>
+<p>色で違いを表現する場合は、印刷したとき区別がつかないため、通常はあまり使用しません。</p>
+<p>例えば、数値用の書式で正と負の書式を黒か赤で表現する「0_);[Red]\(0\)」は、印刷したときや文字列として取得した場合、色による違いだけなので区別がつかなくなります。</p>
+<p class="last">また、予め用意されている名前付きの色は輝度が高く、白黒で印刷すると薄く表示されるためあまりお薦めしません。比較的輝度が低い「青」「赤」を使用する程度にした方がよいと思います。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>ロケールの条件について<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ロケールを書式に指定すると、その言語専用の表記に変換され表示されます。</p>
+<p>Miscrosoftでは、ロケールごとにIDを振り、 <em>ロケールID（LCID）</em> と呼ばれています。</p>
+<table border="1" class="docutils">
+<caption>ロケールの書式記号</caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="15%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">書式記号</th>
+<th class="head">説明</th>
+<th class="head">使用例</th>
+<th class="head">表示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>[$-&lt;LCID&gt;]</td>
+<td><div class="first last line-block">
+<div class="line">LCIDは、16進数の値を指定します。</div>
+<div class="line">LCIDは、外部サイトの <a class="reference external" href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a> を参照してください。</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">[$-411]dddd</div>
+<div class="line">[$-409]dddd</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2001/1/3 -&gt; 水曜日</div>
+<div class="line">2001/1/3 -&gt; Wednesday</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>よく使用するロケール</caption>
+<colgroup>
+<col width="40%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ロケール名</th>
+<th class="head">言語コード</th>
+<th class="head">16進数</th>
+<th class="head">10進数</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>英語 (U.K.)</td>
+<td>en-gb</td>
+<td>0x809</td>
+<td>2057</td>
+</tr>
+<tr class="row-odd"><td>英語 (U.S.)</td>
+<td>en-us</td>
+<td>0x409</td>
+<td>1033</td>
+</tr>
+<tr class="row-even"><td>日本語</td>
+<td>ja</td>
+<td>0x411</td>
+<td>1041</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>特別なLCID</p>
+<p>Excelの中で予め用意されている書式の中で、LCIDの一覧にない <em>[$-F800]</em> と <em>[$-F400]</em> があります。
+これらは、システムの日付、時刻の書式に指定されて、OSの言語によって変わる書式です。</p>
+<p class="last">例えば、日付用の書式「[$-F800]dddd\,\ mmmm\ dd\,\ yyyy」は、日本語環境では「yyyy&#8221;年&#8221;m&#8221;月&#8221;d&#8221;日&#8221;」として処理されます。
+さらに、時間用の書式「[$-F400]h:mm:ss\ AM/PM」は、日本語環境では「h:mm:ss」として処理されます。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>言語固有の数値の表現について<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>全角の数字など言語固有の数値の表現を指定することができます。</p>
+<p>これは、 <strong>Excel2002以降（Excel XP）でのみ利用可能な機能</strong> であり、Excel2000以前ではサポートされません。</p>
+<table border="1" class="docutils">
+<caption>日本語環境で利用可能な数値表示</caption>
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="20%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">書式記号</th>
+<th class="head">言語</th>
+<th class="head">説明</th>
+<th class="head">使用例</th>
+<th class="head">表示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>[DBNum1]</td>
+<td>日本語</td>
+<td>数字を漢数字で表示します。</td>
+<td><div class="first last line-block">
+<div class="line">[DBNum1][$-411]G/標準</div>
+<div class="line">[DBNum1][$-411]ggge&#8221;年&#8221;m&#8221;月&#8221;d&#8221;日&#8221;</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">12345 -&gt; 一万二千三百四十五</div>
+<div class="line">1959/12/10 -&gt; 昭和三十四年十二月十日</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>[DBNum2]</td>
+<td>日本語</td>
+<td>数字を大字（だいじ）で表示します。</td>
+<td><div class="first last line-block">
+<div class="line">[DBNum2][$-411]G/標準</div>
+<div class="line">[DBNum2][$-411]ggge&#8221;年&#8221;m&#8221;月&#8221;d&#8221;日&#8221;</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">12345 -&gt; 壱萬弐阡参百四拾伍</div>
+<div class="line">1959/12/10 -&gt; 昭和参拾四年壱拾弐月壱拾日</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>[DBNum3]</td>
+<td>日本語</td>
+<td>数字を全角で表示します。</td>
+<td><div class="first last line-block">
+<div class="line">[DBNum3][$-411]G/標準</div>
+<div class="line">[DBNum3][$-411]ggge&#8221;年&#8221;m&#8221;月&#8221;d&#8221;日&#8221;</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">12345 -&gt; １２３４５</div>
+<div class="line">1959/12/10 -&gt; 昭和３４年１２月１０日</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>言語固有の数値の表示条件の注意事項</p>
+<p>数値の表示表現をする <em>[DBNumN]</em> は、言語ごとに意味が異なるため、他の言語環境でExcelファイルを開いたときを考慮して、
+通常はロケールの条件も一緒に定義します。</p>
+<p class="last">他の言語で利用可能な数値表現は、外部サイトの <a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">Libre Officeの数の書式コード</a>
+が参考になると思います。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3 で生成しました。
+    </div>
+  </body>
+</html>

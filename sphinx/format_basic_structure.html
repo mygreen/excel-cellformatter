@@ -1,0 +1,306 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>表示形式の構造 &mdash; Excel-CellFormatter 0.2 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Excel-CellFormatter 0.2 ドキュメント" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">プロジェクト情報</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">1.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">1.3. JExcelAPIの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">2. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">2.1. キャッシュの制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">3. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">3.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">3.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">3.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id11">3.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">3.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id20">3.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id21">3.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id26">3.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">4. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">4.1. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">4.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">4.3. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">4.4. 漢数字／大字変換のロジック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">5. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">5.1. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">5.2. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <h3>このページ</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/format_basic_structure.txt"
+           rel="nofollow">ソースコードを表示</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>表示形式の構造<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<ul class="simple">
+<li>表示形式は、 <strong>最大4つ</strong> のセクションまで指定できます。</li>
+<li>セクションは、 <strong>セミコロン（;）で区切り</strong> ます。</li>
+<li>セクションの個数により、自動的に一致条件が変わります。<ul>
+<li>一致条件を直接指定することができます。</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="id2">
+<h2>標準の構造について<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>セクションが4つの場合、それぞれ順番に <strong>「正の数」「負の数」「ゼロの値」「文字列」</strong> に一致する書式となります。</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_4.png"><img alt="_images/format_section_4.png" src="_images/format_section_4.png" style="width: 468.0px; height: 81.0px;" /></a>
+<p class="caption">セクションが4つの場合の例</p>
+</div>
+<ul class="simple">
+<li>セクションが3つの場合、それぞれ順番に <strong>「正の数」「負の数」「ゼロの値」」</strong> に一致する書式となります。</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_3.png"><img alt="_images/format_section_3.png" src="_images/format_section_3.png" style="width: 367.0px; height: 83.0px;" /></a>
+<p class="caption">セクションが3つの場合の例</p>
+</div>
+<ul class="simple">
+<li>セクションが2つの場合、2つめのセクションに <em>記号「&#64;」</em> を含むかどうかで変わります。<ul>
+<li>2つめのセクションに <em>記号「&#64;」</em> を含まない場合、 <strong>「ゼロ以上の数（正の数 + ゼロの値）」「負の数」</strong> に一致する書式となります。</li>
+<li>2つめのセクションに <em>記号「&#64;」</em> を含む場合、<strong>「全ての数」「文字列」</strong> に一致する書式となります。</li>
+<li>2つめのセクションに日時のフォーマットを指定することもできます。その場合、<strong>「日時」「文字列」</strong> に一致する書式となります。</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_2_num.png"><img alt="_images/format_section_2_num.png" src="_images/format_section_2_num.png" style="width: 303.0px; height: 84.0px;" /></a>
+<p class="caption">セクションが2つの場合の例（数値のフォーマット）</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_2_text.png"><img alt="_images/format_section_2_text.png" src="_images/format_section_2_text.png" style="width: 246.0px; height: 81.0px;" /></a>
+<p class="caption">セクションが2つの場合の例（文字列のフォーマット）</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_2_date.png"><img alt="_images/format_section_2_date.png" src="_images/format_section_2_date.png" style="width: 334.0px; height: 81.5px;" /></a>
+<p class="caption">セクションが2つの場合の例（日時のフォーマット）</p>
+</div>
+<ul class="simple">
+<li>セクションが1つの場合、それぞれ <strong>「全ての数」「日時」「文字列」</strong> に一致します。</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_section_1.png"><img alt="_images/format_section_1.png" src="_images/format_section_1.png" style="width: 429.5px; height: 81.5px;" /></a>
+<p class="caption">セクションが1つの場合の例</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>任意の条件式（比較演算子）について<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>演算子を使用して任意の条件を割り当てることで、その条件が満たされた場合にのみ書式を適用することもできます。</p>
+<ul class="simple">
+<li>条件式は、 <em>[条件式]</em> の形式で定義します。<ul>
+<li>条件式には演算子を用いて定義することができます。</li>
+</ul>
+</li>
+<li>条件式を記述しないセクションは、全ての条件に一致するため、最後のセクションに定義します。</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_condition_section_2_ex.png"><img alt="_images/format_condition_section_2_ex.png" src="_images/format_condition_section_2_ex.png" style="width: 331.0px; height: 81.0px;" /></a>
+<p class="caption">セクションが2つの任意の演算子の場合の例</p>
+</div>
+<ul class="simple">
+<li>セクションが2つの場合、条件式を記述するセクションと条件式がないセクションを定義します。<ul>
+<li>セクションが2つの場合は、必ず2つめのセクションには、条件式記述しないようにします。</li>
+<li>2つめのセクションに条件式を記述した場合、条件を満たさない値が入力されたとき、Excel上は表示が不正になります。</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_condition_section_2.png"><img alt="_images/format_condition_section_2.png" src="_images/format_condition_section_2.png" style="width: 203.0px; height: 81.0px;" /></a>
+<p class="caption">セクションが2つの任意の演算子の場合の形式</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_condition_section_2_wrong.png"><img alt="_images/format_condition_section_2_wrong.png" src="_images/format_condition_section_2_wrong.png" style="width: 505.5px; height: 170.0px;" /></a>
+<p class="caption">セクションが2つの任意の演算子の場合の形式（表示が不正になる場合）</p>
+</div>
+<ul class="simple">
+<li>セクションが3つの場合<ul>
+<li>1つめと2つめのセクションに条件式を記述します。</li>
+<li>最後の3つめのセクションは、条件式を記述しないようにして、1つめと2つめの条件に一致しない場合の書式を定義します。</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_condition_section_3.png"><img alt="_images/format_condition_section_3.png" src="_images/format_condition_section_3.png" style="width: 330.5px; height: 81.5px;" /></a>
+<p class="caption">セクションが3つの任意の演算子の場合の形式</p>
+</div>
+<ul class="simple">
+<li><em>記号「&#64;」</em> を追加することで、数値、日時以外の文字列が入力された場合の書式を定義することもできます。</li>
+<li>文字列の書式は省略可能であり、一般的にはあまり利用しないものです。<ul>
+<li>使用例として、入力されていないことを表現するために、文字「-」を使用するときなどに書式をそろえるために利用します。</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/format_condition_section_3_text.png"><img alt="_images/format_condition_section_3_text.png" src="_images/format_condition_section_3_text.png" style="width: 578.5px; height: 179.0px;" /></a>
+<p class="caption">文字列用の書式があるセクションが3つの任意の演算子の場合の形式の例</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>比較演算子の種類<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>様々な比較演算子を利用して条件式を定義することができます。</p>
+<table border="1" class="docutils">
+<caption>比較演算子の種類</caption>
+<colgroup>
+<col width="15%" />
+<col width="20%" />
+<col width="20%" />
+<col width="15%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">演算子</th>
+<th class="head">名称</th>
+<th class="head">名称（英字）</th>
+<th class="head">使用例</th>
+<th class="head">結果</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>=</td>
+<td>等しい</td>
+<td>equal</td>
+<td>[=2]</td>
+<td>2と等しい。</td>
+</tr>
+<tr class="row-odd"><td>&lt;&gt;</td>
+<td>等しくない</td>
+<td>not equal</td>
+<td>[&lt;&gt;2]</td>
+<td>2以外。</td>
+</tr>
+<tr class="row-even"><td>&gt;</td>
+<td>大きい</td>
+<td>greater than</td>
+<td>[&gt;2]</td>
+<td>2より大きい。</td>
+</tr>
+<tr class="row-odd"><td>&lt;</td>
+<td>小さい</td>
+<td>less than</td>
+<td>[&lt;2]</td>
+<td>2より小さい。</td>
+</tr>
+<tr class="row-even"><td>&gt;=</td>
+<td>以上</td>
+<td>greater equal</td>
+<td>[&gt;=2]</td>
+<td>2以上。</td>
+</tr>
+<tr class="row-odd"><td>&lt;=</td>
+<td>以下</td>
+<td>less equal</td>
+<td>[&lt;=2]</td>
+<td>2以下。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3 で生成しました。
+    </div>
+  </body>
+</html>
