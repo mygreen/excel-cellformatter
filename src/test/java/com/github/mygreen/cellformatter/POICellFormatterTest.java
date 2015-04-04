@@ -418,8 +418,8 @@ public class POICellFormatterTest {
             boolean isDateFormatter = false;
             boolean isNumberFormatter = false;
             if(formatter instanceof CustomFormatter) {
-                isDateFormatter = ((CustomFormatter) formatter).isDateFormatter();
-                isNumberFormatter = ((CustomFormatter) formatter).isNumberFormatter();
+                isDateFormatter = ((CustomFormatter) formatter).hasDateFormatter();
+                isNumberFormatter = ((CustomFormatter) formatter).hasNumberFormatter();
             }
             
             System.out.printf("[%3s] [%s] [%s] : actual=\"%s\" : exprected=\"%s\" \t%d\t%s\tdateFormmat=%b\tnumberFormat=%b\n",
