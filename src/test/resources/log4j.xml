@@ -12,7 +12,7 @@
 	
 	<!-- 全てのログ -->
 	<root>
-		<level value="DEBUG" />
+		<level value="ERROR" />
 		<appender-ref ref="debugAppender" />
 	</root>
 
