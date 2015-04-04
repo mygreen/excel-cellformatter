@@ -66,7 +66,7 @@ public class FormatterResolver {
         registerFormatter((short)8, createFormatter("¥#,##0.00;[Red]¥-#,##0.00"));
         
         // ロケールによって変わるフォーマット
-        registerFormatter((short)14, new LocaleSwitchFormatter(new CustomFormatter("m/d/yy"))
+        registerFormatter((short)14, new LocaleSwitchFormatter(createFormatter("m/d/yy"))
                 .register(createFormatter("yyyy/m/d"), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
         
 //        registerFormatter((short)20, createFormatter("h:mm"));
@@ -96,10 +96,10 @@ public class FormatterResolver {
         registerFormatter((short)58, createFormatter("[$-411]ggge\"年\"m\"月\"d\"日\";@"));
         
         // ロケールによって変わるフォーマット
-        registerFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy", new LocaleSwitchFormatter(new CustomFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy"))
+        registerFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy", new LocaleSwitchFormatter(createFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy"))
             .register(createFormatter("yyyy\"年\"m\"月\"d\"日\""), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
         
-        registerFormatter("[$-F400]h:mm:ss\\ AM/PM", new LocaleSwitchFormatter(new CustomFormatter("[$-F400]h:mm:ss\\ AM/PM"))
+        registerFormatter("[$-F400]h:mm:ss\\ AM/PM", new LocaleSwitchFormatter(createFormatter("[$-F400]h:mm:ss\\ AM/PM"))
             .register(createFormatter("h:mm:ss"), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
     }
     
