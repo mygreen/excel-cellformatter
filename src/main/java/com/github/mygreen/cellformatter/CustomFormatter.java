@@ -6,6 +6,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.github.mygreen.cellformatter.number.NumberFactory;
 import com.github.mygreen.cellformatter.term.NumberTerm;
+import com.github.mygreen.cellformatter.term.TextTerm;
+import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
 
@@ -22,13 +24,20 @@ public class CustomFormatter extends CellFormatter {
      */
     public static final CustomFormatter DEFAULT_FORMATTER;
     static {
-        final ConditionNumberFormatter conditionFormatter = new ConditionNumberFormatter("General");
-        conditionFormatter.addTerm(NumberTerm.general());
-        conditionFormatter.setOperator(ConditionOperator.ALL);
-        conditionFormatter.setNumberFactory(NumberFactory.decimalNumber(0, false, 0));
+        // 数値の場合
+        final ConditionNumberFormatter numberFormatter = new ConditionNumberFormatter("General");
+        numberFormatter.addTerm(NumberTerm.general());
+        numberFormatter.setOperator(ConditionOperator.ALL);
+        numberFormatter.setNumberFactory(NumberFactory.decimalNumber(0, false, 0));
+        
+        // 文字列の場合
+        final ConditionTextFormatter textFormatter = new ConditionTextFormatter("General");
+        textFormatter.addTerm(TextTerm.atMark(Token.SYMBOL_AT_MARK));
+        textFormatter.setOperator(ConditionOperator.ALL);
         
         final CustomFormatter formatter = new CustomFormatter("");
-        formatter.addConditionFormatter(conditionFormatter);
+        formatter.addConditionFormatter(numberFormatter);
+        formatter.addConditionFormatter(textFormatter);
         
         DEFAULT_FORMATTER = formatter;
     }
@@ -37,11 +46,6 @@ public class CustomFormatter extends CellFormatter {
      * 書式のパターン
      */
     private final String pattern;
-    
-    /**
-     * テキスト用のフォーマッタ
-     */
-    private ConditionTextFormatter textFormatter;
     
     /**
      * 条件付きのフォーマッタ
@@ -66,23 +70,18 @@ public class CustomFormatter extends CellFormatter {
     @Override
     public String format(final CommonCell cell, final Locale runtimeLocale) {
         
-        if(cell.isText()) {
-            if(textFormatter != null) {
-                return textFormatter.format(cell, runtimeLocale);
-            }  else {
-                return cell.getTextCellValue();
-            }
-            
-        } else {
-            
-            for(ConditionFormatter formatter : conditionFormatters) {
-                if(formatter.isMatch(cell)) {
-                    return formatter.format(cell, runtimeLocale);
-                }
+        for(ConditionFormatter formatter : conditionFormatters) {
+            if(formatter.isMatch(cell)) {
+                return formatter.format(cell, runtimeLocale);
             }
         }
         
-        throw new NoMatchConditionFormatterException();
+        if(cell.isText()) {
+            return cell.getTextCellValue();
+        }
+        
+        throw new NoMatchConditionFormatterException(cell, String.format(
+                "not match format for cell : '%s'", cell.getCellAddress()));
         
     }
     
@@ -95,11 +94,25 @@ public class CustomFormatter extends CellFormatter {
     }
     
     /**
-     * 日時のフォーマッタかどうか。
+     * 文字列の書式を持つかどうか。
+     * @return
+     */
+    public boolean TextFormatter() {
+        for(ConditionFormatter formatter : conditionFormatters) {
+            if(formatter.isTextFormatter()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 日時のフォーマッタを持つかどうか。
      * <p>ただし、';'で区切り数値と日時の書式を同時に持つ可能性がある。
      * @return
      */
-    public boolean isDateFormatter() {
+    public boolean hasDateFormatter() {
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isDateFormatter()) {
                 return true;
@@ -110,11 +123,11 @@ public class CustomFormatter extends CellFormatter {
     }
     
     /**
-     * 数値のフォーマッタかどうか。
+     * 数値のフォーマッタを持つかどうか。
      * <p>ただし、';'で区切り数値と日時の書式を同時に持つ可能性がある。
      * @return
      */
-    public boolean isNumberFormatter() {
+    public boolean hasNumberFormatter() {
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isNumberFormatter()) {
                 return true;
@@ -125,21 +138,17 @@ public class CustomFormatter extends CellFormatter {
     }
     
     /**
-     * テキストのフォーマットを取得する。
-     * @return
+     * 条件付きのフォーマッタを追加する。
+     * @param formatter
      */
-    public ConditionTextFormatter getTextFormatter() {
-        return textFormatter;
-    }
-    
-    public void setTextFormatter(ConditionTextFormatter textFormatter) {
-        this.textFormatter = textFormatter;
-    }
-    
     public void addConditionFormatter(ConditionFormatter formatter) {
         this.conditionFormatters.add(formatter);
     }
     
+    /**
+     * 条件付きのフォーマッタを取得する。
+     * @param formatter
+     */
     public List<ConditionFormatter> getConditionFormatters() {
         return conditionFormatters;
     }

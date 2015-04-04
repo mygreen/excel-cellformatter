@@ -56,4 +56,11 @@ public interface CommonCell {
      */
     boolean isDateStart1904();
     
+    /**
+     * セルのアドレスを取得する。
+     * @since 0.2
+     * @return 'A12'の形式。
+     */
+    String getCellAddress();
+    
 }

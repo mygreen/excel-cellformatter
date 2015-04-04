@@ -30,11 +30,11 @@ public class ConditionTextFormatter extends ConditionFormatter {
     }
     
     /**
-     * 常にtrueを返す。
+     * セルのタイプが文字列の場合に一致。
      */
     @Override
-    public boolean isMatch(CommonCell cell) {
-        return true;
+    public boolean isMatch(final CommonCell cell) {
+        return cell.isText();
     }
     
     @Override

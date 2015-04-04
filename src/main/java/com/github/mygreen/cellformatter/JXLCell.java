@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import jxl.BooleanCell;
 import jxl.Cell;
+import jxl.CellReferenceHelper;
 import jxl.CellType;
 import jxl.DateCell;
 import jxl.LabelCell;
@@ -258,6 +259,11 @@ public class JXLCell implements CommonCell {
     public boolean isDateStart1904() {
         // JExcelAPIの場合は、Workbookからでないと取得できないため、コンストラクタで渡す。
         return dateStart1904;
+    }
+    
+    @Override
+    public String getCellAddress() {
+        return CellReferenceHelper.getCellReference(cell.getColumn(), cell.getRow());
     }
     
 }

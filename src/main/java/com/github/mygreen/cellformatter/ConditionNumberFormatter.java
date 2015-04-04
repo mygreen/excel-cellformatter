@@ -40,6 +40,10 @@ public class ConditionNumberFormatter extends ConditionFormatter {
     
     @Override
     public boolean isMatch(final CommonCell cell) {
+        if(cell.isText()) {
+            return false;
+        }
+        
         final double value = cell.getNumberCellValue();
         return getOperator().isMatch(value);
     }

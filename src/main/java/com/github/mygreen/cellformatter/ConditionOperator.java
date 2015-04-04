@@ -38,6 +38,11 @@ public abstract class ConditionOperator {
     public static ConditionOperator ZERO = new Equal(0.0);
     
     /**
+     * ゼロ以上の値に一致する条件（非負の数）（>= 0.0）;
+     */
+    public static ConditionOperator NON_NEGATIVE = new GreaterEqual(0.0);
+    
+    /**
      * 指定した値が条件に一致するかどうか。
      * @param value
      * @return

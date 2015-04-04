@@ -24,6 +24,7 @@ public class CustomFormatterFactory {
      * 書式を元に、{@link CustomFormatter}のインスタンスを作成する。
      * @param pattern ユーザ定義の書式
      * @return
+     * @throws CustomFormatterParseException 書式が不正な場合にスローされる。
      */
     public CustomFormatter create(final String pattern) {
         
@@ -32,77 +33,100 @@ public class CustomFormatterFactory {
         if(allStore.getTokens().isEmpty()) {
             // 標準のフォーマッタ
             return CustomFormatter.DEFAULT_FORMATTER;
+            
+        } else if(pattern.equalsIgnoreCase("General")) {
+            return CustomFormatter.DEFAULT_FORMATTER;
+        }
+        
+        // セクション単位に分割し、処理していく。
+        final List<TokenStore> sections = allStore.split(Token.SYMBOL_SEMI_COLON);
+        if(sections.size() > 4) {
+            throw new CustomFormatterParseException(pattern,
+                    String.format("section size over 4. but '%s' number of %d secitions.", pattern, sections.size()));
         }
         
         final CustomFormatter formatter = new CustomFormatter(pattern);
-        
-        // ユーザ定義に分割し、処理していく。
-        final List<TokenStore> stores = allStore.split(Token.SYMBOL_SEMI_COLON);
-        final int storeSize = stores.size();
-        for(int i=0; i < storeSize; i++) {
-            
-            final TokenStore storeItem = stores.get(i);
-            
-            if(textFormatterFactory.isTextPattern(storeItem)) {
-                formatter.setTextFormatter(textFormatterFactory.create(storeItem));
-                continue; 
-            }
-            
-            /*
-             * フォーマットのインデックス番号の判定する。
-             * 番号によって、数値の条件が付与されていない書式は、自動的に正、負、ゼロと判定する。
-             */
-            int formatIndex = i;
-            if(storeSize <= 1) {
-                // // 区切り文字がない場合、インデックス番号に意味がない場合は-1をする。
-                formatIndex = -1;
-            }
-            
-            /*
-             * 1番目の書式がデフォルトの条件の場合
-             */
-            boolean hasConditionFirst = false;
-            if(i >= 1) {
-                hasConditionFirst = !formatter.getConditionFormatters().get(0).getOperator().equals(ConditionOperator.POSITIVE);
-            }
+        boolean containsTextFormatter = false;
+        for(TokenStore section : sections) {
             
             final ConditionFormatter conditionFormatter;
-            if(dateFormatterFactory.isDatePattern(storeItem)) {
-                conditionFormatter = dateFormatterFactory.create(storeItem);
+            if(textFormatterFactory.isTextPattern(section)) {
+                conditionFormatter = textFormatterFactory.create(section);
+                containsTextFormatter = true;
                 
-            } else if(numberFormatterFactory.isNumberPattern(storeItem)) {
-                conditionFormatter = numberFormatterFactory.create(storeItem);
+            } else if(dateFormatterFactory.isDatePattern(section)) {
+                conditionFormatter = dateFormatterFactory.create(section);
+                
+            } else if(numberFormatterFactory.isNumberPattern(section)) {
+                conditionFormatter = numberFormatterFactory.create(section);
                 
             } else {
-                conditionFormatter = numberFormatterFactory.create(storeItem);
+                conditionFormatter = numberFormatterFactory.create(section);
                 
             }
             
             formatter.addConditionFormatter(conditionFormatter);
             
-            // 条件がない場合の指定
-            if(conditionFormatter.getOperator() == null) {
-                if(formatIndex == 0) {
-                    conditionFormatter.setOperator(ConditionOperator.POSITIVE);
-                } else if(formatIndex == 1) {
+        }
+        
+        // 条件式の設定
+        int sectionSize = sections.size();
+        if(containsTextFormatter) {
+            // 文字列の書式を含む場合は、個数から除外する。
+            sectionSize--;
+        }
+        
+        // 1番目の書式がデフォルトの条件の場合
+        boolean hasConditionFirst = false;
+        
+        for(int i=0; i < sectionSize; i++) {
+            
+            final ConditionFormatter conditionFormatter = formatter.getConditionFormatters().get(i);
+            if(conditionFormatter.getOperator() != null) {
+                if(i == 0) {
+                    hasConditionFirst = true;
+                }
+                continue;
+            }
+            
+            if(sectionSize <= 1) {
+                // 書式が1つしかない場合
+                conditionFormatter.setOperator(ConditionOperator.ALL);
+                
+            } else if(sectionSize == 2) {
+                if(i==0) {
+                    // ゼロ以上の数の書式
+                    conditionFormatter.setOperator(ConditionOperator.NON_NEGATIVE);
+                    
+                } else if(i==1) {
+                    // その他の書式
                     if(hasConditionFirst) {
                         conditionFormatter.setOperator(ConditionOperator.ALL);
                     } else {
                         conditionFormatter.setOperator(ConditionOperator.NEGATIVE);
                     }
-                } else if(formatIndex == 2) {
-                    // 3番目はゼロの場合ではなく、その他の場合であることに注意
-                    conditionFormatter.setOperator(ConditionOperator.ALL);
-                } else {
-                    conditionFormatter.setOperator(ConditionOperator.ALL);
                 }
+                
+            } else if(sectionSize == 3) {
+                if(i==0) {
+                    // 正の書式
+                    conditionFormatter.setOperator(ConditionOperator.POSITIVE);
+                    
+                } else if(i==1) {
+                    // 負の数の書式
+                    conditionFormatter.setOperator(ConditionOperator.NEGATIVE);
+                    
+                } else {
+                    // その他の書式
+                    conditionFormatter.setOperator(ConditionOperator.ALL);
+                    
+                }
+                
+            } else {
+                throw new CustomFormatterParseException(pattern,
+                        String.format("section size over 4. but '%s' number of %d secitions.", pattern, sections.size())); 
             }
             
-        }
-        
-        // フォーマッタが1つしか内場合は、補正する。
-        if(formatter.getConditionFormatters().size() == 1) {
-           formatter.getConditionFormatters().get(0).setOperator(ConditionOperator.ALL);
         }
         
         return formatter;

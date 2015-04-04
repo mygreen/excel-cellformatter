@@ -48,6 +48,10 @@ public class ConditionDateFormatter extends ConditionFormatter {
      */
     @Override
     public boolean isMatch(final CommonCell cell) {
+        if(cell.isText()) {
+            return false;
+        }
+        
         final long zeroTime = Utils.getExcelZeroDateTime(cell.isDateStart1904());
         final Date date = cell.getDateCellValue();
         final long value = date.getTime() - zeroTime;
