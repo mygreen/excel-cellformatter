@@ -59,4 +59,6 @@ contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(sheet));
 
 
 # ドキュメント
-準備中
+http://mygreen.github.io/excel-cellformatter/sphinx/howtouse.html
+
+
