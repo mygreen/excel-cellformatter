@@ -18,3 +18,6 @@ rmdir /q /s .\target\site\sphinx
 mkdir .\target\site\sphinx
 xcopy /y /e .\src\site\sphinx\build\html .\target\site\sphinx
 
+REM github-pages‚Ìsphinx‘Î‰
+echo "" > .\target\site\.nojekyll
+
