@@ -1,7 +1,5 @@
 package com.github.mygreen.cellformatter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
@@ -15,13 +13,10 @@ import jxl.CellType;
 import jxl.DateCell;
 import jxl.LabelCell;
 import jxl.NumberCell;
-import jxl.biff.FormatRecord;
+import jxl.biff.DisplayFormat;
 import jxl.biff.XFRecord;
 import jxl.format.CellFormat;
 import jxl.format.Format;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
@@ -33,8 +28,6 @@ import com.github.mygreen.cellformatter.lang.Utils;
  *
  */
 public class JXLCell implements CommonCell {
-    
-    private static Logger logger = LoggerFactory.getLogger(JXLCell.class);
     
     /** 日付の始まりが1904年開始かどうか */
     private final boolean dateStart1904;
@@ -117,40 +110,19 @@ public class JXLCell implements CommonCell {
         if(cellFormat == null && cellStyle instanceof XFRecord) {
             final XFRecord record = (XFRecord) cellStyle;
             return (short) record.formatIndex;
-        }
-        
-        if(cellFormat == null) {
+            
+        } else if(cellFormat == null) {
             return 0;
         }
         
-        final String className = cellFormat.getClass().getName();
-        if(className.equals("jxl.biff.BuiltInFormat")) {
-            // 非公開のクラスなので、クラス名で比較する
-            try {
-                final Method method = cellFormat.getClass().getDeclaredMethod("getFormatIndex");
-                method.setAccessible(true);
-                
-                final int formatIndex = (int) method.invoke(cellFormat);
-                return (short) formatIndex;
-                
-            } catch (NoSuchMethodException | SecurityException e) {
-                logger.warn("fail access method : jxl.biff.BuiltInFormat#getFormatIndex()", e);
-                return 0;
-                
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                logger.warn("fail invoke method : jxl.biff.BuiltInFormat#getFormatIndex()", e);
-                return 0;
-            }
-            
-        } else if(className.equals("jxl.biff.FormatRecord")) {
-            final FormatRecord record = (FormatRecord) cellFormat;
-            return (short) record.getFormatIndex();
+        if(cellFormat instanceof DisplayFormat) {
+            final DisplayFormat displayFormat = (DisplayFormat)cellFormat;
+            return (short) displayFormat.getFormatIndex();
         }
         
         return 0;
         
     }
-    
     
     @Override
     public String getFormatPattern() {
