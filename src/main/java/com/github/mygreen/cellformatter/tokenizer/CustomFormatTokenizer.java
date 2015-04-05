@@ -37,7 +37,7 @@ public class CustomFormatTokenizer {
         for(int i=0; i < length; i++) {
             final char c = pattern.charAt(i);
             
-            if(StackUtils.equalsTopElement(stack, Token.STR_ESCAPE)) {
+            if(StackUtils.equalsAnyTopElement(stack, Token.STR_ESCAPES)) {
                 
                 // スタックの一番上がエスケープ文字の場合でかつ、括弧や文字列などの囲み文字の中の場合は、通常の文字として扱う。
                 if(StackUtils.equalsAnyBottomElement(stack, new String[]{"[", "\""})) {
@@ -45,12 +45,14 @@ public class CustomFormatTokenizer {
                     
                 } else {
                     // エスケープ文字として分割する。
+                    final String escapedChar = StackUtils.popup(stack);
                     final String concatStr = StackUtils.popupAndConcat(stack);
-                    if(concatStr.length() >= 2) {
-                        store.add(Token.factor(concatStr.substring(0, concatStr.length()-1)));
+                    if(concatStr.length() >= 1) {
+                        // エスケープ文字以前の文字を追加する。
+                        store.add(Token.factor(concatStr));
                     }
                     
-                    store.add(Token.escapedChar(Token.STR_ESCAPE + c));
+                    store.add(Token.escapedChar(escapedChar + c));
                     
                 }
                 
