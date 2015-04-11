@@ -1,0 +1,187 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. リリースノート &mdash; Excel-CellFormatter 0.2 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Excel-CellFormatter 0.2 ドキュメント" href="index.html" />
+    <link rel="prev" title="4. Excelの書式のその他の情報" href="format_other.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="format_other.html" title="4. Excelの書式のその他の情報"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">プロジェクト情報</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">1.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">1.3. JExcelAPIの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">2. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">2.1. キャッシュの制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">3. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">3.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">3.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">3.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">3.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">3.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">3.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">3.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id22">3.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">4. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">4.1. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">4.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">4.3. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">4.4. 漢数字／大字変換のロジック</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">5. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-3-2015-04-11">5.1. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-2-2015-04-04">5.2. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-1-2015-03-22">5.3. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="format_other.html"
+                        title="前の章へ">4. Excelの書式のその他の情報</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/release.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>5. リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="ver-0-3-2015-04-11">
+<h2>5.1. ver.0.3 - 2015-04-11<a class="headerlink" href="#ver-0-3-2015-04-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul>
+<li><p class="first"><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/2">#2</a> : フォーマットの戻り値として色などの詳細な情報 <cite>CellFormatResult</cite> を取得できるよにしました。</p>
+<blockquote>
+<div><ul class="simple">
+<li>この修正に伴い、既存のメソッド <cite>POICellFormatter#format(...)</cite> 、<cite>JXLCellFormatter#format(...)</cite> の名称を、<cite>#formatAsString(...)</cite> に変更しました。</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/3">#3</a> : エスケープ文字としてクエスチョン（!）に対応しました。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="ver-0-2-2015-04-04">
+<h2>5.2. ver.0.2 - 2015-04-04<a class="headerlink" href="#ver-0-2-2015-04-04" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>セクションの判定条件を修正。<ul>
+<li>セクションが2つの場合、1つめのセクションが「ゼロ以上」の条件になるよう修正。</li>
+<li>セクションが5個以上あるとき、例外 <em>CustomFormatterParseException</em> をスローするよう修正。</li>
+</ul>
+</li>
+<li>Javadocの修正。</li>
+<li>マニュアルの整備。</li>
+</ul>
+</div>
+<div class="section" id="ver-0-1-2015-03-22">
+<h2>5.3. ver.0.1 - 2015-03-22<a class="headerlink" href="#ver-0-1-2015-03-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>初期リリース。</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="format_other.html" title="4. Excelの書式のその他の情報"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.2 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1 で生成しました。
+    </div>
+  </body>
+</html>
