@@ -321,7 +321,7 @@ public class JXLCellFormatterTest {
             }
             
             final boolean startDate1904 = JXLUtils.isDateStart1904(sheet);
-            final String testCase = cellFormatter.format(testCaseCell, Locale.JAPANESE, startDate1904);
+            final String testCase = cellFormatter.formatAsString(testCaseCell, Locale.JAPANESE, startDate1904);
             final String testResult = testResultCell.getContents();
             
             final String test = testCase.equals(testResult) ? "○" : "×";

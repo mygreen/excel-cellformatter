@@ -404,7 +404,7 @@ public class POICellFormatterTest {
                 break;
             }
             
-            final String testCase = cellFormatter.format(testCaseCell);
+            final String testCase = cellFormatter.formatAsString(testCaseCell);
             final String testResult = testResultCell.getRichStringCellValue().getString();
             
             final String test = testCase.equals(testResult) ? "○" : "×";

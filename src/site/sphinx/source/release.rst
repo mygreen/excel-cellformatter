@@ -2,6 +2,17 @@
 リリースノート
 ======================================
 
+
+------------------------
+ver.0.3 - 2015-04-11
+------------------------
+
+* `#2 <https://github.com/mygreen/excel-cellformatter/issues/2>`_ : フォーマットの戻り値として色などの詳細な情報 `CellFormatResult` を取得できるよにしました。
+
+   * この修正に伴い、既存のメソッド `POICellFormatter#format(...)` 、`JXLCellFormatter#format(...)` の名称を、`#formatAsString(...)` に変更しました。
+
+* `#3 <https://github.com/mygreen/excel-cellformatter/issues/3>`_ : エスケープ文字としてクエスチョン（!）に対応しました。
+
 ------------------------
 ver.0.2 - 2015-04-04
 ------------------------

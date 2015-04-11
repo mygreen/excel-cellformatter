@@ -21,7 +21,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
  *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html"></a></li>
  *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html">POIでセルの値をとるのは大変　日付編</a></li>
  *   
- * @version 0.2
+ * @version 0.3
  * @author T.TSUCHIE
  *
  */
@@ -40,8 +40,8 @@ public class POICellFormatter {
      * @return フォーマットしたセルの値。
      * @throws IllegalArgumentException cell is null.
      */
-    public String format(final Cell cell) {
-        return format(cell, Locale.getDefault());
+    public String formatAsString(final Cell cell) {
+        return formatAsString(cell, Locale.getDefault());
     }
     
     /**
@@ -52,7 +52,33 @@ public class POICellFormatter {
      * @return フォーマットした文字列
      * @throws IllegalArgumentException cell is null.
      */
-    public String format(final Cell cell, final Locale locale) {
+    public String formatAsString(final Cell cell, final Locale locale) {
+        ArgUtils.notNull(cell, "cell");
+        
+        return format(cell, locale).getText();
+    }
+    
+    /**
+     * セルの値を取得する
+     * @since 0.3
+     * @param cell フォーマット対象のセル
+     * @return フォーマット結果
+     * @throws IllegalArgumentException cell is null.
+     */
+    public CellFormatResult format(final Cell cell) {
+        return format(cell, Locale.getDefault());
+    }
+    
+    /**
+     * ロケールを指定してセルの値を取得する
+     * @since 0.3
+     * @param cell フォーマット対象のセル
+     * @param locale locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @return フォーマット結果
+     * @throws IllegalArgumentException cell is null.
+     */
+    public CellFormatResult format(final Cell cell, final Locale locale) {
         ArgUtils.notNull(cell, "cell");
         
         switch(cell.getCellType()) {
@@ -73,10 +99,10 @@ public class POICellFormatter {
                 return getFormulaCellValue(cell, locale);
                 
             case Cell.CELL_TYPE_ERROR:
-                return "";
+                return CellFormatResult.noFormatResult("");
                 
             default:
-                return "";
+                return CellFormatResult.noFormatResult("");
         }
     }
     
@@ -86,7 +112,7 @@ public class POICellFormatter {
      * @param locale
      * @return
      */
-    private String getFormulaCellValue(final Cell cell, final Locale locale) {
+    private CellFormatResult getFormulaCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
         if(cellType != Cell.CELL_TYPE_FORMULA) {
@@ -110,7 +136,7 @@ public class POICellFormatter {
      * @param cell
      * @return
      */
-    private String getMergedCellValue(final Cell cell, final Locale locale) {
+    private CellFormatResult getMergedCellValue(final Cell cell, final Locale locale) {
         
         final int rowIndex = cell.getRowIndex();
         final int columnIndex = cell.getColumnIndex();
@@ -126,7 +152,7 @@ public class POICellFormatter {
             }
         }
         
-        return "";
+        return CellFormatResult.noFormatResult("");
     }
     
     /**
@@ -158,7 +184,7 @@ public class POICellFormatter {
      * 数値以外ののフォーマット
      * @return
      */
-    private String getOtherCellValue(final Cell cell, final Locale locale) {
+    private CellFormatResult getOtherCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
         if(!(cellType != Cell.CELL_TYPE_STRING || cellType != Cell.CELL_TYPE_BOOLEAN)) {
@@ -185,7 +211,12 @@ public class POICellFormatter {
             
         } else {
             // 書式を持たない場合は、そのまま返す。
-            return poiCell.getTextCellValue();
+            final String text = poiCell.getTextCellValue();
+            final CellFormatResult result = new CellFormatResult();
+            result.setValue(text);
+            result.setText(text);
+            result.setFormatterType(FormatterType.Unknown);
+            return result;
         }
         
     }
@@ -197,7 +228,7 @@ public class POICellFormatter {
      * @param locale
      * @return
      */
-    private String getNumericCellValue(final Cell cell, final Locale locale) {
+    private CellFormatResult getNumericCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
         if(cellType != Cell.CELL_TYPE_NUMERIC) {

@@ -24,7 +24,7 @@ public class LocaleSwitchFormatter extends CellFormatter {
     }
     
     @Override
-    public String format(final CommonCell cell, final Locale locale) {
+    public CellFormatResult format(final CommonCell cell, final Locale locale) {
         
         if(locale == null) {
             return defaultFormatter.format(cell, locale);

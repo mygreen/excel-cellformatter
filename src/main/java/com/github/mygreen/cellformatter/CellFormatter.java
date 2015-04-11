@@ -5,6 +5,8 @@ import java.util.Locale;
 
 /**
  * セルのフォーマッタの共通インタフェース
+ * 
+ * @version 0.3
  * @author T.TSUCHIE
  *
  */
@@ -15,7 +17,7 @@ public abstract class CellFormatter {
      * @param cell
      * @return
      */
-    public String format(final CommonCell cell) {
+    public CellFormatResult format(final CommonCell cell) {
         return format(cell, Locale.getDefault());
     }
     
@@ -25,6 +27,6 @@ public abstract class CellFormatter {
      * @param locale
      * @return
      */
-    public abstract String format(final CommonCell cell, final Locale locale);
+    public abstract CellFormatResult format(final CommonCell cell, final Locale locale);
     
 }

@@ -40,9 +40,19 @@ public abstract class Token {
     public static final Symbol SYMBOL_AT_MARK = new Symbol("@");
     
     /**
-     * エスケープ文字
+     * エスケープ文字（バックスペース\\）
      */
-    public static final String STR_ESCAPE = "\\";
+    public static final String STR_ESCAPE_BACKSPACE = "\\";
+    
+    /**
+     * エスケープ文字（クエスチョン!）
+     */
+    public static final String STR_ESCAPE_QUESTION = "!";
+    
+    /**
+     * エスケープ文字の配列
+     */
+    public static final String[] STR_ESCAPES = {STR_ESCAPE_BACKSPACE, STR_ESCAPE_QUESTION};
     
     /**
      * トークンの文字列。

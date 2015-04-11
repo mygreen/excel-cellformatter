@@ -10,6 +10,7 @@ import com.github.mygreen.cellformatter.term.Term;
 /**
  * Excelのテキスト表示のフォーマットと処理を行うクラス。
  * <p>書式中に'@'を含むもの。
+ * @version 0.3
  * @author T.TSUCHIE
  *
  */
@@ -38,7 +39,7 @@ public class ConditionTextFormatter extends ConditionFormatter {
     }
     
     @Override
-    public String format(final CommonCell cell, final Locale runtimeLocale) {
+    public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
         
         final String value = cell.getTextCellValue();
         final StringBuilder sb = new StringBuilder();
@@ -47,7 +48,16 @@ public class ConditionTextFormatter extends ConditionFormatter {
             sb.append(term.format(value, getLocale(), runtimeLocale));
         }
         
-        return sb.toString();
+        String text = sb.toString();
+        
+        final CellFormatResult result = new CellFormatResult();
+        result.setValue(value);
+        result.setText(text);
+        result.setTextColor(getColor());
+        result.setSectionPattern(getPattern());
+        result.setFormatterType(getType());
+        
+        return result;
         
     }
     

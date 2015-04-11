@@ -14,6 +14,7 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 
 /**
  * 数値のフォーマッタ
+ * @version 0.3
  * @author T.TSUCHIE
  *
  */
@@ -50,7 +51,7 @@ public class ConditionNumberFormatter extends ConditionFormatter {
     
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public String format(final CommonCell cell, final Locale runtimeLocale) {
+    public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
         
         final double number = cell.getNumberCellValue();
         final FormattedNumber numObj = numberFactory.create(number);
@@ -73,7 +74,14 @@ public class ConditionNumberFormatter extends ConditionFormatter {
             value = callback.call(number, value);
         }
         
-        return value;
+        final CellFormatResult result = new CellFormatResult();
+        result.setValue(number);
+        result.setText(value);
+        result.setTextColor(getColor());
+        result.setSectionPattern(getPattern());
+        result.setFormatterType(getType());
+        
+        return result;
     }
     
     /**

@@ -71,6 +71,32 @@ public class StackUtils {
     }
     
     /**
+     * スタックの先頭の要素（一番上の要素）が引数で指定した文字列の何れかと等しいかどうか比較する。
+     * @param stack
+     * @param strs 比較する文字列の配列
+     * @return
+     */
+    public static boolean equalsAnyTopElement(final LinkedList<String> stack, final String[] strs) {
+        
+        ArgUtils.notNull(stack, "stack");
+        ArgUtils.notEmpty(strs, "strs");
+        
+        if(stack.isEmpty()) {
+            return false;
+        }
+        
+        final String top = stack.peekFirst();
+        for(String str : strs) {
+            if(str.equals(top)) {
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    /**
      * スタックの値を取り出し、文字列として結合する。
      * @param stack
      * @return
@@ -85,6 +111,20 @@ public class StackUtils {
         
         return value.toString();
         
+    }
+    
+    /**
+     * スタックから先頭の値を取り出す。
+     * @param stack
+     * @return スタックが空の場合は空文字を返す。
+     */
+    public static String popup(final LinkedList<String> stack) {
+        
+        if(stack.isEmpty()) {
+            return "";
+        }
+        
+        return stack.pollFirst();
     }
     
 }

@@ -3,7 +3,8 @@ package com.github.mygreen.cellformatter;
 
 /**
  * フォーマッタの種類
- *
+ * 
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -17,6 +18,9 @@ public enum FormatterType {
     
     /** テキストのフォーマッタ */
     Text,
+    
+    /** 不明なフォーマッタ */
+    Unknown,
     
     ;
     

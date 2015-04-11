@@ -19,6 +19,8 @@ import com.github.mygreen.cellformatter.term.Term;
 
 /**
  * ユーザ定義型の日時を解釈するフォーマッタ
+ * 
+ * @version 0.3
  * @author T.TSUCHIE
  *
  */
@@ -65,7 +67,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
     }
     
     @Override
-    public String format(final CommonCell cell, final Locale runtimeLocale) {
+    public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
         ArgUtils.notNull(cell, "date");
         
         final Date date = cell.getDateCellValue();
@@ -86,7 +88,14 @@ public class ConditionDateFormatter extends ConditionFormatter {
         
         String value = sb.toString();
         
-        return value;
+        final CellFormatResult result = new CellFormatResult();
+        result.setValue(date);
+        result.setText(value);
+        result.setTextColor(getColor());
+        result.setSectionPattern(getPattern());
+        result.setFormatterType(getType());
+        
+        return result;
     }
     
     @SuppressWarnings({"rawtypes", "unchecked"})

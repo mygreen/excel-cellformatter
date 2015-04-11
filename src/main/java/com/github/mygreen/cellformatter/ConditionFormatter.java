@@ -14,6 +14,7 @@ import com.github.mygreen.cellformatter.lang.MSLocale;
  * Excelのユーザ定義の各条件式を表現するための抽象クラス。
  * <p>区切り文字';'で区切られたもの。
  * 
+ * @version 0.3
  * @param <T> 扱う処理のタイプ
  * @author T.TSUCHIE
  *
@@ -61,7 +62,7 @@ public abstract class ConditionFormatter {
      * @param cell
      * @return
      */
-    public String format(CommonCell cell) {
+    public CellFormatResult format(CommonCell cell) {
         return format(cell, Locale.getDefault());
     }
     
@@ -71,7 +72,7 @@ public abstract class ConditionFormatter {
      * @param runtimeLocale 実行時のロケール
      * @return
      */
-    public abstract String format(CommonCell cell, Locale runtimeLocale);
+    public abstract CellFormatResult format(CommonCell cell, Locale runtimeLocale);
     
     /**
      * 種類が'日時'のフォーマッタかどうか。
