@@ -68,7 +68,7 @@ public class CustomFormatter extends CellFormatter {
      * @return
      */
     @Override
-    public String format(final CommonCell cell, final Locale runtimeLocale) {
+    public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
         
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isMatch(cell)) {
@@ -76,8 +76,9 @@ public class CustomFormatter extends CellFormatter {
             }
         }
         
+        // 一致するものがなく、セルのタイプが文字列の場合は、そのまま文字列として返す。
         if(cell.isText()) {
-            return cell.getTextCellValue();
+            return CellFormatResult.noFormatResult(cell.getTextCellValue());
         }
         
         throw new NoMatchConditionFormatterException(cell, String.format(
