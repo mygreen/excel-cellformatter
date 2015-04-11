@@ -10,15 +10,11 @@ Mavenのセントラルリポジトリに登録してあるため、依存関係
 
 .. sourcecode:: xml
     
-    <dependencies>
-        
-        <dependency>
-            <groupId>com.github.mygreen</groupId>
-            <artifactId>excel-cellformatter</artifactId>
-            <version>0.2</version>
-        </dependency>
-        
-    </dependencies>
+    <dependency>
+        <groupId>com.github.mygreen</groupId>
+        <artifactId>excel-cellformatter</artifactId>
+        <version>0.3</version>
+    </dependency>
 
 
 -----------------
@@ -37,10 +33,44 @@ Apaceh POIの場合
     
     final POICellFormatter cellFormatter = new POICellFormatter();
     
-    String contents = cellForrmatter.format(cell);
+    String contents = cellForrmatter.formatAsString(cell);
     
     // ロケールを指定してフォーマットする。
-    contents = cellForrmatter.format(cell, Locale.JAPANESE);
+    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE);
+
+
+
+* 書式に色の条件式など指定されている場合、詳細の結果を取得することもできます。
+
+.. sourcecode:: java
+    
+    final POICellFormatter cellFormatter = new POICellFormatter();
+    
+    // フォーマット結果の詳細を取得する
+    CellFormatResult result = cellForrmatter.format(cell);
+    
+    // フォーマットした文字列の取得
+    String text = result.getText();
+    
+    // 文字色が設定されている場合、その色の取得。
+    // 色が設定されていない場合は、nullを返す。
+    MSColor color = result.getTextColor();
+    
+    // フォーマット対象の値を取得します。
+    // どのタイプの書式として処理されたかによって、値の取得方法がことなります。
+    if(result.isDate()) {
+        Date dateValue = result.getValueAsDate();
+        
+    } else if(result.isNumber()) {
+        double numberValue = result.getValueAsDouble();
+    
+    } else if(result.isText()) {
+        String stringValue = rsult.getValueAsString();
+        
+    } else {
+        // エラー用セルやブランクセルの場合
+        
+    }
 
 
 -----------------
@@ -82,10 +112,10 @@ JExcelAPIの場合
     final JXLCellFormatter cellFormatter = new JXLCellFormatter();
     
     // JXLUtils.isDateStart1904(...)を利用して、1904年始まりのシートか調べる。
-    String contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(workbook));
+    String contents = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(workbook));
     
     // ロケールを指定してフォーマットする。
-    contents = cellForrmatter.format(cell, Locale.JAPANESE, JXLUtils.isDateStart1904(workbook));
+    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE, JXLUtils.isDateStart1904(workbook));
 
 
 
