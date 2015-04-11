@@ -89,6 +89,30 @@ public class CellFormatResult {
     }
     
     /**
+     * 値が日付型かどうか。
+     * @return
+     */
+    public boolean isDate() {
+        return getFormatterType().equals(FormatterType.Date);
+    }
+    
+    /**
+     * 値が数値型かどうか。
+     * @return
+     */
+    public boolean isNumber() {
+        return getFormatterType().equals(FormatterType.Number);
+    }
+    
+    /**
+     * 値が文字列型かどうか。
+     * @return
+     */
+    public boolean isText() {
+        return getFormatterType().equals(FormatterType.Text);
+    }
+    
+    /**
      * フォーマット対象の値を設定する。
      * @param value
      */
