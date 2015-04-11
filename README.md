@@ -3,13 +3,11 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 
 # ダウンロード
 ```xml
-<dependencies>
-    <dependency>
-        <groupId>com.github.mygreen</groupId>
-        <artifactId>excel-cellformatter</artifactId>
-        <version>0.2</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>com.github.mygreen</groupId>
+    <artifactId>excel-cellformatter</artifactId>
+    <version>0.3</version>
+</dependency>
 ```
 
 # 簡単な使い方
@@ -19,12 +17,21 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 Cell cell = /* セルの値の取得 */;
 
 POICellFormatter cellFormatter = new POICellFormatter();
-String contents = cellForrmatter.format(cell);
+String contents = cellForrmatter.formatAsString(cell);
 
 // ロケールに依存する書式の場合
-contents = cellForrmatter.format(cell, Locale.US);
+contents = cellForrmatter.formatAsString(cell, Locale.US);
+
+// 文字色の条件が設定されている場合
+CellFormatResult result = cellForrmatter.format(cell);
+String text = result.getText(); // フォーマット結果の文字列
+MSColor textColor = result.getTextColor(); // フォーマットした文字色
 
 ```
+
+** 注意事項
+- 単純にフォーマット結果を文字列として取得する場合、#formatAsString(...)メソッドを呼びます。
+- 文字色など書式に条件が設定されている場合、詳細な情報を取得するには、#format(...)メソッドを呼びます。
 
 ## JExcelAPIの場合
 
@@ -43,13 +50,13 @@ Cell cell = /* セルの値の取得 */;
 
 JXLCellFormatter cellFormatter = new JXLCellFormatter();
 
-String contents = cellForrmatter.format(cell);
+String contents = cellForrmatter.formatAsString(cell);
 
 // ロケールに依存する書式の場合
-contents = cellForrmatter.format(cell, Locale.US);
+contents = cellForrmatter.formatAsString(cell, Locale.US);
 
 // 1904年始まりのシートの場合
-contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(sheet));
+contents = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(sheet));
 
 ```
 
@@ -60,5 +67,3 @@ contents = cellForrmatter.format(cell, JXLUtils.isDateStart1904(sheet));
 
 # ドキュメント
 http://mygreen.github.io/excel-cellformatter/sphinx/howtouse.html
-
-
