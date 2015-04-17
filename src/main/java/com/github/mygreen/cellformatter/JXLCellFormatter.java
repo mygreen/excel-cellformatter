@@ -83,7 +83,7 @@ public class JXLCellFormatter {
         ArgUtils.notNull(cell, "cell");
         
         if(cell.getType() == CellType.EMPTY) {
-            return CellFormatResult.noFormatResult("");
+            return CellFormatResult.createNoFormatResult("");
             
         } else if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
             return getOtherCellValue(cell, locale, isStartDate1904);
@@ -92,7 +92,7 @@ public class JXLCellFormatter {
             return getOtherCellValue(cell, locale, isStartDate1904);
         
         } else if(cell.getType() == CellType.ERROR || cell.getType() == CellType.FORMULA_ERROR) {
-            return CellFormatResult.noFormatResult("");
+            return CellFormatResult.createNoFormatResult("");
             
         } else if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
             return getNumericCellValue(cell, locale, isStartDate1904);
@@ -101,7 +101,7 @@ public class JXLCellFormatter {
             return getNumericCellValue(cell, locale, isStartDate1904);
             
         } else {
-            return CellFormatResult.noFormatResult(cell.getContents());
+            return CellFormatResult.createNoFormatResult(cell.getContents());
         }
         
     }
@@ -136,7 +136,7 @@ public class JXLCellFormatter {
             
         } else {
             // 書式を持たない場合は、そのまま返す。
-            return CellFormatResult.noFormatResult(jxlCell.getTextCellValue());
+            return CellFormatResult.createNoFormatResult(jxlCell.getTextCellValue());
         }
     }
     
@@ -171,10 +171,19 @@ public class JXLCellFormatter {
         
     }
     
+    /**
+     * {@link FormatterResolver}を取得する。
+     * @return
+     */
     public FormatterResolver getFormatterResolver() {
         return formatterResolver;
     }
     
+    /**
+     * {@link FormatterResolver}を設定する。
+     * 独自のものに入れ替える際に利用します。
+     * @param formatterResolver
+     */
     public void setFormatterResolver(FormatterResolver formatterResolver) {
         this.formatterResolver = formatterResolver;
     }
