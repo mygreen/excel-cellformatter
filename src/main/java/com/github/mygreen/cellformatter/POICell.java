@@ -74,6 +74,11 @@ public class POICell implements CommonCell {
     }
     
     @Override
+    public boolean isNumber() {
+        return cell.getCellType() == Cell.CELL_TYPE_NUMERIC;
+    }
+    
+    @Override
     public double getNumberCellValue() {
         return cell.getNumericCellValue();
     }

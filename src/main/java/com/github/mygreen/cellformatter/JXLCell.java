@@ -163,10 +163,11 @@ public class JXLCell implements CommonCell {
     @Override
     public String getTextCellValue() {
         
-        if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
+        final CellType type = cell.getType();
+        if(type == CellType.LABEL || type == CellType.STRING_FORMULA) {
             return ((LabelCell) cell).getString();
             
-        } else if(cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA) {
+        } else if(type == CellType.BOOLEAN || type == CellType.BOOLEAN_FORMULA) {
             return Boolean.toString(((BooleanCell) cell).getValue()).toUpperCase();
             
         } else {
@@ -176,10 +177,23 @@ public class JXLCell implements CommonCell {
     }
     
     @Override
+    public boolean isNumber() {
+        final CellType type = cell.getType();
+        return type == CellType.NUMBER || type == CellType.NUMBER_FORMULA
+                || type == CellType.DATE || type == CellType.DATE_FORMULA;
+    }
+    
+    @Override
     public double getNumberCellValue() {
         
-        if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
+        final CellType type = cell.getType();
+        if(type == CellType.NUMBER || type == CellType.NUMBER_FORMULA) {
             return ((NumberCell) cell).getValue();
+            
+        } else if(type == CellType.DATE || type == CellType.DATE_FORMULA) {
+            //TODO:
+            return 0;
+            
         } else {
             return 0;
         }

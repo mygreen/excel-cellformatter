@@ -6,6 +6,8 @@ import java.util.Date;
 /**
  * 共通のセルのインタフェース。
  * POI、JExcelAPIなどのライブラリ間の違いを吸収するためのもの。
+ * 
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -31,6 +33,13 @@ public interface CommonCell {
      * @return 
      */
     boolean isText();
+    
+    /**
+     * 数値型のセルかどうか。
+     * ・数値型、日付型の場合にtrueを返す。
+     * @return
+     */
+    boolean isNumber();
     
     /**
      * 文字列型のセルとして値を取得する。

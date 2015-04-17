@@ -46,7 +46,7 @@ public class CellFormatResult {
      * @param text
      * @return
      */
-    public static CellFormatResult noFormatResult(final String text) {
+    public static CellFormatResult createNoFormatResult(final String text) {
         CellFormatResult result = new CellFormatResult();
         result.setText(text);
         result.setFormatterType(FormatterType.Unknown);

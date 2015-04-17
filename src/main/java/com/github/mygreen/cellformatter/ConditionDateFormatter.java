@@ -20,7 +20,7 @@ import com.github.mygreen.cellformatter.term.Term;
 /**
  * ユーザ定義型の日時を解釈するフォーマッタ
  * 
- * @version 0.3
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -50,7 +50,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
      */
     @Override
     public boolean isMatch(final CommonCell cell) {
-        if(cell.isText()) {
+        if(!cell.isNumber()) {
             return false;
         }
         

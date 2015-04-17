@@ -13,7 +13,8 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 
 /**
  * ユーザ定義のフォーマッタ。
- *
+ * 
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -76,9 +77,16 @@ public class CustomFormatter extends CellFormatter {
             }
         }
         
-        // 一致するものがなく、セルのタイプが文字列の場合は、そのまま文字列として返す。
+        /*
+         * 一致するものがない場合は、デフォルトのフォーマッタで処理する。
+         * ・セクションとセルの属性が一致していない場合に発生する。
+         * ・数値が設定されているのに、文字列用のセクションしかない場合。
+         */
         if(cell.isText()) {
-            return CellFormatResult.noFormatResult(cell.getTextCellValue());
+            return DEFAULT_FORMATTER.format(cell, runtimeLocale);
+            
+        } else if(cell.isNumber()) {
+            return DEFAULT_FORMATTER.format(cell, runtimeLocale);
         }
         
         throw new NoMatchConditionFormatterException(cell, String.format(
@@ -98,7 +106,7 @@ public class CustomFormatter extends CellFormatter {
      * 文字列の書式を持つかどうか。
      * @return
      */
-    public boolean TextFormatter() {
+    public boolean hasTextFormatter() {
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isTextFormatter()) {
                 return true;
