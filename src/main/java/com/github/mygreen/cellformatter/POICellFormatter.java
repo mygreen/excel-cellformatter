@@ -99,10 +99,10 @@ public class POICellFormatter {
                 return getFormulaCellValue(cell, locale);
                 
             case Cell.CELL_TYPE_ERROR:
-                return CellFormatResult.noFormatResult("");
+                return CellFormatResult.createNoFormatResult("");
                 
             default:
-                return CellFormatResult.noFormatResult("");
+                return CellFormatResult.createNoFormatResult("");
         }
     }
     
@@ -115,9 +115,7 @@ public class POICellFormatter {
     private CellFormatResult getFormulaCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
-        if(cellType != Cell.CELL_TYPE_FORMULA) {
-            throw new IllegalArgumentException(String.format("cell type should be FORMULA, but %d.", cellType));
-        }
+        assert cellType == Cell.CELL_TYPE_FORMULA;
         
         final Workbook workbook = cell.getSheet().getWorkbook();
         final CreationHelper helper = workbook.getCreationHelper();
@@ -152,7 +150,7 @@ public class POICellFormatter {
             }
         }
         
-        return CellFormatResult.noFormatResult("");
+        return CellFormatResult.createNoFormatResult("");
     }
     
     /**
@@ -187,9 +185,7 @@ public class POICellFormatter {
     private CellFormatResult getOtherCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
-        if(!(cellType != Cell.CELL_TYPE_STRING || cellType != Cell.CELL_TYPE_BOOLEAN)) {
-            throw new IllegalArgumentException(String.format("cell type should be String or Boolean, but %d.", cellType));
-        }
+        assert cellType == Cell.CELL_TYPE_STRING || cellType == Cell.CELL_TYPE_BOOLEAN;
         
         // セルの書式の取得。
         final POICell poiCell = new POICell(cell);
@@ -231,9 +227,7 @@ public class POICellFormatter {
     private CellFormatResult getNumericCellValue(final Cell cell, final Locale locale) {
         
         final int cellType = cell.getCellType();
-        if(cellType != Cell.CELL_TYPE_NUMERIC) {
-            throw new IllegalArgumentException(String.format("cell type should be NUMERIC, but %d.", cellType));
-        }
+        assert cellType == Cell.CELL_TYPE_NUMERIC;
         
         // セルの書式の取得。
         final POICell poiCell = new POICell(cell);
@@ -259,10 +253,19 @@ public class POICellFormatter {
         }
     }
     
+    /**
+     * {@link FormatterResolver}を取得する。
+     * @return
+     */
     public FormatterResolver getFormatterResolver() {
         return formatterResolver;
     }
     
+    /**
+     * {@link FormatterResolver}を設定する。
+     * 独自のものに入れ替える際に利用します。
+     * @param formatterResolver
+     */
     public void setFormatterResolver(FormatterResolver formatterResolver) {
         this.formatterResolver = formatterResolver;
     }
