@@ -43,13 +43,71 @@ public class JXLCellFormatterTest {
     public void tearDown() throws Exception {
     }
     
+    /**
+     * 結合セルのテスト
+     * @since 0.4
+     */
+    @Test
+    public void testMergedCell() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            final Sheet sheet = loadSheetByName(file, "結合セル");
+            final boolean isDateStart1904 = JXLUtils.isDateStart1904(sheet);
+            
+            Cell cell = null;
+            CellFormatResult result = null;
+            
+            // 全て空の場合
+            {
+                cell = sheet.getCell("B4");
+                result = cellFormatter.format(cell, isDateStart1904);
+                assertThat("", is(result.getText()));
+            }
+            
+            // 左上に値（文字列）
+            {
+                cell = sheet.getCell("B8");
+                result = cellFormatter.format(cell, isDateStart1904);
+                assertThat("ABC", is(result.getText()));
+            }
+            
+            // 左上に値（日付）
+            {
+                cell = sheet.getCell("B12");
+                result = cellFormatter.format(cell, isDateStart1904);
+                assertThat("2014年10月23日", is(result.getText()));
+            }
+            
+            // 右下に値（文字列）
+            {
+                cell = sheet.getCell("B16");
+                result = cellFormatter.format(cell, isDateStart1904);
+                assertThat("ABC", is(result.getText()));
+            }
+            
+            // 右下に値（日付）
+            {
+                cell = sheet.getCell("B20");
+                result = cellFormatter.format(cell, isDateStart1904);
+                assertThat("2014年10月23日", is(result.getText()));
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
     @Test
     public void testFormatExcel2010_compatible() {
         
         File file = new File("src/test/data/cell_format_2010_compatible.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
-            List<Sheet> sheetList = loadSheet(file);
+            List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
                 assertSheet(sheet, cellFormatter);
             }
@@ -85,7 +143,7 @@ public class JXLCellFormatterTest {
         File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
-            List<Sheet> sheetList = loadSheet(file);
+            List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
                 assertSheet(sheet, cellFormatter);
             }
@@ -121,7 +179,7 @@ public class JXLCellFormatterTest {
         File file = new File("src/test/data/cell_format_2000.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
-            List<Sheet> sheetList = loadSheet(file);
+            List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
                 assertSheet(sheet, cellFormatter);
             }
@@ -157,7 +215,7 @@ public class JXLCellFormatterTest {
         File file = new File("src/test/data/cell_format_libre.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
-            List<Sheet> sheetList = loadSheet(file);
+            List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
                 assertSheet(sheet, cellFormatter);
             }
@@ -193,7 +251,7 @@ public class JXLCellFormatterTest {
         File file = new File("src/test/data/cell_format_date1904.xls");
         JXLCellFormatter cellFormatter = new JXLCellFormatter();
         try {
-            List<Sheet> sheetList = loadSheet(file);
+            List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
                 assertSheet(sheet, cellFormatter);
             }
@@ -223,7 +281,7 @@ public class JXLCellFormatterTest {
         
     }
     
-    private List<Sheet> loadSheet(final File file) throws IOException, BiffException {
+    private List<Sheet> loadSheetForFormat(final File file) throws IOException, BiffException {
         
         final List<Sheet> list = new ArrayList<>();
         try(InputStream in = new FileInputStream(file)) {
@@ -291,6 +349,40 @@ public class JXLCellFormatterTest {
         }
         
         return list;
+    }
+    
+    /**
+     * シート名を指定して取得する
+     * @param file
+     * @param name
+     */
+    private Sheet loadSheetByName(final File file, final String name) throws IOException, BiffException {
+        
+        try(InputStream in = new FileInputStream(file)) {
+            final WorkbookSettings settings = new WorkbookSettings();
+            settings.setSuppressWarnings(true);
+            settings.setGCDisabled(true);
+            
+            // 文字コードを「ISO8859_1」にしないと文字化けする
+            settings.setEncoding("ISO8859_1");
+            settings.setLocale(Locale.JAPANESE);
+            
+            final Workbook workbook = Workbook.getWorkbook(in, settings);
+            
+            
+            final int sheetNum = workbook.getNumberOfSheets();
+            for(int i=0; i < sheetNum; i++) {
+                
+                final Sheet sheet = workbook.getSheet(i);
+                final String sheetName = sheet.getName();
+                if(sheetName.equals(name)) {
+                    return sheet;
+                }
+                
+            }
+        }
+        
+        throw new IllegalStateException("not found sheet : " + name);
     }
     
     private void assertSheet(final Sheet sheet, final JXLCellFormatter cellFormatter) {

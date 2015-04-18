@@ -21,7 +21,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
  *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html"></a></li>
  *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html">POIでセルの値をとるのは大変　日付編</a></li>
  *   
- * @version 0.3
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -53,8 +53,6 @@ public class POICellFormatter {
      * @throws IllegalArgumentException cell is null.
      */
     public String formatAsString(final Cell cell, final Locale locale) {
-        ArgUtils.notNull(cell, "cell");
-        
         return format(cell, locale).getText();
     }
     
@@ -69,6 +67,7 @@ public class POICellFormatter {
         return format(cell, Locale.getDefault());
     }
     
+    
     /**
      * ロケールを指定してセルの値を取得する
      * @since 0.3
@@ -78,25 +77,27 @@ public class POICellFormatter {
      * @return フォーマット結果
      * @throws IllegalArgumentException cell is null.
      */
-    public CellFormatResult format(final Cell cell, final Locale locale) {
+    private CellFormatResult format(final Cell cell, final Locale locale) {
+        
         ArgUtils.notNull(cell, "cell");
+        final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
         
         switch(cell.getCellType()) {
             case Cell.CELL_TYPE_BLANK:
                 // 結合しているセルの場合、左上のセル以外に値が設定されている場合がある。
-                return getMergedCellValue(cell, locale);
+                return getMergedCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_BOOLEAN:
-                return getOtherCellValue(cell, locale);
+                return getOtherCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_STRING:
-                return getOtherCellValue(cell, locale);
+                return getOtherCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_NUMERIC:
-                return getNumericCellValue(cell, locale);
+                return getNumericCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_FORMULA:
-                return getFormulaCellValue(cell, locale);
+                return getFormulaCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_ERROR:
                 return CellFormatResult.createNoFormatResult("");
@@ -132,50 +133,40 @@ public class POICellFormatter {
      * <p>通常は左上のセルに値が設定されているが、結合されているときは左上以外のセルの値を取得する。
      * <p>左上以外のセルに値が設定されている場合は、CellTypeがCELL_TYPE_BLANKになるため注意が必要。
      * @param cell
+     * @param locale
      * @return
      */
     private CellFormatResult getMergedCellValue(final Cell cell, final Locale locale) {
-        
-        final int rowIndex = cell.getRowIndex();
-        final int columnIndex = cell.getColumnIndex();
         
         final Sheet sheet = cell.getSheet();
         final int size = sheet.getNumMergedRegions();
         
         for(int i=0; i < size; i++) {
             final CellRangeAddress range = sheet.getMergedRegion(i);
-            if(range.isInRange(rowIndex, columnIndex)) {
-                final Cell firstCell = getCell(sheet, range.getFirstColumn(), range.getFirstRow());
-                return format(firstCell, locale);
+            if(!range.isInRange(cell.getRowIndex(), cell.getColumnIndex())) {
+                continue;
             }
+            
+            // 非BLANKまたはnullでないセルを取得する。
+            for(int rowIdx=range.getFirstRow(); rowIdx <= range.getFirstRow(); rowIdx++) {
+                final Row row = sheet.getRow(rowIdx);
+                if(row == null) {
+                    continue;
+                }
+                
+                for(int colIdx=range.getFirstColumn(); colIdx <= range.getLastColumn(); colIdx++) {
+                    final Cell valueCell = row.getCell(colIdx);
+                    if(valueCell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+                        continue;
+                    }
+                    
+                    return format(valueCell, locale);
+                }
+            }
+            
         }
         
         return CellFormatResult.createNoFormatResult("");
-    }
-    
-    /**
-     * シートから任意のセルを取得する。
-     * 
-     * @see jxl.Sheet.getCell(int column, int row)
-     * @param sheet
-     * @param column
-     * @param row
-     * @return
-     */
-    private static Cell getCell(final Sheet sheet, final int column, final int row) {
-        ArgUtils.notNull(sheet, "sheet");
-        
-        Row rows = sheet.getRow(row);
-        if(rows == null) {
-            rows = sheet.createRow(row);
-        }
-        
-        Cell cell = rows.getCell(column);
-        if(cell == null) {
-            cell = rows.createCell(column, Cell.CELL_TYPE_BLANK);
-        }
-        
-        return cell;
     }
     
     /**
@@ -285,4 +276,5 @@ public class POICellFormatter {
     public void setCache(boolean cache) {
         this.cache = cache;
     }
+    
 }
