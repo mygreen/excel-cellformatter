@@ -40,6 +40,21 @@ public class POICellFormatterTest {
     }
     
     /**
+     * 引数がnullの場合のテスト
+     * @since 0.4
+     */
+    @Test
+    public void testArg() {
+        
+        POICellFormatter cellFormatter = new POICellFormatter();
+        
+        // Cellがnullの場合
+        CellFormatResult result = cellFormatter.format(null);
+        assertThat(result.getCellType(), is(FormatCellType.Blank));
+        assertThat(result.getText(), is(""));
+    }
+    
+    /**
      * 結合セルのテスト
      * @since 0.4
      */
@@ -99,6 +114,48 @@ public class POICellFormatterTest {
         
         final CellReference ref = new CellReference(address.toUpperCase());
         return sheet.getRow(ref.getRow()).getCell(ref.getCol());
+        
+    }
+    
+    /**
+     * エラーのテスト
+     * @since 0.4
+     */
+    @Test
+    public void testErrorCell() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            Sheet sheet = loadSheetByName(file, "エラー");
+            assertSheet(sheet, cellFormatter);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    /**
+     * エラーのテスト
+     * ・エラー時に空文字として取得する。
+     * @since 0.4
+     */
+    @Test
+    public void testErrorCell_asEmpty() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        cellFormatter.setErrorCellAsEmpty(true);
+        try {
+            Sheet sheet = loadSheetByName(file, "エラー (空)");
+            assertSheet(sheet, cellFormatter);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
         
     }
     

@@ -44,6 +44,21 @@ public class TestNumberCell implements CommonCell {
     }
     
     @Override
+    public boolean isBoolean() {
+        return false;
+    }
+    
+    @Override
+    public boolean getBooleanCellValue() {
+        return false;
+    }
+    
+    @Override
+    public boolean isNumber() {
+        return true;
+    }
+    
+    @Override
     public double getNumberCellValue() {
         return value;
     }

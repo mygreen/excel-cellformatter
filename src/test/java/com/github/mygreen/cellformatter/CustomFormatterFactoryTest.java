@@ -85,7 +85,7 @@ public class CustomFormatterFactoryTest {
         assertThat(actual.getText(), is(">100.1"));
         assertThat(actual.getTextColor(), is(MSColor.RED));
         assertThat(actual.getSectionPattern(), is("[赤][>100]\">\"##.0#"));
-        assertThat(actual.getFormatterType(), is(FormatterType.Number));
+        assertThat(actual.getCellType(), is(FormatCellType.Number));
         
     }
 }

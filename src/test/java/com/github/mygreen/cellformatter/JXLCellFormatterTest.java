@@ -101,6 +101,48 @@ public class JXLCellFormatterTest {
         
     }
     
+    /**
+     * エラーのテスト
+     * @since 0.4
+     */
+    @Test
+    public void testErrorCell() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        try {
+            Sheet sheet = loadSheetByName(file, "エラー");
+            assertSheet(sheet, cellFormatter);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    /**
+     * エラーのテスト
+     * ・エラー時に空文字として取得する。
+     * @since 0.4
+     */
+    @Test
+    public void testErrorCell_asEmpty() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        cellFormatter.setErrorCellAsEmpty(true);
+        try {
+            Sheet sheet = loadSheetByName(file, "エラー (空)");
+            assertSheet(sheet, cellFormatter);
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
     @Test
     public void testFormatExcel2010_compatible() {
         
