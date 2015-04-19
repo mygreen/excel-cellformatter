@@ -29,10 +29,16 @@ public interface CommonCell {
     
     /**
      * 文字列型のセルかどうか。
-     * 非数値型の文字列、Boolean型の場合にtrueを返す。
      * @return 
      */
     boolean isText();
+    
+    /**
+     * Boolean型のセルかどうか。
+     * @since 0.4
+     * @return
+     */
+    boolean isBoolean();
     
     /**
      * 数値型のセルかどうか。
@@ -46,6 +52,13 @@ public interface CommonCell {
      * @return
      */
     String getTextCellValue();
+    
+    /**
+     * Boolean型のセルとして値を取得する。
+     * @since 0.4
+     * @return
+     */
+    boolean getBooleanCellValue();
     
     /**
      * 数値型のセルとして値を取得する。

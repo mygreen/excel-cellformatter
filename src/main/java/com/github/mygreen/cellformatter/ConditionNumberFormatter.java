@@ -79,7 +79,7 @@ public class ConditionNumberFormatter extends ConditionFormatter {
         result.setText(value);
         result.setTextColor(getColor());
         result.setSectionPattern(getPattern());
-        result.setFormatterType(getType());
+        result.setCellType(FormatCellType.Number);
         
         return result;
     }

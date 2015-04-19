@@ -36,22 +36,9 @@ public class CellFormatResult {
     private String sectionPattern;
     
     /**
-     * フォーマットの種類
+     * フォーマットした際のセルの種類
      */
-    private FormatterType formatterType;
-    
-    /**
-     * 書式を持たない結果の場合。
-     * <p>単純に文字列だけを設定する。
-     * @param text
-     * @return
-     */
-    public static CellFormatResult createNoFormatResult(final String text) {
-        CellFormatResult result = new CellFormatResult();
-        result.setText(text);
-        result.setFormatterType(FormatterType.Unknown);
-        return result;
-    }
+    private FormatCellType cellType;
     
     /**
      * フォーマット対象の値を取得する
@@ -89,11 +76,19 @@ public class CellFormatResult {
     }
     
     /**
+     * 値がブランクかどうか。
+     * @return
+     */
+    public boolean isBlank() {
+        return getCellType() == FormatCellType.Blank;
+    }
+    
+    /**
      * 値が日付型かどうか。
      * @return
      */
     public boolean isDate() {
-        return getFormatterType().equals(FormatterType.Date);
+        return getCellType() == FormatCellType.Date;
     }
     
     /**
@@ -101,7 +96,7 @@ public class CellFormatResult {
      * @return
      */
     public boolean isNumber() {
-        return getFormatterType().equals(FormatterType.Number);
+        return getCellType() == FormatCellType.Number;
     }
     
     /**
@@ -109,7 +104,15 @@ public class CellFormatResult {
      * @return
      */
     public boolean isText() {
-        return getFormatterType().equals(FormatterType.Text);
+        return getCellType() == FormatCellType.Text;
+    }
+    
+    /**
+     * 値がエラー型かどうか。
+     * @return
+     */
+    public boolean isError() {
+        return getCellType() == FormatCellType.Error;
     }
     
     /**
@@ -168,19 +171,20 @@ public class CellFormatResult {
         this.sectionPattern = sectionPattern;
     }
     
+    
     /**
-     * フォーマットの種類を取得する
+     * セルの種類を取得する
      * @return
      */
-    public FormatterType getFormatterType() {
-        return formatterType;
+    public FormatCellType getCellType() {
+        return cellType;
     }
     
     /**
-     * フォーマットの種類を設定する。
-     * @param formatterType
+     * セルの種類を設定する。
+     * @param cellType
      */
-    public void setFormatterType(FormatterType formatterType) {
-        this.formatterType = formatterType;
+    public void setCellType(FormatCellType cellType) {
+        this.cellType = cellType;
     }
 }

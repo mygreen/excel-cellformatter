@@ -19,6 +19,7 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 
 /**
  * POIのセル
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -59,18 +60,22 @@ public class POICell implements CommonCell {
     
     @Override
     public boolean isText() {
-        return cell.getCellType() == Cell.CELL_TYPE_STRING || cell.getCellType() == Cell.CELL_TYPE_BOOLEAN;
+        return cell.getCellType() == Cell.CELL_TYPE_STRING;
     }
     
     @Override
     public String getTextCellValue() {
-        if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
-            return cell.getStringCellValue();
-            
-        } else if(cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
-            return Boolean.toString(cell.getBooleanCellValue()).toUpperCase();
-        }
-        return "";
+        return cell.getStringCellValue();
+    }
+    
+    @Override
+    public boolean isBoolean() {
+        return cell.getCellType() == Cell.CELL_TYPE_BOOLEAN;
+    }
+    
+    @Override
+    public boolean getBooleanCellValue() {
+        return cell.getBooleanCellValue();
     }
     
     @Override

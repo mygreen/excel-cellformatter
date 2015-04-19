@@ -25,6 +25,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
 
 /**
  * JExcel APIのセル
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -156,8 +157,7 @@ public class JXLCell implements CommonCell {
     
     @Override
     public boolean isText() {
-        return cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA
-                || cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA;
+        return cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA;
     }
     
     @Override
@@ -167,11 +167,26 @@ public class JXLCell implements CommonCell {
         if(type == CellType.LABEL || type == CellType.STRING_FORMULA) {
             return ((LabelCell) cell).getString();
             
-        } else if(type == CellType.BOOLEAN || type == CellType.BOOLEAN_FORMULA) {
-            return Boolean.toString(((BooleanCell) cell).getValue()).toUpperCase();
-            
         } else {
             return cell.getContents();
+        }
+        
+    }
+    
+    @Override
+    public boolean isBoolean() {
+        return cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA;
+    }
+    
+    @Override
+    public boolean getBooleanCellValue() {
+        
+        final CellType type = cell.getType();
+        if(type == CellType.BOOLEAN || type == CellType.BOOLEAN_FORMULA) {
+            return ((BooleanCell) cell).getValue();
+            
+        } else {
+            return false;
         }
         
     }

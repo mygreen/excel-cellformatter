@@ -35,13 +35,19 @@ public class ConditionTextFormatter extends ConditionFormatter {
      */
     @Override
     public boolean isMatch(final CommonCell cell) {
-        return cell.isText();
+        return cell.isText() || cell.isBoolean();
     }
     
     @Override
     public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
         
-        final String value = cell.getTextCellValue();
+        final String value;
+        if(cell.isBoolean()) {
+            value = String.valueOf(cell.getBooleanCellValue()).toUpperCase();
+        } else {
+            value = cell.getTextCellValue();
+        }
+        
         final StringBuilder sb = new StringBuilder();
         
         for(Term<String> term : terms) {
@@ -51,11 +57,17 @@ public class ConditionTextFormatter extends ConditionFormatter {
         String text = sb.toString();
         
         final CellFormatResult result = new CellFormatResult();
-        result.setValue(value);
+        if(cell.isBoolean()) {
+            result.setValue(cell.getBooleanCellValue());
+            result.setCellType(FormatCellType.Boolean);
+        } else {
+            result.setValue(value);
+            result.setCellType(FormatCellType.Text);
+        }
+        
         result.setText(text);
         result.setTextColor(getColor());
         result.setSectionPattern(getPattern());
-        result.setFormatterType(getType());
         
         return result;
         

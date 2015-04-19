@@ -19,9 +19,6 @@ public enum FormatterType {
     /** テキストのフォーマッタ */
     Text,
     
-    /** 不明なフォーマッタ */
-    Unknown,
-    
     ;
     
 }

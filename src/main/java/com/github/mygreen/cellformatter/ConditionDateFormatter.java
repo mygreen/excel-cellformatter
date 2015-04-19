@@ -93,7 +93,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
         result.setText(value);
         result.setTextColor(getColor());
         result.setSectionPattern(getPattern());
-        result.setFormatterType(getType());
+        result.setCellType(FormatCellType.Date);
         
         return result;
     }

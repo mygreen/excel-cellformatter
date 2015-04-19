@@ -4,14 +4,12 @@ import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FormulaError;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-
-import com.github.mygreen.cellformatter.lang.ArgUtils;
-import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
@@ -35,10 +33,14 @@ public class POICellFormatter {
     private boolean cache = true;
     
     /**
+     * エラーセルの値を空文字として取得するかどうか。
+     */
+    private boolean errorCellAsEmpty = false;
+    
+    /**
      * セルの値を文字列として取得する
      * @param cell 取得対象のセル
-     * @return フォーマットしたセルの値。
-     * @throws IllegalArgumentException cell is null.
+     * @return フォーマットしたセルの値。 cellがnullの場合、空文字を返す。
      */
     public String formatAsString(final Cell cell) {
         return formatAsString(cell, Locale.getDefault());
@@ -49,8 +51,7 @@ public class POICellFormatter {
      * @param cell フォーマット対象のセル
      * @param locale locale フォーマットしたロケール。nullでも可能。
      *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
-     * @return フォーマットした文字列
-     * @throws IllegalArgumentException cell is null.
+     * @return フォーマットした文字列。cellがnullの場合、空文字を返す。
      */
     public String formatAsString(final Cell cell, final Locale locale) {
         return format(cell, locale).getText();
@@ -60,8 +61,7 @@ public class POICellFormatter {
      * セルの値を取得する
      * @since 0.3
      * @param cell フォーマット対象のセル
-     * @return フォーマット結果
-     * @throws IllegalArgumentException cell is null.
+     * @return フォーマット結果。cellがnullの場合、空文字を返す。
      */
     public CellFormatResult format(final Cell cell) {
         return format(cell, Locale.getDefault());
@@ -74,12 +74,17 @@ public class POICellFormatter {
      * @param cell フォーマット対象のセル
      * @param locale locale フォーマットしたロケール。nullでも可能。
      *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
-     * @return フォーマット結果
-     * @throws IllegalArgumentException cell is null.
+     * @return フォーマット結果。cellがnullの場合、空文字を返す。
      */
     private CellFormatResult format(final Cell cell, final Locale locale) {
         
-        ArgUtils.notNull(cell, "cell");
+        if(cell == null) {
+            final CellFormatResult result = new CellFormatResult();
+            result.setCellType(FormatCellType.Blank);
+            result.setText("");
+            return result;
+        }
+        
         final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
         
         switch(cell.getCellType()) {
@@ -100,10 +105,13 @@ public class POICellFormatter {
                 return getFormulaCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_ERROR:
-                return CellFormatResult.createNoFormatResult("");
+                return getErrorCellValue(cell, runtimeLocale);
                 
             default:
-                return CellFormatResult.createNoFormatResult("");
+                final CellFormatResult result = new CellFormatResult();
+                result.setCellType(FormatCellType.Unknown);
+                result.setText("");
+                return result;
         }
     }
     
@@ -122,10 +130,41 @@ public class POICellFormatter {
         final CreationHelper helper = workbook.getCreationHelper();
         final FormulaEvaluator evaluator = helper.createFormulaEvaluator();
         
-        // 再帰的に処理する
-        final Cell evalCell = evaluator.evaluateInCell(cell);
-        return format(evalCell, locale);
+        try {
+            // 再帰的に処理する
+            final Cell evalCell = evaluator.evaluateInCell(cell);
+            return format(evalCell, locale);
+        } catch(Exception e) {
+            return getErrorCellValue(cell, locale);
+        }
         
+    }
+    
+    /**
+     * エラーセルの値を評価する。
+     * @param cell
+     * @param locale
+     * @return
+     */
+    private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale) {
+        
+       final int cellType = cell.getCellType();
+       assert cellType == Cell.CELL_TYPE_ERROR;
+       
+       final FormulaError error = FormulaError.forInt(cell.getErrorCellValue());
+       
+       final CellFormatResult result = new CellFormatResult();
+       result.setCellType(FormatCellType.Error);
+       result.setValue(error.getCode());
+       
+       if(isErrorCellAsEmpty()) {
+           result.setText("");
+       } else {
+           result.setText(error.getString());
+       }
+       
+       return result;
+       
     }
     
     /**
@@ -156,7 +195,7 @@ public class POICellFormatter {
                 
                 for(int colIdx=range.getFirstColumn(); colIdx <= range.getLastColumn(); colIdx++) {
                     final Cell valueCell = row.getCell(colIdx);
-                    if(valueCell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+                    if(valueCell == null || valueCell.getCellType() == Cell.CELL_TYPE_BLANK) {
                         continue;
                     }
                     
@@ -166,7 +205,10 @@ public class POICellFormatter {
             
         }
         
-        return CellFormatResult.createNoFormatResult("");
+        final CellFormatResult result = new CellFormatResult();
+        result.setCellType(FormatCellType.Blank);
+        result.setText("");
+        return result;
     }
     
     /**
@@ -178,7 +220,6 @@ public class POICellFormatter {
         final int cellType = cell.getCellType();
         assert cellType == Cell.CELL_TYPE_STRING || cellType == Cell.CELL_TYPE_BOOLEAN;
         
-        // セルの書式の取得。
         final POICell poiCell = new POICell(cell);
         final short formatIndex = poiCell.getFormatIndex();
         final String formatPattern = poiCell.getFormatPattern();
@@ -191,19 +232,14 @@ public class POICellFormatter {
             final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);
             return cellFormatter.format(poiCell, locale);
             
-        } else if(Utils.isNotEmpty(formatPattern)) {
+        } else {
+            // キャッシュに存在しない場合
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
-            formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            if(isCache()) {
+                formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            }
             return cellFormatter.format(poiCell, locale);
             
-        } else {
-            // 書式を持たない場合は、そのまま返す。
-            final String text = poiCell.getTextCellValue();
-            final CellFormatResult result = new CellFormatResult();
-            result.setValue(text);
-            result.setText(text);
-            result.setFormatterType(FormatterType.Unknown);
-            return result;
         }
         
     }
@@ -220,7 +256,6 @@ public class POICellFormatter {
         final int cellType = cell.getCellType();
         assert cellType == Cell.CELL_TYPE_NUMERIC;
         
-        // セルの書式の取得。
         final POICell poiCell = new POICell(cell);
         final short formatIndex = poiCell.getFormatIndex();
         final String formatPattern = poiCell.getFormatPattern();
@@ -263,6 +298,7 @@ public class POICellFormatter {
     
     /**
      * パースしたフォーマッタをキャッシュするかどうか。
+     * 初期値はtrueです。
      * @return
      */
     public boolean isCache() {
@@ -275,6 +311,25 @@ public class POICellFormatter {
      */
     public void setCache(boolean cache) {
         this.cache = cache;
+    }
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか。
+     * 初期値はfalseです。
+     * @since 0.4
+     * @return
+     */
+    public boolean isErrorCellAsEmpty() {
+        return errorCellAsEmpty;
+    }
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか設定する。
+     * @since 0.4
+     * @param errorCellAsEmpty true:空文字として取得する。
+     */
+    public void setErrorCellAsEmpty(boolean errorCellAsEmpty) {
+        this.errorCellAsEmpty = errorCellAsEmpty;
     }
     
 }

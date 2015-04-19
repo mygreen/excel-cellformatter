@@ -4,15 +4,15 @@ import java.util.Locale;
 
 import jxl.Cell;
 import jxl.CellType;
+import jxl.ErrorCell;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.JXLUtils;
-import com.github.mygreen.cellformatter.lang.Utils;
 
 
 /**
  * JExcel APIのセルのフォーマッタ。
- * @version 0.3
+ * @version 0.4
  * @author T.TSUCHIE
  *
  */
@@ -24,6 +24,11 @@ public class JXLCellFormatter {
      * パースしたフォーマッタをキャッシングするかどうか。
      */
     private boolean cache = true;
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか。
+     */
+    private boolean errorCellAsEmpty = false;
     
     /**
      * セルの値をフォーマットし、文字列として取得する
@@ -82,27 +87,110 @@ public class JXLCellFormatter {
     public CellFormatResult format(final Cell cell, final Locale locale, final boolean isStartDate1904) {        
         ArgUtils.notNull(cell, "cell");
         
-        if(cell.getType() == CellType.EMPTY) {
-            return CellFormatResult.createNoFormatResult("");
-            
-        } else if(cell.getType() == CellType.LABEL || cell.getType() == CellType.STRING_FORMULA) {
-            return getOtherCellValue(cell, locale, isStartDate1904);
-            
-        } else if(cell.getType() == CellType.BOOLEAN || cell.getType() == CellType.BOOLEAN_FORMULA) {
-            return getOtherCellValue(cell, locale, isStartDate1904);
+        final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
+        final CellType cellType = cell.getType();
         
-        } else if(cell.getType() == CellType.ERROR || cell.getType() == CellType.FORMULA_ERROR) {
-            return CellFormatResult.createNoFormatResult("");
+        if(cellType == CellType.EMPTY) {
+            final CellFormatResult result = new CellFormatResult();
+            result.setCellType(FormatCellType.Blank);
+            result.setText("");
+            return result;
             
-        } else if(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
-            return getNumericCellValue(cell, locale, isStartDate1904);
+        } else if(cellType == CellType.LABEL || cellType == CellType.STRING_FORMULA) {
+            return getOtherCellValue(cell, runtimeLocale, isStartDate1904);
             
-        } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
-            return getNumericCellValue(cell, locale, isStartDate1904);
+        } else if(cellType == CellType.BOOLEAN || cellType == CellType.BOOLEAN_FORMULA) {
+            return getOtherCellValue(cell, runtimeLocale, isStartDate1904);
+        
+        } else if(cellType == CellType.ERROR || cellType == CellType.FORMULA_ERROR) {
+            return getErrorCellValue(cell, runtimeLocale, isStartDate1904);
+            
+        } else if(cellType == CellType.DATE || cellType == CellType.DATE_FORMULA) {
+            return getNumericCellValue(cell, runtimeLocale, isStartDate1904);
+            
+        } else if(cellType == CellType.NUMBER || cellType == CellType.NUMBER_FORMULA) {
+            return getNumericCellValue(cell, runtimeLocale, isStartDate1904);
             
         } else {
-            return CellFormatResult.createNoFormatResult(cell.getContents());
+            final CellFormatResult result = new CellFormatResult();
+            result.setCellType(FormatCellType.Unknown);
+            result.setText("");
+            return result;
         }
+        
+    }
+    
+    
+    /**
+     * エラー型のセルの値を取得する。
+     * @since 0.4
+     * @param cell
+     * @param locale
+     * @param isStartDate1904
+     * @return
+     */
+    private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale, final boolean isStartDate1904) {
+        
+        final CellFormatResult result = new CellFormatResult();
+        result.setCellType(FormatCellType.Error);
+        
+        final ErrorCell errorCell = (ErrorCell) cell;
+        final int errorCode = errorCell.getErrorCode();
+        result.setValue(errorCode);
+        
+        if(isErrorCellAsEmpty()) {
+            result.setText("");
+            
+        } else {
+            /*
+             * エラーコードについては、POIクラスを参照。
+             * ・org.apache.poi.ss.usermodel.FormulaError
+             * ・org.apache.poi.ss.usermodel.ErrorConstants
+             */
+            switch(errorCode) {
+                case 7:
+                    // 0除算
+                    result.setText("#DIV/0!");
+                    break;
+                    
+                case 42:
+                    // 関数や数式に使用できる値がない
+                    result.setText("#N/A");
+                    break;
+                    
+                case 29:
+                    // 数式が参照している名称がない
+                    result.setText("#NAME?");
+                    break;
+                    
+                case 0:
+                    // 正しくない参照演算子または正しくないセル参照を使っている
+                    result.setText("#NULL!");
+                    break;
+                    
+                case 36:
+                    // 数式または関数の数値が不適切
+                    result.setText("#NUM!");
+                    break;
+                    
+                case 23:
+                    // 数式が参照しているセルがない
+                    result.setText("#REF!");
+                    break;
+                    
+                case 15:
+                    // 文字列が正しいデータ型に変換されない
+                    result.setText("#VALUE!");
+                    break;
+                    
+                default:
+                    result.setText("");
+                    break;
+            }
+            
+        }
+        
+        return result;
         
     }
     
@@ -127,16 +215,13 @@ public class JXLCellFormatter {
             final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);
             return cellFormatter.format(jxlCell, locale);
             
-        } else if(Utils.isNotEmpty(formatPattern)) {
+        } else {
+            // キャッシュに登録する。
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
             if(isCache()) {
                 formatterResolver.registerFormatter(formatPattern, cellFormatter);
             }
             return cellFormatter.format(jxlCell, locale);
-            
-        } else {
-            // 書式を持たない場合は、そのまま返す。
-            return CellFormatResult.createNoFormatResult(jxlCell.getTextCellValue());
         }
     }
     
@@ -164,7 +249,9 @@ public class JXLCellFormatter {
         } else {
             // キャッシュに登録する。
             final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
-            formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            if(isCache()) {
+                formatterResolver.registerFormatter(formatPattern, cellFormatter);
+            }
             return cellFormatter.format(jxlCell, locale);
             
         }
@@ -190,6 +277,7 @@ public class JXLCellFormatter {
     
     /**
      * パースしたフォーマッタをキャッシュするかどうか。
+     * 初期値はtrueです。
      * @return
      */
     public boolean isCache() {
@@ -202,6 +290,25 @@ public class JXLCellFormatter {
      */
     public void setCache(boolean cache) {
         this.cache = cache;
+    }
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか。
+     * 初期値はfalseです。
+     * @since 0.4
+     * @return
+     */
+    public boolean isErrorCellAsEmpty() {
+        return errorCellAsEmpty;
+    }
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか設定する。
+     * @since 0.4
+     * @param errorCellAsEmpty true:空文字として取得する。
+     */
+    public void setErrorCellAsEmpty(boolean errorCellAsEmpty) {
+        this.errorCellAsEmpty = errorCellAsEmpty;
     }
     
 }
