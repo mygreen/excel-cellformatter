@@ -1,0 +1,698 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ロケールID(LCID)の一覧 &mdash; Excel-CellFormatter 0.4 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Excel-CellFormatter 0.4 ドキュメント" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.4 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">プロジェクト情報</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">1.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">1.3. JExcelAPIの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">2. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">2.1. キャッシュの制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">3. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">3.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">3.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">3.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">3.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">3.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">3.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">3.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id22">3.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">4. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">4.1. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">4.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">4.3. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">4.4. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">4.5. 漢数字／大字変換のロジック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">5. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">5.1. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">5.2. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">5.3. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">5.4. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/format_other_locale.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id-lcid">
+<h1>ロケールID(LCID)の一覧<a class="headerlink" href="#id-lcid" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Excelで指定可能なロケールの一覧は、外部サイトの <a class="reference external" href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a> で確認できます。</p>
+<p>Excelの書式で指定する際には、16進数表記の値で指定します。</p>
+<p>日本語の場合、LCIDは0x0411であるため、書式上では <code class="docutils literal"><span class="pre">[$-411]</span></code> と指定します。</p>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">LCIDの一覧</span><a class="headerlink" href="#id2" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="20%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ロケール名</th>
+<th class="head">言語コード</th>
+<th class="head">16進値</th>
+<th class="head">10進数</th>
+<th class="head">ロケール名</th>
+<th class="head">言語コード</th>
+<th class="head">16進値</th>
+<th class="head">10進数</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>アフリカーンス語</td>
+<td>af</td>
+<td>0x0436</td>
+<td>1078</td>
+<td>ヒンズー語</td>
+<td>hi</td>
+<td>0x0439</td>
+<td>1081</td>
+</tr>
+<tr class="row-odd"><td>アルバニア語</td>
+<td>sq</td>
+<td>0x041C</td>
+<td>1052</td>
+<td>ハンガリー語</td>
+<td>hu</td>
+<td>0x040E</td>
+<td>1038</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (U.A.E.)</td>
+<td>ar-ae</td>
+<td>0x3801</td>
+<td>14337</td>
+<td>アイスランド語</td>
+<td>is</td>
+<td>0x040F</td>
+<td>1039</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (バーレーン)</td>
+<td>ar-bh</td>
+<td>0x3C01</td>
+<td>15361</td>
+<td>インドネシア語</td>
+<td>in</td>
+<td>0x0421</td>
+<td>1057</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (アルジェリア)</td>
+<td>ar-dz</td>
+<td>0x1401</td>
+<td>5121</td>
+<td>イタリア語 (イタリア)</td>
+<td>it</td>
+<td>0x0410</td>
+<td>1040</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (エジプト)</td>
+<td>ar-eg</td>
+<td>0x0C01</td>
+<td>3073</td>
+<td>イタリア語 (スイス)</td>
+<td>it-ch</td>
+<td>0x0810</td>
+<td>2064</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (イラク)</td>
+<td>ar-iq</td>
+<td>0x0801</td>
+<td>2049</td>
+<td>日本語</td>
+<td>ja</td>
+<td>0x0411</td>
+<td>1041</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (ヨルダン)</td>
+<td>ar-jo</td>
+<td>0x2C01</td>
+<td>11265</td>
+<td>韓国語</td>
+<td>ko</td>
+<td>0x0412</td>
+<td>1042</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (クウェート)</td>
+<td>ar-kw</td>
+<td>0x3401</td>
+<td>13313</td>
+<td>ラトビア語</td>
+<td>lv</td>
+<td>0x0426</td>
+<td>1062</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (レバノン)</td>
+<td>ar-lb</td>
+<td>0x3001</td>
+<td>12289</td>
+<td>リトアニア語</td>
+<td>lt</td>
+<td>0x0427</td>
+<td>1063</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (リビア)</td>
+<td>ar-ly</td>
+<td>0x1001</td>
+<td>4097</td>
+<td>マケドニア語 (FYROM)</td>
+<td>mk</td>
+<td>0x042F</td>
+<td>1071</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (モロッコ)</td>
+<td>ar-ma</td>
+<td>0x1801</td>
+<td>6145</td>
+<td>マレー語 (マレーシア)</td>
+<td>ms</td>
+<td>0x043E</td>
+<td>1086</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (オマーン)</td>
+<td>ar-om</td>
+<td>0x2001</td>
+<td>8193</td>
+<td>マルタ語</td>
+<td>mt</td>
+<td>0x043A</td>
+<td>1082</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (カタール)</td>
+<td>ar-qa</td>
+<td>0x4001</td>
+<td>16385</td>
+<td>ノルウェー語 (ブークモール)</td>
+<td>no</td>
+<td>0x0414</td>
+<td>1044</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (サウジアラビア)</td>
+<td>ar-sa</td>
+<td>0x0401</td>
+<td>1025</td>
+<td>ポーランド語</td>
+<td>pl</td>
+<td>0x0415</td>
+<td>1045</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (シリア)</td>
+<td>ar-sy</td>
+<td>0x2801</td>
+<td>10241</td>
+<td>ポルトガル語 (ポルトガル)</td>
+<td>pt</td>
+<td>0x0816</td>
+<td>2070</td>
+</tr>
+<tr class="row-even"><td>アラビア語 (チュニジア)</td>
+<td>ar-tn</td>
+<td>0x1C01</td>
+<td>7169</td>
+<td>ポルトガル語 (ブラジル)</td>
+<td>pt-br</td>
+<td>0x0416</td>
+<td>1046</td>
+</tr>
+<tr class="row-odd"><td>アラビア語 (イエメン)</td>
+<td>ar-ye</td>
+<td>0x2401</td>
+<td>9217</td>
+<td>レトロマン語</td>
+<td>rm</td>
+<td>0x0417</td>
+<td>1047</td>
+</tr>
+<tr class="row-even"><td>バスク語</td>
+<td>eu</td>
+<td>0x042D</td>
+<td>1069</td>
+<td>ルーマニア語</td>
+<td>ro</td>
+<td>0x0418</td>
+<td>1048</td>
+</tr>
+<tr class="row-odd"><td>ベラルーシ語</td>
+<td>be</td>
+<td>0x0423</td>
+<td>1059</td>
+<td>ルーマニア語 (モルドバ)</td>
+<td>ro-mo</td>
+<td>0x0818</td>
+<td>2072</td>
+</tr>
+<tr class="row-even"><td>ブルガリア語</td>
+<td>bg</td>
+<td>0x0402</td>
+<td>1026</td>
+<td>ロシア語</td>
+<td>ru</td>
+<td>0x0419</td>
+<td>1049</td>
+</tr>
+<tr class="row-odd"><td>カタロニア語</td>
+<td>ca</td>
+<td>0x0403</td>
+<td>1027</td>
+<td>ロシア語 (モルドバ)</td>
+<td>ru-mo</td>
+<td>0x0819</td>
+<td>2073</td>
+</tr>
+<tr class="row-even"><td>中国語 (中華人民共和国)</td>
+<td>zh-cn</td>
+<td>0x0804</td>
+<td>2052</td>
+<td>セルビア語 (キリル文字)</td>
+<td>sr</td>
+<td>0x0C1A</td>
+<td>3098</td>
+</tr>
+<tr class="row-odd"><td>中国語 (香港)</td>
+<td>zh-hk</td>
+<td>0x0C04</td>
+<td>3076</td>
+<td>ツワナ語</td>
+<td>tn</td>
+<td>0x0432</td>
+<td>1074</td>
+</tr>
+<tr class="row-even"><td>中国語 (シンガポール)</td>
+<td>zh-sg</td>
+<td>0x1004</td>
+<td>4100</td>
+<td>スロベニア語</td>
+<td>sl</td>
+<td>0x0424</td>
+<td>1060</td>
+</tr>
+<tr class="row-odd"><td>中国語 (台湾)</td>
+<td>zh-tw</td>
+<td>0x0404</td>
+<td>1028</td>
+<td>スロバキア語</td>
+<td>sk</td>
+<td>0x041B</td>
+<td>1051</td>
+</tr>
+<tr class="row-even"><td>クロアチア語</td>
+<td>hr</td>
+<td>0x041A</td>
+<td>1050</td>
+<td>ソルビア語</td>
+<td>sb</td>
+<td>0x042E</td>
+<td>1070</td>
+</tr>
+<tr class="row-odd"><td>チェコ語</td>
+<td>cs</td>
+<td>0x0405</td>
+<td>1029</td>
+<td>スペイン語 (スペイン)</td>
+<td>es</td>
+<td>0x040A</td>
+<td>1034</td>
+</tr>
+<tr class="row-even"><td>デンマーク語</td>
+<td>da</td>
+<td>0x0406</td>
+<td>1030</td>
+<td>スペイン語 (アルゼンチン)</td>
+<td>es-ar</td>
+<td>0x2C0A</td>
+<td>11274</td>
+</tr>
+<tr class="row-odd"><td>オランダ語</td>
+<td>nl</td>
+<td>0x0413</td>
+<td>1043</td>
+<td>スペイン語 (ボリビア)</td>
+<td>es-bo</td>
+<td>0x400A</td>
+<td>16394</td>
+</tr>
+<tr class="row-even"><td>オランダ語 (ベルギー)</td>
+<td>nl-be</td>
+<td>0x0813</td>
+<td>2067</td>
+<td>スペイン語 (チリ)</td>
+<td>es-cl</td>
+<td>0x340A</td>
+<td>13322</td>
+</tr>
+<tr class="row-odd"><td>英語 (オーストラリア)</td>
+<td>en-au</td>
+<td>0x0C09</td>
+<td>3081</td>
+<td>スペイン語 (コロンビア)</td>
+<td>es-co</td>
+<td>0x240A</td>
+<td>9226</td>
+</tr>
+<tr class="row-even"><td>英語 (ベリーズ)</td>
+<td>en-bz</td>
+<td>0x2809</td>
+<td>10249</td>
+<td>スペイン語 (コスタリカ)</td>
+<td>es-cr</td>
+<td>0x140A</td>
+<td>5130</td>
+</tr>
+<tr class="row-odd"><td>英語 (カナダ)</td>
+<td>en-ca</td>
+<td>0x1009</td>
+<td>4105</td>
+<td>スペイン語 (ドミニカ共和国)</td>
+<td>es-do</td>
+<td>0x1C0A</td>
+<td>7178</td>
+</tr>
+<tr class="row-even"><td>英語 (アイルランド)</td>
+<td>en-ie</td>
+<td>0x1809</td>
+<td>6153</td>
+<td>スペイン語 (エクアドル)</td>
+<td>es-ec</td>
+<td>0x300A</td>
+<td>12298</td>
+</tr>
+<tr class="row-odd"><td>英語 (ジャマイカ)</td>
+<td>en-jm</td>
+<td>0x2009</td>
+<td>8201</td>
+<td>スペイン語 (グアテマラ)</td>
+<td>es-gt</td>
+<td>0x100A</td>
+<td>4106</td>
+</tr>
+<tr class="row-even"><td>英語 (ニュージーランド)</td>
+<td>en-nz</td>
+<td>0x1409</td>
+<td>5129</td>
+<td>スペイン語 (ホンジュラス)</td>
+<td>es-hn</td>
+<td>0x480A</td>
+<td>18442</td>
+</tr>
+<tr class="row-odd"><td>英語 (南アフリカ)</td>
+<td>en-za</td>
+<td>0x1C09</td>
+<td>7177</td>
+<td>スペイン語 (メキシコ)</td>
+<td>es-mx</td>
+<td>0x080A</td>
+<td>2058</td>
+</tr>
+<tr class="row-even"><td>英語 (トリニダード)</td>
+<td>en-tt</td>
+<td>0x2C09</td>
+<td>11273</td>
+<td>スペイン語 (ニカラグア)</td>
+<td>es-ni</td>
+<td>0x4C0A</td>
+<td>19466</td>
+</tr>
+<tr class="row-odd"><td>英語 (U.K.)</td>
+<td>en-gb</td>
+<td>0x0809</td>
+<td>2057</td>
+<td>スペイン語 (パナマ)</td>
+<td>es-pa</td>
+<td>0x180A</td>
+<td>6154</td>
+</tr>
+<tr class="row-even"><td>英語 (U.S.)</td>
+<td>en-us</td>
+<td>0x0409</td>
+<td>1033</td>
+<td>スペイン語 (ペルー)</td>
+<td>es-pe</td>
+<td>0x280A</td>
+<td>10250</td>
+</tr>
+<tr class="row-odd"><td>エストニア語</td>
+<td>et</td>
+<td>0x0425</td>
+<td>1061</td>
+<td>スペイン語 (プエルトリコ)</td>
+<td>es-pr</td>
+<td>0x500A</td>
+<td>20490</td>
+</tr>
+<tr class="row-even"><td>ペルシャ語</td>
+<td>fa</td>
+<td>0x0429</td>
+<td>1065</td>
+<td>スペイン語 (パラグアイ)</td>
+<td>es-py</td>
+<td>0x3C0A</td>
+<td>15370</td>
+</tr>
+<tr class="row-odd"><td>フィンランド語</td>
+<td>fi</td>
+<td>0x040B</td>
+<td>1035</td>
+<td>スペイン語 (エルサルバドル)</td>
+<td>es-sv</td>
+<td>0x440A</td>
+<td>17418</td>
+</tr>
+<tr class="row-even"><td>フェロー語</td>
+<td>fo</td>
+<td>0x0438</td>
+<td>1080</td>
+<td>スペイン語 (ウルグアイ)</td>
+<td>es-uy</td>
+<td>0x380A</td>
+<td>14346</td>
+</tr>
+<tr class="row-odd"><td>フランス語 (フランス)</td>
+<td>fr</td>
+<td>0x040C</td>
+<td>1036</td>
+<td>スペイン語 (ベネズエラ)</td>
+<td>es-ve</td>
+<td>0x200A</td>
+<td>8202</td>
+</tr>
+<tr class="row-even"><td>フランス語 (ベルギー)</td>
+<td>fr-be</td>
+<td>0x080C</td>
+<td>2060</td>
+<td>ソト語</td>
+<td>sx</td>
+<td>0x0430</td>
+<td>1072</td>
+</tr>
+<tr class="row-odd"><td>フランス語 (カナダ)</td>
+<td>fr-ca</td>
+<td>0x0C0C</td>
+<td>3084</td>
+<td>スウェーデン語</td>
+<td>sv</td>
+<td>0x041D</td>
+<td>1053</td>
+</tr>
+<tr class="row-even"><td>フランス語 (ルクセンブルグ)</td>
+<td>fr-lu</td>
+<td>0x140C</td>
+<td>5132</td>
+<td>スウェーデン語 (フィンランド)</td>
+<td>sv-fi</td>
+<td>0x081D</td>
+<td>2077</td>
+</tr>
+<tr class="row-odd"><td>フランス語 (スイス)</td>
+<td>fr-ch</td>
+<td>0x100C</td>
+<td>4108</td>
+<td>タイ語</td>
+<td>th</td>
+<td>0x041E</td>
+<td>1054</td>
+</tr>
+<tr class="row-even"><td>ゲール語 (スコットランド)</td>
+<td>gd</td>
+<td>0x043C</td>
+<td>1084</td>
+<td>トルコ語</td>
+<td>tr</td>
+<td>0x041F</td>
+<td>1055</td>
+</tr>
+<tr class="row-odd"><td>ドイツ語 (ドイツ)</td>
+<td>de</td>
+<td>0x0407</td>
+<td>1031</td>
+<td>ツォンガ語</td>
+<td>ts</td>
+<td>0x0431</td>
+<td>1073</td>
+</tr>
+<tr class="row-even"><td>ドイツ語 (オーストリア)</td>
+<td>de-at</td>
+<td>0x0C07</td>
+<td>3079</td>
+<td>ウクライナ語</td>
+<td>uk</td>
+<td>0x0422</td>
+<td>1058</td>
+</tr>
+<tr class="row-odd"><td>ドイツ語 (リヒテンシュタイン)</td>
+<td>de-li</td>
+<td>0x1407</td>
+<td>5127</td>
+<td>ウルドゥー語 (パキスタン)</td>
+<td>ur</td>
+<td>0x0420</td>
+<td>1056</td>
+</tr>
+<tr class="row-even"><td>ドイツ語 (ルクセンブルグ)</td>
+<td>de-lu</td>
+<td>0x1007</td>
+<td>4103</td>
+<td>ベトナム語</td>
+<td>vi</td>
+<td>0x042A</td>
+<td>1066</td>
+</tr>
+<tr class="row-odd"><td>ドイツ語 (スイス)</td>
+<td>de-ch</td>
+<td>0x0807</td>
+<td>2055</td>
+<td>コーサ語</td>
+<td>xh</td>
+<td>0x0434</td>
+<td>1076</td>
+</tr>
+<tr class="row-even"><td>ギリシャ語</td>
+<td>el</td>
+<td>0x0408</td>
+<td>1032</td>
+<td>イディッシュ語</td>
+<td>ji</td>
+<td>0x043D</td>
+<td>1085</td>
+</tr>
+<tr class="row-odd"><td>ヘブライ語</td>
+<td>he</td>
+<td>0x040D</td>
+<td>1037</td>
+<td>ズールー語</td>
+<td>zu</td>
+<td>0x0435</td>
+<td>1077</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.4 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1 で生成しました。
+    </div>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ファイル内部の日付の基準日の設定 &mdash; Excel-CellFormatter 0.4 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="Excel-CellFormatter 0.4 ドキュメント" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.4 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">プロジェクト情報</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">Javadoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">1. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">1.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">1.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">1.3. JExcelAPIの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">2. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">2.1. キャッシュの制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">3. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">3.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">3.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">3.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">3.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">3.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">3.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">3.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id22">3.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">4. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">4.1. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">4.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">4.3. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">4.4. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">4.5. 漢数字／大字変換のロジック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">5. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">5.1. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">5.2. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">5.3. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">5.4. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/format_other_startdate.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    モジュール、クラス、または関数名を入力してください
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>ファイル内部の日付の基準日の設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Excelは、ファイル内部では数値型として値を保持しており、値が0の場合は基準日として、通常は <strong>「1900年1月0日（1899年12月31日）」</strong> を表します。</p>
+<p>この基準日は、設定によって変更することができ、ファイルごとに設定を持ちます。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://support.microsoft.com/ja-jp/kb/180162/ja">Miscrosoftのサポートページ</a></li>
+</ul>
+<div class="section" id="excel1904">
+<h2>Excelの1904年始まりの設定変更方法<a class="headerlink" href="#excel1904" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Excelのバージョンによって設定方法は変わります。</p>
+<ul class="simple">
+<li>Excel2000～2003の場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のタブ「計算方法」から設定できます。</li>
+<li>Excel2007の場合、Officeボタンの「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</li>
+<li>Excel2010の場合、メニュー「ファイル」の「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</li>
+<li>LibreOfficeの場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のペイン「LibreOffice Calc」-「計算式」から設定できます。</li>
+</ul>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_2002.png"><img alt="_images/excel_settings_date1904_2002.png" src="_images/excel_settings_date1904_2002.png" /></a>
+<p class="caption"><span class="caption-text">Excel2002(XP)の場合の1904年始まりの設定</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_2010.png"><img alt="_images/excel_settings_date1904_2010.png" src="_images/excel_settings_date1904_2010.png" /></a>
+<p class="caption"><span class="caption-text">Excel2010の場合の1904年始まりの設定</span></p>
+</div>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_libre.png"><img alt="_images/excel_settings_date1904_libre.png" src="_images/excel_settings_date1904_libre.png" /></a>
+<p class="caption"><span class="caption-text">LibreOfficeの場合の1904年始まりの設定</span></p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>ライブラリによる1904年始まりの判定方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="apache-poi1904">
+<h3>Apache POIにおける1904年始まりの判定方法<a class="headerlink" href="#apache-poi1904" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Apache POIの場合、ファイルのフォーマットによって取得方法が変わります。</p>
+<ul class="simple">
+<li>公開されていないメソッドなのでリフレクションを使用して取得します。</li>
+<li>本ライブラリでは、 <em>POICell#isDateStart1904()</em> 中のメソッドで実装されています。</li>
+<li>1904年始まりかどうかの設定はファイル単位に持つため、Workbookを取得して判定を行います。</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span class="kd">final</span> <span class="n">Workbook</span> <span class="n">workbook</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="na">getSheet</span><span class="o">().</span><span class="na">getWorkbook</span><span class="o">();</span>
+<span class="k">if</span><span class="o">(</span><span class="n">workbook</span> <span class="k">instanceof</span> <span class="n">HSSFWorkbook</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 拡張子がxlsの場合</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">HSSFWorkbook</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&quot;getWorkbook&quot;</span><span class="o">);</span>
+        <span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+        <span class="n">InternalWorkbook</span> <span class="n">iw</span> <span class="o">=</span> <span class="o">(</span><span class="n">InternalWorkbook</span><span class="o">)</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">workbook</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">iw</span><span class="o">.</span><span class="na">isUsing1904DateWindowing</span><span class="o">();</span>
+
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="o">|</span> <span class="n">SecurityException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail access method HSSFWorkbook.getWorkbook.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IllegalAccessException</span> <span class="o">|</span> <span class="n">IllegalArgumentException</span> <span class="o">|</span> <span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail invoke method HSSFWorkbook.getWorkbook.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">workbook</span> <span class="k">instanceof</span> <span class="n">XSSFWorkbook</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 拡張子がxlsxの場合</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">XSSFWorkbook</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&quot;isDate1904&quot;</span><span class="o">);</span>
+        <span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+        <span class="kt">boolean</span> <span class="n">value</span> <span class="o">=</span> <span class="o">(</span><span class="kt">boolean</span><span class="o">)</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">workbook</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="o">|</span> <span class="n">SecurityException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail access method XSSFWorkbook.isDate1904.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">IllegalAccessException</span> <span class="o">|</span> <span class="n">IllegalArgumentException</span> <span class="o">|</span> <span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail invoke method XSSFWorkbook.isDate1904.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="jexcelapi1904">
+<h3>JExcelAPIにおける1904年始まりの判定方法<a class="headerlink" href="#jexcelapi1904" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>JExcel APIの場合も同様にWorkbookから取得しますが、セルクラスから上位のSheetクラスなどを取得できないため不便です。</p>
+<ul class="simple">
+<li>公開されていないメソッドなのでリフレクションを使用して取得します。</li>
+<li>本ライブラリでは、 <em>JXLUtils#isDateStart1904(...)</em> 中のメソッドで実装されています。</li>
+<li>1904年始まりかどうかの設定はシートにも引き継がれるため、Sheet、Wookbookのどちらからも判定できます。</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// Workbookを元に判定を行う場合</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isDateStart1904</span><span class="o">(</span><span class="kd">final</span> <span class="n">Workbook</span> <span class="n">workbook</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ArgUtils</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">workbook</span><span class="o">,</span> <span class="s">&quot;workbook&quot;</span><span class="o">);</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">workbook</span> <span class="k">instanceof</span> <span class="n">WorkbookParser</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Field</span> <span class="n">field</span> <span class="o">=</span> <span class="n">WorkbookParser</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&quot;nineteenFour&quot;</span><span class="o">);</span>
+            <span class="n">field</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+            <span class="kt">boolean</span> <span class="n">value</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="n">workbook</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchFieldException</span> <span class="o">|</span> <span class="n">SecurityException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail access field WrokbookParser#nineteenFour&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="o">|</span> <span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail invoke field WrokbookParser#nineteenFour&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// Sheetを元に判定を行う場合</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isDateStart1904</span><span class="o">(</span><span class="kd">final</span> <span class="n">Sheet</span> <span class="n">sheet</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ArgUtils</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">sheet</span><span class="o">,</span> <span class="s">&quot;sheet&quot;</span><span class="o">);</span>
+
+    <span class="k">if</span><span class="o">(</span><span class="n">sheet</span> <span class="k">instanceof</span> <span class="n">SheetImpl</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Field</span> <span class="n">field</span> <span class="o">=</span> <span class="n">SheetImpl</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">&quot;nineteenFour&quot;</span><span class="o">);</span>
+            <span class="n">field</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+            <span class="kt">boolean</span> <span class="n">value</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchFieldException</span> <span class="o">|</span> <span class="n">SecurityException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail access field SheetImpl#nineteenFour&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="o">|</span> <span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;fail invoke field SheetImpl#nineteenFour&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.4 ドキュメント</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1 で生成しました。
+    </div>
+  </body>
+</html>
