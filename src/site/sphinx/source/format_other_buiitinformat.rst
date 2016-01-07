@@ -330,6 +330,6 @@ Apache POIによる書式のインデックスの取得
 
 .. sourcecode:: java
    
-   short short formatIndex = cell.getCellStyle().getDataFormat();
+   short formatIndex = cell.getCellStyle().getDataFormat();
 
 
