@@ -15,6 +15,14 @@ Excelの書式は、ファイル内部では *インデックス番号* に対�
   * 通貨記号を含む書式は、環境によって変わる可能性があります。
 
 
+.. note::
+   
+   ビルトインフォーマットは、各ライブラリでプログラムで固定長の文字列として記述されています。
+   
+   * Apache POIの場合、 ``org.apache.poi.ss.usermodel.BuiltinFormats`` (`Javadoc <https://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html>`_ ) で定義されています。
+   * JExcel APIの場合、 非公開のクラス ``jxl.biff.BuiltInFormat`` で定義されています。
+
+
 本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、予め *FormatterResolver#registerDefaultFormat()* メソッド内で登録し、正しい書式で取得できるようにしています。
 
 .. list-table:: ビルドインフォーマットの一覧
@@ -69,7 +77,7 @@ Excelの書式は、ファイル内部では *インデックス番号* に対�
    * - 5
      - 5
      - ``($#,##0_);($#,##0)``
-     - `` $#,##0_);($#,##0)``
+     - ``$#,##0_);($#,##0)``
      - ``\#,##0;\-#,##0``
      - | POI、JExcelAPIの場合、括弧が余分で、符号がなく間違っている。
        | さらに、通貨記号が異なる。
