@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.lang.EraPeriod;
 import com.github.mygreen.cellformatter.lang.MSLocale;
+import com.github.mygreen.cellformatter.lang.MessageResolver;
 import com.github.mygreen.cellformatter.lang.Utils;
 
 
@@ -22,6 +23,8 @@ import com.github.mygreen.cellformatter.lang.Utils;
 public abstract class DateTerm implements Term<Calendar> {
     
     protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);
+    
+    protected static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.cellformatter");
     
     @Override
     public String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale) {
@@ -494,22 +497,6 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        static final String[][] MONTH_NAMES = {
-            {"January", "Jan", "J"},
-            {"February", "Feb", "F"},
-            {"March", "Mar", "M"},
-            {"April", "Apr", "A"},
-            {"May", "May", "M"},
-            {"June", "Jun", "J"},
-            {"July", "Jul", "J"},
-            {"August", "Aug", "A"},
-            {"September", "Sep", "S"},
-            {"October", "Oct", "O"},
-            {"November", "Nov", "N"},
-            {"December", "Dec", "D"},
-            
-        };
-        
         public MonthTerm(final String format) {
             this.format = format;
         } 
@@ -517,29 +504,32 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
-            final int value = cal.get(Calendar.MONTH);
+            final int value = cal.get(Calendar.MONTH) + 1;
             final int formatLength = format.length();
             
             if(formatLength == 1) {
-                return String.valueOf(value + 1);
+                return String.valueOf(value);
                 
             } else if(formatLength == 2) {
-                return supplyZero(String.valueOf(value + 1), 2);
+                return supplyZero(String.valueOf(value), 2);
                 
             } else if(formatLength == 3) {
                 // 月名の先頭3文字
-                return MONTH_NAMES[value][1];
+                final String key = String.format("month.%d.abbrev", value);
+                return DateTerm.messageResolver.getMessage(formatLocale, key);
                 
             } else if(formatLength == 4) {
                 // 月名
-                return MONTH_NAMES[value][0];
+                final String key = String.format("month.%d.name", value);
+                return DateTerm.messageResolver.getMessage(formatLocale, key);
                 
             } else if(formatLength == 5) {
                 // 月名の先頭1文字
-                return MONTH_NAMES[value][2];
+                final String key = String.format("month.%d.leading", value);
+                return DateTerm.messageResolver.getMessage(formatLocale, key);
                 
             } else {
-                return supplyZero(String.valueOf(value + 1), 2);
+                return supplyZero(String.valueOf(value), 2);
             }
         }
         
@@ -585,16 +575,6 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        static final String[][] WEEK_NAMES = {
-            {"Sunday", "Sun"},
-            {"Monday", "Mon"},
-            {"Tuesday", "Tue"},
-            {"Wednesday", "Wed"},
-            {"Thursday", "Thu"},
-            {"Friday", "Fri"},
-            {"Saturday", "Sat"},
-        };
-        
         public DayTerm(final String format) {
             this.format = format;
         } 
@@ -614,20 +594,14 @@ public abstract class DateTerm implements Term<Calendar> {
             } else if(formatLength == 3) {
                 // 曜日の省略名
                 final int index = getWeekIndex(cal);
-                if(formatLocale == MSLocale.JAPANESE) {
-                    return WeekName.WEEK_NAMES_JA[index][1];
-                } else {
-                    return WEEK_NAMES[index][1];
-                }
+                final String key = String.format("week.%d.abbrev", index);
+                return messageResolver.getMessage(formatLocale, key);
                 
             } else if(formatLength >= 4) {
                 // 曜日の正式名
                 final int index = getWeekIndex(cal);
-                if(formatLocale == MSLocale.JAPANESE) {
-                    return WeekName.WEEK_NAMES_JA[index][0];
-                } else {
-                    return WEEK_NAMES[index][0];
-                }
+                final String key = String.format("week.%d.name", index);
+                return messageResolver.getMessage(formatLocale, key);
                 
             } else {
                return supplyZero(String.valueOf(value), 2); 
@@ -649,16 +623,6 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        static final String[][] WEEK_NAMES_JA = {
-            {"日曜日", "日"},
-            {"月曜日", "月"},
-            {"火曜日", "火"},
-            {"水曜日", "水"},
-            {"木曜日", "木"},
-            {"金曜日", "金"},
-            {"土曜日", "土"},
-        };
-        
         public WeekName(final String format) {
             this.format = format;
         } 
@@ -670,9 +634,11 @@ public abstract class DateTerm implements Term<Calendar> {
             final int formatLength = format.length();
             
             if(formatLength <= 3) {
-                return WEEK_NAMES_JA[index][1];
+                final String key = String.format("week.%d.abbrev", index);
+                return messageResolver.getMessage(MSLocale.JAPANESE, key);
             } else {
-                return WEEK_NAMES_JA[index][0];
+                final String key = String.format("week.%d.name", index);
+                return messageResolver.getMessage(MSLocale.JAPANESE, key);
             }
         }
         
@@ -701,9 +667,11 @@ public abstract class DateTerm implements Term<Calendar> {
             final int formatLength = format.length();
             
             if(formatLength <= 2) {
-                return WeekName.WEEK_NAMES_JA[index][1];
+                final String key = String.format("week.%d.abbrev", index);
+                return messageResolver.getMessage(MSLocale.JAPANESE, key);
             } else {
-                return WeekName.WEEK_NAMES_JA[index][0];
+                final String key = String.format("week.%d.name", index);
+                return messageResolver.getMessage(MSLocale.JAPANESE, key);
             }
         }
         
@@ -861,11 +829,11 @@ public abstract class DateTerm implements Term<Calendar> {
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
             final int val = cal.get(Calendar.AM_PM);
-            if(formatLocale == MSLocale.JAPANESE) {
-                return val == Calendar.AM ? "午前" : "午後";
+            if(val == Calendar.AM) {
+                return messageResolver.getMessage(formatLocale, "day.am.name", am);
                 
             } else {
-                return val == Calendar.AM ? am : pm;
+                return messageResolver.getMessage(formatLocale, "day.pm.name", pm);
                 
             }
             
@@ -892,20 +860,6 @@ public abstract class DateTerm implements Term<Calendar> {
         
         private final String format;
         
-        static final String QUATER_NAMES[][] = {
-            {"1st quater", "Q1"}, 
-            {"2nd quater", "Q2"}, 
-            {"3rd quater", "Q3"}, 
-            {"4th quater", "Q4"}, 
-        };
-        
-        static final String QUATER_NAMES_JA[] = {
-            "第１四半期",
-            "第２四半期",
-            "第３四半期",
-            "第４四半期",
-        };
-        
         public QuaterTerm(final String format) {
             this.format = format;
         } 
@@ -913,40 +867,27 @@ public abstract class DateTerm implements Term<Calendar> {
         @Override
         public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
             
-            final int index = cal.get(Calendar.MONTH) / 3;
+            final int index = (cal.get(Calendar.MONTH) / 3) + 1;
             
+            // Excelではなく実行環境のロケールによっても変わるため注意
             if(format.length() == 1) {
-                return QUATER_NAMES[index][1];
-                
-            } else if(isJapaneseLocale(formatLocale, runtimeLocale)) {
-                return QUATER_NAMES_JA[index];
+                final String key = String.format("quaterTerm.%d.abbrev", index);
+                if(formatLocale != null) {
+                    return messageResolver.getMessage(formatLocale, key);
+                } else {
+                    return messageResolver.getMessage(runtimeLocale, key);
+                    
+                }
                 
             } else {
-                return QUATER_NAMES[index][0];
+                final String key = String.format("quaterTerm.%d.name", index);
+                if(formatLocale != null) {
+                    return messageResolver.getMessage(formatLocale, key);
+                } else {
+                    return messageResolver.getMessage(runtimeLocale, key);
+                }
             }
             
-        }
-        
-        /**
-         * 日本語のロケールかチェックする
-         * @param formatLocale 書式上のロケール
-         * @param runtimeLocale 実行時のロケール
-         * @return
-         */
-        private boolean isJapaneseLocale(final MSLocale formatLocale, final Locale runtimeLocale) {
-            
-            if(formatLocale == MSLocale.JAPANESE) {
-                return true;
-                
-            } else if(runtimeLocale != null && runtimeLocale.getLanguage().equals("ja")) {
-                return true;
-            }
-            
-            return false;
-        }
-        
-        public String getFormat() {
-            return format;
         }
         
     }
