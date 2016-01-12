@@ -3,6 +3,7 @@ package com.github.mygreen.cellformatter.callback;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,10 +14,11 @@ import java.util.regex.Pattern;
  * <p>途中に区切り文字などがあると、そこで途切れる。
  * <p>大字の定義：<a href="http://www.benricho.org/kanji/kansuji.html">漢数字と大字〔だいじ〕の書き方</a>
  * 
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
-public class KansujiCallback implements Callback<Object>{
+public class KansujiCallback extends JapaneseCallback<Object>{
     
     /**
      * インスタンスを取得する
@@ -32,7 +34,7 @@ public class KansujiCallback implements Callback<Object>{
     private static final Pattern PATTERN_NUM = Pattern.compile("([\\D]*)([\\d]+)([\\.]{0,1}[.\\s\\w]*)");
     
     @Override
-    public String call(final Object data, final String value) {
+    public String call(final Object data, final String value, final Locale locale) {
         
         final Matcher matcher = PATTERN_NUM.matcher(value);
         if(!matcher.matches()) {

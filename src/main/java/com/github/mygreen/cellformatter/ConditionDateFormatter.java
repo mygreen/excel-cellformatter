@@ -20,7 +20,7 @@ import com.github.mygreen.cellformatter.term.Term;
 /**
  * ユーザ定義型の日時を解釈するフォーマッタ
  * 
- * @version 0.4
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
@@ -83,7 +83,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
             } else {
                 formatValue = term.format(cal, getLocale(), runtimeLocale);
             }
-            sb.append(applyFormatCallback(cal, formatValue));
+            sb.append(applyFormatCallback(cal, formatValue, runtimeLocale));
         }
         
         String value = sb.toString();
@@ -99,12 +99,24 @@ public class ConditionDateFormatter extends ConditionFormatter {
     }
     
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private String applyFormatCallback(final Calendar cal, final String str) {
+    private String applyFormatCallback(final Calendar cal, final String str, final Locale runtimeLocale) {
         
         String value = str;
         
         for(Callback callback : getCallbacks()) {
-            value = callback.call(cal, value);
+            
+            final Locale locale;
+            if(getLocale() != null) {
+                locale = getLocale().getLocale();
+            } else {
+                locale = runtimeLocale;
+            }
+            
+            if(!callback.isApplicable(locale)) {
+                continue;
+            }
+            
+            value = callback.call(cal, value, locale);
         }
         
         return value;

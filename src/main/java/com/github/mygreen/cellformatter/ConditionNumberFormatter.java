@@ -14,7 +14,7 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 
 /**
  * 数値のフォーマッタ
- * @version 0.4
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
@@ -71,7 +71,19 @@ public class ConditionNumberFormatter extends ConditionFormatter {
         // 特殊条件の処理を行う。
         String value = sb.toString();
         for(Callback callback : getCallbacks()) {
-            value = callback.call(number, value);
+            
+            final Locale locale;
+            if(getLocale() != null) {
+                locale = getLocale().getLocale();
+            } else {
+                locale = runtimeLocale;
+            }
+            
+            if(!callback.isApplicable(locale)) {
+                continue;
+            }
+            
+            value = callback.call(number, value, locale);
         }
         
         final CellFormatResult result = new CellFormatResult();

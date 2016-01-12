@@ -1,82 +1,21 @@
 package com.github.mygreen.cellformatter.lang;
 
-import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 
 /**
- * 平成などの時代を表すクラス。
+ * 平成などの時代の期間を表すクラス。
+ * 
+ * @version 0.5
  * @author T.TSUCHIE
  */
 public class EraPeriod {
     
     /**
-     * 不明な場合
+     * 不明な期間を示すインスタンス。
      */
-    public static final EraPeriod UNKNOWN = new EraPeriod() {
-        {
-            setAbbrevRomanName("U");
-            setAbbrevName("不");
-            setName("不明");
-        }
-    };
-    
-    /** 明治の定義 */
-    public static final EraPeriod MEIJI = new EraPeriod() {
-        {
-            setAbbrevRomanName("M");
-            setAbbrevName("明");
-            setName("明治");
-            setStartDate(Timestamp.valueOf("1868-01-25 00:00:00.000"));
-            setEndDate(Timestamp.valueOf("1912-07-29 23:59:59.999"));
-            
-        }
-    };
-    
-    /** 大正の定義 */
-    public static final EraPeriod TAISYO = new EraPeriod() {
-        {
-            setAbbrevRomanName("T");
-            setAbbrevName("大");
-            setName("大正");
-            setStartDate(Timestamp.valueOf("1912-07-30 00:00:00.000"));
-            setEndDate(Timestamp.valueOf("1926-12-24 23:59:59.999"));
-            
-        }
-    };
-    
-    /** 昭和の定義 */
-    public static final EraPeriod SYOWA = new EraPeriod() {
-        {
-            setAbbrevRomanName("S");
-            setAbbrevName("昭");
-            setName("昭和");
-            setStartDate(Timestamp.valueOf("1926-12-25 00:00:00.000"));
-            setEndDate(Timestamp.valueOf("1989-01-07 23:59:59.999"));
-            
-        }
-    };
-    
-    /** 平成の定義 */
-    public static final EraPeriod HEISEI = new EraPeriod() {
-        {
-            setAbbrevRomanName("H");
-            setAbbrevName("平");
-            setName("平成");
-            setStartDate(Timestamp.valueOf("1989-01-08 00:00:00.000"));
-            
-            // 終了日がないため、無期限とする
-            setEndDate(null);
-        }
-    };
-            
-    /** 元号の定義 */
-    public static final List<EraPeriod> PERIODS = Collections.unmodifiableList(Arrays.asList(
-            MEIJI, TAISYO, SYOWA, HEISEI));
+    public static final EraPeriod UNKNOWN_PERIOD = new UnknownPeriod();
     
     /** 省略時のローマ字名 （例：H）*/
     private String abbrevRomanName;
@@ -227,6 +166,29 @@ public class EraPeriod {
      */
     public Date getEndDate() {
         return endDate;
+    }
+    
+    /**
+     * 不明な期間かどうか。
+     * @since 0.5
+     * @return
+     */
+    public boolean isUnknown() {
+        return false;
+    }
+    
+    /**
+     * 不明な時代の期間を示すクラス。
+     * <p>存在しない期間を示すにも使用する。
+     * @since 0.5
+     */
+    public static class UnknownPeriod extends EraPeriod {
+        
+        @Override
+        public boolean isUnknown() {
+            return true;
+        }
+        
     }
     
 }

@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 /**
@@ -13,13 +15,15 @@ import org.junit.Test;
  * @author T.TSUCHIE
  *
  */
-public class MessageResourceResolverTest {
+public class MessageResolverTest {
     
     
     @Test
-    public void testCellFormatter() {
+    public void testGetMessage() {
         
         MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.cellformatter");
+        
+        assertThat(messageResolver.loadResource(Locale.JAPANESE).isNullObject(), is(false));
         
         // default
         assertThat(messageResolver.getMessage("week.0.name"), is("Sunday"));
@@ -32,6 +36,16 @@ public class MessageResourceResolverTest {
         
         // 存在しないプロパティ
         assertThat(messageResolver.getMessage("aaaa"), is(nullValue()));
+    }
+    
+    @Test
+    public void testNullObject() {
+        
+        MessageResolver messageResolver = new MessageResolver("com.sample", true);
+        
+        // default
+        assertThat(messageResolver.loadResource(Locale.JAPANESE).isNullObject(), is(true));
+        
     }
     
 }

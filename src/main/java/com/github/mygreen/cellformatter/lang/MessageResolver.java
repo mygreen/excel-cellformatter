@@ -28,7 +28,16 @@ public class MessageResolver {
      */
     private final String resourceName;
     
+    /**
+     * デフォルトのメッセージがない場合を許可するかどうか。
+     */
+    private final boolean allowedNoDefault;
+    
+    /**
+     * デフォルトのメッセージ情報
+     */
     private MessageResource defaultResource;
+    
     
     /**
      * ロケールごとのメッセージリソースの取得
@@ -40,10 +49,20 @@ public class MessageResolver {
      * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
      */
     public MessageResolver(final String resourceName) {
-        this.resourceName = resourceName;
-        this.defaultResource = loadDefaultResource();
-        this.resources = new ConcurrentHashMap<>();
+        this(resourceName, false);
         
+    }
+    
+    /**
+     * リソース名を指定してインスタンスを生成する。
+     * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
+     * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
+     */
+    public MessageResolver(final String resourceName, final boolean allowedNoDefault) {
+        this.resourceName = resourceName;
+        this.allowedNoDefault = allowedNoDefault;
+        this.defaultResource = loadDefaultResource(allowedNoDefault);
+        this.resources = new ConcurrentHashMap<>();
     }
     
     private String getPropertyPath() {
@@ -93,19 +112,24 @@ public class MessageResolver {
      * プロパティファイルから取得する。
      * <p>プロパティ名を補完する。
      * @param path プロパティファイルのパス名
+     * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
      * @return
      */
-    private MessageResource loadDefaultResource() {
+    private MessageResource loadDefaultResource(boolean allowedNoDefault) {
         
         final String path = getPropertyPath();
         Properties props = new Properties();
         try {
             props.load(MessageResolver.class.getResourceAsStream(path));
-        } catch (IOException e) {
-            throw new RuntimeException("fail default properties. :" + path, e);
+        } catch (NullPointerException | IOException e) {
+            if(allowedNoDefault) {
+                return MessageResource.NULL_OBJECT;
+            } else {
+                throw new RuntimeException("fail default properties. :" + path, e);
+            }
         }
         
-        final MessageResource resource = new MessageResource(null);
+        final MessageResource resource = new MessageResource();
         
         Enumeration<?> keys = props.propertyNames();
         while(keys.hasMoreElements()) {
@@ -124,7 +148,7 @@ public class MessageResolver {
      * @param locale ロケールがnullの場合は、デフォルトのリソースを返す。
      * @return
      */
-    private MessageResource loadResource(final Locale locale) {
+    MessageResource loadResource(final Locale locale) {
         
         if(locale == null) {
             return defaultResource;
@@ -142,7 +166,7 @@ public class MessageResolver {
                     Properties props = new Properties();
                     props.load(MessageResolver.class.getResourceAsStream(path));
                     
-                    localeResource = new MessageResource(null);
+                    localeResource = new MessageResource();
                     
                     Enumeration<?> keys = props.propertyNames();
                     while(keys.hasMoreElements()) {
@@ -177,6 +201,14 @@ public class MessageResolver {
      */
     public String getResourceName() {
         return resourceName;
+    }
+    
+    /**
+     * デフォルトのメッセージ情報がない場合を許可するかどうか。
+     * @return
+     */
+    public boolean isAllowedNoDefault() {
+        return allowedNoDefault;
     }
 
     /**

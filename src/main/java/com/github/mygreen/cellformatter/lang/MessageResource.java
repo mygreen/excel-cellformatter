@@ -1,6 +1,8 @@
 package com.github.mygreen.cellformatter.lang;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -15,29 +17,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MessageResource {
     
     /**
-     * このメッセージが処理可能なロケール
-     * <p>標準の場合、値は空を設定。
+     * 存在しないメッセージリソースを示すオブジェクト。
      */
-    private final MSLocale locale;
+    public static final NullMessageResource NULL_OBJECT = new NullMessageResource();
     
     /**
      * メッセージのキャッシュされたデータセット
      * <p>key = キー、value=メッセージ
      * <p>読み込む度にキャッシュしていく。
      */
-    private Map<String, String> messages;
+    protected Map<String, String> messages;
     
-    public MessageResource(final MSLocale locale) {
-        this.locale = locale;
+    public MessageResource() {
         this.messages = new ConcurrentHashMap<>();
-    }
-    
-    /**
-     * ロケ-ルを取得する。
-     * @return
-     */
-    public MSLocale getLocale() {
-        return locale;
     }
     
     /**
@@ -50,12 +42,44 @@ public class MessageResource {
     }
     
     /**
+     * メッセージ定義中に含まれるキーを全て返す。
+     * @return
+     */
+    public Set<String> getKeys() {
+        return messages.keySet();
+    }
+    
+    /**
      * キーとメッセージを指定して登録する。
      * @param key
      * @param message
      */
     public void addMessage(final String key, final String message) {
         messages.put(key, message);
+    }
+    
+    /**
+     * 存在しないメッセージソースを示すかどうか。
+     * @return
+     */
+    public boolean isNullObject() {
+        return false;
+    }
+    
+    /**
+     * 存在しないメッセージソースを示すクラス。
+     * <p>メッセージの追加はできない、読み込み専用のメッセージ。
+     */
+    public static class NullMessageResource extends MessageResource {
+        
+        public NullMessageResource() {
+            this.messages = Collections.unmodifiableMap(new ConcurrentHashMap<String, String>());
+        }
+        
+        @Override
+        public boolean isNullObject() {
+            return true;
+        }
     }
     
 }

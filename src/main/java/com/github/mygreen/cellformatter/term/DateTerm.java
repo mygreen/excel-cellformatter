@@ -9,7 +9,9 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.mygreen.cellformatter.lang.Era;
 import com.github.mygreen.cellformatter.lang.EraPeriod;
+import com.github.mygreen.cellformatter.lang.EraResolver;
 import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.lang.MessageResolver;
 import com.github.mygreen.cellformatter.lang.Utils;
@@ -17,6 +19,8 @@ import com.github.mygreen.cellformatter.lang.Utils;
 
 /**
  * 日時の書式の項
+ * 
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
@@ -25,6 +29,8 @@ public abstract class DateTerm implements Term<Calendar> {
     protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);
     
     protected static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.cellformatter");
+    
+    protected static final EraResolver eraResolver = new EraResolver();
     
     @Override
     public String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale) {
@@ -366,15 +372,19 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final Date date = cal.getTime();
             
-            EraPeriod period = null;
-            for(EraPeriod p : EraPeriod.PERIODS) {
-                if(p.contains(date)) {
-                    period = p;
-                    break;
-                }
+            final Era era;
+            if(formatLocale != null) {
+                era = eraResolver.getEra(formatLocale);
+            } else {
+                era = eraResolver.getEra(runtimeLocale);
             }
             
-            if(period == null) {
+            if(era.isUnkndown()) {
+                return "";
+            }
+            
+            final EraPeriod period = era.getTargetPeriod(date);
+            if(period.isUnknown()) {
                 return "";
             }
             
@@ -413,16 +423,22 @@ public abstract class DateTerm implements Term<Calendar> {
             final int formatLength = format.length();
             final Date date = cal.getTime();
             
-            EraPeriod period = null;
-            for(EraPeriod p : EraPeriod.PERIODS) {
-                if(p.contains(date)) {
-                    period = p;
-                    break;
-                }
+            final Era era;
+            if(formatLocale != null) {
+                era = eraResolver.getEra(formatLocale);
+            } else {
+                era = eraResolver.getEra(runtimeLocale);
             }
             
-            // 不明な場合
-            if(period == null) {
+            if(era.isUnkndown()) {
+                // 該当する時代の定義がない場合
+                String value = String.valueOf(cal.get(Calendar.YEAR));
+                return supplyZero(value, formatLength);
+            }
+            
+            final EraPeriod period = era.getTargetPeriod(date);
+            if(period.isUnknown()) {
+                // 期間が不明な場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
                 return supplyZero(value, formatLength);
                 
@@ -456,15 +472,22 @@ public abstract class DateTerm implements Term<Calendar> {
             final int formatLength = format.length();
             final Date date = cal.getTime();
             
-            EraPeriod period = null;
-            for(EraPeriod p : EraPeriod.PERIODS) {
-                if(p.contains(date)) {
-                    period = p;
-                    break;
-                }
+            final Era era;
+            if(formatLocale != null) {
+                era = eraResolver.getEra(formatLocale);
+            } else {
+                era = eraResolver.getEra(runtimeLocale);
             }
             
-            if(period == null) {
+            if(era.isUnkndown()) {
+                // 該当する時代の定義がない場合
+                String value = String.valueOf(cal.get(Calendar.YEAR));
+                return supplyZero(value, formatLength);
+            }
+            
+            final EraPeriod period = era.getTargetPeriod(date);
+            if(period.isUnknown()) {
+                // 期間が不明な場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
                 return supplyZero(value, formatLength);
                 

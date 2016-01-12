@@ -1,12 +1,15 @@
 package com.github.mygreen.cellformatter.callback;
 
+import java.util.Locale;
+
 /**
  * 半角数字を全角数字に変換する。
  * 
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
-public class ZenkakuNumberCallback implements Callback<Object> {
+public class ZenkakuNumberCallback extends JapaneseCallback<Object> {
     
     private static final String[][] MAP = {
         {"0", "０"},
@@ -26,7 +29,7 @@ public class ZenkakuNumberCallback implements Callback<Object> {
     }
     
     @Override
-    public String call(final Object data, final String value) {
+    public String call(final Object data, final String value, final Locale locale) {
         
         String str = value;
         for(String[] item : MAP) {
