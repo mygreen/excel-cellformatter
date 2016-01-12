@@ -1,6 +1,6 @@
 package com.github.mygreen.cellformatter;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,7 +27,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * POIによるテスト
+ * 
+ * @version 0.5
+ * @since 0.1
+ * @author T.TSUCHIE
+ *
+ */
 public class POICellFormatterTest {
     
     @AfterClass
@@ -191,6 +201,55 @@ public class POICellFormatterTest {
         } catch(Exception e) {
             e.printStackTrace();
             fail();
+        }
+        
+    }
+    
+    /**
+     * マルチスレッドでのテスト
+     * @since 0.5
+     */
+    @Test
+    public void testFormatExcel2010_MultiThread() {
+        
+        File file = new File("src/test/data/cell_format_2010.xlsx");
+        final POICellFormatter cellFormatter = new POICellFormatter();
+        cellFormatter.setCache(true);
+        
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+//        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            final List<Sheet> sheetList = loadSheetForFormat(file);
+            final CountDownLatch countDown = new CountDownLatch(sheetList.size());
+            
+            for(Sheet sheet : sheetList) {
+                
+                final Sheet s = sheet;
+                
+                executor.submit(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        try {
+                            assertSheet(s, cellFormatter);
+                            
+                        } finally {
+                            countDown.countDown();
+                        }
+                        
+                    }
+                });
+                
+            }
+            
+            countDown.await();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+            
+        } finally {
+            executor.shutdown();
         }
         
     }

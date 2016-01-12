@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -29,7 +32,8 @@ import com.github.mygreen.cellformatter.lang.JXLUtils;
 
 /**
  * JExcelAPI用のフォーマッタのテスタ
- *
+ * @version 0.5
+ * @since 0.1
  * @author T.TSUCHIE
  *
  */
@@ -175,6 +179,55 @@ public class JXLCellFormatterTest {
         } catch(Exception e) {
             e.printStackTrace();
             fail();
+        }
+        
+    }
+    
+    /**
+     * マルチスレッドでのテスト
+     * @since 0.5
+     */
+    @Test
+    public void testFormatExcel2010_compatible_MultiThread() {
+        
+        File file = new File("src/test/data/cell_format_2010_compatible.xls");
+        final JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        cellFormatter.setCache(true);
+        
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+//        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            final List<Sheet> sheetList = loadSheetForFormat(file);
+            final CountDownLatch countDown = new CountDownLatch(sheetList.size());
+            
+            for(Sheet sheet : sheetList) {
+                
+                final Sheet s = sheet;
+                
+                executor.submit(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        try {
+                            assertSheet(s, cellFormatter);
+                            
+                        } finally {
+                            countDown.countDown();
+                        }
+                        
+                    }
+                });
+                
+            }
+            
+            countDown.await();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+            
+        } finally {
+            executor.shutdown();
         }
         
     }
@@ -431,7 +484,11 @@ public class JXLCellFormatterTest {
         
         System.out.printf("======== START : [%s] =========\n", sheet.getName());
         
-        final int maxRow = sheet.getRows();
+        final int maxRow;
+        synchronized (cellFormatter) {
+            maxRow = sheet.getRows();
+        }
+        
         for(int r=3; r < maxRow; r++) {
             
             final Cell[] row = sheet.getRow(r);
