@@ -16,9 +16,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
  * POIのセルの値を文字列として取得する。
  * 参考URL
  * <ul>
- *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html">ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得</a></li>
- *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html">POIでセルの値をとるのは大変　日付編</a></li>
- *   
+ *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html">{@code ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得}</a></li>
+ *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html">{@code POIでセルの値をとるのは大変　日付編}</a></li>
+ * </ul>
+ * 
  * @version 0.4
  * @author T.TSUCHIE
  *

@@ -97,6 +97,10 @@ public class DaijiCallback extends JapaneseCallback<Object> {
      */
     private String replaceDisits(final String value) {
         
+        if(value.equals("0")) {
+            return NUM_MAP[0][1];
+        }
+        
         // 4桁ごとに、分割する。
         final int length = value.length();
         final List<String> split4 = new ArrayList<>();
