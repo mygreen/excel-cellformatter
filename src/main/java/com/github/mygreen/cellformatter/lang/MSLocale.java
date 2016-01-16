@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Microsoftで使用しているロケール。
- * <p>インスタンスを作成する際には、{@link MSLocaleBuilder}を使用する。
  * <ul>
  *  <li><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" target="_blank">ロケール ID (LCID) の一覧</a>
  *  <li><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" target="_blank">Locale IDs Assigned by Microsoft</a>
@@ -94,6 +93,10 @@ public class MSLocale {
         return Utils.isNotEmpty(code);
     }
     
+    /**
+     * IDを指定してインスタンスを作成する。
+     * @param id ロケールID(10進数)
+     */
     public MSLocale(final int id) {
         this.id = id;
         
