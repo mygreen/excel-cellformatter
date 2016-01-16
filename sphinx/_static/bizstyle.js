@@ -36,6 +36,6 @@ $(window).resize(function(){
         $("li.nav-item-0 a").text("Top");
     }
     else {
-        $("li.nav-item-0 a").text("Excel-CellFormatter 0.4 ドキュメント");
+        $("li.nav-item-0 a").text("Excel-CellFormatter 0.5 ドキュメント");
     }
 });

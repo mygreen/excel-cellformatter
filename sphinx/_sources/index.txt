@@ -17,6 +17,7 @@ Apache POIとJExeclAPIのライブラリをサポートします。
    :numbered:
    :maxdepth: 2
    
+   biginning
    howtouse
    customize
    format_basic
