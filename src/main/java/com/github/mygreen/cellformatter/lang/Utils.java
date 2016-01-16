@@ -269,4 +269,33 @@ public class Utils {
         return format.format(date);
     }
     
+    /**
+     * 指定した桁分、ゼロサプライ（ゼロ埋め）する。
+     * <p>既に指定したサイズを超える桁数の場合は、何もしない。
+     * <p>nullや空文字の場合は、空文字を返す。
+     * @param str 対象の文字
+     * @param size 桁数
+     * @return ゼロサプライした文字列
+     */
+    public static String supplyZero(final String str, final int size) {
+        
+        if(str == null) {
+            return "";
+        }
+        final int length = str.length();
+        if(length > size) {
+            return str;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        final int appendSize = size - length;
+        for(int i=0; i < appendSize; i++) {
+            sb.append("0");
+        }
+        sb.append(str);
+        
+        return sb.toString();
+        
+    }
+    
 }

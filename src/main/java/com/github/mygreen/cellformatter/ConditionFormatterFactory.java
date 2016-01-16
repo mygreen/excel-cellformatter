@@ -6,13 +6,12 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.callback.DaijiCallback;
 import com.github.mygreen.cellformatter.callback.KansujiCallback;
-import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.callback.ZenkakuNumberCallback;
 import com.github.mygreen.cellformatter.lang.MSColor;
 import com.github.mygreen.cellformatter.lang.MSLocale;
-import com.github.mygreen.cellformatter.lang.MSLocaleBuilder;
 import com.github.mygreen.cellformatter.tokenizer.Token;
 import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 
@@ -161,9 +160,9 @@ public abstract class ConditionFormatterFactory<F> {
         
         // 16進数=>10進数に直す
         final int value = Integer.valueOf(number, 16);
-        MSLocale locale = MSLocale.valueOfKnwonValue(value);
+        MSLocale locale = MSLocale.createKnownLocale(value);
         if(locale == null) {
-            locale = MSLocaleBuilder.create().value(value).build();
+            locale = new MSLocale(value);
         }
         
         formatter.setLocale(locale);

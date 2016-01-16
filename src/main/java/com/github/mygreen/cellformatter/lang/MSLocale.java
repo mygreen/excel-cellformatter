@@ -1,64 +1,73 @@
 package com.github.mygreen.cellformatter.lang;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
  * Microsoftで使用しているロケール。
  * <p>インスタンスを作成する際には、{@link MSLocaleBuilder}を使用する。
- * <p><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" taret="_blank">ロケール ID (LCID) の一覧</a>
- * <p><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" taret="_blank">Locale IDs Assigned by Microsoft</a>
+ * <ul>
+ *  <li><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" target="_blank">ロケール ID (LCID) の一覧</a>
+ *  <li><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" target="_blank">Locale IDs Assigned by Microsoft</a>
  * 
+ * @version 0.5
  * @author T.TSUCHIE
  *
  */
 public class MSLocale {
     
+    private static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.locale");
+    
+    /**
+     * 既知（プロパティファイル）に定義したのロケールはキャッシュする。
+     * ・キー：id（10進数）
+     * ・値：既知のロケール。
+     */
+    private static Map<Integer, MSLocale> KNOWN_LOCALES = new ConcurrentHashMap<>();
+    
     /** 日本語 */
-    public static final MSLocale JAPANESE = MSLocaleBuilder.create().code("ja").value(1041).language("Japanese")
-            .country("Japan").name("日本語").locale(Locale.JAPANESE).build();
+    public static final MSLocale JAPANESE = MSLocale.createKnownLocale(0x0411);
     
     /** 英語 (米国) */
-    public static final MSLocale US = MSLocaleBuilder.create().code("en-us").value(1033).language("English")
-            .country("United States").name("英語 (米国)").locale(Locale.US).build();
+    public static final MSLocale US = MSLocale.createKnownLocale(0x0409);
     
     /** 英語 (英国) */
-    public static final MSLocale UK = MSLocaleBuilder.create().code("en-gb").value(2057).language("English")
-            .country("United Kingdom").name("英語 (英国)").locale(Locale.UK).build();
+    public static final MSLocale UK = MSLocale.createKnownLocale(0x0809);
     
-    /**
-     * 定義されている有効なロケール
-     */
-    public static final List<MSLocale> KNOWN_LOCALES;
-    static {
-        KNOWN_LOCALES = Collections.unmodifiableList(new CopyOnWriteArrayList<MSLocale>(
-                Arrays.asList(JAPANESE, US, UK)));
-    }
+    /** 英語 (カナダ) */
+    public static final MSLocale CANADA = MSLocale.createKnownLocale(0x2809);
     
-    /**
-     * 10 進数のコードを指定して既知のロケールを取得する。
-     * @param value 
-     * @return 変換できない場合は、nullを返す。
-     */
-    public static MSLocale valueOfKnwonValue(final int value) {
-        for(MSLocale locale : KNOWN_LOCALES) {
-            if(locale.getValue() == value) {
-                return locale;
-            }
-        }
-        
-        return null;
-    }
+    /** ドイツ語 */
+    public static final MSLocale GERMAY = MSLocale.createKnownLocale(0x0407);
     
-    /** 言語コード(2桁) */
+    /** フランス語 */
+    public static final MSLocale FRENCE = MSLocale.createKnownLocale(0x040C);
+    
+    /** フランス語（カナダ） */
+    public static final MSLocale CANADA_FRENCH = MSLocale.createKnownLocale(0x0C0C);
+    
+    /** イタリア語 */
+    public static final MSLocale ITALY = MSLocale.createKnownLocale(0x0410);
+    
+    /** 韓国語 */
+    public static final MSLocale KOREA = MSLocale.createKnownLocale(0x0412);
+    
+    /** 中国語（中華人民共和国） */
+    public static final MSLocale PRC = MSLocale.createKnownLocale(0x0804);
+    
+    /** 中国語（台湾） */
+    public static final MSLocale TAIWAN = MSLocale.createKnownLocale(0x0404);
+    
+    /** ID - 10進値 */
+    private final int id;
+    
+    /** ID - 16進値(10進数を元に設定する) */
+    private final String hexId;
+    
+    /** 言語コード */
     private String code;
-    
-    /** 10進値 */
-    private int value;
     
     /** 言語名 */
     private String language;
@@ -72,26 +81,88 @@ public class MSLocale {
     /** Javaのロケール */
     private Locale locale;
     
-    /** 16進値(10進数を元に設定する) */
-    private String hexValue;
-    
-    public String getCode() {
-        return code;
-    }
-    
-    void setCode(String code) {
-        this.code = code;
-    }
-    
-    public int getValue() {
-        return value;
-    }
-    
-    void setValue(int value) {
-        this.value = value;
+    /**
+     * 既知のIDかどうか。
+     * <p>プロパティファイルに定義されているかで確認する。
+     * @since 0.5
+     * @param id 10進数
+     */
+    public static boolean isUnkownById(int id) {
+        final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
         
-        // 16進数の設定を行う
-        this.hexValue = Integer.toHexString(value).toUpperCase();
+        String code = messageResolver.getMessage(String.format("locale.%s.code", hexId));
+        return Utils.isNotEmpty(code);
+    }
+    
+    public MSLocale(final int id) {
+        this.id = id;
+        
+        // IDを16進数に変換する
+        final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
+        this.hexId = hexId;
+        
+    }
+    
+    /**
+     * 既知の言語を組み立てる。
+     * <p>プロパティファイルに定義されている情報を元に作成する。
+     * @since 0.5
+     * @param id 10進数の言語ID
+     * @return 不明なIDの場合は、nullを返す。
+     */
+    public static MSLocale createKnownLocale(final int id) {
+        
+        if(KNOWN_LOCALES.containsKey(id)) {
+            return KNOWN_LOCALES.get(id);
+        }
+        
+        final MSLocale locale = new MSLocale(id);
+        
+        synchronized (KNOWN_LOCALES) {
+            
+            // IDを16進数に変換する
+            final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
+            
+            String code = messageResolver.getMessage(String.format("locale.%s.code", hexId));
+            if(Utils.isEmpty(code)) {
+                return null;
+            }
+            
+            locale.code = code;
+            locale.language = messageResolver.getMessage(String.format("locale.%s.language", hexId));
+            locale.country = messageResolver.getMessage(String.format("locale.%s.country", hexId));
+            locale.name = messageResolver.getMessage(String.format("locale.%s.name", hexId));
+            
+            // Javaのロケールの設定
+            String jid = messageResolver.getMessage(String.format("locale.%s.jid", hexId));
+            if(Utils.isNotEmpty(jid)) {
+                locale.locale = parseLocale(jid);
+            }
+            
+            // キャッシュに登録する。
+            KNOWN_LOCALES.put(id, locale);
+        }
+        
+        return locale;
+        
+    }
+    
+    private static Locale parseLocale(final String jid) {
+        
+        String[] split = jid.split("_");
+        if(split.length == 1) {
+            return new Locale(split[0]);
+            
+        } if(split.length == 2) {
+            return new Locale(split[0], split[1]);
+            
+        } else if(split.length == 3) {
+            return new Locale(split[0], split[2]);
+            
+        }
+        
+        return null;
+        
     }
     
     /**
@@ -100,7 +171,7 @@ public class MSLocale {
      * @return
      */
     public boolean isSystemDate() {
-        return getHexValue().equalsIgnoreCase("F800");
+        return getHexId().equalsIgnoreCase("F800");
     }
     
     /**
@@ -109,116 +180,96 @@ public class MSLocale {
      * @return
      */
     public boolean isSystemTime() {
-        return getHexValue().equalsIgnoreCase("F400");
+        return getHexId().equalsIgnoreCase("F400");
     }
     
-    public String getHexValue() {
-        return this.hexValue;
+    /**
+     * IDを取得する。10進数の数値
+     * @return
+     */
+    public int getId() {
+        return id;
     }
     
+    /**
+     * 16進数のIDを取得する。
+     * ・大文字、4桁に整形されている。
+     * @return
+     */
+    public String getHexId() {
+        return hexId;
+    }
+    
+    /**
+     * コードの取得
+     * @return
+     */
+    public String getCode() {
+        return code;
+    }
+    
+    /**
+     * 言語コードを取得する
+     * @return
+     */
     public String getLanguage() {
         return language;
     }
     
-    void setLanguage(String language) {
-        this.language = language;
-    }
-    
+    /**
+     * 国コードを取得する
+     * @return
+     */
     public String getCountry() {
         return country;
     }
     
-    void setCountry(String country) {
-        this.country = country;
-    }
-    
+    /**
+     * 名称を取得する。
+     * @return
+     */
     public String getName() {
         return name;
     }
     
-    void setName(String name) {
-        this.name = name;
+    /**
+     * 指定したロケールの名称を取得する。
+     * @param locale
+     * @return
+     */
+    public String getName(final Locale locale) {
+        return messageResolver.getMessage(locale, String.format("locale.%s.name", hexId));
     }
     
+    /**
+     * 対応するJavaのロケールを取得する。
+     * <p>存在しない場合は、nullを返す。
+     * @return
+     */
     public Locale getLocale() {
         return locale;
-    }
-    
-    void setLocale(Locale locale) {
-        this.locale = locale;
     }
     
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((code == null) ? 0 : code.hashCode());
-        result = prime * result + ((country == null) ? 0 : country.hashCode());
-        result = prime * result + ((hexValue == null) ? 0 : hexValue.hashCode());
-        result = prime * result + ((language == null) ? 0 : language.hashCode());
-        result = prime * result + ((locale == null) ? 0 : locale.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + value;
+        result = prime * result + id;
         return result;
     }
     
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if(this == obj)
             return true;
-        }
-        if(obj == null) {
+        if(obj == null)
             return false;
-        }
-        if(!(obj instanceof MSLocale)) {
+        if(getClass() != obj.getClass())
             return false;
-        }
         MSLocale other = (MSLocale) obj;
-        if(code == null) {
-            if(other.code != null) {
-                return false;
-            }
-        } else if(!code.equals(other.code)) {
+        if(id != other.id)
             return false;
-        }
-        if(country == null) {
-            if(other.country != null) {
-                return false;
-            }
-        } else if(!country.equals(other.country)) {
-            return false;
-        }
-        if(hexValue == null) {
-            if(other.hexValue != null) {
-                return false;
-            }
-        } else if(!hexValue.equals(other.hexValue)) {
-            return false;
-        }
-        if(language == null) {
-            if(other.language != null) {
-                return false;
-            }
-        } else if(!language.equals(other.language)) {
-            return false;
-        }
-        if(locale == null) {
-            if(other.locale != null) {
-                return false;
-            }
-        } else if(!locale.equals(other.locale)) {
-            return false;
-        }
-        if(name == null) {
-            if(other.name != null) {
-                return false;
-            }
-        } else if(!name.equals(other.name)) {
-            return false;
-        }
-        if(value != other.value) {
-            return false;
-        }
         return true;
     }
+    
 }

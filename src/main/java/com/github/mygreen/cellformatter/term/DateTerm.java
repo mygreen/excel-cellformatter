@@ -48,34 +48,7 @@ public abstract class DateTerm implements Term<Calendar> {
      */
     public abstract String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale, boolean isStartDate1904);
     
-    /**
-     * 指定した桁分、ゼロサプライ（ゼロ埋め）する。
-     * <p>既に指定したサイズを超える桁数の場合は、何もしない。
-     * <p>nullや空文字の場合は、空文字を返す。
-     * @param str 対象の文字
-     * @param size 桁数
-     * @return ゼロサプライした文字列
-     */
-    private static String supplyZero(final String str, final int size) {
-        
-        if(str == null) {
-            return "";
-        }
-        final int length = str.length();
-        if(length > size) {
-            return str;
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        final int appendSize = size - length;
-        for(int i=0; i < appendSize; i++) {
-            sb.append("0");
-        }
-        sb.append(str);
-        
-        return sb.toString();
-        
-    }
+    
     
     /**
      * 1900-03-01の時間（単位はミリ秒）
@@ -250,7 +223,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             final int formatLength = format.length();
-            return supplyZero(String.valueOf(time), formatLength);
+            return Utils.supplyZero(String.valueOf(time), formatLength);
         }
         
         public String getFormat() {
@@ -283,7 +256,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             final int formatLength = format.length();
-            return supplyZero(String.valueOf(time), formatLength);
+            return Utils.supplyZero(String.valueOf(time), formatLength);
         }
         
         public String getFormat() {
@@ -316,7 +289,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
             final int formatLength = format.length();
-            return supplyZero(String.valueOf(time), formatLength);
+            return Utils.supplyZero(String.valueOf(time), formatLength);
         }
         
         public String getFormat() {
@@ -344,9 +317,9 @@ public abstract class DateTerm implements Term<Calendar> {
             
             // 2桁、4桁補正する
             if(formatLength <= 2) {
-                return supplyZero(value, 2).substring(2);
+                return Utils.supplyZero(value, 2).substring(2);
             } else {
-                return supplyZero(value, 4);
+                return Utils.supplyZero(value, 4);
             }
         }
         
@@ -433,19 +406,19 @@ public abstract class DateTerm implements Term<Calendar> {
             if(era.isUnkndown()) {
                 // 該当する時代の定義がない場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
-                return supplyZero(value, formatLength);
+                return Utils.supplyZero(value, formatLength);
             }
             
             final EraPeriod period = era.getTargetPeriod(date);
             if(period.isUnknown()) {
                 // 期間が不明な場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
-                return supplyZero(value, formatLength);
+                return Utils.supplyZero(value, formatLength);
                 
             }
             
             final String value = String.valueOf(period.getEraYear(cal));
-            return supplyZero(value, formatLength);
+            return Utils.supplyZero(value, formatLength);
             
         }
         
@@ -482,14 +455,14 @@ public abstract class DateTerm implements Term<Calendar> {
             if(era.isUnkndown()) {
                 // 該当する時代の定義がない場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
-                return supplyZero(value, formatLength);
+                return Utils.supplyZero(value, formatLength);
             }
             
             final EraPeriod period = era.getTargetPeriod(date);
             if(period.isUnknown()) {
                 // 期間が不明な場合
                 String value = String.valueOf(cal.get(Calendar.YEAR));
-                return supplyZero(value, formatLength);
+                return Utils.supplyZero(value, formatLength);
                 
             }
             
@@ -502,7 +475,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             // 年の組み立て
             final String strYear = String.valueOf(period.getEraYear(cal));
-            sb.append(supplyZero(strYear, 2));
+            sb.append(Utils.supplyZero(strYear, 2));
             
             return sb.toString();
         }
@@ -534,7 +507,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 return String.valueOf(value);
                 
             } else if(formatLength == 2) {
-                return supplyZero(String.valueOf(value), 2);
+                return Utils.supplyZero(String.valueOf(value), 2);
                 
             } else if(formatLength == 3) {
                 // 月名の先頭3文字
@@ -552,7 +525,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 return DateTerm.messageResolver.getMessage(formatLocale, key);
                 
             } else {
-                return supplyZero(String.valueOf(value), 2);
+                return Utils.supplyZero(String.valueOf(value), 2);
             }
         }
         
@@ -612,7 +585,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 return String.valueOf(value);
                 
             } else if(formatLength == 2) {
-                return supplyZero(String.valueOf(value), 2); 
+                return Utils.supplyZero(String.valueOf(value), 2); 
                 
             } else if(formatLength == 3) {
                 // 曜日の省略名
@@ -627,7 +600,7 @@ public abstract class DateTerm implements Term<Calendar> {
                 return messageResolver.getMessage(formatLocale, key);
                 
             } else {
-               return supplyZero(String.valueOf(value), 2); 
+               return Utils.supplyZero(String.valueOf(value), 2); 
             }
             
         }
@@ -758,7 +731,7 @@ public abstract class DateTerm implements Term<Calendar> {
             }
             
             final int formatLength = format.length();
-            return supplyZero(value, formatLength);
+            return Utils.supplyZero(value, formatLength);
             
         }
         
@@ -788,7 +761,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final String value = String.valueOf(cal.get(Calendar.MINUTE));
             final int formatLength = format.length();
-            return supplyZero(value, formatLength);
+            return Utils.supplyZero(value, formatLength);
             
         }
         
@@ -814,7 +787,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final String value = String.valueOf(cal.get(Calendar.SECOND));
             final int formatLength = format.length();
-            return supplyZero(value, formatLength);
+            return Utils.supplyZero(value, formatLength);
             
         }
         
