@@ -14,7 +14,7 @@ public enum FormatCellType {
     /** Boolean */
     Boolean,
     
-    /** Test - String */
+    /** Text - String */
     Text,
     
     /** Number - double */

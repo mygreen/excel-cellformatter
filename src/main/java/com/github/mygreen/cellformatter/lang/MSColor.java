@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * 色のパレットの定義クラス。
  * <p>色はパレットが指定可能。
- * <p>Excelの色パレット一覧：<a href="http://dmcritchie.mvps.org/excel/colors.htm">Color Palette and the 56 Excel ColorIndex Colors</a>
+ * <p>Excelの色パレット一覧：<a href="http://dmcritchie.mvps.org/excel/colors.htm" target="_blank">Color Palette and the 56 Excel ColorIndex Colors</a>
  * 
  * @author T.TSUCHIE
  *
