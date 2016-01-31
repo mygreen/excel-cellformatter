@@ -6,12 +6,14 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>excel-cellformatter</artifactId>
-    <version>0.5</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
 # 簡単な使い方
-## POIの場合
+## Apache POIの場合
+
+Apache POIの場合、POICellFormatter クラスを使います。
 
 ```java
 Cell cell = /* セルの値の取得 */;
@@ -29,11 +31,14 @@ MSColor textColor = result.getTextColor(); // フォーマットした文字色
 
 ```
 
-** 注意事項
+### 注意事項
 - 単純にフォーマット結果を文字列として取得する場合、#formatAsString(...)メソッドを呼びます。
 - 文字色など書式に条件が設定されている場合、詳細な情報を取得するには、#format(...)メソッドを呼びます。
 
 ## JExcelAPIの場合
+
+JExcelAPIの場合、JXLCellFormatter クラスを使います。
+基本的に、使い方は POICellFormatter と同じです。
 
 ```java
 // シートの読み込み

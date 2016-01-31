@@ -5,7 +5,7 @@
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>excel-cellformatter</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
+	<version>0.5.1</version>
 	<name>Excel-CellFormatter</name>
 	<url>http://mygreen.github.io/excel-cellformatter/</url>
 	<description><![CDATA[
