@@ -39,7 +39,7 @@ public class MSLocale {
     public static final MSLocale CANADA = MSLocale.createKnownLocale(0x2809);
     
     /** ドイツ語 */
-    public static final MSLocale GERMAY = MSLocale.createKnownLocale(0x0407);
+    public static final MSLocale GERMAN = MSLocale.createKnownLocale(0x0407);
     
     /** フランス語 */
     public static final MSLocale FRENCE = MSLocale.createKnownLocale(0x040C);
@@ -84,9 +84,9 @@ public class MSLocale {
      * 既知のIDかどうか。
      * <p>プロパティファイルに定義されているかで確認する。
      * @since 0.5
-     * @param id 10進数
+     * @param id ロケールID(10進数)。
      */
-    public static boolean isUnkownById(int id) {
+    public static boolean isKnownById(int id) {
         final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
         
         String code = messageResolver.getMessage(String.format("locale.%s.code", hexId));
