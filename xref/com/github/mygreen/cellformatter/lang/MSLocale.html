@@ -47,7 +47,7 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> CANADA = MSLocale.createKnownLocale(0x2809);
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/** ドイツ語 */</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> GERMAY = MSLocale.createKnownLocale(0x0407);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> GERMAN = MSLocale.createKnownLocale(0x0407);
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <em class="jxr_javadoccomment">/** フランス語 */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> FRENCE = MSLocale.createKnownLocale(0x040C);
@@ -92,9 +92,9 @@
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     * 既知のIDかどうか。</em>
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;プロパティファイルに定義されているかで確認する。</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * @since 0.5</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param id 10進数</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param id ロケールID(10進数)。</em>
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isUnkownById(<strong class="jxr_keyword">int</strong> id) {
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isKnownById(<strong class="jxr_keyword">int</strong> id) {
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          <strong class="jxr_keyword">final</strong> String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          String code = messageResolver.getMessage(String.format(<span class="jxr_string">"locale.%s.code"</span>, hexId));

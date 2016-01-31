@@ -3,6 +3,16 @@
 ======================================
 
 ------------------------
+ver.0.5.1 - 2016-01-31
+------------------------
+
+* `#9 <https://github.com/mygreen/excel-cellformatter/issues/9>`_ : ``MSLocale`` クラス内の綴り間違いを修正。
+
+  * MSLocale.MSLocale.GERMAY → MSLocale.GERMAN
+  * MSLocale.isUnkownById(int) → MSLocale.isKnown(int)
+
+
+------------------------
 ver.0.5 - 2016-01-16
 ------------------------
 
@@ -39,7 +49,7 @@ ver.0.3 - 2015-04-11
 
 * `#2 <https://github.com/mygreen/excel-cellformatter/issues/2>`_ : フォーマットの戻り値として色などの詳細な情報 `CellFormatResult` を取得できるよにしました。
 
-   * この修正に伴い、既存のメソッド `POICellFormatter#format(...)` 、`JXLCellFormatter#format(...)` の名称を、`#formatAsString(...)` に変更しました。
+  * この修正に伴い、既存のメソッド `POICellFormatter#format(...)` 、`JXLCellFormatter#format(...)` の名称を、`#formatAsString(...)` に変更しました。
 
 * `#3 <https://github.com/mygreen/excel-cellformatter/issues/3>`_ : エスケープ文字としてクエスチョン（!）に対応しました。
 

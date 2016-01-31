@@ -13,7 +13,7 @@ Mavenのセントラルリポジトリに登録してあるため、依存関係
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.5</version>
+        <version>0.5.1</version>
     </dependency>
 
 

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. Excelの書式の基本について &mdash; Excel-CellFormatter 0.5 ドキュメント</title>
+    <title>4. Excelの書式の基本について &mdash; Excel-CellFormatter 0.5.1 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5',
+        VERSION:     '0.5.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.5 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.5.1 ドキュメント" href="index.html" />
     <link rel="next" title="5. Excelの書式のその他の情報" href="format_other.html" />
     <link rel="prev" title="3. カスタマイズ方法" href="customize.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="customize.html" title="3. カスタマイズ方法"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -63,7 +63,7 @@
 <li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
 <li class="toctree-l2"><a class="reference internal" href="biginning.html#id3">1.2. 前提環境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="biginning.html#id4">1.3. 制限事項</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#restriction">1.3. 制限事項</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">2. 基本的な使い方</a><ul>
@@ -96,11 +96,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.1. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.2. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.3. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.4. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.5. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.1. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.2. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.3. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.4. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.5. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.6. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -143,12 +144,21 @@
             
   <div class="section" id="excel">
 <h1>4. Excelの書式の基本について<a class="headerlink" href="#excel" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>ここでは、Excelの書式の説明を行います。</p>
 <p>Excelの書式は、全てユーザ定義をとります。
 特に、Excel2000以降は、日付、会計などの全ての書式がユーザ定義として登録されています。</p>
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
-<p class="last">表示形式のパターンには大文字／小文字の区別は基本的になく両方の記述が利用できます。
-一部、大文字／小文字によって、表示形式が変わる場合があります。</p>
+<ul class="last simple">
+<li>本ライブラリは、基本的に、Excelでサポートされている書式は対応しています。<ul>
+<li>一部対応していない書式は、<a class="reference internal" href="biginning.html#restriction"><span>制限事項</span></a> を参照してください。</li>
+</ul>
+</li>
+<li>表示形式のパターンには大文字／小文字の区別は基本的になく両方の記述が利用できます。<ul>
+<li>一部、大文字／小文字によって、表示形式が変わる場合があります。</li>
+</ul>
+</li>
+</ul>
 </div>
 <div class="section" id="id1">
 <h2>4.1. 参考リンク<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -436,8 +446,8 @@
 </div>
 <div class="section" id="id7">
 <h2>4.4. 数値用の書式記号<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Excelの数値関連の書式は分類すれば、「数値」「通貨」「会計」「パーセンテージ」「分数」「指数」を指します。</p>
-<p>これらの書式は、据えて共通の書式記号と数値用の書式記号から構成されています。</p>
+<p>Excelの数値関連の書式は分類すれば、「数値」「通貨」「会計」「パーセンテージ」「分数」「指数」に分けられます。</p>
+<p>これらの書式は、全て <a class="reference internal" href="format_basic_common.html"><em>共通の書式記号</em></a> と数値用の書式記号から構成されています。</p>
 <table border="1" class="docutils" id="id36">
 <caption><span class="caption-text">数値の書式記号</span><a class="headerlink" href="#id36" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
@@ -706,7 +716,7 @@
 </div>
 <div class="section" id="id12">
 <h2>4.5. 日時用の書式記号<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Excelの表示形式で分類すれば、「日付」「時刻」を指します。</p>
+<p>Excelの表示形式で分類すれば、「日付」「時刻」に分けられます。</p>
 <div class="section" id="id13">
 <h3>4.5.1. 日付の書式<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <table border="1" class="docutils" id="id41">
@@ -893,7 +903,7 @@
 <tr class="row-even"><td>ddd</td>
 <td><div class="first last line-block">
 <div class="line">英語の曜日の頭文字から 3 文字 (Sun～Sat) を表示します。</div>
-<div class="line">ただし、日本語ロケール用の条件 <em>「$-411」</em> を付与すると、「aaa」と同じ漢字の曜日の頭文字（日～土）を表示します。</div>
+<div class="line">ただし、日本語ロケール用の条件 <em>[$-411]</em> を付与すると、「aaa」と同じ漢字の曜日の頭文字（日～土）を表示します。</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -912,7 +922,7 @@
 <tr class="row-odd"><td>dddd</td>
 <td><div class="first last line-block">
 <div class="line">英語の曜日 (Sunday～Saturday) を表示します。</div>
-<div class="line">ただし、日本語ロケール用の条件 <em>「$-411」</em> を付与すると、「aaaa」と同じ漢字の曜日（日曜日～土曜日）を表示します。</div>
+<div class="line">ただし、日本語ロケール用の条件 <em>[$-411]</em> を付与すると、「aaaa」と同じ漢字の曜日（日曜日～土曜日）を表示します。</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1127,7 +1137,7 @@
 <td>M</td>
 <td>明</td>
 <td>1900/1/1（明治33年）</td>
-<td>1912/7/29（明治47年）</td>
+<td>1912/7/29（明治45年）</td>
 </tr>
 <tr class="row-odd"><td>大正</td>
 <td>T</td>
@@ -1152,11 +1162,18 @@
 <div class="admonition note">
 <p class="first admonition-title">注釈</p>
 <p>Excel内部の時間の保持の方法</p>
-<p class="last">Excelは、日時は内部では数字型で保持しており、値が0の場合は <strong>「1900年1月0日（1899年12月31日）」</strong> を表す。
-そのため、値が負の場合となる1899年12月30日以前の明治32年は表現できない。
-また、明治5年12月2日(1872年12月31日)まで、旧暦の太陰太陽暦を採用していたため、
-西暦とはずれが発生するため、1900年以前を表現するのはややこしくなる。
-さらに、Excelの設定によっては、値が0の場合が <strong>「1904年1月1日」</strong> から始まるように変更できるため、明治時代以前を表記するのには注意が必要となる。</p>
+<p>Excelは、日時は内部では数字型で保持しており、値が0の場合は <strong>「1900年1月0日（1899年12月31日）」</strong> を表します。</p>
+<p>そのため、値が負の場合となる1899年12月30日以前の明治32年は表現できません。</p>
+<p>また、明治5年12月2日(1872年12月31日)まで、旧暦の太陰太陽暦を採用していたため、
+西暦とはずれが発生し、独自に1900年以前を表現するのは複雑になります。</p>
+<p class="last">さらに、 <a class="reference internal" href="format_other_startdate.html"><em>Excelの設定</em></a> によっては、
+値が0の場合が <strong>「1904年1月1日」</strong> から始まるように変更できるため、明治時代以前を表記するのには注意が必要となる。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>和暦の内部表現</p>
+<p class="last">本ライブラリでは、和暦情報は、独自のプロパティファイル <code class="docutils literal"><span class="pre">「era_ja.properties」</span></code> で定義されています。
+Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calendars.properties」</span></code> のプロパティファイルは参照していません。</p>
 </div>
 </div>
 <div class="section" id="id15">
@@ -1296,7 +1313,7 @@
 <tr class="row-even"><td>AM/PM または am/pm (※)</td>
 <td><div class="first last line-block">
 <div class="line">時間を12時間表示し、AMまたはPMを付けます。</div>
-<div class="line">日本語ロケール用の条件 「$-411」 を付与すると、漢字表記（午前または午後）で表示します。</div>
+<div class="line">日本語ロケール用の条件 <em>[$-411]</em> を付与すると、漢字表記（午前または午後）で表示します。</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1321,7 +1338,7 @@
 <tr class="row-odd"><td>A/P または a/p (※)</td>
 <td><div class="first last line-block">
 <div class="line">時間を12時間表示し、AまたはPを付けます。</div>
-<div class="line">日本語ロケール用の条件 「$-411」 を付与すると、漢字表記（午前または午後）で表示します。</div>
+<div class="line">日本語ロケール用の条件 <em>[$-411]</em> を付与すると、漢字表記（午前または午後）で表示します。</div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1421,7 +1438,7 @@
 <p class="first admonition-title">注釈</p>
 <p>時間経過の書式の注意事項</p>
 <p class="last">時間経過の書式は、値が0であるExcelの基準日の <em>1899年12月31日（Excel表記上は1900年1月0日）からの経過時間</em> となります。
-ただし、Excelの基準日は、1904年1月1日と設定されている場合もあります。</p>
+ただし、 <a class="reference internal" href="format_other_startdate.html"><em>Excelの設定</em></a> により、基準日が1904年1月1日と設定されている場合もあります。</p>
 </div>
 </div>
 </div>
@@ -1461,7 +1478,7 @@
 </div>
 <div class="section" id="id17">
 <h2>4.7. 条件式について<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>条件式には複数の種類があり、基本的に書式を拡張するために使用します。</p>
+<p>条件式には複数の種類があり、書式を拡張するために使用します。</p>
 <ul class="simple">
 <li>書式は、大括弧&#8221;[&#8221;, &#8220;]&#8221;で囲みます。</li>
 <li>比較演算子（[&gt;80]）</li>
@@ -1948,7 +1965,7 @@
         <li class="right" >
           <a href="customize.html" title="3. カスタマイズ方法"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
