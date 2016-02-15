@@ -7,7 +7,8 @@ import java.util.Date;
  * 共通のセルのインタフェース。
  * POI、JExcelAPIなどのライブラリ間の違いを吸収するためのもの。
  * 
- * @version 0.4
+ * @version 0.6
+ * @since 0.4
  * @author T.TSUCHIE
  *
  */
@@ -68,6 +69,7 @@ public interface CommonCell {
     
     /**
      * 日時型のセルとして値を取得する。
+     * <p>ただじ、タイムゾーンは標準の{@literal GMT-00:00}とする。
      */
     Date getDateCellValue();
     

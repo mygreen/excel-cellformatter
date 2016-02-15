@@ -1,6 +1,5 @@
 package com.github.mygreen.cellformatter.lang;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -112,12 +111,12 @@ public class EraResolver {
             
             String start = resource.getMessage(String.format("era.%s.start", keyName));
             if(Utils.isNotEmpty(start)) {
-                period.setStartDate(Timestamp.valueOf(start));
+                period.setStartDate(ExcelDateUtils.parseDate(start));
             }
             
             String end = resource.getMessage(String.format("era.%s.end", keyName));
             if(Utils.isNotEmpty(end)) {
-                period.setEndDate(Timestamp.valueOf(end));
+                period.setEndDate(ExcelDateUtils.parseDate(end));
             }
             
             periodList.add(period);

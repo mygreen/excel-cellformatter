@@ -2,17 +2,18 @@ package com.github.mygreen.cellformatter;
 
 import java.util.Locale;
 
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.JXLUtils;
+
 import jxl.Cell;
 import jxl.CellType;
 import jxl.ErrorCell;
 
-import com.github.mygreen.cellformatter.lang.ArgUtils;
-import com.github.mygreen.cellformatter.lang.JXLUtils;
-
 
 /**
  * JExcel APIのセルのフォーマッタ。
- * @version 0.4
+ * @version 0.6
+ * @since 0.4
  * @author T.TSUCHIE
  *
  */

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.term.DateTerm;
 import com.github.mygreen.cellformatter.term.Term;
@@ -54,13 +55,13 @@ public class ConditionDateFormatter extends ConditionFormatter {
             return false;
         }
         
-        final long zeroTime = Utils.getExcelZeroDateTime(cell.isDateStart1904());
+        final long zeroTime = ExcelDateUtils.getExcelZeroDateTime(cell.isDateStart1904());
         final Date date = cell.getDateCellValue();
         final long value = date.getTime() - zeroTime;
         
         if(logger.isDebugEnabled()) {
             logger.debug("isMatch::date={}, zeroTime={}, diff={}",
-                    Utils.formatDate(date), Utils.formatDate(new Date(zeroTime)), value);
+                    ExcelDateUtils.formatDate(date), ExcelDateUtils.formatDate(new Date(zeroTime)), value);
         }
         
         return getOperator().isMatch(value);
@@ -71,7 +72,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
         ArgUtils.notNull(cell, "date");
         
         final Date date = cell.getDateCellValue();
-        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT-00:00"));
         cal.setTime(date);
         
         // 各項の処理

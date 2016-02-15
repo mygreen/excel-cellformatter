@@ -1,14 +1,10 @@
 package com.github.mygreen.cellformatter.lang;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -231,42 +227,6 @@ public class Utils {
         
         return false;
         
-    }
-    
-    /**
-     * '1900-01-01 00:00:00.000'の時間（単位はミリ秒）
-     */
-    public static final long TIME_19000101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
-    
-    /**
-     * '1904-01-01 00:00:00.000'の時間（単位はミリ秒）
-     */
-    public static final long TIME_19040101 = Timestamp.valueOf("1904-01-01 00:00:00.000").getTime();
-    
-    /**
-     * Excelの日付の開始日の時間の取得（単位はミリ秒）
-     * ・数値が0の時、「1900-1-0 00:00:00」 。この値は、1900年1月1日から、1日（24時間）を引いた値。
-     * ・ただし、1904年始まりの場合は、1904-1-1 0:00:00を返す。
-     * @param isStartDate1904 1904年始まりかどうか。
-     * @return
-     */
-    public static long getExcelZeroDateTime(boolean isStartDate1904) {
-        if(isStartDate1904) {
-            return TIME_19040101;
-        } else {
-            return TIME_19000101 - 1*TimeUnit.DAYS.toMillis(1);
-        }
-    }
-    
-    /**
-     * 日時オブジェクトを、文字列としてフォーマットする。
-     * 書式は、「yyyy-MM-dd HH:mm:ss.SSS」
-     * @param date
-     * @return
-     */
-    public static String formatDate(final Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        return format.format(date);
     }
     
     /**

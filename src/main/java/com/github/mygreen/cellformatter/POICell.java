@@ -3,6 +3,7 @@ package com.github.mygreen.cellformatter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.poi.hssf.model.InternalWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,7 +20,8 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 
 /**
  * POIのセル
- * @version 0.4
+ * @version 0.6
+ * @since 0.4
  * @author T.TSUCHIE
  *
  */
@@ -91,7 +93,9 @@ public class POICell implements CommonCell {
     @Override
     public Date getDateCellValue() {
         final Date date = cell.getDateCellValue();
-        return date;
+        
+        // タイムゾーン分、引かれているので調整する。
+        return new Date(date.getTime() + TimeZone.getDefault().getRawOffset());
     }
     
     @Override

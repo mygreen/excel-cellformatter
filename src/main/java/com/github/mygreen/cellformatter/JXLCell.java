@@ -1,11 +1,13 @@
 package com.github.mygreen.cellformatter;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
 
 import jxl.BooleanCell;
 import jxl.Cell;
@@ -19,13 +21,11 @@ import jxl.biff.XFRecord;
 import jxl.format.CellFormat;
 import jxl.format.Format;
 
-import com.github.mygreen.cellformatter.lang.ArgUtils;
-import com.github.mygreen.cellformatter.lang.Utils;
-
 
 /**
  * JExcel APIのセル
- * @version 0.4
+ * @version 0.6
+ * @since 0.4
  * @author T.TSUCHIE
  *
  */
@@ -206,15 +206,14 @@ public class JXLCell implements CommonCell {
             return ((NumberCell) cell).getValue();
             
         } else if(type == CellType.DATE || type == CellType.DATE_FORMULA) {
-            //TODO:
-            return 0;
+            final Date  date = ((DateCell) cell).getDate();
+            final double num = ExcelDateUtils.convertExcelNumber(date, isDateStart1904());
+            return num;
             
         } else {
             return 0;
         }
     }
-    
-    private static final long DATE_19000101 = Timestamp.valueOf("1900-01-01 00:00:00.000").getTime();
     
     @Override
     public Date getDateCellValue() {
@@ -225,64 +224,28 @@ public class JXLCell implements CommonCell {
             
         } else if(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
             final double num = getNumberCellValue();
-            final Date date = convertJavaDate(num, isDateStart1904());
-            return adjustDate(date);
+            final Date date = ExcelDateUtils.convertJavaDate(num, isDateStart1904());
+            return date;
             
         } else {
-            return new Date(Utils.getExcelZeroDateTime(isDateStart1904()));
+            return new Date(ExcelDateUtils.getExcelZeroDateTime(isDateStart1904()));
         }
-    }
-    
-    private Date adjustDate(final Date date) {
-        
-        // JExcelAPIは、タイムゾーンの時差が加算されているため補正する。
-        Date adjustDate = new Date(date.getTime() - TimeZone.getDefault().getRawOffset());
-        
-        // 1900年以前の場合は、1899-12-30となるため、１日進めて補正をかける
-        if(adjustDate.getTime() < DATE_19000101) {
-            adjustDate = new Date(adjustDate.getTime() + TimeUnit.DAYS.toMillis(1));
-        }
-        
-        return adjustDate;
     }
     
     /**
-     * 数値を日時に変換する処理。
-     * <p>JExcelAPIの「jxl.read.biff.DateRecord」を参照。
-     * @param value
-     * @param date1904 Excelの基準日が1904年かどうか
+     * 時刻の調整を行う。
+     * <p>1900年1月0日が、1899-12-30となり、1899年12月31日以降が1日ずれるため、調整を行う。
+     * @param date
      * @return
      */
-    private Date convertJavaDate(final double value, final boolean date1904) {
+    private Date adjustDate(final Date date) {
         
-        double numValue = value;
-        boolean time;
-        
-        if(Math.abs(numValue) < 1) {
-            time = true;
-        } else {
-            time = false;
+        if(!isDateStart1904() && date.getTime() < ExcelDateUtils.MILLISECONDS_19000101) {
+            return new Date(date.getTime() + TimeUnit.DAYS.toMillis(1));
         }
         
-        if(!date1904 && !time && numValue < nonLeapDay) {
-            numValue += 1;
-        }
-        
-        int offsetDays = date1904 ? utcOffsetDays1904 : utcOffsetDays;
-        double utcDays = numValue - offsetDays;
-        
-        long utcValue = Math.round(utcDays * secondsInADay) * msInASecond;
-        
-        return new Date(utcValue);
-        
+        return date;
     }
-    
-    // convertJavaDate内で使用する定数。
-    private static final int nonLeapDay = 61;
-    private static final int utcOffsetDays = 25569;
-    private static final int utcOffsetDays1904 = 24107;
-    private static final long secondsInADay = 24 * 60 * 60;
-    private static final long msInASecond = 1000;
     
     @Override
     public boolean isDateStart1904() {

@@ -1,6 +1,5 @@
 package com.github.mygreen.cellformatter.term;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.github.mygreen.cellformatter.lang.Era;
 import com.github.mygreen.cellformatter.lang.EraPeriod;
 import com.github.mygreen.cellformatter.lang.EraResolver;
+import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
 import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.lang.MessageResolver;
 import com.github.mygreen.cellformatter.lang.Utils;
@@ -48,16 +48,10 @@ public abstract class DateTerm implements Term<Calendar> {
      */
     public abstract String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale, boolean isStartDate1904);
     
-    
-    
-    /**
-     * 1900-03-01の時間（単位はミリ秒）
-     */
-    private static final long TIME_19000301 = Timestamp.valueOf("1900-03-01 00:00:00.000").getTime();
-    
     /**
      * 経過時間を計算するときの基準日を取得する。
-     * ・1900/2/28までは、-1日。1900/3/1以降は、-2日。
+     * ・1900/2/28までは、-1日ずれる。Excelは1900年は1月0日(=1899年12月31日)から始まるため、1日多い。
+     * ・1900/3/1以降は、-2日ずれず。Excel は、閏日ではない1900年2月29日(=1900年3月1日)が存在するため1日多い。
      * @param date
      * @param isStartDate1904
      * @return
@@ -65,13 +59,13 @@ public abstract class DateTerm implements Term<Calendar> {
     private static long getElapsedZeroTime(final Date date, final boolean isStartDate1904) {
         
         if(isStartDate1904) {
-            return Utils.getExcelZeroDateTime(isStartDate1904);
+            return ExcelDateUtils.getExcelZeroDateTime(isStartDate1904);
         } else {
-            if(TIME_19000301 <= date.getTime()) {
+            if(ExcelDateUtils.MILLISECONDS_19000301 <= date.getTime()) {
                 // 1900-03-01以降
-                return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(2);
+                return ExcelDateUtils.MILLISECONDS_19000101 - TimeUnit.DAYS.toMillis(2);
             } else {
-                return Utils.TIME_19000101 - TimeUnit.DAYS.toMillis(1);
+                return ExcelDateUtils.MILLISECONDS_19000101 - TimeUnit.DAYS.toMillis(1);
             }
         }
         
@@ -218,7 +212,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
-                logger.info("ElapsedHour:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+                logger.info("ElapsedHour:calendar={}, zeroTime={}.", ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));
             }
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
@@ -251,7 +245,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
-                logger.info("ElapsedMinute:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+                logger.info("ElapsedMinute:calendar={}, zeroTime={}.", ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));
             }
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);
@@ -284,7 +278,7 @@ public abstract class DateTerm implements Term<Calendar> {
             
             final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);
             if(logger.isInfoEnabled()) {
-                logger.info("ElapsedSecond:calendar={}, zeroTime={}.", Utils.formatDate(cal.getTime()), Utils.formatDate(new Date(zeroTime)));
+                logger.info("ElapsedSecond:calendar={}, zeroTime={}.", ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));
             }
             
             final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);

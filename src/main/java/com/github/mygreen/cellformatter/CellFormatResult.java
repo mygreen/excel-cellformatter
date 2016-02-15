@@ -1,6 +1,7 @@
 package com.github.mygreen.cellformatter;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.github.mygreen.cellformatter.lang.MSColor;
 
@@ -9,7 +10,7 @@ import com.github.mygreen.cellformatter.lang.MSColor;
  * フォーマット結果を保持するクラス。
  * <p>条件に色が付与されている場合などの情報を保持する。
  * 
- * @since 0.3
+ * @since 0.6
  * @author T.TSUCHIE
  *
  */
@@ -59,11 +60,28 @@ public class CellFormatResult {
     
     /**
      * フォーマット対象の値を日時型として取得する。
-     * @return
+     * @return タイムゾーンが考慮された日時です。タイムゾーンはデフォルトです。
      * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      */
     public Date getValueAsDate() {
-        return (Date) value;
+        return getValueAsDate(null);
+    }
+    
+    /**
+     * タイムゾーンを指定して、フォーマット対象の値を日時型として取得する。
+     * @param tz タイムゾーン。値がnullの場合は、デフォルトを使用します。
+     * @return
+     */
+    public Date getValueAsDate(final TimeZone tz) {
+        long time = ((Date) value).getTime();
+        long offset;
+        if(tz == null) {
+            offset = TimeZone.getDefault().getRawOffset();
+        } else {
+            offset = tz.getRawOffset();
+        }
+        
+        return new Date(time - offset);
     }
     
     /**
@@ -73,6 +91,15 @@ public class CellFormatResult {
      */
     public String getValueAsString() {
         return (String) value;
+    }
+    
+    /**
+     * フォーマット対象の値をブール型として取得する。
+     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
+     * @return
+     */
+    public boolean getValueAsBoolean() {
+        return (boolean) value;
     }
     
     /**

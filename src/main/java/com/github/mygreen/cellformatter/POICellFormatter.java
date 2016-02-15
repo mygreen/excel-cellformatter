@@ -62,7 +62,7 @@ public class POICellFormatter {
      * セルの値を取得する
      * @since 0.3
      * @param cell フォーマット対象のセル
-     * @return フォーマット結果。cellがnullの場合、空文字を返す。
+     * @return フォーマット結果。cellがnullの場合、空セルとして値を返す。
      */
     public CellFormatResult format(final Cell cell) {
         return format(cell, Locale.getDefault());
@@ -75,7 +75,7 @@ public class POICellFormatter {
      * @param cell フォーマット対象のセル
      * @param locale locale フォーマットしたロケール。nullでも可能。
      *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
-     * @return フォーマット結果。cellがnullの場合、空文字を返す。
+     * @return フォーマット結果。cellがnullの場合、空セルとして値を返す。
      */
     private CellFormatResult format(final Cell cell, final Locale locale) {
         

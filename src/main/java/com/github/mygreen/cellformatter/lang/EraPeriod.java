@@ -2,6 +2,7 @@ package com.github.mygreen.cellformatter.lang;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 /**
@@ -34,7 +35,7 @@ public class EraPeriod {
     
     /**
      * 指定した日時が含まれているかどうか。
-     * @param date
+     * @param date チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
      * @return true:この時代に含まれている。
      * @throws IllegalArgumentException date is null.
      */
@@ -56,14 +57,14 @@ public class EraPeriod {
     
     /**
      * 指定した日時が、開始日時から経過した年を取得する。
-     * @param cal
+     * @param cal チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
      * @return
      * @throws IllegalArgumentException cal is null.
      */
     public int getEraYear(final Calendar cal) {
         ArgUtils.notNull(cal, "cal");
         
-        final Calendar startCal = Calendar.getInstance();
+        final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone("GMT-00:00"));
         startCal.setTime(startDate);
         
         final int diff = cal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;
@@ -77,11 +78,11 @@ public class EraPeriod {
         StringBuilder sb = new StringBuilder();
         sb.append(EraPeriod.class.getSimpleName()).append("[").append(getName()).append("]");
         if(startDate != null) {
-            sb.append("[start=").append(Utils.formatDate(startDate)).append("]");
+            sb.append("[start=").append(ExcelDateUtils.formatDate(startDate)).append("]");
         }
         
         if(endDate != null) {
-            sb.append("[end=").append(Utils.formatDate(endDate)).append("]");
+            sb.append("[end=").append(ExcelDateUtils.formatDate(endDate)).append("]");
         }
         
         return sb.toString();
