@@ -1,6 +1,7 @@
 package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -8,7 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -27,10 +30,12 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.mygreen.cellformatter.lang.MSColor;
+
 /**
  * POIによるテスト
  * 
- * @version 0.5
+ * @version 0.6
  * @since 0.1
  * @author T.TSUCHIE
  *
@@ -62,6 +67,64 @@ public class POICellFormatterTest {
         CellFormatResult result = cellFormatter.format(null);
         assertThat(result.getCellType(), is(FormatCellType.Blank));
         assertThat(result.getText(), is(""));
+    }
+    
+    /**
+     * 戻り値のテスト
+     * ・日付用。
+     * @since 0.6
+     */
+    @Test
+    public void testReturnValue_date() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        
+        try {
+            Sheet sheet = loadSheetByName(file, "書式（日付）");
+            Cell cell = getCell(sheet, "C4");
+            
+            CellFormatResult result = cellFormatter.format(cell);
+            
+            assertThat(result.getCellType(), is(FormatCellType.Date));
+            assertThat(result.getText(), is("2012/2/29 1:58 AM"));
+            assertThat(result.getTextColor(), is(nullValue()));
+            assertThat(result.getSectionPattern(), is("[$-409]yyyy/m/d\\ h:mm\\ AM/PM"));
+            assertThat(result.getValueAsDate(), is(new Date(Timestamp.valueOf("2012-02-29 01:58:00.000").getTime())));
+        
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    /**
+     * 戻り値のテスト
+     * ・日付用。
+     * @since 0.6
+     */
+    @Test
+    public void testReturnValue_numeric() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        
+        try {
+            Sheet sheet = loadSheetByName(file, "書式（数値）");
+            Cell cell = getCell(sheet, "C4");
+            
+            CellFormatResult result = cellFormatter.format(cell);
+            
+            assertThat(result.getCellType(), is(FormatCellType.Number));
+            assertThat(result.getText(), is("123.5"));
+            assertThat(result.getTextColor(), is(MSColor.BLUE));
+            assertThat(result.getSectionPattern(), is("[Blue]#,##0.0"));
+            assertThat(result.getValueAsDoulbe(), is(123.456d));
+        
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
     
     /**

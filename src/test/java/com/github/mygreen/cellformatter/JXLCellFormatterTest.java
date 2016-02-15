@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
@@ -29,10 +31,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.mygreen.cellformatter.lang.JXLUtils;
+import com.github.mygreen.cellformatter.lang.MSColor;
 
 /**
  * JExcelAPI用のフォーマッタのテスタ
- * @version 0.5
+ * @version 0.6
  * @since 0.1
  * @author T.TSUCHIE
  *
@@ -45,6 +48,66 @@ public class JXLCellFormatterTest {
     
     @After
     public void tearDown() throws Exception {
+    }
+    
+    /**
+     * 戻り値のテスト
+     * ・日付用。
+     * @since 0.6
+     */
+    @Test
+    public void testReturnValue_date() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        
+        try {
+            Sheet sheet = loadSheetByName(file, "書式（日付）");
+            final boolean isDateStart1904 = JXLUtils.isDateStart1904(sheet);
+            Cell cell = sheet.getCell("C4");
+            
+            CellFormatResult result = cellFormatter.format(cell, isDateStart1904);
+            
+            assertThat(result.getCellType(), is(FormatCellType.Date));
+            assertThat(result.getText(), is("2012/2/29 1:58 AM"));
+            assertThat(result.getTextColor(), is(nullValue()));
+            assertThat(result.getSectionPattern(), is("[$-409]yyyy/m/d\\ h:mm\\ AM/PM"));
+            assertThat(result.getValueAsDate(), is(new Date(Timestamp.valueOf("2012-02-29 01:58:00.000").getTime())));
+        
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    /**
+     * 戻り値のテスト
+     * ・日付用。
+     * @since 0.6
+     */
+    @Test
+    public void testReturnValue_numeric() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        JXLCellFormatter cellFormatter = new JXLCellFormatter();
+        
+        try {
+            Sheet sheet = loadSheetByName(file, "書式（数値）");
+            final boolean isDateStart1904 = JXLUtils.isDateStart1904(sheet);
+            Cell cell = sheet.getCell("C4");
+            
+            CellFormatResult result = cellFormatter.format(cell, isDateStart1904);
+            
+            assertThat(result.getCellType(), is(FormatCellType.Number));
+            assertThat(result.getText(), is("123.5"));
+            assertThat(result.getTextColor(), is(MSColor.BLUE));
+            assertThat(result.getSectionPattern(), is("[Blue]#,##0.0"));
+            assertThat(result.getValueAsDoulbe(), is(123.456d));
+        
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
     
     /**
