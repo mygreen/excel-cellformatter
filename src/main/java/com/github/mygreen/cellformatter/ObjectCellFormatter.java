@@ -1,9 +1,34 @@
 package com.github.mygreen.cellformatter;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
- * Javaのオブジェクト型を直接フォーマットする。
+ * Javaのオブジェクト型を直接フォーマットするクラス。
+ * <p>Excelの基本型である「文字列型」「ブール型」「数値型」「日付型」の4つをサポートします。</p>
+ * <p>数値型については、Javaの{@link Number}を継承している標準クラスに対応しています。</p>
+ * <ul>
+ *  <li>プリミティブ型：byte/shrot/int/long/float/double</li>
+ *  <li>ラッパークラス：Byte/Short/Integer/Long/Float/Double</li>
+ *  <li>その他：AtomicInteger/AtomicLong/BigDecimal/BigInteger</li>
+ * </ul>
+ * 
+ * <pre>
+ * {@code //} 基本的な使い方。
+ * {@code //} 各型に対応したインタフェースを利用します。
+ * ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+ * String text = cellFormatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", Timestamp.valueOf("2012-02-01 12:10:00.000"));
+ * 
+ * {@code //} 細かく指定したい場合。
+ * {@code //} 仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
+ * ObejctCell cell = new DateCell(Timestamp.valueOf("2012-02-01 12:10:00.000"), "yyyy\"年\"m\"月\"d\"日\";@", false)
+ * CellFormatResult result = cellFormatter.format(cell);
+ * String text = result.getText(); {@code //} フォーマットした文字列の取得
+ * MSColor color = result.getTextColor(); {@code //} 文字色が設定されている場合、その色の取得。
+ * 
+ * </pre>
+ * 
+ * 
  * @since 0.6
  * @author T.TSUCHIE
  *
@@ -18,8 +43,176 @@ public class ObjectCellFormatter {
     private boolean cache = true;
     
     /**
-     * セルの値を文字列として取得する
-     * @param cell 取得対象のセル
+     * 文字列型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final String value) {
+        return format(formatPattern, value).getText();
+    }
+    
+    /**
+     * 文字列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final String value) {
+        return format(formatPattern, value, Locale.getDefault());
+    }
+    
+    /**
+     * ロケールを指定して、文字列型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final String value, final Locale locale) {
+        return format(formatPattern, value, locale).getText();
+    }
+    
+    /**
+     * ロケールを指定して、文字列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final String value, final Locale locale) {
+        return format(new TextCell(value, formatPattern), locale);
+    }
+    
+    /**
+     * ブール型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */    
+    public String formatAsString(final String formatPattern, final boolean value, final Locale locale) {
+        return format(formatPattern, value, locale).getText();
+    }
+    
+    /**
+     * ブール型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final boolean value, final Locale locale) {
+        return format(new BooleanCell(value, formatPattern), locale);
+    }
+    
+    /**
+     * ロケールを指定して、ブール型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果の文字列。
+     */    
+    public String formatAsString(final String formatPattern, final boolean value) {
+        return format(formatPattern, value).getText();
+    }
+    
+    /**
+     * ロケールを指定して、ブール型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final boolean value) {
+        return format(formatPattern, value, Locale.getDefault());
+    }
+    
+    /**
+     * 数値型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */
+    public <N extends Number> String formatAsString(final String formatPattern, final N value, final Locale locale) {
+        return format(formatPattern, value, locale).getText();
+    }
+    
+    /**
+     * 数値列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public <N extends Number> CellFormatResult format(final String formatPattern, final N value, final Locale locale) {
+        return format(new NumberCell<N>(value, formatPattern), locale);
+    }
+    
+    /**
+     * ロケールを指定して、数値型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果の文字列。
+     */
+    public <N extends Number>String formatAsString(final String formatPattern, final N value) {
+        return format(formatPattern, value).getText();
+    }
+    
+    /**
+     * ロケールを指定して、数値型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果。
+     */
+    public <N extends Number> CellFormatResult format(final String formatPattern, final N value) {
+        return format(formatPattern, value, Locale.getDefault());
+    }
+    
+    /**
+     * 日付型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final Date value, final Locale locale) {
+        return format(formatPattern, value, locale).getText();
+    }
+    
+    /**
+     * 日付型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final Date value, final Locale locale) {
+        return format(new DateCell(value, formatPattern), locale);
+    }
+    
+    /**
+     * ロケールを指定して、日付型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final Date value) {
+        return format(formatPattern, value).getText();
+    }
+    
+    /**
+     * ロケールを指定して、日付型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final Date value) {
+        return format(formatPattern, value, Locale.getDefault());
+    }
+    
+    /**
+     * セルの値を文字列として取得する。
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
      * @return フォーマットしたセルの値。 cellがnullの場合、空文字を返す。
      */
     public String formatAsString(final ObjectCell<?> cell) {
@@ -28,7 +221,7 @@ public class ObjectCellFormatter {
     
     /**
      * ロケールを指定してセルの値を文字列として取得する
-     * @param cell フォーマット対象のセル
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
      * @param locale locale フォーマットしたロケール。nullでも可能。
      *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
      * @return フォーマットした文字列。cellがnullの場合、空文字を返す。

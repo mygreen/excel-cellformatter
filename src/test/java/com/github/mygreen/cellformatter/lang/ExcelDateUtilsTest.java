@@ -194,6 +194,8 @@ public class ExcelDateUtilsTest {
         
         assertThat(ExcelDateUtils.convertExcelNumber(toDate("1900-01-01 23:59:59.000"), false), is(1.0 + toXlsSeconds(60*60*24 - 1)));
         
+        // 小数の桁数確認
+        assertThat(ExcelDateUtils.convertExcelNumber(toDate("1900-01-01 23:59:59.999"), false), is(1.0 + toXlsSeconds(60*60*24 - 1)+ toXlsMillSeconds(999)));
     }
     
     /**
@@ -216,6 +218,9 @@ public class ExcelDateUtilsTest {
         
         assertThat(ExcelDateUtils.convertExcelNumber(toDate("1904-01-02 23:59:59.000"), true), is(1.0 + toXlsSeconds(60*60*24 - 1)));
         
+        // 小数の桁数確認
+        assertThat(ExcelDateUtils.convertExcelNumber(toDate("1904-01-02 23:59:59.999"), true), is(1.0 + toXlsSeconds(60*60*24 - 1)+ toXlsMillSeconds(999)));
+        
     }
     
     /**
@@ -226,7 +231,21 @@ public class ExcelDateUtilsTest {
     private double toXlsSeconds(int value) {
         
         BigDecimal num = new BigDecimal(value);
-        num = num.divide(new BigDecimal(60*60*24), 13, BigDecimal.ROUND_HALF_UP);
+        num = num.divide(new BigDecimal(60*60*24), 17, BigDecimal.ROUND_HALF_UP);
+        
+        return num.doubleValue();
+        
+    }
+    
+    /**
+     * Excel上の数値のミリ秒に変換する
+     * @param value
+     * @return
+     */
+    private double toXlsMillSeconds(int value) {
+        
+        BigDecimal num = new BigDecimal(value);
+        num = num.divide(new BigDecimal(60*60*24*1000), 17, BigDecimal.ROUND_HALF_UP);
         
         return num.doubleValue();
         

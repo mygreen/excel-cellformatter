@@ -10,9 +10,15 @@ import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
 
 /**
  * 数値型の値を直接扱うための仮想的なセル。
+ * <p>Javaの数値型のクラスに対応しています。</p>
+ * <ul>
+ *  <li>プリミティブ型：byte/shrot/int/long/float/double</li>
+ *  <li>ラッパークラス：Byte/Short/Integer/Long/Float/Double</li>
+ *  <li>その他：AtomicInteger/AtomicLong/BigDecimal/BigInteger</li>
+ * </ul>
  * 
  * @since 0.6
- * @param <T> 
+ * @param <T> Javaの数値クラス。
  * @author T.TSUCHIE
  *
  */

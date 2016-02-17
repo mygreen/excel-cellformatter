@@ -108,7 +108,7 @@ public class DateCell extends ObjectCell<Date> {
     @Override
     public Date getDateCellValue() {
         
-        // タイムゾーン分を引いて、標準時にする。
+        // タイムゾーン分を考慮して、標準時にする。
         return new Date(getValue().getTime() + TimeZone.getDefault().getRawOffset());
     }
     
