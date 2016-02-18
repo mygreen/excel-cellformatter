@@ -1,7 +1,6 @@
 package com.github.mygreen.cellformatter;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -13,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,6 +28,7 @@ import org.apache.poi.ss.util.CellReference;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.mygreen.cellformatter.lang.MSColor;
@@ -201,7 +202,7 @@ public class POICellFormatterTest {
         POICellFormatter cellFormatter = new POICellFormatter();
         try {
             Sheet sheet = loadSheetByName(file, "エラー");
-            assertSheet(sheet, cellFormatter);
+            assertSheet(sheet, cellFormatter, null);
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -223,7 +224,7 @@ public class POICellFormatterTest {
         cellFormatter.setErrorCellAsEmpty(true);
         try {
             Sheet sheet = loadSheetByName(file, "エラー (空)");
-            assertSheet(sheet, cellFormatter);
+            assertSheet(sheet, cellFormatter, null);
             
         } catch(Exception e) {
             e.printStackTrace();
@@ -240,7 +241,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -258,7 +259,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -294,7 +295,7 @@ public class POICellFormatterTest {
                     @Override
                     public void run() {
                         try {
-                            assertSheet(s, cellFormatter);
+                            assertSheet(s, cellFormatter, null);
                             
                         } finally {
                             countDown.countDown();
@@ -325,7 +326,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -343,7 +344,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -361,7 +362,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -379,7 +380,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -397,7 +398,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -415,7 +416,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -434,7 +435,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -452,7 +453,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -470,7 +471,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -488,7 +489,44 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    @Test
+    public void testFormatExcel2000_builtintformat_ja() {
+        
+        File file = new File("src/test/data/cell_format_2000_builtinformat_ja.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForFormat(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, Locale.JAPANESE);
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+//    @Ignore
+    @Test
+    public void testFormatExcel2000_builtintformat_en() {
+        
+        File file = new File("src/test/data/cell_format_2000_builtinformat_en.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForFormat(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, Locale.ENGLISH);
             }
             
         } catch(Exception e) {
@@ -506,7 +544,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -524,7 +562,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -542,7 +580,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForFormat(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -560,7 +598,7 @@ public class POICellFormatterTest {
         try {
             List<Sheet> sheetList = loadSheetForTest(file);
             for(Sheet sheet : sheetList) {
-                assertSheet(sheet, cellFormatter);
+                assertSheet(sheet, cellFormatter, null);
             }
             
         } catch(Exception e) {
@@ -651,7 +689,7 @@ public class POICellFormatterTest {
         throw new IllegalStateException("not found sheet : " + name);
     }
     
-    private void assertSheet(final Sheet sheet, final POICellFormatter cellFormatter) {
+    private void assertSheet(final Sheet sheet, final POICellFormatter cellFormatter, final Locale locale) {
         
         System.out.printf("======== START : [%s] =========\n", sheet.getSheetName());
         
@@ -678,7 +716,7 @@ public class POICellFormatterTest {
                 break;
             }
             
-            final String testCase = cellFormatter.formatAsString(testCaseCell);
+            final String testCase = cellFormatter.formatAsString(testCaseCell, locale);
             final String testResult = testResultCell.getRichStringCellValue().getString();
             
             final String test = testCase.equals(testResult) ? "○" : "×";
