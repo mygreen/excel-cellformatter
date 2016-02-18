@@ -214,7 +214,7 @@ public class MessageResolver {
     /**
      * キーを指定してメッセージを取得する。
      * @param key メッセージキー
-     * @return
+     * @return 存在しないキーの場合、nullを返す。
      */
     public String getMessage(final String key) {
         return defaultResource.getMessage(key);

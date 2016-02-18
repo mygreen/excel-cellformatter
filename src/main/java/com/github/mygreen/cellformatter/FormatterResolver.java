@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.github.mygreen.cellformatter.lang.MessageResolver;
+
 
 /**
  * セルのフォーマッタを解決するクラス。
@@ -13,6 +15,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FormatterResolver {
     
+    private static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.format");
+    
+    /**
+     * カスタム書式のインスタンスを作成する。
+     */
     private CustomFormatterFactory customFormatterFactory = new CustomFormatterFactory();
     
     /**
@@ -24,6 +31,11 @@ public class FormatterResolver {
      * 和暦用の日本語のロケール
      */
     private static final Locale LOCALE_JAPANESE = new Locale("ja", "JP", "JP");
+    
+    /**
+     * 日本語に関するロケール
+     */
+    private static final Locale[] JAPANESE_LOCALES = new Locale[]{Locale.JAPANESE, Locale.JAPAN, LOCALE_JAPANESE};
     
     /**
      * 書式のパターンとフォーマッターのマップ
@@ -59,48 +71,87 @@ public class FormatterResolver {
      */
     public synchronized void registerDefaultFormat() {
         
-        // 間違ったフォーマット
-        registerFormatter((short)5, createFormatter("¥#,##0;¥-#,##0"));
-        registerFormatter((short)6, createFormatter("¥#,##0;[Red]¥-#,##0"));
-        registerFormatter((short)7, createFormatter("¥#,##0.00;¥-#,##0.00"));
-        registerFormatter((short)8, createFormatter("¥#,##0.00;[Red]¥-#,##0.00"));
         
-        // ロケールによって変わるフォーマット
-        registerFormatter((short)14, new LocaleSwitchFormatter(createFormatter("m/d/yy"))
-                .register(createFormatter("yyyy/m/d"), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
+        final Locale[] availableLocales = new Locale[]{Locale.JAPANESE};
         
-//        registerFormatter((short)20, createFormatter("h:mm"));
-//        registerFormatter((short)21, createFormatter("h:mm:ss"));
-        registerFormatter((short)22, createFormatter("yyyy/m/d h:mm"));
         
-        registerFormatter((short)30, createFormatter("m/d/yy"));
-        registerFormatter((short)31, createFormatter("yyyy\"年\"m\"月\"d\"日\""));
-        registerFormatter((short)32, createFormatter("h\"時\"mm\"分\""));
-        registerFormatter((short)33, createFormatter("h\"時\"mm\"分\"ss\"秒\""));
+        // 組み込み書式の登録
+        for(int i=0; i <= 58; i++) {
+            
+            final CellFormatter formatter = createDefaultFormatter(String.valueOf(i), availableLocales);
+            if(formatter != null) {
+                registerFormatter((short) i, formatter);
+                
+            }
+            
+        }
         
-        // 間違ったフォーマットの訂正
-        registerFormatter((short)37, createFormatter("#,##0;-#,##0"));
-        registerFormatter((short)38, createFormatter("#,##0;[Red]-#,##0"));
-        registerFormatter((short)39, createFormatter("#,##0.00;-#,##0.00"));
-        registerFormatter((short)40, createFormatter("#,##0.00;[Red]-#,##0.00"));
+        // 特別な書式
+        final String[] names = new String[]{"F800", "F400"};
+        for(String name : names) {
+            
+            final String key = String.format("format.%s", name);
+            
+            final String defaultFormat = messageResolver.getMessage(key);
+            if(defaultFormat == null) {
+                continue;
+            }
+            
+            final CellFormatter formatter = createDefaultFormatter(name, availableLocales);
+            if(formatter != null) {
+                registerFormatter(defaultFormat, formatter);
+            }
+        }
         
-        registerFormatter((short)41, createFormatter("_ * #,##0_ ;_ * \\-#,##0_ ;_ * \"-\"_ ;_ @_"));
-        registerFormatter((short)42, createFormatter("_ \"¥\"* #,##0_ ;_ \"¥\"* \\-#,##0_ ;_ \"¥\"* \"-\"_ ;_ @_ "));
-        registerFormatter((short)43, createFormatter("_ * #,##0.00_ ;_ * (#,##0.00);_ * \"-\"??_ ;_ @_ "));
-        registerFormatter((short)44, createFormatter("_ \"¥\"* #,##0.00_ ;_ \"¥\"* -#,##0.00_ ;_ \"¥\"* \"-\"??_ ;_ @_ "));
+    }
+    
+    /**
+     * 指定したインデックスでプロパティに定義されているフォーマットを作成する。
+     * @param name 書式の名前。({@link format.<書式の名前>=})
+     * @param locales 検索するロケール。
+     * @return 存在しないインデックス番号の時は、nullを返す。
+     */
+    protected CellFormatter createDefaultFormatter(final String name, final Locale... locales) {
         
-        // インデックス番号のみあり、フォーマットがない場合
-        registerFormatter((short)55, createFormatter("yyyy\"年\"m\"月\""));
-        registerFormatter((short)56, createFormatter("m\"月\"d\"日\""));
-        registerFormatter((short)57, createFormatter("[$-411]ge\\.m\\.d;@"));
-        registerFormatter((short)58, createFormatter("[$-411]ggge\"年\"m\"月\"d\"日\";@"));
+        final String key = String.format("format.%s", name);
         
-        // ロケールによって変わるフォーマット
-        registerFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy", new LocaleSwitchFormatter(createFormatter("[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy"))
-            .register(createFormatter("yyyy\"年\"m\"月\"d\"日\""), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
+        final String defaultFormat = messageResolver.getMessage(key);
+        if(defaultFormat == null) {
+            return null;
+        }
         
-        registerFormatter("[$-F400]h:mm:ss\\ AM/PM", new LocaleSwitchFormatter(createFormatter("[$-F400]h:mm:ss\\ AM/PM"))
-            .register(createFormatter("h:mm:ss"), Locale.JAPAN, Locale.JAPANESE, LOCALE_JAPANESE));
+        CellFormatter formatter = createFormatter(defaultFormat);
+        
+        // ロケールのフォーマットの取得
+        for(Locale locale : locales) {
+            
+            final String localeFormat = messageResolver.getMessage(locale, key, null);
+            if(localeFormat == null) {
+                continue;
+            }
+            
+            final LocaleSwitchFormatter switchFormatter;
+            if(formatter instanceof LocaleSwitchFormatter) {
+                switchFormatter = (LocaleSwitchFormatter) formatter;
+                
+            } else {
+                // LocaleSwitchFormatterに入れ替える。
+                switchFormatter = new LocaleSwitchFormatter(formatter);
+                formatter = switchFormatter;
+            }
+            
+            // ロケールごとのフォーマットの登録
+            if(locale.equals(Locale.JAPANESE)) {
+                switchFormatter.register(createFormatter(localeFormat), JAPANESE_LOCALES);
+                
+            } else {
+                switchFormatter.register(createFormatter(localeFormat), locale);
+            }
+            
+        }
+        
+        return formatter;
+        
     }
     
     /**

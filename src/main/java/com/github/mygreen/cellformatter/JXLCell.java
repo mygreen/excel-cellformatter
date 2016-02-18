@@ -47,13 +47,7 @@ public class JXLCell implements CommonCell {
         BUILT_IN_FORMATS.put((short)7, "$#,##0.00);($#,##0.00)");
         BUILT_IN_FORMATS.put((short)8, "$#,##0.00_);[Red]($#,##0.00)");
         
-//        BUILT_IN_FORMAT.put((short)5, "¥#,##0_);(¥#,##0)");
-//        BUILT_IN_FORMAT.put((short)6, "¥#,##0_);[Red](¥#,##0)");
-//        BUILT_IN_FORMAT.put((short)7, "¥#,##0.00);(¥#,##0.00)");
-//        BUILT_IN_FORMAT.put((short)8, "¥#,##0.00_);[Red](¥#,##0.00)");
-        
         // 日付
-        // システムのロケールによって変わる
         BUILT_IN_FORMATS.put((short)14, "m/d/yy");
         
         // 通貨（記号なし）

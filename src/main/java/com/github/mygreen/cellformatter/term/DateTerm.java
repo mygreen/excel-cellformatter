@@ -28,7 +28,7 @@ public abstract class DateTerm implements Term<Calendar> {
     
     protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);
     
-    protected static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.cellformatter");
+    protected static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.label");
     
     protected static final EraResolver eraResolver = new EraResolver();
     
