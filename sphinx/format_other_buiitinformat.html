@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ビルトインフォーマット（組み込み書式）について &mdash; Excel-CellFormatter 0.5.1 ドキュメント</title>
+    <title>ビルトインフォーマット（組み込み書式）について &mdash; Excel-CellFormatter 0.6 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.1',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.5.1 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.6 ドキュメント" href="index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
@@ -81,19 +82,20 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のロジック</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.1. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.2. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.3. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.4. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.5. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.6. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.1. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.2. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.3. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.4. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.5. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.6. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.7. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -135,10 +137,11 @@
 <ul class="simple">
 <li>Excelのバージョンによっては、インデックス番号だけ持ち、書式を持たない場合があります。</li>
 <li>50番以降は、ユーザ定義用書式として、ファイルによって異なります。</li>
-<li>ただし、50～59番第は、Excelの言語環境によって予約された番号で、インデックス番号だけ持ち、書式をを持たない場合があります。</li>
+<li>ただし、50～59番第は、Excelの言語環境によって予約された番号で、インデックス番号だけ持ち、書式を持たない場合があります。</li>
 <li>ビルインフォーマットは、JExcelAPIの場合とApaceh POIでは一部異なっています。</li>
-<li>JExcelAPIの場合、明らかに間違った書式で定義されています。<ul>
-<li>通貨記号を含む書式は、環境によって変わる可能性があります。</li>
+<li>OSの言語環境によって変わるものがあります。<ul>
+<li>日時、通貨記号を含む書式は、環境によって変わる可能性があります。</li>
+<li>JExcelAPI/Aaache POIとも英語環境の値で固定で定義されており、日本語の書式には対応していません。</li>
 </ul>
 </li>
 </ul>
@@ -151,8 +154,8 @@
 </ul>
 </div>
 <p>本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、予め <em>FormatterResolver#registerDefaultFormat()</em> メソッド内で登録し、正しい書式で取得できるようにしています。</p>
-<table border="1" class="docutils" id="id4">
-<caption><span class="caption-text">ビルドインフォーマットの一覧</span><a class="headerlink" href="#id4" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（0～49）</span><a class="headerlink" href="#id2" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="5%" />
 <col width="5%" />
@@ -172,286 +175,491 @@
 <div class="line">10進</div>
 </div>
 </th>
-<th class="head">JExcelAPI</th>
-<th class="head">Apache POI</th>
-<th class="head">Excel</th>
+<th class="head">英語環境</th>
+<th class="head"><div class="first last line-block">
+<div class="line">日本語環境</div>
+<div class="line">(英語環境と同じ場合は省略)</div>
+</div>
+</th>
+<th class="head">例</th>
 <th class="head">備考</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>0</td>
 <td>0</td>
-<td>&nbsp;</td>
 <td><code class="docutils literal"><span class="pre">General</span></code></td>
 <td><code class="docutils literal"><span class="pre">標準/G</span></code></td>
 <td>&nbsp;</td>
+<td>標準の設定。日本語の場合、内部的には英語環境と同じ。</td>
 </tr>
 <tr class="row-odd"><td>1</td>
 <td>1</td>
 <td><code class="docutils literal"><span class="pre">0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0</span></code></td>
-<td><code class="docutils literal"><span class="pre">0</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">-123</span></code></td>
+<td>小数なしの数値の書式。</td>
 </tr>
 <tr class="row-even"><td>2</td>
 <td>2</td>
 <td><code class="docutils literal"><span class="pre">0.00</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">-123.45</span></code></td>
+<td>小数ありの数値の書式。</td>
 </tr>
 <tr class="row-odd"><td>3</td>
 <td>3</td>
 <td><code class="docutils literal"><span class="pre">#,##0</span></code></td>
-<td><code class="docutils literal"><span class="pre">#,##0</span></code></td>
-<td><code class="docutils literal"><span class="pre">#,##0</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">-12,345</span></code></td>
+<td>桁区切りの数値の書式。</td>
 </tr>
 <tr class="row-even"><td>4</td>
 <td>4</td>
-<td><code class="docutils literal"><span class="pre">0.00</span></code></td>
-<td><code class="docutils literal"><span class="pre">#,##0.00</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0.00</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">-12,345.67</span></code></td>
+<td>小数あり、桁区切りの数値の書式。</td>
 </tr>
 <tr class="row-odd"><td>5</td>
 <td>5</td>
-<td><code class="docutils literal"><span class="pre">($#,##0_);($#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">$#,##0_);($#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">\#,##0;\-#,##0</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分で、符号がなく間違っている。</div>
-<div class="line">さらに、通貨記号が異なる。</div>
-</div>
-</td>
+<td><code class="docutils literal"><span class="pre">\-123</span></code></td>
+<td>会計用の書式。通貨の単位や括弧が異なる。</td>
 </tr>
 <tr class="row-even"><td>6</td>
 <td>6</td>
-<td><code class="docutils literal"><span class="pre">($#,##0_);[Red]($#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">$#,##0_);[Red]($#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">\#,##0;[Red]\-#,##0</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分で、符号がなく間違っている。</div>
-<div class="line">さらに、通貨記号が異なる。</div>
-</div>
-</td>
+<td>-123</td>
+<td>会計用の書式。通貨の単位や括弧が異なる。</td>
 </tr>
 <tr class="row-odd"><td>7</td>
 <td>7</td>
-<td><code class="docutils literal"><span class="pre">($#,##0_);[Red]($#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">$#,##0.00);($#,##0.00)</span></code></td>
-<td><code class="docutils literal"><span class="pre">¥#,##0.00;¥-#,##0.00</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分で、符号がなく間違っている。</div>
-<div class="line">さらに、通貨記号が異なる。</div>
-</div>
-</td>
+<td><code class="docutils literal"><span class="pre">\#,##0.00;\-#,##0.00</span></code></td>
+<td><code class="docutils literal"><span class="pre">\-123.46</span></code></td>
+<td>会計用の書式。通貨の単位や括弧が異なる。</td>
 </tr>
 <tr class="row-even"><td>8</td>
 <td>8</td>
-<td><code class="docutils literal"><span class="pre">($#,##0.00_);[Red]($#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">$#,##0.00_);[Red]($#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">\#,##0.00;[Red]\-#,##0.00</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分で、符号がなく間違っている。</div>
-<div class="line">さらに、通貨記号が異なる。</div>
-</div>
-</td>
+<td><code class="docutils literal"><span class="pre">\-123.46</span></code></td>
+<td>会計用の書式。通貨の単位や括弧が異なる。</td>
 </tr>
 <tr class="row-odd"><td>9</td>
 <td>9</td>
 <td><code class="docutils literal"><span class="pre">0%</span></code></td>
-<td><code class="docutils literal"><span class="pre">0%</span></code></td>
-<td><code class="docutils literal"><span class="pre">0%</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">12%</span></code></td>
+<td>100分率の書式。</td>
 </tr>
 <tr class="row-even"><td>a</td>
 <td>10</td>
 <td><code class="docutils literal"><span class="pre">0.00%</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00%</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00%</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">12.34%</span></code></td>
+<td>100分率の書式。</td>
 </tr>
 <tr class="row-odd"><td>b</td>
 <td>11</td>
 <td><code class="docutils literal"><span class="pre">0.00E+00</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00E+00</span></code></td>
-<td><code class="docutils literal"><span class="pre">0.00E+00</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">1.23E-02</span></code></td>
+<td>指数用の書式。</td>
 </tr>
 <tr class="row-even"><td>c</td>
 <td>12</td>
 <td><code class="docutils literal"><span class="pre">#</span> <span class="pre">?/?</span></code></td>
-<td><code class="docutils literal"><span class="pre">#</span> <span class="pre">?/?</span></code></td>
-<td><code class="docutils literal"><span class="pre">#</span> <span class="pre">?/?</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">12</span> <span class="pre">1/3</span></code></td>
+<td>分数の書式。</td>
 </tr>
 <tr class="row-odd"><td>d</td>
 <td>13</td>
 <td><code class="docutils literal"><span class="pre">#</span> <span class="pre">??/??</span></code></td>
-<td><code class="docutils literal"><span class="pre">#</span> <span class="pre">??/??</span></code></td>
-<td><code class="docutils literal"><span class="pre">#</span> <span class="pre">??/??</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">12</span> <span class="pre">10/29</span></code></td>
+<td>分数の書式。</td>
 </tr>
 <tr class="row-even"><td>e</td>
 <td>14</td>
-<td><code class="docutils literal"><span class="pre">dd/mm/yyyy</span></code></td>
 <td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
-<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
-<td>JexcelAPIの場合、間違っている。</td>
+<td><code class="docutils literal"><span class="pre">yyyy/m/d</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000/2/29</span></code></td>
+<td>日付の書式。年の桁数、順番が異なる。</td>
 </tr>
 <tr class="row-odd"><td>f</td>
 <td>15</td>
 <td><code class="docutils literal"><span class="pre">d-mmm-yy</span></code></td>
-<td><code class="docutils literal"><span class="pre">d-mmm-yy</span></code></td>
-<td><code class="docutils literal"><span class="pre">d-mmm-yy</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">29-Feb-00</span></code></td>
+<td>日付の書式。</td>
 </tr>
 <tr class="row-even"><td>10</td>
 <td>16</td>
 <td><code class="docutils literal"><span class="pre">d-mmm</span></code></td>
-<td><code class="docutils literal"><span class="pre">d-mmm</span></code></td>
-<td><code class="docutils literal"><span class="pre">d-mmm</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">29-Feb</span></code></td>
+<td>日付の書式。</td>
 </tr>
 <tr class="row-odd"><td>11</td>
 <td>17</td>
 <td><code class="docutils literal"><span class="pre">mmm-yy</span></code></td>
-<td><code class="docutils literal"><span class="pre">mmm-yy</span></code></td>
-<td><code class="docutils literal"><span class="pre">mmm-yy</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">Feb-00</span></code></td>
+<td>日付の書式。</td>
 </tr>
 <tr class="row-even"><td>12</td>
 <td>18</td>
 <td><code class="docutils literal"><span class="pre">h:mm</span> <span class="pre">AM/PM</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm</span> <span class="pre">AM/PM</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm</span> <span class="pre">AM/PM</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19</span> <span class="pre">AM</span></code></td>
+<td>時刻の書式。</td>
 </tr>
 <tr class="row-odd"><td>13</td>
 <td>19</td>
 <td><code class="docutils literal"><span class="pre">h:mm:ss</span> <span class="pre">AM/PM</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm:ss</span> <span class="pre">AM/PM</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm:ss</span> <span class="pre">AM/PM</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19:23</span> <span class="pre">AM</span></code></td>
+<td>時刻の書式。</td>
 </tr>
 <tr class="row-even"><td>14</td>
 <td>20</td>
 <td><code class="docutils literal"><span class="pre">h:mm</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19</span></code></td>
+<td>時刻の書式。</td>
 </tr>
 <tr class="row-odd"><td>15</td>
 <td>21</td>
 <td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
-<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19:23</span></code></td>
+<td>時刻の書式。</td>
 </tr>
 <tr class="row-even"><td>16</td>
 <td>22</td>
 <td><code class="docutils literal"><span class="pre">m/d/yy</span> <span class="pre">h:mm</span></code></td>
-<td><code class="docutils literal"><span class="pre">m/d/yy</span> <span class="pre">h:mm</span></code></td>
-<td><code class="docutils literal"><span class="pre">m/d/yy</span> <span class="pre">h:mm</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy/m/d</span> <span class="pre">h:mm</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000/2/29</span> <span class="pre">10:19</span></code></td>
+<td>日時の書式。年の桁数、順番が異なる。</td>
+</tr>
+<tr class="row-odd"><td>17</td>
+<td>23</td>
+<td><code class="docutils literal"><span class="pre">\$#,##0_);\(\$#,##0\)</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">$36,585</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>18</td>
+<td>24</td>
+<td><code class="docutils literal"><span class="pre">\$#,##0_);[Red]\(\$#,##0\)</span></code></td>
+<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">$36,585</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>19</td>
+<td>25</td>
+<td><code class="docutils literal"><span class="pre">\$#,##0.00_);\(\$#,##0.00\)</span></code></td>
+<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">$36,585.43</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>1a</td>
+<td>26</td>
+<td><code class="docutils literal"><span class="pre">\$#,##0.00_);[Red]\(\$#,##0.00\)</span></code></td>
+<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">$36,585.43</span></code></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>1b</td>
+<td>27</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ge.m.d</span></code></td>
+<td><code class="docutils literal"><span class="pre">H12.2.29</span></code></td>
+<td><div class="first last line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを際保存すると、57番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>1c</td>
+<td>28</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">平成12年2月29日</span></code></td>
+<td><div class="first last line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを際保存すると、58番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>1d</td>
+<td>29</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">平成12年2月29日</span></code></td>
+<td><div class="first last line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを際保存すると、58番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>1e</td>
+<td>30</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">2/29/00</span></code></td>
+<td>日付の書式。</td>
+</tr>
+<tr class="row-odd"><td>1f</td>
+<td>31</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000年2月29日</span></code></td>
+<td>日付の書式。日本語環境の場合、和暦表示。</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td>32</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">h&quot;時&quot;mm&quot;分&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">10時19分</span></code></td>
+<td>時間の書式。日本語環境の場合、区切りが異なる。</td>
+</tr>
+<tr class="row-odd"><td>21</td>
+<td>33</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">h&quot;時&quot;mm&quot;分&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">10時19分</span></code></td>
+<td>時間の書式。日本語環境の場合、区切りが異なる。</td>
+</tr>
+<tr class="row-even"><td>22</td>
+<td>34</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000年2月</span></code></td>
+<td><div class="first last line-block">
+<div class="line">時刻の書式。日本語環境の場合、日付の書式。</div>
+<div class="line">ファイルを際保存すると、55番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>23</td>
+<td>35</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2月29日</span></code></td>
+<td><div class="first last line-block">
+<div class="line">時刻の書式。日本語環境の場合、日付の書式。</div>
+<div class="line">ファイルを際保存すると、56番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>24</td>
+<td>36</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ge.m.d</span></code></td>
+<td><code class="docutils literal"><span class="pre">H12.2.29</span></code></td>
+<td><div class="first last line-block">
+<div class="line">時刻の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを際保存すると、57番に割り振られる。</div>
+</div>
+</td>
 </tr>
 <tr class="row-odd"><td>25</td>
 <td>37</td>
-<td><code class="docutils literal"><span class="pre">(#,##0_);(#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0_);(#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0;-#,##0</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分、符号がなく間違っている。</div>
-</div>
-</td>
+<td><code class="docutils literal"><span class="pre">-123</span></code></td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>26</td>
 <td>38</td>
-<td><code class="docutils literal"><span class="pre">(#,##0_);[Red](#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0_);[Red](#,##0)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0;[Red]-#,##0</span></code></td>
-<td><div class="first last line-block">
-<div class="line">POI、JExcelAPIの場合、括弧が余分、符号がなく間違っている。</div>
-</div>
-</td>
+<td><code class="docutils literal"><span class="pre">-123</span></code></td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>27</td>
 <td>39</td>
-<td><code class="docutils literal"><span class="pre">(#,##0.00_);(#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0.00_);(#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0.00;-#,##0.00</span></code></td>
-<td>POI、JExcelAPIの場合、括弧が余分、符号がなく間違っている。</td>
+<td><code class="docutils literal"><span class="pre">-123.46</span></code></td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>28</td>
 <td>40</td>
-<td><code class="docutils literal"><span class="pre">(#,##0.00_);[Red](#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0.00_);[Red](#,##0.00)</span></code></td>
 <td><code class="docutils literal"><span class="pre">#,##0.00;[Red]-#,##0.00</span></code></td>
-<td>POI、JExcelAPIの場合、括弧が余分、符号がなく間違っている。</td>
+<td><code class="docutils literal"><span class="pre">-123.46</span></code></td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>29</td>
 <td>41</td>
-<td><code class="docutils literal"><span class="pre">_(*#,##0_);_(*(#,##0);_(*\&quot;-\&quot;_);(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0_);_(*</span> <span class="pre">(#,##0);_(*</span> <span class="pre">\&quot;-\&quot;_);_(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">\\-#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">\&quot;-\&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>POI、JExcelAPIの場合、符号がなく間違っている。</td>
+<td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0_);_(*</span> <span class="pre">(#,##0);_(*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></td>
+<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
+<td>`` -123 ``</td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>2a</td>
 <td>42</td>
-<td><code class="docutils literal"><span class="pre">_($*#,##0_);_($*(#,##0);_($*\&quot;-\&quot;_);(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0_);_($*</span> <span class="pre">(#,##0);_($*</span> <span class="pre">\&quot;-\&quot;_);_(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">\\-#,##0_</span> <span class="pre">;_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">\&quot;-\&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>JExcelAPI、POIの場合、符号がなく、通貨記号が異なる。</td>
+<td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0_);_($*</span> <span class="pre">(#,##0);_($*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></td>
+<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
+<td>`` -123 ``</td>
+<td>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>2b</td>
 <td>43</td>
-<td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0.00_);_(*</span> <span class="pre">(#,##0.00);_(*</span> <span class="pre">\&quot;-\&quot;??_);(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0.00_);_(*</span> <span class="pre">(#,##0.00);_(*</span> <span class="pre">\&quot;-\&quot;??_);_(&#64;_)</span></code></td>
-<td><a href="#id2"><span class="problematic" id="id3">``</span></a>_ * #,##0.00_ ;_ * (#,##0.00);_ * &#8220;-&#8221;??_ ;_ &#64;_ ``</td>
-<td>JExcelAPIの場合、文字列の書式が間違っている。</td>
+<td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0.00_);_(*</span> <span class="pre">(#,##0.00);_(*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></td>
+<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
+<td>`` -123.46 ``</td>
+<td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>2c</td>
 <td>44</td>
-<td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0.00_);_($*</span> <span class="pre">(#,##0.00);_($*</span> <span class="pre">\&quot;-\&quot;??_);(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0.00_);_($*</span> <span class="pre">(#,##0.00);_($*</span> <span class="pre">\&quot;-\&quot;??_);_(&#64;_)</span></code></td>
-<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\&quot;\\&quot;*</span> <span class="pre">\&quot;-\&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span> <span class="pre">&quot;</span></code></td>
-<td>JExcelAPI、POIの場合、通貨記号が異なる。</td>
+<td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0.00_);_($*</span> <span class="pre">(#,##0.00);_($*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></td>
+<td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
+<td>`` -123.46 ``</td>
+<td>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>2d</td>
 <td>45</td>
 <td><code class="docutils literal"><span class="pre">mm:ss</span></code></td>
-<td><code class="docutils literal"><span class="pre">mm:ss</span></code></td>
-<td><code class="docutils literal"><span class="pre">mm:ss</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19</span></code></td>
+<td>時刻の書式。</td>
 </tr>
 <tr class="row-even"><td>2e</td>
 <td>46</td>
-<td><code class="docutils literal"><span class="pre">[h]mm:ss</span></code></td>
 <td><code class="docutils literal"><span class="pre">[h]:mm:ss</span></code></td>
-<td><code class="docutils literal"><span class="pre">[h]:mm:ss</span></code></td>
-<td>JExcelAPIの場合、コロン&#8221;:&#8221;が足りない。</td>
+<td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">30:10:19</span></code></td>
+<td>時間時間の書式。</td>
 </tr>
 <tr class="row-odd"><td>2f</td>
 <td>47</td>
 <td><code class="docutils literal"><span class="pre">mm:ss.0</span></code></td>
-<td><code class="docutils literal"><span class="pre">mm:ss.0</span></code></td>
-<td><code class="docutils literal"><span class="pre">mm:ss.0</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">10:19.0</span></code></td>
+<td>時間の書式。</td>
 </tr>
 <tr class="row-even"><td>30</td>
 <td>48</td>
 <td><code class="docutils literal"><span class="pre">##0.0E+0</span></code></td>
-<td><code class="docutils literal"><span class="pre">##0.0E+0</span></code></td>
-<td><code class="docutils literal"><span class="pre">##0.0E+0</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">12.3E+0</span></code></td>
+<td>指数の書式。</td>
 </tr>
-<tr class="row-odd"><td>31</td>
+<tr class="row-odd"><td>41</td>
 <td>49</td>
 <td><code class="docutils literal"><span class="pre">&#64;</span></code></td>
-<td><code class="docutils literal"><span class="pre">&#64;</span></code></td>
-<td><code class="docutils literal"><span class="pre">&#64;</span></code></td>
 <td>&nbsp;</td>
+<td><code class="docutils literal"><span class="pre">テキスト</span></code></td>
+<td>文字列の書式。</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（50～）</span><a class="headerlink" href="#id3" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="25%" />
+<col width="25%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><div class="first last line-block">
+<div class="line">index</div>
+<div class="line">16進</div>
+</div>
+</th>
+<th class="head"><div class="first last line-block">
+<div class="line">index</div>
+<div class="line">10進</div>
+</div>
+</th>
+<th class="head">英語環境</th>
+<th class="head"><div class="first last line-block">
+<div class="line">日本語環境</div>
+<div class="line">(英語環境と同じ場合は省略)</div>
+</div>
+</th>
+<th class="head">例</th>
+<th class="head">備考</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>37</td>
+<td>55</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000年2月</span></code></td>
+<td>時刻の書式。日本語の場合、日付の書式。</td>
+</tr>
+<tr class="row-odd"><td>38</td>
+<td>56</td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2月29日</span></code></td>
+<td>時刻の書式。日本語の場合、日付の書式。</td>
+</tr>
+<tr class="row-even"><td>39</td>
+<td>57</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ge.m.d</span></code></td>
+<td><code class="docutils literal"><span class="pre">H12.2.29</span></code></td>
+<td>日付の書式。日本語の場合、和暦表示。</td>
+</tr>
+<tr class="row-odd"><td>3A</td>
+<td>58</td>
+<td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">平成12年2月29日</span></code></td>
+<td>日付の書式。日本語の場合、和暦表示。</td>
+</tr>
+</tbody>
+</table>
+<p>組み込み書式以外で、OSの言語環境によって変わる書式があります。
+Excel上では、書式の前にアスタリスク（*）が付いている書式です。</p>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">言語によって書式が変わる</span><a class="headerlink" href="#id4" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">英語環境</th>
+<th class="head">日本の語環境</th>
+<th class="head">例</th>
+<th class="head">備考</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">m/d/yy</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy/m/d</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000/2/29</span></code></td>
+<td><div class="first last line-block">
+<div class="line">日付の書式。Excelの表記上は、「* 2001/3/14」と表示されます。</div>
+<div class="line">インデックス番号14の組み込み書式です。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[$-F800]dddd\,\</span> <span class="pre">mmmm\</span> <span class="pre">dd\,\</span> <span class="pre">yyyy</span></code></td>
+<td><code class="docutils literal"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></td>
+<td><code class="docutils literal"><span class="pre">2000年2月29日</span></code></td>
+<td>日付の書式。Excelの表記上は、「* 2001年3月14日」と表示されます。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[$-F400]h:mm:ss\</span> <span class="pre">AM/PM</span></code></td>
+<td><code class="docutils literal"><span class="pre">h:mm:ss</span></code></td>
+<td><code class="docutils literal"><span class="pre">10:19:23</span></code></td>
+<td>日付の書式。Excelの表記上は、「* 13:30:55」と表示されます。</td>
 </tr>
 </tbody>
 </table>
@@ -511,7 +719,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

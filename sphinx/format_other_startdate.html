@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ファイル内部の日付の基準日の設定 &mdash; Excel-CellFormatter 0.5.1 ドキュメント</title>
+    <title>ファイル内部の日付の基準日の設定 &mdash; Excel-CellFormatter 0.6 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.1',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.5.1 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.6 ドキュメント" href="index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
@@ -81,19 +82,20 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のロジック</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.1. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.2. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.3. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.4. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.5. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.6. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.1. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.2. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.3. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.4. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.5. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.6. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.7. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -144,15 +146,15 @@
 <li>Excel2010の場合、メニュー「ファイル」の「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</li>
 <li>LibreOfficeの場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のペイン「LibreOffice Calc」-「計算式」から設定できます。</li>
 </ul>
-<div class="figure align-center" id="id3">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_2002.png"><img alt="_images/excel_settings_date1904_2002.png" src="_images/excel_settings_date1904_2002.png" /></a>
 <p class="caption"><span class="caption-text">Excel2002(XP)の場合の1904年始まりの設定</span></p>
 </div>
-<div class="figure align-center" id="id4">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_2010.png"><img alt="_images/excel_settings_date1904_2010.png" src="_images/excel_settings_date1904_2010.png" /></a>
 <p class="caption"><span class="caption-text">Excel2010の場合の1904年始まりの設定</span></p>
 </div>
-<div class="figure align-center" id="id5">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_libre.png"><img alt="_images/excel_settings_date1904_libre.png" src="_images/excel_settings_date1904_libre.png" /></a>
 <p class="caption"><span class="caption-text">LibreOfficeの場合の1904年始まりの設定</span></p>
 </div>
@@ -269,6 +271,147 @@
 </div>
 </div>
 </div>
+<div class="section" id="id3">
+<h2>日時の内部表現<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の特徴を持ちます。</p>
+<ul class="simple">
+<li>整数部が日付情報。<ul>
+<li>1日は、値は1.0。</li>
+</ul>
+</li>
+<li>小数部が時刻情報。<ul>
+<li>1秒は、 <code class="docutils literal"><span class="pre">1/(24*60*60)=1.15741e-5</span></code> 。</li>
+<li>Excelは、秒までの精度しか持たない。</li>
+</ul>
+</li>
+<li>タイムゾーンは持たない。<ul>
+<li>タイムゾーンは持たないため、OSの言語環境など変わっても、表示される時間は変わりません。</li>
+</ul>
+</li>
+<li>基準日の値は、 <code class="docutils literal"><span class="pre">0.0</span></code> となる。<ul>
+<li>ファイルの基準日の設定により、値が <code class="docutils literal"><span class="pre">0.0</span></code> のとき、1900年1月0日始まりか1904年1月1日始まりか変わります。</li>
+<li>内部的な値が負の数となる、基準日より前の日時は表現できない。</li>
+</ul>
+</li>
+<li>1900年始まりの場合、他のオフィスアプリと互換性を持たすために、以下の不良のような仕様となっています。<ul>
+<li>1900年1月0日から始まる。</li>
+<li>グレゴリオ歴上は、閏年でないのに、1900年2月29日が存在する。</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>グレゴリオ歴の閏年の定義</p>
+<p><a class="reference external" href="https://ja.wikipedia.org/wiki/%E9%96%8F%E5%B9%B4">グレゴリオ暦</a> では、次の規則に従って400年間に（100回ではなく）97回の閏年を設ける。</p>
+<ol class="last arabic simple">
+<li>西暦年が4で割り切れる年は閏年</li>
+<li>ただし、西暦年が100で割り切れる年は平年（閏年でない）</li>
+<li>ただし、西暦年が400で割り切れる年は閏年</li>
+</ol>
+</div>
+<table border="1" class="docutils" id="id8">
+<caption><span class="caption-text">Excelの日付の内部表現</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="25%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Excel表記上の日時</th>
+<th class="head"><div class="first last line-block">
+<div class="line">数値表現</div>
+<div class="line">1900年始まり</div>
+</div>
+</th>
+<th class="head"><div class="first last line-block">
+<div class="line">数値表現</div>
+<div class="line">1904年始まり</div>
+</div>
+</th>
+<th class="head">備考</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1900年01月00日 00時00分00秒</td>
+<td>0.00000000000</td>
+<td>&nbsp;</td>
+<td>1900年始まりの基準日。</td>
+</tr>
+<tr class="row-odd"><td>1900年01月01日 00時00分00秒</td>
+<td>1.00000000000</td>
+<td>&nbsp;</td>
+<td>基準日から1日進む。</td>
+</tr>
+<tr class="row-even"><td>1900年02月29日 00時00分00秒</td>
+<td>60.00000000000</td>
+<td>&nbsp;</td>
+<td>正しくない閏日。</td>
+</tr>
+<tr class="row-odd"><td>1900年03月01日 00時00分00秒</td>
+<td>61.00000000000</td>
+<td>&nbsp;</td>
+<td>正しくない閏日の翌日。</td>
+</tr>
+<tr class="row-even"><td>1904年01月01日 00時00分00秒</td>
+<td>1462.00000000000</td>
+<td>0.00000000000</td>
+<td>1904年始まりの基準日。</td>
+</tr>
+<tr class="row-odd"><td>1970年01月01日 00時00分00秒</td>
+<td>25569.00000000000</td>
+<td>24107.00000000000</td>
+<td>UTCの基準日。</td>
+</tr>
+<tr class="row-even"><td>YYYY年MM月DD日 00時00分01秒</td>
+<td>0.0000115741</td>
+<td>0.0000115741</td>
+<td>基準日から1秒経過</td>
+</tr>
+<tr class="row-odd"><td>YYYY年MM月DD日 00時01分00秒</td>
+<td>0.00069444444444</td>
+<td>0.00069444444444</td>
+<td>基準日から1分経過</td>
+</tr>
+<tr class="row-even"><td>YYYY年MM月DD日 00時01分00秒</td>
+<td>0.04166666666667</td>
+<td>0.04166666666667</td>
+<td>基準日から1時間経過</td>
+</tr>
+<tr class="row-odd"><td>YYYY年MM月DD日 23時59分59秒</td>
+<td>0.99998842592593</td>
+<td>0.99998842592593</td>
+<td>基準日から23時間59分59秒経過</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="excelutc">
+<h3>Excel上の日時の値をUTC表記に変換する方法<a class="headerlink" href="#excelutc" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Excelは日時は内部では数値で保持しており、Javaの <code class="docutils literal"><span class="pre">java.util.Date</span></code> に渡す形式であるUTC表現とは異なる。
+また、基準日が複数あるため、UTC形式に変換するには次の計算を行う。</p>
+<p>本ライブラリでは、 <code class="docutils literal"><span class="pre">ExcelDateUtils#convertJavaDate(...)</span></code> メソッドで提供されています。</p>
+<ol class="arabic simple">
+<li>1904年始まりの場合。</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>24107の値を足す。(1970年1月1日から見て、1904年1月1日の経過日数を足す。)</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>1900年始まりの場合。</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>値が61.0以上ならば、1.0を引く。(1900年2月29日はUTC上存在しないため、1900年3月1日（=61.0）以降は、1日多くなるので調整する。)</li>
+<li>25568.0の値を足す。(1970年1月1日から見て、1900年1月0日(=1899年12月31日)の経過日数を足す。)</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>値に24*60*60*1000を掛ける。(Excelは時刻が小数部なので、24*60*60で整数1桁目の精度を秒にする。UTCはミリ秒精度なので、さらに1000を掛ける。)</li>
+</ol>
+</div>
+</div>
 </div>
 
 
@@ -283,7 +426,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

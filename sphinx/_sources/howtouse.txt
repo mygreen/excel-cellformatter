@@ -13,7 +13,7 @@ Mavenのセントラルリポジトリに登録してあるため、依存関係
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.5.1</version>
+        <version>0.6</version>
     </dependency>
 
 
@@ -117,5 +117,50 @@ JExcelAPIの場合
     // ロケールを指定してフォーマットする。
     contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE, JXLUtils.isDateStart1904(workbook));
 
+.. _howObjectCellFormatter:
+
+----------------------------------
+Javaオブジェクトの場合
+----------------------------------
+
+Javaのオブジェクトを直接フォーマットすることもできます。
+
+直接フォーマットをする場合、``ObjectCellFormatter`` (**ver0.6から利用可能**)を使用します。
+
+* フォーマットするには、``ObjectCellFormatter#formatAsString(<書式>, <値>)`` を利用します。
+
+* フォーマット可能なクラスは、Excelの型に対応する次のクラスになります。
+
+  * 文字列値： ``String``
+  * ブール値： ``boolean/Boolean``
+  * 数値：プリミティブ型 ``byte/short/int/long/float/double`` のとそのラッパークラス ``Byte/Short/Integer/Long/Float/Double`` 。
+    ``java.math.Number`` のサブクラス ``AtomicInteger/AtomicLong/BigDecimal/BigInteger`` 。
+  * 日時： ``java.util.Date`` とそのサブクラス ``java.sql.Date/java.sql.Time/java.sql.Timestamp`` 。
+
+.. sourcecode:: java
+
+    // 各型に対応したインタフェースを利用します。
+    ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+    String text = cellFormatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", Timestamp.valueOf("2012-02-01 12:10:00.000"));
+
+
+* 細かく設定を行いたい場合は、仮想的なセル ``ObjectCell`` のサブクラスのインスタンスを引数に渡します。
+
+  * 文字列型を表すセル： ``TextCell``
+  * ブール型を表すセル： ``BooleanCell``
+  * 数値型を表すセル： ``NumberCell``
+  * 日時型を表すセル： ``DateCell`` 。1904年始まりなどの設定ができます。
+
+.. sourcecode:: java
+
+    //仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
+    ObejctCell cell = new DateCell(Timestamp.valueOf("2012-02-01 12:10:00.000"), "yyyy\"年\"m\"月\"d\"日\";@", false)
+    CellFormatResult result = cellFormatter.format(cell);
+    
+    // フォーマットした文字列の取得
+    String text = result.getText();
+    
+    // 文字色が設定されている場合、その色の取得。
+    MSColor color = result.getTextColor();
 
 

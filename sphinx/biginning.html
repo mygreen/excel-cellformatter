@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. はじめに &mdash; Excel-CellFormatter 0.5.1 ドキュメント</title>
+    <title>1. はじめに &mdash; Excel-CellFormatter 0.6 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.1',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.5.1 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.6 ドキュメント" href="index.html" />
     <link rel="next" title="2. 基本的な使い方" href="howtouse.html" />
     <link rel="prev" title="Welcome to Excel-CellFormatter" href="index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to Excel-CellFormatter"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -70,6 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
@@ -89,19 +90,20 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のロジック</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.1. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.2. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.3. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.4. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.5. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.6. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.1. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.2. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.3. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.4. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.5. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.6. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.7. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -153,7 +155,7 @@
 <li>日付、特に和暦は対応していない。 Javaの <code class="docutils literal"><span class="pre">java.text.SimpleDateFormat</span></code> では対応していない書式がある。<ul>
 <li>セルの値を取得するときに、ライブラリの内部では、Excelの書式をJavaの <code class="docutils literal"><span class="pre">java.text.SimpleDateFormat</span></code> の書式に変換してフォーマットしているが、Javaにはない書式記号があるため、正確な値が取得できない。</li>
 <li>元号などを出力する際にはJavaではLocaleを渡す必要があるが、Excelでは書式に条件式としてロケール情報が設定でき、書式ごとにロケールを切り替えることができる。</li>
-<li>Javaは月のMと分のmは大文字／小文字で区別してリウが、Excelは大文字/小文字の区別がなく、前後の関連する日時の記号を含むかで判断している。</li>
+<li>Javaは月のMと分のmは大文字／小文字で区別しているが、Excelは大文字/小文字の区別がなく、前後の関連する日時の記号を含むかで判断している。</li>
 <li>経過時間の書式に対応していない。</li>
 </ul>
 </li>
@@ -270,7 +272,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to Excel-CellFormatter"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

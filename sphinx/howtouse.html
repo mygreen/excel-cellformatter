@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. 基本的な使い方 &mdash; Excel-CellFormatter 0.5.1 ドキュメント</title>
+    <title>2. 基本的な使い方 &mdash; Excel-CellFormatter 0.6 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.1',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.5.1 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.6 ドキュメント" href="index.html" />
     <link rel="next" title="3. カスタマイズ方法" href="customize.html" />
     <link rel="prev" title="1. はじめに" href="biginning.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="biginning.html" title="1. はじめに"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -70,6 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">2.1. ダウンロード</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#apaceh-poi">2.2. Apaceh POIの場合</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#java">2.4. Javaオブジェクトの場合</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
@@ -89,19 +90,20 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id3">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のロジック</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.1. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.2. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.3. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.4. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.5. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.6. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.1. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.2. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.3. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.4. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.5. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.6. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.7. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -150,7 +152,7 @@
 <div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.mygreen<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>excel-cellformatter<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.5.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.6<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </div>
@@ -248,6 +250,47 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="java">
+<span id="howobjectcellformatter"></span><h2>2.4. Javaオブジェクトの場合<a class="headerlink" href="#java" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Javaのオブジェクトを直接フォーマットすることもできます。</p>
+<p>直接フォーマットをする場合、<code class="docutils literal"><span class="pre">ObjectCellFormatter</span></code> (<strong>ver0.6から利用可能</strong>)を使用します。</p>
+<ul class="simple">
+<li>フォーマットするには、<code class="docutils literal"><span class="pre">ObjectCellFormatter#formatAsString(&lt;書式&gt;,</span> <span class="pre">&lt;値&gt;)</span></code> を利用します。</li>
+<li>フォーマット可能なクラスは、Excelの型に対応する次のクラスになります。<ul>
+<li>文字列値： <code class="docutils literal"><span class="pre">String</span></code></li>
+<li>ブール値： <code class="docutils literal"><span class="pre">boolean/Boolean</span></code></li>
+<li>数値：プリミティブ型 <code class="docutils literal"><span class="pre">byte/short/int/long/float/double</span></code> のとそのラッパークラス <code class="docutils literal"><span class="pre">Byte/Short/Integer/Long/Float/Double</span></code> 。
+<code class="docutils literal"><span class="pre">java.math.Number</span></code> のサブクラス <code class="docutils literal"><span class="pre">AtomicInteger/AtomicLong/BigDecimal/BigInteger</span></code> 。</li>
+<li>日時： <code class="docutils literal"><span class="pre">java.util.Date</span></code> とそのサブクラス <code class="docutils literal"><span class="pre">java.sql.Date/java.sql.Time/java.sql.Timestamp</span></code> 。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// 各型に対応したインタフェースを利用します。</span>
+<span class="n">ObjectCellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectCellFormatter</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">cellFormatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="s">&quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;</span><span class="o">,</span> <span class="n">Timestamp</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">&quot;2012-02-01 12:10:00.000&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>細かく設定を行いたい場合は、仮想的なセル <code class="docutils literal"><span class="pre">ObjectCell</span></code> のサブクラスのインスタンスを引数に渡します。<ul>
+<li>文字列型を表すセル： <code class="docutils literal"><span class="pre">TextCell</span></code></li>
+<li>ブール型を表すセル： <code class="docutils literal"><span class="pre">BooleanCell</span></code></li>
+<li>数値型を表すセル： <code class="docutils literal"><span class="pre">NumberCell</span></code></li>
+<li>日時型を表すセル： <code class="docutils literal"><span class="pre">DateCell</span></code> 。1904年始まりなどの設定ができます。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。</span>
+<span class="n">ObejctCell</span> <span class="n">cell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DateCell</span><span class="o">(</span><span class="n">Timestamp</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">&quot;2012-02-01 12:10:00.000&quot;</span><span class="o">),</span> <span class="s">&quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+<span class="n">CellFormatResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cellFormatter</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
+
+<span class="c1">// フォーマットした文字列の取得</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+
+<span class="c1">// 文字色が設定されている場合、その色の取得。</span>
+<span class="n">MSColor</span> <span class="n">color</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getTextColor</span><span class="o">();</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -268,7 +311,7 @@
         <li class="right" >
           <a href="biginning.html" title="1. はじめに"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.5.1 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
