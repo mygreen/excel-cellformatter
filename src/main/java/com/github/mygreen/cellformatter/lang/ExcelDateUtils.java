@@ -43,13 +43,13 @@ public class ExcelDateUtils {
     public static final long MILLISECONDS_19000301 = ExcelDateUtils.parseDate("1900-03-01 00:00:00.000").getTime();
     
     /**
-     * Javaの基準日(=0)である1970年日に対するExcelの基準日1900年の日のオフセット（単位は日）。
+     * Javaの基準日(=0)である1970年1月1日に対するExcelの基準日1900年1月0日の日のオフセット（単位は日）。
      * ・ただし、Excelは1900年は1月0日から始まり、実質1899年12月31日となる。
      */
     public static final int OFFSET_DAYS_1900; 
     
     /**
-     * Javaの基準日(=0)である1970年日に対するExcelの基準日1904年の日のオフセット（単位は日）。
+     * Javaの基準日(=0)である1970年1月1日に対するExcelの基準日1904年1月1日の日のオフセット（単位は日）。
      */
     public static final int OFFSET_DAYS_1904;
     
@@ -73,7 +73,7 @@ public class ExcelDateUtils {
      * <p>1900年始まりの場合は以下の注意が必要。</p>
      * <ul>
      *   <li>値{@literal 0.0}は、Excel上は1900年1月0日であるが、Date型へ変換した場合は1899年12月31日となります。</li>
-     *   <li>値{@literal 60.0}は、Excel上は1900年2月29日だが、グレゴリオ歴上は閏日ではあにため、1900年3月31日となります。</li>
+     *   <li>値{@literal 60.0}は、Excel上は1900年2月29日だが、グレゴリオ歴上は閏日ではあにため、1900年3月1日となります。</li>
      * </ul>
      * 
      * @param value 変換対象のExcel表現上の数値。
