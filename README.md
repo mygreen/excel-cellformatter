@@ -6,7 +6,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>excel-cellformatter</artifactId>
-    <version>0.5.1</version>
+    <version>0.6</version>
 </dependency>
 ```
 
@@ -68,6 +68,29 @@ contents = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(sheet));
 ### JExcelAPIを使用する際の注意事項
 - Excelファイルの読み込み時に、文字コードを「ISO8859_1」にする必要がある。指定しない場合は、書式のパターンが文字化けする。Windows-31jでも文字化けする。
 - 1904年始まりのファイルの設定の場合、メソッド「JXLUtils.isDateStart1904(...)」で調べる。
+
+
+## Javaのオブジェクトを直接フォーマットする場合
+
+Javaのオブジェクトの場合、ObjectCellFormatter クラスを使います。
+基本的に、使い方は POICellFormatter と同じです。
+
+```java
+
+Date date = Timestamp.valueOf("2012-02-01 12:10:00.000");
+
+ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+String contents = cellForrmatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", date);
+
+// ロケールに依存する書式の場合
+contents = cellForrmatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", date, Locale.US);
+
+// 文字色の条件が設定されている場合
+CellFormatResult result = cellForrmatter.format("[Red]yyyy\"年\"m\"月\"d\"日\";@", date);
+String text = result.getText(); // フォーマット結果の文字列
+MSColor textColor = result.getTextColor(); // フォーマットした文字色
+
+```
 
 
 # ドキュメント
