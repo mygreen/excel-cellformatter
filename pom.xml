@@ -135,7 +135,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 						<link>http://poi.apache.org/apidocs/</link>
 						<link>http://jexcelapi.sourceforge.net/resources/javadocs/2_6_10/docs/</link>
 					</links>
-					<stylesheetfile>${basedir}/javadoc/stylesheet.css</stylesheetfile>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
  					<header>${project.name} - ${project.version}
  <![CDATA[
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
@@ -293,7 +293,25 @@ $(document).ready(function() {
 					<locale>ja_JP</locale>
 					<links>
 						<link>http://docs.oracle.com/javase/jp/7/api/</link>
+						<link>http://poi.apache.org/apidocs/</link>
+						<link>http://jexcelapi.sourceforge.net/resources/javadocs/2_6_10/docs/</link>
 					</links>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<header>${project.name} - ${project.version}
+ <![CDATA[
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('pre.highlight code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+]]>
+					</header>
+
 				</configuration>
 			</plugin>
 			<plugin>
