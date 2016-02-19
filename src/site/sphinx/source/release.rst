@@ -3,6 +3,17 @@
 ======================================
 
 ------------------------
+ver.0.6 - 2016-02-20
+------------------------
+
+* `#10 <https://github.com/mygreen/excel-cellformatter/issues/10>`_ : Javaオブジェクトを直接フォーマットできるクラス :ref:`ObjectCellFormatter <howObjectCellFormatter>`  を追加。
+
+* `#11 <https://github.com/mygreen/excel-cellformatter/issues/11>`_ : ビルドインフォーマット(組み込み書式)の実装方法と英語環境での書式の修正。
+
+  * 組み込み書式の実装方法をプロパティファイル「format.properties」に定義するよう変更。
+  * :doc:`英語環境の組み込み書式 <format_other_buiitinformat>` を見直し。 
+
+------------------------
 ver.0.5.1 - 2016-01-31
 ------------------------
 
