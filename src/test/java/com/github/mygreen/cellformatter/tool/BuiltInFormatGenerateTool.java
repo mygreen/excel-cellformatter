@@ -1,4 +1,4 @@
-package com.github.mygreen.cellformatter;
+package com.github.mygreen.cellformatter.tool;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,30 +14,34 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
- * 組み込み書式のシートを作成する。
+ * 組み込み書式のシートを作成するツール。
  * @since 0.6
  * @author T.TSUCHIE
  *
  */
-public class BuiltInFormatGenerator {
+public class BuiltInFormatGenerateTool {
     
     /**
      * @param args
      */
     public static void main(String[] args) throws Exception {
         
-        BuiltInFormatGenerator tool = new BuiltInFormatGenerator();
+        BuiltInFormatGenerateTool tool = new BuiltInFormatGenerateTool();
         
         // 新規に作成
-//        File templateFile = new File("src/test/data/cell_format_2000_builtinformat_template.xls");
-//        File outFile = new File("src/test/data/cell_format_2000_builtinformat.xls");
-//        tool.generate(templateFile, outFile);
+        File templateFile = new File("src/test/data/cell_format_2000_builtinformat_template.xls");
+        File outFile = new File("src/test/data/cell_format_2000_builtinformat.xls");
+        tool.generate(templateFile, outFile);
         
-        // 更新する
-        File templateFile = new File("src/test/data/cell_format_2000_builtinformat_en_template.xls");
-        File outFile = new File("src/test/data/cell_format_2000_builtinformat_en.xls");
-        tool.update(templateFile, outFile);
+        // 更新する(英語)
+//        File templateFile = new File("src/test/data/cell_format_2000_builtinformat_en_template.xls");
+//        File outFile = new File("src/test/data/cell_format_2000_builtinformat_en.xls");
+//        tool.update(templateFile, outFile);
         
+        // 更新する（日本語）
+//        File templateFile = new File("src/test/data/cell_format_2000_builtinformat_ja_template.xls");
+//        File outFile = new File("src/test/data/cell_format_2000_builtinformat_ja.xls");
+//        tool.update(templateFile, outFile);
         
         
     }
@@ -93,7 +97,7 @@ public class BuiltInFormatGenerator {
         
         DataFormat format = sheet.getWorkbook().createDataFormat();
         
-        for(int i=0; i <= 49; i++) {
+        for(int i=0; i <= 59; i++) {
             
             final Row row = sheet.getRow(3 + i);
             
@@ -146,6 +150,9 @@ public class BuiltInFormatGenerator {
             } else if(i == 49) {
                 // テキスト
                 testCaseCell.setCellValue("テキスト");
+                
+            } else if(range(i, 50, 59)) {
+                testCaseCell.setCellValue(Timestamp.valueOf("2000-02-29 10:19:23.123"));
             }
             
             // インデックス
