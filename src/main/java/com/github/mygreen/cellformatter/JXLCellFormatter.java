@@ -12,6 +12,36 @@ import jxl.ErrorCell;
 
 /**
  * JExcel APIのセルのフォーマッタ。
+ * 
+ * <pre class="highlight"><code class="java">
+ * // シートの読み込み
+ * final WorkbookSettings settings = new WorkbookSettings();
+ * settings.setSuppressWarnings(true);
+ * settings.setGCDisabled(true);
+ * 
+ * // 文字コードを「ISO8859_1」にしないと、会計の記号が文字化けする
+ * settings.setEncoding("ISO8859_1");
+ * 
+ * final Workbook workbook = Workbook.getWorkbook(in, settings);
+ * 
+ * // 基本的な使い方。
+ * JXLCellFormatter   cellFormatter = new JXLCellFormatter  ();
+ * 
+ * Cell cell = // セルの取得
+ * String text1 = cellForrmatter.formatAsString(cell);
+ * 
+ * // ロケールに依存する書式の場合
+ * String text2 = cellForrmatter.formatAsString(cell, Locale.US);
+ *
+ * // 文字色の条件が設定されている場合
+ * CellFormatResult result = cellForrmatter.format(cell);
+ * String text3 = result.getText(); // フォーマット結果の文字列
+ * MSColor textColor = result.getTextColor(); // 書式の文字色
+ * 
+ * // 1904年始まりのシートの場合、JXLUtils.isDateStart1904(...) を使って判定を行います。
+ * String text4 = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(sheet));
+ * </code></pre>
+ * 
  * @version 0.6
  * @since 0.4
  * @author T.TSUCHIE

@@ -10,7 +10,7 @@ import com.github.mygreen.cellformatter.lang.MSColor;
  * フォーマット結果を保持するクラス。
  * <p>条件に色が付与されている場合などの情報を保持する。
  * 
- * @since 0.6
+ * @version 0.6
  * @author T.TSUCHIE
  *
  */
@@ -42,8 +42,9 @@ public class CellFormatResult {
     private FormatCellType cellType;
     
     /**
-     * フォーマット対象の値を取得する
-     * @return
+     * フォーマット対象の値を取得する。
+     * <p>具体的に値を取得する際には、キャストして利用する。
+     * @return フォーマット対象の値。
      */
     public Object getValue() {
         return value;
@@ -51,7 +52,7 @@ public class CellFormatResult {
     
     /**
      * フォーマット対象の値をdouble型として取得する。
-     * @return
+     * @return 数値の値を返す。{@link #isNumber()}の値が{@literal true}の時に値が取得可能。
      * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      */
     public double getValueAsDoulbe() {
@@ -61,6 +62,7 @@ public class CellFormatResult {
     /**
      * フォーマット対象の値を日時型として取得する。
      * @return タイムゾーンが考慮された日時です。タイムゾーンはデフォルトです。
+     *         {@link #isDate()}の値が{@literal true}の時に値が取得可能。
      * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      */
     public Date getValueAsDate() {
@@ -69,8 +71,11 @@ public class CellFormatResult {
     
     /**
      * タイムゾーンを指定して、フォーマット対象の値を日時型として取得する。
+     * @since 0.6
      * @param tz タイムゾーン。値がnullの場合は、デフォルトを使用します。
-     * @return
+     * @return タイムゾーンを考慮した日時オブジェクト。
+     *          {@link #isDate()}の値が{@literal true}の時に値が取得可能。
+     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      */
     public Date getValueAsDate(final TimeZone tz) {
         long time = ((Date) value).getTime();
@@ -87,7 +92,7 @@ public class CellFormatResult {
     /**
      * フォーマット対象の値を文字列型として取得する。
      * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
-     * @return
+     * @return 文字列の値。{@link #isText()}の値が{@literal true}の時に値が取得可能。
      */
     public String getValueAsString() {
         return (String) value;
@@ -96,7 +101,7 @@ public class CellFormatResult {
     /**
      * フォーマット対象の値をブール型として取得する。
      * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
-     * @return
+     * @return {@link #isBoolean()}の値が{@literal true}の時に値が取得可能。
      */
     public boolean getValueAsBoolean() {
         return (boolean) value;
@@ -104,7 +109,7 @@ public class CellFormatResult {
     
     /**
      * 値がブランクかどうか。
-     * @return
+     * @return true:空。
      */
     public boolean isBlank() {
         return getCellType() == FormatCellType.Blank;
@@ -112,7 +117,7 @@ public class CellFormatResult {
     
     /**
      * 値が日付型かどうか。
-     * @return
+     * @return true:日時型の場合。
      */
     public boolean isDate() {
         return getCellType() == FormatCellType.Date;
@@ -120,7 +125,7 @@ public class CellFormatResult {
     
     /**
      * 値が数値型かどうか。
-     * @return
+     * @return true:数値型の場合。
      */
     public boolean isNumber() {
         return getCellType() == FormatCellType.Number;
@@ -128,7 +133,7 @@ public class CellFormatResult {
     
     /**
      * 値が文字列型かどうか。
-     * @return
+     * @return true:文字列型の場合。
      */
     public boolean isText() {
         return getCellType() == FormatCellType.Text;
@@ -136,7 +141,7 @@ public class CellFormatResult {
     
     /**
      * 値がエラー型かどうか。
-     * @return
+     * @return true:エラーの場合。
      */
     public boolean isError() {
         return getCellType() == FormatCellType.Error;
@@ -144,23 +149,23 @@ public class CellFormatResult {
     
     /**
      * フォーマット対象の値を設定する。
-     * @param value
+     * @param value 値。
      */
     public void setValue(Object value) {
         this.value = value;
     }
     
     /**
-     * 文字色
-     * @return
+     * 文字色を取得する。
+     * @return 書式に色が適用されていない場合は、nullを返す。
      */
     public MSColor getTextColor() {
         return textColor;
     }
     
     /**
-     * 文字色を設定する。
-     * @param color
+     * 書式の文字色を設定する。
+     * @param color 文字色。
      */
     public void setTextColor(MSColor textColor) {
         this.textColor = textColor;
@@ -168,7 +173,7 @@ public class CellFormatResult {
     
     /**
      * フォーマットした文字列を取得する
-     * @return
+     * @return フォーマットした文字列。
      */
     public String getText() {
         return text;
@@ -183,16 +188,16 @@ public class CellFormatResult {
     }
     
     /**
-     * フォーマットの際の一致した書式内のセクションの書式を返す。
-     * @return
+     * フォーマットの際、一致した書式内のセクションの書式を返す。
+     * @return 一致したセクションの書式。
      */
     public String getSectionPattern() {
         return sectionPattern;
     }
     
     /**
-     * フォーマットの際の一致した書式内のセクションの書式を設定する
-     * @param sectionPattern
+     * フォーマットの際、一致した書式内のセクションの書式を設定する
+     * @param sectionPattern 一致したセクションの書式。
      */
     public void setSectionPattern(String sectionPattern) {
         this.sectionPattern = sectionPattern;
@@ -201,7 +206,8 @@ public class CellFormatResult {
     
     /**
      * セルの種類を取得する
-     * @return
+     * <p>各メソッド{@link #isText()}などのisXXX()メソッドの判定に利用する。
+     * @return フォーマットした結果のセルの種類。
      */
     public FormatCellType getCellType() {
         return cellType;

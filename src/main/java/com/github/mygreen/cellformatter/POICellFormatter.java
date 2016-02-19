@@ -13,12 +13,28 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 
 /**
- * POIのセルの値を文字列として取得する。
- * 参考URL
+ * Apache POIのセルの値を文字列として取得する。
+ * <p>参考URL</p>
  * <ul>
  *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html" target="_blank">{@code ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得}</a></li>
  *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html" target="_blank">{@code POIでセルの値をとるのは大変　日付編}</a></li>
  * </ul>
+ * 
+ * <pre class="highlight"><code class="java">
+ * // 基本的な使い方。
+ * POICellFormatter  cellFormatter = new POICellFormatter ();
+ * 
+ * Cell cell = // セルの取得
+ * String text1 = cellForrmatter.formatAsString(cell);
+ * 
+ * // ロケールに依存する書式の場合
+ * String text2 = cellForrmatter.formatAsString(cell, Locale.US);
+ *
+ * // 文字色の条件が設定されている場合
+ * CellFormatResult result = cellForrmatter.format(cell);
+ * String text3 = result.getText(); // フォーマット結果の文字列
+ * MSColor textColor = result.getTextColor(); // 書式の文字色
+ * </code></pre>
  * 
  * @version 0.4
  * @author T.TSUCHIE

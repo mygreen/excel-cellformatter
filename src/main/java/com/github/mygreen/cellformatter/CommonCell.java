@@ -35,22 +35,21 @@ public interface CommonCell {
     boolean isText();
     
     /**
-     * Boolean型のセルかどうか。
+     * ブール型のセルかどうか。
      * @since 0.4
-     * @return
+     * @return true:セルの形式がブール型の場合
      */
     boolean isBoolean();
     
     /**
      * 数値型のセルかどうか。
-     * ・数値型、日付型の場合にtrueを返す。
-     * @return
+     * @return true:セルの形式が数値型、日付型の場合。
      */
     boolean isNumber();
     
     /**
      * 文字列型のセルとして値を取得する。
-     * @return
+     * @return true:セルの形式が文字型の場合
      */
     String getTextCellValue();
     
@@ -63,13 +62,15 @@ public interface CommonCell {
     
     /**
      * 数値型のセルとして値を取得する。
-     * @return
+     * <p>日時型の場合でもExcelの内部表現である数値に変換して値を取得する。
+     * @return 
      */
     double getNumberCellValue();
     
     /**
      * 日時型のセルとして値を取得する。
      * <p>ただじ、タイムゾーンは標準の{@literal GMT-00:00}とする。
+     * <p>数値型の場合でも日時型に変換して値を取得する。
      */
     Date getDateCellValue();
     

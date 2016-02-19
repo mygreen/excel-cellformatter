@@ -19,7 +19,8 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 
 
 /**
- * POIのセル
+ * POIのセルのラッパークラス。
+ * 
  * @version 0.6
  * @since 0.4
  * @author T.TSUCHIE
@@ -31,11 +32,20 @@ public class POICell implements CommonCell {
     
     private final Cell cell;
     
+    /**
+     * セルを渡してインスタンスを作成する。
+     * @param cell フォーマット対象のセルのインスタンス。
+     * @throws IllegalArgumentException {@literal cell == null.}
+     */
     public POICell(final Cell cell) {
         ArgUtils.notNull(cell, "cell");
         this.cell = cell;
     }
     
+    /**
+     * POIの元々のセルのインスタンスを取得する。
+     * @return
+     */
     public Cell getCell() {
         return cell;
     }

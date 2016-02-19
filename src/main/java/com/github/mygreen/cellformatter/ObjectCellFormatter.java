@@ -13,20 +13,21 @@ import java.util.Locale;
  *  <li>その他：AtomicInteger/AtomicLong/BigDecimal/BigInteger</li>
  * </ul>
  * 
- * <pre>
- * {@code //} 基本的な使い方。
- * {@code //} 各型に対応したインタフェースを利用します。
+ * <pre class="highlight"><code class="java">
+ * // 基本的な使い方。
  * ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
- * String text = cellFormatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", Timestamp.valueOf("2012-02-01 12:10:00.000"));
+ * Date date = Timestamp.valueOf("2012-02-01 12:10:00.000");
  * 
- * {@code //} 細かく指定したい場合。
- * {@code //} 仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
- * ObejctCell cell = new DateCell(Timestamp.valueOf("2012-02-01 12:10:00.000"), "yyyy\"年\"m\"月\"d\"日\";@", false)
+ * // 各型に対応したインタフェースを利用します。
+ * String text = cellFormatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", date);
+ * 
+ * // 細かく指定したい場合。
+ * // 仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
+ * ObejctCell cell = new DateCell(date, "yyyy\"年\"m\"月\"d\"日\";@", false)
  * CellFormatResult result = cellFormatter.format(cell);
- * String text = result.getText(); {@code //} フォーマットした文字列の取得
- * MSColor color = result.getTextColor(); {@code //} 文字色が設定されている場合、その色の取得。
- * 
- * </pre>
+ * String text = result.getText(); // フォーマットした文字列の取得
+ * MSColor color = result.getTextColor(); // 文字色が設定されている場合、その色の取得。
+ * </code></pre>
  * 
  * 
  * @since 0.6

@@ -95,7 +95,7 @@ public class ExcelDateUtils {
             // 1900年始まりの場合
             
             // UTC(1970年基準に戻す)
-            utcDay = numValue + OFFSET_DAYS_1900 ;
+            utcDay = numValue + OFFSET_DAYS_1900;
             
             /*
              * 1900年3月1日（Excel上は1900年2月29日）以降の場合の補正。

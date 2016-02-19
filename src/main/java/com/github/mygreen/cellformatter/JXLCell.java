@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
+import com.github.mygreen.cellformatter.lang.JXLUtils;
 import com.github.mygreen.cellformatter.lang.Utils;
 
 import jxl.BooleanCell;
@@ -23,7 +24,8 @@ import jxl.format.Format;
 
 
 /**
- * JExcel APIのセル
+ * JExcel APIのラッパークラス。
+ * 
  * @version 0.6
  * @since 0.4
  * @author T.TSUCHIE
@@ -71,8 +73,9 @@ public class JXLCell implements CommonCell {
     /**
      * セルを渡してインスタンスを作成する。
      * @param cell フォーマット対象のセルのインスタンス。
-     * @param dateStart1904 日付の開始が1904年始まりかどうか。Workbookまたはシートから取得する。
-     * @throws IllegalArgumentException cell is null.
+     * @param dateStart1904 日付の開始が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}を使用して、Workbookまたはシートから取得する。
+     * @throws IllegalArgumentException {@literal cell == null.}
      */
     public JXLCell(final Cell cell, final boolean dateStart1904) {
         ArgUtils.notNull(cell, "cell");
