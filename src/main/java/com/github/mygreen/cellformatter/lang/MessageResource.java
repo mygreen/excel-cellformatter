@@ -17,9 +17,21 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MessageResource {
     
     /**
-     * 存在しないメッセージリソースを示すオブジェクト。
+     * 存在しないメッセージソースを示すクラス。
+     * <p>メッセージの追加はできない、読み込み専用のメッセージ。
      */
-    public static final NullMessageResource NULL_OBJECT = new NullMessageResource();
+    public static final MessageResource NULL_OBJECT = new MessageResource() {
+        
+        {
+            this.messages = Collections.unmodifiableMap(new ConcurrentHashMap<String, String>());
+            
+        }
+        
+        @Override
+        public boolean isNullObject() {
+            return true;
+        }
+    };
     
     /**
      * メッセージのキャッシュされたデータセット
@@ -60,26 +72,10 @@ public class MessageResource {
     
     /**
      * 存在しないメッセージソースを示すかどうか。
-     * @return
+     * @return {@link #NULL_OBJECT}のインスタンスの場合、trueを返す。
      */
     public boolean isNullObject() {
         return false;
-    }
-    
-    /**
-     * 存在しないメッセージソースを示すクラス。
-     * <p>メッセージの追加はできない、読み込み専用のメッセージ。
-     */
-    public static class NullMessageResource extends MessageResource {
-        
-        public NullMessageResource() {
-            this.messages = Collections.unmodifiableMap(new ConcurrentHashMap<String, String>());
-        }
-        
-        @Override
-        public boolean isNullObject() {
-            return true;
-        }
     }
     
 }

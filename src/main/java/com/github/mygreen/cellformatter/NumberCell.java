@@ -51,7 +51,7 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
      * @param value フォーマット対象の値。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public NumberCell(final T value, final String formatPattern) {
         this(value, formatPattern, false);
@@ -64,7 +64,7 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public NumberCell(final T value, final short formatIndex, final String formatPattern) {
@@ -95,7 +95,7 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
      * @param dateStart1904 1904年始まりかどうか。
      * @param dateStart1904 1904年始まりかどうか。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public NumberCell(final T value, final String formatPattern, final boolean dateStart1904) {
         super(value, formatPattern);
@@ -110,7 +110,7 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public NumberCell(final T value, final short formatIndex, final String formatPattern, final boolean dateStart1904) {

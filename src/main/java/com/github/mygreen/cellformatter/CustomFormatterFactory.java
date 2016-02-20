@@ -8,7 +8,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 
 
 /**
- * {@link CustomFormatter}のインスタンスを作成するクラス。
+ * ユーザ定義の書式を解析して、{@link CustomFormatter}のインスタンスを作成するクラス。
  * @author T.TSUCHIE
  *
  */
@@ -23,7 +23,7 @@ public class CustomFormatterFactory {
     /**
      * 書式を元に、{@link CustomFormatter}のインスタンスを作成する。
      * @param pattern ユーザ定義の書式
-     * @return
+     * @return 指定したユーザ定義に対するフォーマッタ。
      * @throws CustomFormatterParseException 書式が不正な場合にスローされる。
      */
     public CustomFormatter create(final String pattern) {

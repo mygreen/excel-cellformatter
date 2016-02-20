@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 色のパレットの定義クラス。
+ * 書式中の色を表現するクラス。
  * <p>色はパレットが指定可能。
  * <p>Excelの色パレット一覧：<a href="http://dmcritchie.mvps.org/excel/colors.htm" target="_blank">Color Palette and the 56 Excel ColorIndex Colors</a>
  * 
@@ -94,9 +94,9 @@ public class MSColor {
     }
     
     /**
-     * ロケールを指定し固有の色の名称の取得。
+     * ロケールを指定し固有の色の名称の取得する。
      * @param locale ロケール
-     * @return 別名がない場合は、nullを返す。
+     * @return 固有の名称がない場合は、nullを返す。
      */
     public String getLocaleName(final Locale locale) {
         return messageResolver.getMessage(locale, String.format("color.%d.name", index));

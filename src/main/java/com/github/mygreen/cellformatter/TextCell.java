@@ -27,7 +27,7 @@ public class TextCell extends ObjectCell<String> {
      * <p>フォーマットのインデックス番号は、{@literal 0}となります。
      * @param value フォーマット対象の値。
      * @param formatPattern Excelの書式。
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public TextCell(final String value, final String formatPattern) {
         super(value, formatPattern);
@@ -39,7 +39,7 @@ public class TextCell extends ObjectCell<String> {
      * @param formatIndex フォーマットのインデックス番号。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public TextCell(final String value, final short formatIndex, final String formatPattern) {

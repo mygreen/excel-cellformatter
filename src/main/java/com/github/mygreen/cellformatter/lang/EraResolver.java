@@ -48,7 +48,7 @@ public class EraResolver {
     /**
      * ロケールに該当する時代情報を取得する。
      * @param locale ロケール。null指定可能。
-     * @return 見つからない場合は、不明な時代情報を返す{@link Era.UnknownEra}クラスのインスタンスを返す。
+     * @return 見つからない場合は、不明な時代情報を返す{@link Era#UNKNOWN_ERA}を返す。
      */
     public Era getEra(final Locale locale) {
         

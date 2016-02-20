@@ -15,7 +15,7 @@ public class BooleanCell extends ObjectCell<Boolean> {
      * @param value フォーマット対象の値。
      * @param formatIndex 書式のインデックス番号。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException {@literal formatIndex < 0}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public BooleanCell(final Boolean value, final short formatIndex) {
@@ -28,7 +28,7 @@ public class BooleanCell extends ObjectCell<Boolean> {
      * @param value フォーマット対象の値。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public BooleanCell(final Boolean value, final String formatPattern) {
         super(value, formatPattern);
@@ -41,7 +41,7 @@ public class BooleanCell extends ObjectCell<Boolean> {
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public BooleanCell(final Boolean value, final short formatIndex, final String formatPattern) {

@@ -21,10 +21,10 @@ public class JXLUtils {
     private static final Logger logger = LoggerFactory.getLogger(JXLUtils.class);
     
     /**
-     * 1904年始まりの設定かどうか。
-     * @param workbook
-     * @return
-     * @throws IllegalArgumentException workbook is null.
+     * ファイルが1904年始まりの設定かどうか。
+     * @param workbook 判定対象のワークブック。
+     * @return true:1904年始まり
+     * @throws IllegalArgumentException {@literal workbook == null.}
      */
     public static boolean isDateStart1904(final Workbook workbook) {
         ArgUtils.notNull(workbook, "workbook");
@@ -52,10 +52,10 @@ public class JXLUtils {
     }
     
     /**
-     * 日付が1904年始まりの設定かどうか。
-     * @param sheet
-     * @return
-     * @throws IllegalArgumentException sheet is null.
+     * ファイルが1904年始まりの設定かどうか。
+     * @param sheet 判定対象のシート。
+     * @return true:1904年始まり
+     * @throws IllegalArgumentException  {@literal sheet == null.}
      */
     public static boolean isDateStart1904(final Sheet sheet) {
         ArgUtils.notNull(sheet, "sheet");

@@ -14,9 +14,19 @@ import java.util.TimeZone;
 public class EraPeriod {
     
     /**
-     * 不明な期間を示すインスタンス。
+     * 不明な時代の期間を示すクラス。
+     * <p>存在しない期間を示すにも使用する。
+     * @since 0.5
      */
-    public static final EraPeriod UNKNOWN_PERIOD = new UnknownPeriod();
+    public static final EraPeriod UNKNOWN_PERIOD = new EraPeriod() {
+        
+        @Override
+        public boolean isUnknown() {
+            return true;
+        }
+        
+    };
+            
     
     /** 省略時のローマ字名 （例：H）*/
     private String abbrevRomanName;
@@ -37,7 +47,7 @@ public class EraPeriod {
      * 指定した日時が含まれているかどうか。
      * @param date チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
      * @return true:この時代に含まれている。
-     * @throws IllegalArgumentException date is null.
+     * @throws IllegalArgumentException {@literal date == null.}
      */
     public boolean contains(final Date date) {
         
@@ -59,7 +69,7 @@ public class EraPeriod {
      * 指定した日時が、開始日時から経過した年を取得する。
      * @param cal チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
      * @return
-     * @throws IllegalArgumentException cal is null.
+     * @throws IllegalArgumentException {@literal cal == null.}
      */
     public int getEraYear(final Calendar cal) {
         ArgUtils.notNull(cal, "cal");
@@ -106,16 +116,17 @@ public class EraPeriod {
     }
     
     /**
-     * 元号の日本語名の省略名を取得する。
-     * @return
+     * 元号のロケールに対する省略名を取得する。
+     * 
+     * @return 日本語の場合、「平成」だと「平」の値。
      */
     public String getAbbrevName() {
         return abbrevName;
     }
     
     /**
-     * 元号の日本語名の省略名を設定する。
-     * @return
+     * 元号のロケールに対する省略名を設定する。
+     * @param abbrevName ロケールに対する省略名
      */
     void setAbbrevName(String abbrevName) {
         this.abbrevName = abbrevName;
@@ -163,7 +174,7 @@ public class EraPeriod {
     
     /**
      * 終了日を取得する
-     * @return
+     * @return 終了日がない現行の元号の場合は{@literal null}を返す。
      */
     public Date getEndDate() {
         return endDate;
@@ -172,24 +183,10 @@ public class EraPeriod {
     /**
      * 不明な期間かどうか。
      * @since 0.5
-     * @return
+     * @return {@link #UNKNOWN_PERIOD}のインスタンスのとき、trueを返す。
      */
     public boolean isUnknown() {
         return false;
-    }
-    
-    /**
-     * 不明な時代の期間を示すクラス。
-     * <p>存在しない期間を示すにも使用する。
-     * @since 0.5
-     */
-    public static class UnknownPeriod extends EraPeriod {
-        
-        @Override
-        public boolean isUnknown() {
-            return true;
-        }
-        
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.number.NumberFactory;
 import com.github.mygreen.cellformatter.term.NumberTerm;
 import com.github.mygreen.cellformatter.term.TextTerm;
@@ -12,7 +13,8 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 
 
 /**
- * ユーザ定義のフォーマッタ。
+ * ユーザ定義の書式を表現するフォーマッタ。
+ * <p>{@link CustomFormatterFactory}からインスタンスを作成する。
  * 
  * @version 0.4
  * @author T.TSUCHIE
@@ -55,21 +57,16 @@ public class CustomFormatter extends CellFormatter {
     
     /**
      * 書式を指定してインスタンスを作成する。
-     * @param pattern
-     * @throws IllegalArgumentException patternが空文字の場合。
+     * @param pattern ユーザ定義の書式。
      */
     public CustomFormatter(final String pattern) {
         this.pattern = pattern;
     }
     
-    /**
-     * ロケールを指定してフォーマットする
-     * @param cell
-     * @param locale
-     * @return
-     */
     @Override
     public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
+        
+        ArgUtils.notNull(cell, "cell");
         
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isMatch(cell)) {

@@ -55,8 +55,9 @@ public abstract class ConditionFormatterFactory<F> {
     private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[(色|Color)([0-9]+)\\]");
     
     /**
-     * 演算子の条件式かどうか。
-     * @param token
+     * '[<=1000]'などの演算子の条件式かどうか。
+     * @param token 判定対象のトークン。
+     * @return true: 演算子の条件式。
      *
      */
     protected boolean isConditionOperator(final Token.Condition token) {
@@ -64,8 +65,9 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * ロケールの条件式かどうか。
-     * @param token
+     * '[$-403]'などのロケールの条件式かどうか。
+     * @param token 判定対象のトークン。
+     * @return true: ロケールの条件式。
      *
      */
     protected boolean isConditionLocale(final Token.Condition token) {
@@ -73,8 +75,9 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * 特殊な処理の条件式かどうか。
-     * @param token
+     * '[DBNum1]'などの組み込み処理の条件式かどうか。
+     * @param token 判定対象のトークン。
+     * @return true: 特殊な処理の条件式。
      *
      */
     protected boolean isConditionDbNum(final Token.Condition token) {
@@ -82,8 +85,9 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * 色の条件式の書式かどうか
-     * @param token
+     * '[Red]'などの色の条件式の書式かどうか
+     * @param token 判定対象のトークン。
+     * @return true: 色の条件式。
      *
      */
     protected boolean isConditionColor(final Token.Condition token) {
@@ -95,9 +99,9 @@ public abstract class ConditionFormatterFactory<F> {
     
     /**
      * '[<=1000]'などの数値の条件を組み立てる
-     * @param formatter
-     * @param token
-     * @return
+     * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
+     * @param token 条件式のトークン。
+     * @return 演算子の条件式。
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected ConditionOperator setupConditionOperator(final ConditionFormatter formatter, final Token.Condition token) {
@@ -143,10 +147,10 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * ロケールの条件を組み立てる
-     * @param formatter
-     * @param str
-     * @return
+     * '[$-403]'などのロケールの条件を組み立てる
+     * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
+     * @param token 条件式のトークン。
+     * @return ロケールの条件式。
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected MSLocale setupConditionLocale(final ConditionFormatter formatter, final Token.Condition token) {
@@ -173,9 +177,9 @@ public abstract class ConditionFormatterFactory<F> {
     
     /**
      * '[DBNum1]'などの組み込み処理の条件を組み立てる。
-     * @param formatter
-     * @param str
-     * @return
+     * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
+     * @param token 条件式のトークン。
+     * @return 組み込みの条件式。
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected Callback<?> setupConditionDbNum(final ConditionFormatter formatter, final Token.Condition token) {
@@ -207,10 +211,10 @@ public abstract class ConditionFormatterFactory<F> {
     
     
     /**
-     * 色の条件の組み立てる。
-     * @param formatter
-     * @param str
-     * @return
+     * '[Red]'などの色の条件の組み立てる。
+     * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
+     * @param token 条件式のトークン。
+     * @return 色の条件式。
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected MSColor setupConditionColor(final ConditionFormatter formatter, final Token.Condition token) {

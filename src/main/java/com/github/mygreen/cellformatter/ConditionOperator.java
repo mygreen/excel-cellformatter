@@ -3,7 +3,7 @@ package com.github.mygreen.cellformatter;
 
 /**
  * ユーザ定義の条件式を表現するクラス。
- * <pre><、>、>=、<=、<></pre>を表現する。
+ * 演算子の条件式{@literal <、>、>=、<=、<>}を表現する。
  *
  * @author T.TSUCHIE
  *

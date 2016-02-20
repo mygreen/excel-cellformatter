@@ -155,18 +155,18 @@ public class FormatterResolver {
     }
     
     /**
-     * インデックス形式の書式指定が解決可能かどうか。
-     * @param formatIndex
-     * @return
+     * インデックス形式の書式指定がキャッシュに登録され、解決可能かどうか。
+     * @param formatIndex 検証対象の書式のインデックス番号。
+     * @return true: 事前に登録されているものやキャッシュされているインデックス番号の場合。
      */
     public boolean canResolve(final short formatIndex) {
         return indexFormatterMap.containsKey(formatIndex);
     }
     
     /**
-     * パターン形式の書式指定が解決可能かどうか。
-     * @param formatPattern
-     * @return
+     * パターン形式の書式指定がキャッシュに登録され、解決可能かどうか。
+     * @param formatPattern 検証対象の書式パターン。
+     * @return true:  事前に登録されているものやキャッシュされている書式パターンの場合。
      */
     public boolean canResolve(final String formatPattern) {
         final String key = (formatPattern == null ? "" : formatPattern);
@@ -174,8 +174,8 @@ public class FormatterResolver {
     }
     
     /**
-     * インデックスを指定してフォーマッタを取得する。
-     * @param formatIndex
+     * インデックス番号を指定して、キャッシュに登録されているフォーマッタを取得する。
+     * @param formatIndex 検証対象の書式のインデックス番号。
      * @return 登録されていないインデックスの場合は、nullを返す。
      */
     public CellFormatter getFormatter(final short formatIndex) {
@@ -184,7 +184,7 @@ public class FormatterResolver {
     }
     
     /**
-     * 書式のパターンを指定してフォーマッタを取得する。
+     * 書式のパターンを指定して、キャッシュに登録されているフォーマッタを取得する。
      * @param pattern
      * @return 登録されていないインデックスの場合は、nullを返す。
      */
@@ -196,8 +196,8 @@ public class FormatterResolver {
     
     /**
      * パターンを指定して新たに書式を作成する。
-     * @param formatPattern
-     * @return
+     * @param formatPattern 書式パターン。
+     * @return パースしたフォーマッタ。
      */
     public CellFormatter createFormatter(final String formatPattern) {
         
@@ -207,29 +207,38 @@ public class FormatterResolver {
     }
     
     /**
-     * インデックス番号を指定してフォーマッタを登録する。
-     * @param formatIndex
-     * @param cellFormatter
-     * @return
+     * 書式インデックス番号を指定してフォーマッタをキャッシュに登録する。
+     * @param formatIndex 書式のインデックス番号。
+     * @param cellFormatter 登録対象のフォーマッタ。
+     * @return 以前に登録されたフォーマッタのインスタンス。登録されたフォーマッタがなければ、nullを返す。
      */
     public synchronized CellFormatter registerFormatter(final short formatIndex, final CellFormatter cellFormatter) {
         return indexFormatterMap.put(formatIndex, cellFormatter);
     }
     
     /**
-     * パターンを指定してフォーマッタを登録する。
-     * @param formatPattern
-     * @param cellFormatter
-     * @return
+     * 書式パターンを指定してフォーマッタをキャッシュに登録する。
+     * @param formatPattern 書式パターン。
+     * @param cellFormatter 登録対象のフォーマッタ。
+     * @return 以前に登録されたフォーマッタのインスタンス。登録されたフォーマッタがなければ、nullを返す。
      */
     public synchronized CellFormatter registerFormatter(final String formatPattern, final CellFormatter cellFormatter) {
         return patternFormatterMap.put(formatPattern, cellFormatter);
     }
     
+    /**
+     * 書式パターンを解析して、{@link CellFormatter}のインスタンスを作成するクラスの取得。
+     * @return デフォルトは標準のクラスが設定されています。
+     */
     public CustomFormatterFactory getCustomFormatterFactory() {
         return customFormatterFactory;
     }
     
+    /**
+     * 書式パターンを解析して、{@link CellFormatter}のインスタンスを作成するクラスの設定。
+     * <p>独自のカスタマイズしたものが設定可能。
+     * @param customFormatterFactory
+     */
     public void setCustomFormatterFactory(CustomFormatterFactory customFormatterFactory) {
         this.customFormatterFactory = customFormatterFactory;
     }

@@ -53,7 +53,7 @@ public abstract class ObjectCell<T> implements CommonCell {
      * @param value フォーマット対象の値。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public ObjectCell(final T value, final String formatPattern) {
         ArgUtils.notNull(value, "value");
@@ -70,7 +70,7 @@ public abstract class ObjectCell<T> implements CommonCell {
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public ObjectCell(final T value, final short formatIndex, final String formatPattern) {
@@ -91,18 +91,13 @@ public abstract class ObjectCell<T> implements CommonCell {
         return value;
     }
     
-    /**
-     * {@inheritDoc}
-     * <p>常に{@literal -1}を返します。
-     * 
-     */
     @Override
     public short getFormatIndex() {
         return formatIndex;
     }
     
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      * <p>コンストラクタで指定したフォーマットを返します。
      */
     @Override

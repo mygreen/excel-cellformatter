@@ -52,15 +52,15 @@ public abstract class ConditionFormatter {
     /**
      * 値が条件に一致するかどうか。
      * <p>{@link ConditionOperator}に一致するかどうか。
-     * @param cell
-     * @return
+     * @param cell 判定対象のセル。
+     * @return true:一致する。
      */
     public abstract boolean isMatch(CommonCell cell);
     
     /**
      * 値をフォーマットする。
-     * @param cell
-     * @return
+     * @param cell フォーマット対象のセル。
+     * @return true:一致する。
      */
     public CellFormatResult format(CommonCell cell) {
         return format(cell, Locale.getDefault());
@@ -68,9 +68,9 @@ public abstract class ConditionFormatter {
     
     /**
      * ロケールを指定して値フォーマットする。
-     * @param cell
-     * @param runtimeLocale 実行時のロケール
-     * @return
+     * @param cell フォーマット対象のセル。
+     * @param runtimeLocale 実行時のロケール。nullの場合は、実行環境のロケールが指定される。
+     * @return フォーマット結果。
      */
     public abstract CellFormatResult format(CommonCell cell, Locale runtimeLocale);
     

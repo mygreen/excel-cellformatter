@@ -13,8 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * メッセージソースを管理するクラス。
- * <p>ロケールを指定した場合、そのロケールで存在しないキーがあるときに、
- *    標準の値を返す。
+ * <p>ロケールを指定した場合、そのロケールで存在しないキーがあるときに、標準の値を返す。
  * 
  * @since 0.5
  * @author T.TSUCHIE
@@ -210,7 +209,7 @@ public class MessageResolver {
     public boolean isAllowedNoDefault() {
         return allowedNoDefault;
     }
-
+    
     /**
      * キーを指定してメッセージを取得する。
      * @param key メッセージキー
@@ -223,10 +222,9 @@ public class MessageResolver {
     /**
      * ロケールとキーを指定してメッセージを取得する。
      * <p>ロケールに該当する値を取得する。
-     * <p>該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
      * @param locale ロケール
      * @param key メッセージキー
-     * @return
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
      */
     public String getMessage(final MSLocale locale, final String key) {
         if(locale == null) {
@@ -238,11 +236,11 @@ public class MessageResolver {
     }
     
     /**
-     * 値がnullの場合、defaultValueの値を返す。
-     * @param locale
-     * @param key
+     * ロケールとキーを指定してメッセージを取得する。
+     * @param locale ロケール
+     * @param key メッセージキー
      * @param defaultValue
-     * @return
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
      */
     public String getMessage(final MSLocale locale, final String key, final String defaultValue) {
         String message = getMessage(locale, key);
@@ -252,10 +250,9 @@ public class MessageResolver {
     /**
      * ロケールとキーを指定してメッセージを取得する。
      * <p>ロケールに該当する値を取得する。
-     * <p>該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
      * @param locale ロケール
      * @param key メッセージキー
-     * @return
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
      */
     public String getMessage(final Locale locale, final String key) {
         return loadResource(locale).getMessage(key);
@@ -263,10 +260,10 @@ public class MessageResolver {
     
     /**
      * 値がnullの場合、defaultValueの値を返す。
-     * @param locale
-     * @param key
+     * @param locale ロケール
+     * @param key メッセージキー
      * @param defaultValue
-     * @return
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
      */
     public String getMessage(final Locale locale, final String key, final String defaultValue) {
         String message = getMessage(locale, key);

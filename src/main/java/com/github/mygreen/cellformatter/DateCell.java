@@ -35,7 +35,7 @@ public class DateCell extends ObjectCell<Date> {
      * @param value フォーマット対象の日時。タイムゾーンが考慮された値。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public DateCell(final Date value, final String formatPattern) {
         this(value, formatPattern, false);
@@ -48,7 +48,7 @@ public class DateCell extends ObjectCell<Date> {
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
      * @throws IllegalArgumentException {@literal formatIndex < 0}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      * 
      */
     public DateCell(final Date value, final short formatIndex, final String formatPattern) {
@@ -77,7 +77,7 @@ public class DateCell extends ObjectCell<Date> {
      * @param formatPattern Excelの書式。
      * @param dateStart1904 1904年始まりかどうか。
      * @throws IllegalArgumentException {@literal value == null}
-     * @throws IllegalArgumentException fommatPattern is empty.
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
      */
     public DateCell(final Date value, final String formatPattern, final boolean dateStart1904) {
         super(value, formatPattern);
