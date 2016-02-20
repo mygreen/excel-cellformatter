@@ -43,7 +43,7 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment">     * @param value フォーマット対象の日時。タイムゾーンが考慮された値。</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment">     * @param formatPattern Excelの書式。</em>
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException fommatPattern is empty.</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/DateCell.html">DateCell</a>(<strong class="jxr_keyword">final</strong> Date value, <strong class="jxr_keyword">final</strong> String formatPattern) {
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">this</strong>(value, formatPattern, false);
@@ -56,7 +56,7 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * @param formatPattern Excelの書式。</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}</em>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException fommatPattern is empty.</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/DateCell.html">DateCell</a>(<strong class="jxr_keyword">final</strong> Date value, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">short</strong> formatIndex, <strong class="jxr_keyword">final</strong> String formatPattern) {
@@ -85,7 +85,7 @@
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * @param formatPattern Excelの書式。</em>
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * @param dateStart1904 1904年始まりかどうか。</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException fommatPattern is empty.</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/DateCell.html">DateCell</a>(<strong class="jxr_keyword">final</strong> Date value, <strong class="jxr_keyword">final</strong> String formatPattern, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dateStart1904) {
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">super</strong>(value, formatPattern);

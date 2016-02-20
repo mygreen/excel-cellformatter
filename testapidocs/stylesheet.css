@@ -472,3 +472,14 @@ h1.hidden {
 .strong {
     font-weight:bold;
 }
+
+/**
+ * customize
+ */
+pre.highlight {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 80%;
+	border: solid 1px #9eadc0;
+	background-color: #f9f9f9;
+}

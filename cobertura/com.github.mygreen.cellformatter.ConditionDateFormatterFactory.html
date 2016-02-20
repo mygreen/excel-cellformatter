@@ -72,10 +72,10 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;28</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;29</td>  <td class="nbHitsCovered">&nbsp;280</td>  <td class="src"><pre class="src">&nbsp;<span class="keyword">public</span> <span class="keyword">class</span> ConditionDateFormatterFactory <span class="keyword">extends</span> ConditionFormatterFactory&lt;ConditionDateFormatter&gt; {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;29</td>  <td class="nbHitsCovered">&nbsp;382</td>  <td class="src"><pre class="src">&nbsp;<span class="keyword">public</span> <span class="keyword">class</span> ConditionDateFormatterFactory <span class="keyword">extends</span> ConditionFormatterFactory&lt;ConditionDateFormatter&gt; {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;30</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;31</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(ConditionDateFormatterFactory.<span class="keyword">class</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;31</td>  <td class="nbHitsCovered">&nbsp;8</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(ConditionDateFormatterFactory.<span class="keyword">class</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;32</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;33</td>  <td class="nbHits">&nbsp;</td>
@@ -84,20 +84,20 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * 日時の書式かどうかを決定するためのキーワード。</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;35</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;36</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATE_DECISTION_CHARS = {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;37</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"yy"</span>, <span class="string">"yyyy"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;38</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"m"</span>, <span class="string">"mm"</span>, <span class="string">"mmm"</span>, <span class="string">"mmmm"</span>, <span class="string">"mmmmm"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;39</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"d"</span>, <span class="string">"dd"</span>, <span class="string">"ddd"</span>, <span class="string">"dddd"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;40</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"g"</span>, <span class="string">"gg"</span>, <span class="string">"ggg"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;41</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="comment">/*"e",*/</span> <span class="string">"ee"</span>,  <span class="comment">// e単体だと指数と区別がつかないので除外する。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;42</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;43</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"r"</span>, <span class="string">"rr"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;44</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"h"</span>, <span class="string">"hh"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;45</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"s"</span>, <span class="string">"ss"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;46</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"am/pm"</span>, <span class="string">"a/p"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;47</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"q"</span>, <span class="string">"qq"</span>,    <span class="comment">// OpenOffice用</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;48</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"nn"</span>, <span class="string">"nnn"</span>,  <span class="comment">// OpenOffice用</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;49</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"ww"</span>,         <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;36</td>  <td class="nbHitsCovered">&nbsp;15</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATE_DECISTION_CHARS = {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;37</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"yy"</span>, <span class="string">"yyyy"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;38</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"m"</span>, <span class="string">"mm"</span>, <span class="string">"mmm"</span>, <span class="string">"mmmm"</span>, <span class="string">"mmmmm"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;39</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"d"</span>, <span class="string">"dd"</span>, <span class="string">"ddd"</span>, <span class="string">"dddd"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;40</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"g"</span>, <span class="string">"gg"</span>, <span class="string">"ggg"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;41</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="comment">/*"e",*/</span> <span class="string">"ee"</span>,  <span class="comment">// e単体だと指数と区別がつかないので除外する。</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;42</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;43</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"r"</span>, <span class="string">"rr"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;44</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"h"</span>, <span class="string">"hh"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;45</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"s"</span>, <span class="string">"ss"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;46</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"am/pm"</span>, <span class="string">"a/p"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;47</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"q"</span>, <span class="string">"qq"</span>,    <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;48</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"nn"</span>, <span class="string">"nnn"</span>,  <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;49</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"ww"</span>,         <span class="comment">// OpenOffice用</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;50</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    };</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;51</td>  <td class="nbHits">&nbsp;</td>
@@ -108,20 +108,20 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * 日時で使用するフォーマット用の文字</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;54</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATE_TERM_CHARS = {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;56</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"yy"</span>, <span class="string">"yyyy"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;57</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"m"</span>, <span class="string">"mm"</span>, <span class="string">"mmm"</span>, <span class="string">"mmmm"</span>, <span class="string">"mmmmm"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;58</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"d"</span>, <span class="string">"dd"</span>, <span class="string">"ddd"</span>, <span class="string">"dddd"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;59</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"g"</span>, <span class="string">"gg"</span>, <span class="string">"ggg"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;60</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"e"</span>, <span class="string">"ee"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;61</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;62</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"r"</span>, <span class="string">"rr"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;63</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"h"</span>, <span class="string">"hh"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;64</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"s"</span>, <span class="string">"ss"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;65</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"am/pm"</span>, <span class="string">"a/p"</span>,</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;66</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"q"</span>, <span class="string">"qq"</span>,  <span class="comment">// OpenOffice用</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;67</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"nn"</span>,       <span class="comment">// OpenOffice用</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;68</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"ww"</span>,       <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;15</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] DATE_TERM_CHARS = {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;56</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"yy"</span>, <span class="string">"yyyy"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;57</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"m"</span>, <span class="string">"mm"</span>, <span class="string">"mmm"</span>, <span class="string">"mmmm"</span>, <span class="string">"mmmmm"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;58</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"d"</span>, <span class="string">"dd"</span>, <span class="string">"ddd"</span>, <span class="string">"dddd"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;59</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"g"</span>, <span class="string">"gg"</span>, <span class="string">"ggg"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;60</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"e"</span>, <span class="string">"ee"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;61</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"aaa"</span>, <span class="string">"aaaa"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;62</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"r"</span>, <span class="string">"rr"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;63</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"h"</span>, <span class="string">"hh"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;64</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"s"</span>, <span class="string">"ss"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;65</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"am/pm"</span>, <span class="string">"a/p"</span>,</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;66</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"q"</span>, <span class="string">"qq"</span>,  <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;67</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"nn"</span>,       <span class="comment">// OpenOffice用</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;68</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        <span class="string">"ww"</span>,       <span class="comment">// OpenOffice用</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;69</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    };</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;70</td>  <td class="nbHits">&nbsp;</td>
@@ -134,7 +134,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * ・フォーマットのキーワードを①文字列の長い順、辞書順に並び変え、比較していく。</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;74</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;75</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;String&gt; SORTED_DATE_CHARS = Utils.reverse(DATE_TERM_CHARS);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;75</td>  <td class="nbHitsCovered">&nbsp;8</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;String&gt; SORTED_DATE_CHARS = Utils.reverse(DATE_TERM_CHARS);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;76</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;77</td>  <td class="nbHits">&nbsp;</td>
@@ -143,7 +143,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * 経過時間の時刻のパターン</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;79</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;80</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Pattern PATTERN_ELAPSED_TIME = Pattern.compile(<span class="string">"\\[([h]+|[m]+|[s]+)\\]"</span>, Pattern.CASE_INSENSITIVE);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;80</td>  <td class="nbHitsCovered">&nbsp;8</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Pattern PATTERN_ELAPSED_TIME = Pattern.compile(<span class="string">"\\[([h]+|[m]+|[s]+)\\]"</span>, Pattern.CASE_INSENSITIVE);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;81</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;82</td>  <td class="nbHits">&nbsp;</td>
@@ -160,31 +160,31 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">boolean</span> isDatePattern(<span class="keyword">final</span> TokenStore store) {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;88</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;89</td>  <td class="nbHitsCovered"><a title="Line 89: Conditional coverage 100% (2/2).">&nbsp;32854</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 89: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(store.containsInFactor(<span class="string">"General"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;90</td>  <td class="nbHitsCovered">&nbsp;90</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;89</td>  <td class="nbHitsCovered"><a title="Line 89: Conditional coverage 100% (2/2).">&nbsp;46554</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 89: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(store.containsInFactor(<span class="string">"General"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;90</td>  <td class="nbHitsCovered">&nbsp;120</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;91</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;92</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;93</td>  <td class="nbHitsCovered"><a title="Line 93: Conditional coverage 100% (2/2).">&nbsp;32764</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 93: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;94</td>  <td class="nbHitsCovered">&nbsp;12122</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;93</td>  <td class="nbHitsCovered"><a title="Line 93: Conditional coverage 100% (2/2).">&nbsp;46434</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 93: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;94</td>  <td class="nbHitsCovered">&nbsp;17238</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;95</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;96</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;97</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// [h][m][s]の形式のチェック</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;98</td>  <td class="nbHitsCovered"><a title="Line 98: Conditional coverage 100% (2/2).">&nbsp;92518</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 98: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(Token token : store.getTokens()) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;99</td>  <td class="nbHitsCovered"><a title="Line 99: Conditional coverage 100% (2/2).">&nbsp;58134</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 99: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(!(token <span class="keyword">instanceof</span> Token.Condition)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;100</td>  <td class="nbHitsCovered">&nbsp;54070</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">continue</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;98</td>  <td class="nbHitsCovered"><a title="Line 98: Conditional coverage 100% (2/2).">&nbsp;133590</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 98: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(Token token : store.getTokens()) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;99</td>  <td class="nbHitsCovered"><a title="Line 99: Conditional coverage 100% (2/2).">&nbsp;82118</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 99: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(!(token <span class="keyword">instanceof</span> Token.Condition)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;100</td>  <td class="nbHitsCovered">&nbsp;76478</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">continue</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;101</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;102</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;103</td>  <td class="nbHitsCovered">&nbsp;4064</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> Token.Condition condition = token.asCondition();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;104</td>  <td class="nbHitsCovered">&nbsp;4064</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> String value = condition.getValue();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;105</td>  <td class="nbHitsCovered"><a title="Line 105: Conditional coverage 100% (2/2).">&nbsp;4064</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 105: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(PATTERN_ELAPSED_TIME.matcher(value).matches()) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;106</td>  <td class="nbHitsCovered">&nbsp;60</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;103</td>  <td class="nbHitsCovered">&nbsp;5640</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> Token.Condition condition = token.asCondition();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;104</td>  <td class="nbHitsCovered">&nbsp;5640</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> String value = condition.getValue();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;105</td>  <td class="nbHitsCovered"><a title="Line 105: Conditional coverage 100% (2/2).">&nbsp;5640</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 105: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(PATTERN_ELAPSED_TIME.matcher(value).matches()) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;106</td>  <td class="nbHitsCovered">&nbsp;80</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;107</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;108</td>  <td class="nbHits">&nbsp;</td>
@@ -192,7 +192,7 @@
 <tr>  <td class="numLineCover">&nbsp;109</td>  <td class="nbHitsCovered">&nbsp;446</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;110</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;20582</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;29116</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;112</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;113</td>  <td class="nbHits">&nbsp;</td>
@@ -213,60 +213,60 @@
   <td class="src"><pre class="src">&nbsp;    @Override</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;121</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> ConditionDateFormatter create(<span class="keyword">final</span> TokenStore store) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;122</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(store, <span class="string">"store"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;122</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(store, <span class="string">"store"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;123</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;124</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> ConditionDateFormatter formatter = <span class="keyword">new</span> ConditionDateFormatter(store.getConcatenatedToken());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;124</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> ConditionDateFormatter formatter = <span class="keyword">new</span> ConditionDateFormatter(store.getConcatenatedToken());</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;125</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;126</td>  <td class="nbHitsCovered"><a title="Line 126: Conditional coverage 100% (2/2).">&nbsp;56174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 126: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(Token token : store.getTokens()) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;126</td>  <td class="nbHitsCovered"><a title="Line 126: Conditional coverage 100% (2/2).">&nbsp;80768</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 126: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(Token token : store.getTokens()) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;127</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;128</td>  <td class="nbHitsCovered"><a title="Line 128: Conditional coverage 100% (2/2).">&nbsp;36886</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 128: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Condition) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;128</td>  <td class="nbHitsCovered"><a title="Line 128: Conditional coverage 100% (2/2).">&nbsp;51208</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 128: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Condition) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;129</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                <span class="comment">// 条件の場合</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;130</td>  <td class="nbHitsCovered">&nbsp;3260</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Token.Condition conditionToken = token.asCondition();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;131</td>  <td class="nbHitsCovered">&nbsp;3260</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> String condition = conditionToken.getCondition();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;130</td>  <td class="nbHitsCovered">&nbsp;4536</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Token.Condition conditionToken = token.asCondition();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;131</td>  <td class="nbHitsCovered">&nbsp;4536</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> String condition = conditionToken.getCondition();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;132</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;133</td>  <td class="nbHitsCovered"><a title="Line 133: Conditional coverage 100% (2/2).">&nbsp;3260</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 133: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(PATTERN_ELAPSED_TIME.matcher(token.getValue()).matches()) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;133</td>  <td class="nbHitsCovered"><a title="Line 133: Conditional coverage 100% (2/2).">&nbsp;4536</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 133: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(PATTERN_ELAPSED_TIME.matcher(token.getValue()).matches()) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;134</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    <span class="comment">// [h][m][s]などの経過時刻のパターン</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;135</td>  <td class="nbHitsCovered"><a title="Line 135: Conditional coverage 100% (2/2).">&nbsp;440</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 135: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"h"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;136</td>  <td class="nbHitsCovered">&nbsp;320</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedHour(condition));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;135</td>  <td class="nbHitsCovered"><a title="Line 135: Conditional coverage 100% (2/2).">&nbsp;612</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 135: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"h"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;136</td>  <td class="nbHitsCovered">&nbsp;452</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedHour(condition));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;137</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;138</td>  <td class="nbHitsCovered"><a title="Line 138: Conditional coverage 100% (2/2).">&nbsp;312</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 138: Conditional coverage 100% (2/2).">                    } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"m"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;139</td>  <td class="nbHitsCovered">&nbsp;60</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedMinute(condition));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;138</td>  <td class="nbHitsCovered"><a title="Line 138: Conditional coverage 100% (2/2).">&nbsp;444</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 138: Conditional coverage 100% (2/2).">                    } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"m"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;139</td>  <td class="nbHitsCovered">&nbsp;80</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedMinute(condition));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;140</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;141</td>  <td class="nbHitsUncovered"><a title="Line 141: Conditional coverage 50% (1/2).">&nbsp;60</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 141: Conditional coverage 50% (1/2).">                    } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"s"</span>)) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;142</td>  <td class="nbHitsCovered">&nbsp;60</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedSecond(condition));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;141</td>  <td class="nbHitsUncovered"><a title="Line 141: Conditional coverage 50% (1/2).">&nbsp;80</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 141: Conditional coverage 50% (1/2).">                    } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(condition, <span class="string">"s"</span>)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;142</td>  <td class="nbHitsCovered">&nbsp;80</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(DateTerm.elapsedSecond(condition));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;143</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;144</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;145</td>  <td class="nbHitsCovered">&nbsp;50</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">continue</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;145</td>  <td class="nbHitsCovered">&nbsp;70</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">continue</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;146</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;147</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;148</td>  <td class="nbHitsCovered">&nbsp;2820</td>  <td class="src"><pre class="src">&nbsp;                formatter.addCondition(condition);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;148</td>  <td class="nbHitsCovered">&nbsp;3924</td>  <td class="src"><pre class="src">&nbsp;                formatter.addCondition(condition);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;149</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;150</td>  <td class="nbHitsUncovered"><a title="Line 150: Conditional coverage 50% (1/2).">&nbsp;2820</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 150: Conditional coverage 50% (1/2).">                <span class="keyword">if</span>(isConditionOperator(conditionToken)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;150</td>  <td class="nbHitsUncovered"><a title="Line 150: Conditional coverage 50% (1/2).">&nbsp;3924</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 150: Conditional coverage 50% (1/2).">                <span class="keyword">if</span>(isConditionOperator(conditionToken)) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;151</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    setupConditionOperator(formatter, conditionToken);</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;152</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;153</td>  <td class="nbHitsCovered"><a title="Line 153: Conditional coverage 100% (2/2).">&nbsp;306</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 153: Conditional coverage 100% (2/2).">                } <span class="keyword">else</span> <span class="keyword">if</span>(isConditionLocale(conditionToken)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;154</td>  <td class="nbHitsCovered">&nbsp;2712</td>  <td class="src"><pre class="src">&nbsp;                    setupConditionLocale(formatter, conditionToken);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;154</td>  <td class="nbHitsCovered">&nbsp;3780</td>  <td class="src"><pre class="src">&nbsp;                    setupConditionLocale(formatter, conditionToken);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;155</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;156</td>  <td class="nbHitsUncovered"><a title="Line 156: Conditional coverage 50% (1/2).">&nbsp;2442</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 156: Conditional coverage 50% (1/2).">                } <span class="keyword">else</span> <span class="keyword">if</span>(isConditionDbNum(conditionToken)) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;157</td>  <td class="nbHitsCovered">&nbsp;108</td>  <td class="src"><pre class="src">&nbsp;                    setupConditionDbNum(formatter, conditionToken);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;156</td>  <td class="nbHitsUncovered"><a title="Line 156: Conditional coverage 50% (1/2).">&nbsp;3510</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 156: Conditional coverage 50% (1/2).">                } <span class="keyword">else</span> <span class="keyword">if</span>(isConditionDbNum(conditionToken)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;157</td>  <td class="nbHitsCovered">&nbsp;144</td>  <td class="src"><pre class="src">&nbsp;                    setupConditionDbNum(formatter, conditionToken);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;158</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;159</td>  <td class="nbHitsUncovered"><a title="Line 159: Conditional coverage 0% (0/2).">&nbsp;90</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 159: Conditional coverage 0% (0/2).">                } <span class="keyword">else</span> <span class="keyword">if</span>(isConditionColor(conditionToken)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;159</td>  <td class="nbHitsUncovered"><a title="Line 159: Conditional coverage 0% (0/2).">&nbsp;126</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 159: Conditional coverage 0% (0/2).">                } <span class="keyword">else</span> <span class="keyword">if</span>(isConditionColor(conditionToken)) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;160</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    setupConditionColor(formatter, conditionToken);</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;161</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
@@ -275,14 +275,14 @@
 <tr>  <td class="numLine">&nbsp;163</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;164</td>  <td class="nbHitsCovered"><a title="Line 164: Conditional coverage 100% (2/2).">&nbsp;306</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 164: Conditional coverage 100% (2/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Word) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;8358</td>  <td class="src"><pre class="src">&nbsp;                formatter.addTerm(<span class="keyword">new</span> WordTerm&lt;Calendar&gt;(token.asWord()));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;11620</td>  <td class="src"><pre class="src">&nbsp;                formatter.addTerm(<span class="keyword">new</span> WordTerm&lt;Calendar&gt;(token.asWord()));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;166</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;167</td>  <td class="nbHitsCovered"><a title="Line 167: Conditional coverage 100% (2/2).">&nbsp;10291</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 167: Conditional coverage 100% (2/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.EscapedChar) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;168</td>  <td class="nbHitsCovered">&nbsp;4632</td>  <td class="src"><pre class="src">&nbsp;                formatter.addTerm(<span class="keyword">new</span> EscapedCharTerm&lt;Calendar&gt;(token.asEscapedChar()));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;167</td>  <td class="nbHitsCovered"><a title="Line 167: Conditional coverage 100% (2/2).">&nbsp;13553</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 167: Conditional coverage 100% (2/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.EscapedChar) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;168</td>  <td class="nbHitsCovered">&nbsp;6184</td>  <td class="src"><pre class="src">&nbsp;                formatter.addTerm(<span class="keyword">new</span> EscapedCharTerm&lt;Calendar&gt;(token.asEscapedChar()));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;169</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;170</td>  <td class="nbHitsUncovered"><a title="Line 170: Conditional coverage 50% (1/2).">&nbsp;5954</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 170: Conditional coverage 50% (1/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Underscore) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;170</td>  <td class="nbHitsUncovered"><a title="Line 170: Conditional coverage 50% (1/2).">&nbsp;7506</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 170: Conditional coverage 50% (1/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Underscore) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;171</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                formatter.addTerm(<span class="keyword">new</span> UnderscoreTerm&lt;Calendar&gt;(token.asUnderscore()));</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;172</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
@@ -293,70 +293,70 @@
 <tr>  <td class="numLineCover">&nbsp;176</td>  <td class="nbHitsUncovered"><a title="Line 176: Conditional coverage 50% (1/2).">&nbsp;2086</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 176: Conditional coverage 50% (1/2).">            } <span class="keyword">else</span> <span class="keyword">if</span>(token <span class="keyword">instanceof</span> Token.Factor) {</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;177</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                <span class="comment">// 因子を日時用の書式に分解する</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;178</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> List&lt;Token&gt; list = convertFactor(token.asFactor());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;179</td>  <td class="nbHitsCovered"><a title="Line 179: Conditional coverage 100% (2/2).">&nbsp;89488</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 179: Conditional coverage 100% (2/2).">                <span class="keyword">for</span>(Token item : list) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;178</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> List&lt;Token&gt; list = convertFactor(token.asFactor());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;179</td>  <td class="nbHitsCovered"><a title="Line 179: Conditional coverage 100% (2/2).">&nbsp;129088</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 179: Conditional coverage 100% (2/2).">                <span class="keyword">for</span>(Token item : list) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;180</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;181</td>  <td class="nbHitsCovered"><a title="Line 181: Conditional coverage 100% (2/2).">&nbsp;54332</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 181: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span>(item <span class="keyword">instanceof</span> Token.Formatter) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;182</td>  <td class="nbHitsCovered">&nbsp;38060</td>  <td class="src"><pre class="src">&nbsp;                        <span class="keyword">final</span> String formatterItem = item.asFormatter().getValue();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;181</td>  <td class="nbHitsCovered"><a title="Line 181: Conditional coverage 100% (2/2).">&nbsp;77468</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 181: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span>(item <span class="keyword">instanceof</span> Token.Formatter) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;182</td>  <td class="nbHitsCovered">&nbsp;53980</td>  <td class="src"><pre class="src">&nbsp;                        <span class="keyword">final</span> String formatterItem = item.asFormatter().getValue();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;183</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;184</td>  <td class="nbHitsCovered"><a title="Line 184: Conditional coverage 100% (2/2).">&nbsp;38060</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 184: Conditional coverage 100% (2/2).">                        <span class="keyword">if</span>(Utils.equalsAnyIgnoreCase(formatterItem, <span class="keyword">new</span> String[]{<span class="string">"am/pm"</span>, <span class="string">"a/p"</span>})) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;185</td>  <td class="nbHitsCovered">&nbsp;1016</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.amPm(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;184</td>  <td class="nbHitsCovered"><a title="Line 184: Conditional coverage 100% (2/2).">&nbsp;53980</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 184: Conditional coverage 100% (2/2).">                        <span class="keyword">if</span>(Utils.equalsAnyIgnoreCase(formatterItem, <span class="keyword">new</span> String[]{<span class="string">"am/pm"</span>, <span class="string">"a/p"</span>})) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;185</td>  <td class="nbHitsCovered">&nbsp;1426</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.amPm(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;186</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;187</td>  <td class="nbHitsCovered"><a title="Line 187: Conditional coverage 100% (2/2).">&nbsp;3930</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 187: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"w"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;188</td>  <td class="nbHitsCovered">&nbsp;12</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.weekNumber(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;187</td>  <td class="nbHitsCovered"><a title="Line 187: Conditional coverage 100% (2/2).">&nbsp;4340</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 187: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"w"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;188</td>  <td class="nbHitsCovered">&nbsp;16</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.weekNumber(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;189</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;190</td>  <td class="nbHitsCovered"><a title="Line 190: Conditional coverage 100% (2/2).">&nbsp;3020</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 190: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"y"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;191</td>  <td class="nbHitsCovered">&nbsp;5814</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.year(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;190</td>  <td class="nbHitsCovered"><a title="Line 190: Conditional coverage 100% (2/2).">&nbsp;3024</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 190: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"y"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;191</td>  <td class="nbHitsCovered">&nbsp;8236</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.year(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;192</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;193</td>  <td class="nbHitsCovered"><a title="Line 193: Conditional coverage 100% (2/2).">&nbsp;7854</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 193: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"g"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;194</td>  <td class="nbHitsCovered">&nbsp;1628</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraName(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;193</td>  <td class="nbHitsCovered"><a title="Line 193: Conditional coverage 100% (2/2).">&nbsp;10276</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 193: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"g"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;194</td>  <td class="nbHitsCovered">&nbsp;2316</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraName(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;195</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;196</td>  <td class="nbHitsCovered"><a title="Line 196: Conditional coverage 100% (2/2).">&nbsp;3901</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 196: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"e"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;197</td>  <td class="nbHitsCovered">&nbsp;1688</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraYear(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;196</td>  <td class="nbHitsCovered"><a title="Line 196: Conditional coverage 100% (2/2).">&nbsp;4589</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 196: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"e"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;197</td>  <td class="nbHitsCovered">&nbsp;2396</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraYear(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;198</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;199</td>  <td class="nbHitsCovered"><a title="Line 199: Conditional coverage 100% (2/2).">&nbsp;3815</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 199: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"r"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;200</td>  <td class="nbHitsCovered">&nbsp;36</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraNameYear(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;199</td>  <td class="nbHitsCovered"><a title="Line 199: Conditional coverage 100% (2/2).">&nbsp;4523</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 199: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"r"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;200</td>  <td class="nbHitsCovered">&nbsp;48</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.eraNameYear(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;201</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;202</td>  <td class="nbHitsCovered"><a title="Line 202: Conditional coverage 100% (2/2).">&nbsp;2287</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 202: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"m"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;202</td>  <td class="nbHitsCovered"><a title="Line 202: Conditional coverage 100% (2/2).">&nbsp;2299</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 202: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"m"</span>)) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;203</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            <span class="comment">// 月か分かの判定は、全ての書式を組み立て後に行う。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;204</td>  <td class="nbHitsCovered">&nbsp;12968</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.month(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;204</td>  <td class="nbHitsCovered">&nbsp;18408</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.month(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;205</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;206</td>  <td class="nbHitsCovered"><a title="Line 206: Conditional coverage 100% (2/2).">&nbsp;13137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 206: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"d"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;207</td>  <td class="nbHitsCovered">&nbsp;7830</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.day(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;206</td>  <td class="nbHitsCovered"><a title="Line 206: Conditional coverage 100% (2/2).">&nbsp;18577</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 206: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"d"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;207</td>  <td class="nbHitsCovered">&nbsp;11078</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.day(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;208</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;209</td>  <td class="nbHitsCovered"><a title="Line 209: Conditional coverage 100% (2/2).">&nbsp;7709</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 209: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"a"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;210</td>  <td class="nbHitsCovered">&nbsp;132</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.weekName(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;209</td>  <td class="nbHitsCovered"><a title="Line 209: Conditional coverage 100% (2/2).">&nbsp;10957</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 209: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"a"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;210</td>  <td class="nbHitsCovered">&nbsp;176</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.weekName(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;211</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;212</td>  <td class="nbHitsUncovered"><a title="Line 212: Conditional coverage 50% (1/2).">&nbsp;634</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 212: Conditional coverage 50% (1/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"n"</span>)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;212</td>  <td class="nbHitsUncovered"><a title="Line 212: Conditional coverage 50% (1/2).">&nbsp;678</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 212: Conditional coverage 50% (1/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"n"</span>)) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;213</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                            formatter.addTerm(DateTerm.weekNameForOO(formatterItem));</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;214</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;215</td>  <td class="nbHitsCovered"><a title="Line 215: Conditional coverage 100% (2/2).">&nbsp;524</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 215: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"h"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;216</td>  <td class="nbHitsCovered">&nbsp;3830</td>  <td class="src"><pre class="src">&nbsp;                            <span class="keyword">final</span> <span class="keyword">boolean</span> halfHour = store.containsAnyInFactorIgnoreCase(<span class="keyword">new</span> String[]{<span class="string">"am/pm"</span>, <span class="string">"a/p"</span>});</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;217</td>  <td class="nbHitsCovered">&nbsp;3830</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.hour(formatterItem, halfHour));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;216</td>  <td class="nbHitsCovered">&nbsp;5434</td>  <td class="src"><pre class="src">&nbsp;                            <span class="keyword">final</span> <span class="keyword">boolean</span> halfHour = store.containsAnyInFactorIgnoreCase(<span class="keyword">new</span> String[]{<span class="string">"am/pm"</span>, <span class="string">"a/p"</span>});</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;217</td>  <td class="nbHitsCovered">&nbsp;5434</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.hour(formatterItem, halfHour));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;218</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;219</td>  <td class="nbHitsCovered"><a title="Line 219: Conditional coverage 100% (2/2).">&nbsp;3830</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 219: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"s"</span>)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;220</td>  <td class="nbHitsCovered">&nbsp;3082</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.second(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;219</td>  <td class="nbHitsCovered"><a title="Line 219: Conditional coverage 100% (2/2).">&nbsp;5434</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 219: Conditional coverage 100% (2/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"s"</span>)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;220</td>  <td class="nbHitsCovered">&nbsp;4414</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.second(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;221</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;222</td>  <td class="nbHitsUncovered"><a title="Line 222: Conditional coverage 50% (1/2).">&nbsp;2877</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 222: Conditional coverage 50% (1/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"q"</span>)) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;24</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.quater(formatterItem));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;222</td>  <td class="nbHitsUncovered"><a title="Line 222: Conditional coverage 50% (1/2).">&nbsp;4209</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 222: Conditional coverage 50% (1/2).">                        } <span class="keyword">else</span> <span class="keyword">if</span>(Utils.startsWithIgnoreCase(formatterItem, <span class="string">"q"</span>)) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;32</td>  <td class="src"><pre class="src">&nbsp;                            formatter.addTerm(DateTerm.quater(formatterItem));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;224</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;20</td>  <td class="src"><pre class="src">&nbsp;                        } <span class="keyword">else</span> {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;28</td>  <td class="src"><pre class="src">&nbsp;                        } <span class="keyword">else</span> {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;226</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                            <span class="comment">// ここには到達しない</span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;227</td>  <td class="nbHitsUncovered"><a title="Line 227: Conditional coverage 0% (0/2).">&nbsp;0</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 227: Conditional coverage 0% (0/2).">                            <span class="keyword">if</span>(logger.isWarnEnabled()) {</a></span></pre></td></tr>
@@ -369,13 +369,13 @@
 <tr>  <td class="numLine">&nbsp;232</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        </pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;233</td>  <td class="nbHitsCovered">&nbsp;3110</td>  <td class="src"><pre class="src">&nbsp;                    } <span class="keyword">else</span> {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;234</td>  <td class="nbHitsCovered">&nbsp;16272</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(<span class="keyword">new</span> OtherTerm&lt;Calendar&gt;(item));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;234</td>  <td class="nbHitsCovered">&nbsp;23488</td>  <td class="src"><pre class="src">&nbsp;                        formatter.addTerm(<span class="keyword">new</span> OtherTerm&lt;Calendar&gt;(item));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;235</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;236</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    </pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;237</td>  <td class="nbHitsCovered">&nbsp;4030</td>  <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;238</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;            } <span class="keyword">else</span> {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;238</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;            } <span class="keyword">else</span> {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;239</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                formatter.addTerm(<span class="keyword">new</span> OtherTerm&lt;Calendar&gt;(token));</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;240</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
@@ -384,10 +384,10 @@
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;243</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// 書式'm'の項を分に変換する処理を行う</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;244</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;        convertMinuteTerm(formatter);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;244</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;        convertMinuteTerm(formatter);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;245</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;246</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> formatter;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;246</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> formatter;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;247</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;248</td>  <td class="nbHits">&nbsp;</td>
@@ -408,45 +408,45 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> List&lt;Token&gt; convertFactor(<span class="keyword">final</span> Token.Factor factor) {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;256</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;257</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> String item = factor.getValue();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;258</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> itemLength = item.length();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;257</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> String item = factor.getValue();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;258</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> itemLength = item.length();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;259</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;260</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> List&lt;Token&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;260</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> List&lt;Token&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;261</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;262</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> idx = 0;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder noTermChar = <span class="keyword">new</span> StringBuilder(); <span class="comment">// フォーマット以外の文字列を積む。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;264</td>  <td class="nbHitsCovered"><a title="Line 264: Conditional coverage 100% (2/2).">&nbsp;93770</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 264: Conditional coverage 100% (2/2).">        <span class="keyword">while</span>(idx &lt; itemLength) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;262</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> idx = 0;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder noTermChar = <span class="keyword">new</span> StringBuilder(); <span class="comment">// フォーマット以外の文字列を積む。</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;264</td>  <td class="nbHitsCovered"><a title="Line 264: Conditional coverage 100% (2/2).">&nbsp;133486</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 264: Conditional coverage 100% (2/2).">        <span class="keyword">while</span>(idx &lt; itemLength) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;265</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;266</td>  <td class="nbHitsCovered">&nbsp;54584</td>  <td class="src"><pre class="src">&nbsp;            String matchChars = <span class="keyword">null</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;267</td>  <td class="nbHitsCovered"><a title="Line 267: Conditional coverage 100% (2/2).">&nbsp;1239155</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 267: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(String chars : SORTED_DATE_CHARS) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered"><a title="Line 268: Conditional coverage 100% (2/2).">&nbsp;1255118</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 268: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(Utils.startsWithIgnoreCase(item, chars, idx)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;38060</td>  <td class="src"><pre class="src">&nbsp;                    matchChars = item.substring(idx, idx + chars.length());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;270</td>  <td class="nbHitsCovered">&nbsp;38060</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;266</td>  <td class="nbHitsCovered">&nbsp;77836</td>  <td class="src"><pre class="src">&nbsp;            String matchChars = <span class="keyword">null</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;267</td>  <td class="nbHitsCovered"><a title="Line 267: Conditional coverage 100% (2/2).">&nbsp;1811157</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 267: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(String chars : SORTED_DATE_CHARS) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered"><a title="Line 268: Conditional coverage 100% (2/2).">&nbsp;1796536</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 268: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(Utils.startsWithIgnoreCase(item, chars, idx)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;53980</td>  <td class="src"><pre class="src">&nbsp;                    matchChars = item.substring(idx, idx + chars.length());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;270</td>  <td class="nbHitsCovered">&nbsp;53980</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;271</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;272</td>  <td class="nbHitsCovered">&nbsp;83031</td>  <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;273</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsCovered"><a title="Line 274: Conditional coverage 100% (2/2).">&nbsp;54584</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 274: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(matchChars == <span class="keyword">null</span>) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsCovered"><a title="Line 274: Conditional coverage 100% (2/2).">&nbsp;77836</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 274: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(matchChars == <span class="keyword">null</span>) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;275</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                <span class="comment">// フォーマットでない場合は、文字列としてバッファに追加する。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;276</td>  <td class="nbHitsCovered">&nbsp;16524</td>  <td class="src"><pre class="src">&nbsp;                noTermChar.append(item.charAt(idx));</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;277</td>  <td class="nbHitsCovered">&nbsp;16524</td>  <td class="src"><pre class="src">&nbsp;                idx++;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;278</td>  <td class="nbHitsCovered">&nbsp;15594</td>  <td class="src"><pre class="src">&nbsp;            } <span class="keyword">else</span> {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;279</td>  <td class="nbHitsCovered"><a title="Line 279: Conditional coverage 100% (2/2).">&nbsp;38060</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 279: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(noTermChar.length() &gt; 0) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;276</td>  <td class="nbHitsCovered">&nbsp;23856</td>  <td class="src"><pre class="src">&nbsp;                noTermChar.append(item.charAt(idx));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;277</td>  <td class="nbHitsCovered">&nbsp;23856</td>  <td class="src"><pre class="src">&nbsp;                idx++;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;278</td>  <td class="nbHitsCovered">&nbsp;22926</td>  <td class="src"><pre class="src">&nbsp;            } <span class="keyword">else</span> {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;279</td>  <td class="nbHitsCovered"><a title="Line 279: Conditional coverage 100% (2/2).">&nbsp;53980</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 279: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(noTermChar.length() &gt; 0) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;280</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                    <span class="comment">// 今まで積んだバッファを、文字列として分割する。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;281</td>  <td class="nbHitsCovered">&nbsp;16044</td>  <td class="src"><pre class="src">&nbsp;                    list.add(Token.factor(noTermChar.toString()));</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;282</td>  <td class="nbHitsCovered">&nbsp;16044</td>  <td class="src"><pre class="src">&nbsp;                    noTermChar = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;281</td>  <td class="nbHitsCovered">&nbsp;23152</td>  <td class="src"><pre class="src">&nbsp;                    list.add(Token.factor(noTermChar.toString()));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;282</td>  <td class="nbHitsCovered">&nbsp;23152</td>  <td class="src"><pre class="src">&nbsp;                    noTermChar = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;283</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;284</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;285</td>  <td class="nbHitsCovered">&nbsp;38060</td>  <td class="src"><pre class="src">&nbsp;                list.add(Token.formatter(matchChars));</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;286</td>  <td class="nbHitsCovered">&nbsp;38060</td>  <td class="src"><pre class="src">&nbsp;                idx += matchChars.length();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;285</td>  <td class="nbHitsCovered">&nbsp;53980</td>  <td class="src"><pre class="src">&nbsp;                list.add(Token.formatter(matchChars));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;286</td>  <td class="nbHitsCovered">&nbsp;53980</td>  <td class="src"><pre class="src">&nbsp;                idx += matchChars.length();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;287</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;288</td>  <td class="nbHits">&nbsp;</td>
@@ -454,13 +454,13 @@
 <tr>  <td class="numLineCover">&nbsp;289</td>  <td class="nbHitsCovered">&nbsp;4040</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;290</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;291</td>  <td class="nbHitsCovered"><a title="Line 291: Conditional coverage 100% (2/2).">&nbsp;20636</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 291: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(noTermChar.length() &gt; 0) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;292</td>  <td class="nbHitsCovered">&nbsp;228</td>  <td class="src"><pre class="src">&nbsp;            list.add(Token.factor(noTermChar.toString()));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;291</td>  <td class="nbHitsCovered"><a title="Line 291: Conditional coverage 100% (2/2).">&nbsp;28868</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 291: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(noTermChar.length() &gt; 0) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;292</td>  <td class="nbHitsCovered">&nbsp;336</td>  <td class="src"><pre class="src">&nbsp;            list.add(Token.factor(noTermChar.toString()));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;293</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;294</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;295</td>  <td class="nbHitsCovered">&nbsp;20636</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> list;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;295</td>  <td class="nbHitsCovered">&nbsp;28868</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> list;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;296</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;297</td>  <td class="nbHits">&nbsp;</td>
@@ -479,20 +479,20 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">void</span> convertMinuteTerm(<span class="keyword">final</span> ConditionDateFormatter formatter) {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;304</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;305</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> termSize = formatter.getTerms().size();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsCovered"><a title="Line 306: Conditional coverage 100% (2/2).">&nbsp;79944</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 306: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(<span class="keyword">int</span> i=0; i &lt; termSize; i++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;307</td>  <td class="nbHitsCovered">&nbsp;67762</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> Term&lt;Calendar&gt; term = formatter.getTerms().get(i);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;308</td>  <td class="nbHitsCovered"><a title="Line 308: Conditional coverage 100% (2/2).">&nbsp;67762</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 308: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(!(term <span class="keyword">instanceof</span> DateTerm.MonthTerm)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;309</td>  <td class="nbHitsCovered">&nbsp;54794</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">continue</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;305</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> termSize = formatter.getTerms().size();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsCovered"><a title="Line 306: Conditional coverage 100% (2/2).">&nbsp;113202</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 306: Conditional coverage 100% (2/2).">        <span class="keyword">for</span>(<span class="keyword">int</span> i=0; i &lt; termSize; i++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;307</td>  <td class="nbHitsCovered">&nbsp;95884</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> Term&lt;Calendar&gt; term = formatter.getTerms().get(i);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;308</td>  <td class="nbHitsCovered"><a title="Line 308: Conditional coverage 100% (2/2).">&nbsp;95884</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 308: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(!(term <span class="keyword">instanceof</span> DateTerm.MonthTerm)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;309</td>  <td class="nbHitsCovered">&nbsp;77476</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">continue</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;310</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;311</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;312</td>  <td class="nbHitsCovered"><a title="Line 312: Conditional coverage 100% (2/2).">&nbsp;12968</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 312: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(isMinuteTerm(i, formatter.getTerms())) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;312</td>  <td class="nbHitsCovered"><a title="Line 312: Conditional coverage 100% (2/2).">&nbsp;18408</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 312: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(isMinuteTerm(i, formatter.getTerms())) {</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;313</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                <span class="comment">// '分'の項に入れ替える</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;314</td>  <td class="nbHitsCovered">&nbsp;4570</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> DateTerm.MonthTerm monthTerm = (DateTerm.MonthTerm) term;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;315</td>  <td class="nbHitsCovered">&nbsp;4570</td>  <td class="src"><pre class="src">&nbsp;                formatter.getTerms().set(i, DateTerm.minute(monthTerm.getFormat()));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;314</td>  <td class="nbHitsCovered">&nbsp;6510</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> DateTerm.MonthTerm monthTerm = (DateTerm.MonthTerm) term;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;315</td>  <td class="nbHitsCovered">&nbsp;6510</td>  <td class="src"><pre class="src">&nbsp;                formatter.getTerms().set(i, DateTerm.minute(monthTerm.getFormat()));</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;316</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;317</td>  <td class="nbHits">&nbsp;</td>
@@ -501,7 +501,7 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;319</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsCovered">&nbsp;12182</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsCovered">&nbsp;17318</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;321</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;322</td>  <td class="nbHits">&nbsp;</td>
@@ -526,18 +526,18 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">boolean</span> isMinuteTerm(<span class="keyword">final</span> <span class="keyword">int</span> currentTermIdx, <span class="keyword">final</span> List&lt;Term&lt;Calendar&gt;&gt; terms) {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;332</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;333</td>  <td class="nbHitsCovered">&nbsp;12968</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> termSize = terms.size();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;333</td>  <td class="nbHitsCovered">&nbsp;18408</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> termSize = terms.size();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;334</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;335</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// 直前の項のチェック</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;336</td>  <td class="nbHitsCovered"><a title="Line 336: Conditional coverage 100% (2/2).">&nbsp;12968</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 336: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(currentTermIdx -1 &gt; 0) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;337</td>  <td class="nbHitsCovered">&nbsp;8956</td>  <td class="src"><pre class="src">&nbsp;            DateTerm beforeTerm = <span class="keyword">null</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsCovered"><a title="Line 338: Conditional coverage 100% (2/2).">&nbsp;18174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 338: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(<span class="keyword">int</span> i=currentTermIdx-1; i &gt;= 0; i--) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;339</td>  <td class="nbHitsCovered">&nbsp;18174</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Term&lt;Calendar&gt; term = terms.get(i);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;340</td>  <td class="nbHitsCovered"><a title="Line 340: Conditional coverage 100% (2/2).">&nbsp;18174</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 340: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(term <span class="keyword">instanceof</span> DateTerm) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;341</td>  <td class="nbHitsCovered">&nbsp;8956</td>  <td class="src"><pre class="src">&nbsp;                    beforeTerm = (DateTerm) term;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;342</td>  <td class="nbHitsCovered">&nbsp;8956</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;336</td>  <td class="nbHitsCovered"><a title="Line 336: Conditional coverage 100% (2/2).">&nbsp;18408</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 336: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(currentTermIdx -1 &gt; 0) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;337</td>  <td class="nbHitsCovered">&nbsp;12586</td>  <td class="src"><pre class="src">&nbsp;            DateTerm beforeTerm = <span class="keyword">null</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsCovered"><a title="Line 338: Conditional coverage 100% (2/2).">&nbsp;25530</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 338: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(<span class="keyword">int</span> i=currentTermIdx-1; i &gt;= 0; i--) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;339</td>  <td class="nbHitsCovered">&nbsp;25530</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Term&lt;Calendar&gt; term = terms.get(i);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;340</td>  <td class="nbHitsCovered"><a title="Line 340: Conditional coverage 100% (2/2).">&nbsp;25530</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 340: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(term <span class="keyword">instanceof</span> DateTerm) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;341</td>  <td class="nbHitsCovered">&nbsp;12586</td>  <td class="src"><pre class="src">&nbsp;                    beforeTerm = (DateTerm) term;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;342</td>  <td class="nbHitsCovered">&nbsp;12586</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;343</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;344</td>  <td class="nbHits">&nbsp;</td>
@@ -546,9 +546,9 @@
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;346</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;347</td>  <td class="nbHitsUncovered"><a title="Line 347: Conditional coverage 50% (1/2).">&nbsp;8956</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 347: Conditional coverage 50% (1/2).">            <span class="keyword">if</span>(beforeTerm != <span class="keyword">null</span>) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;348</td>  <td class="nbHitsCovered"><a title="Line 348: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;8956</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 348: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">                <span class="keyword">if</span>(beforeTerm <span class="keyword">instanceof</span> DateTerm.HourTerm || beforeTerm <span class="keyword">instanceof</span> DateTerm.ElapsedHourTerm) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;349</td>  <td class="nbHitsCovered">&nbsp;4150</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;347</td>  <td class="nbHitsUncovered"><a title="Line 347: Conditional coverage 50% (1/2).">&nbsp;12586</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 347: Conditional coverage 50% (1/2).">            <span class="keyword">if</span>(beforeTerm != <span class="keyword">null</span>) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;348</td>  <td class="nbHitsCovered"><a title="Line 348: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;12586</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 348: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">                <span class="keyword">if</span>(beforeTerm <span class="keyword">instanceof</span> DateTerm.HourTerm || beforeTerm <span class="keyword">instanceof</span> DateTerm.ElapsedHourTerm) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;349</td>  <td class="nbHitsCovered">&nbsp;5886</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;350</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;351</td>  <td class="nbHits">&nbsp;</td>
@@ -561,22 +561,22 @@
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;355</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// 直後の項のチェック</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;356</td>  <td class="nbHitsCovered"><a title="Line 356: Conditional coverage 100% (2/2).">&nbsp;8818</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 356: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(currentTermIdx +1 &lt; termSize) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;357</td>  <td class="nbHitsCovered">&nbsp;8496</td>  <td class="src"><pre class="src">&nbsp;            DateTerm afterTerm = <span class="keyword">null</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;358</td>  <td class="nbHitsCovered"><a title="Line 358: Conditional coverage 100% (2/2).">&nbsp;16992</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 358: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(<span class="keyword">int</span> i=currentTermIdx+1; i &lt; termSize; i++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;359</td>  <td class="nbHitsCovered">&nbsp;16490</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Term&lt;Calendar&gt; term = terms.get(i);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;360</td>  <td class="nbHitsCovered"><a title="Line 360: Conditional coverage 100% (2/2).">&nbsp;16490</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 360: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(term <span class="keyword">instanceof</span> DateTerm) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;361</td>  <td class="nbHitsCovered">&nbsp;7994</td>  <td class="src"><pre class="src">&nbsp;                    afterTerm = (DateTerm) term;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;362</td>  <td class="nbHitsCovered">&nbsp;7994</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;356</td>  <td class="nbHitsCovered"><a title="Line 356: Conditional coverage 100% (2/2).">&nbsp;12522</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 356: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(currentTermIdx +1 &lt; termSize) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;357</td>  <td class="nbHitsCovered">&nbsp;12062</td>  <td class="src"><pre class="src">&nbsp;            DateTerm afterTerm = <span class="keyword">null</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;358</td>  <td class="nbHitsCovered"><a title="Line 358: Conditional coverage 100% (2/2).">&nbsp;24124</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 358: Conditional coverage 100% (2/2).">            <span class="keyword">for</span>(<span class="keyword">int</span> i=currentTermIdx+1; i &lt; termSize; i++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;359</td>  <td class="nbHitsCovered">&nbsp;23414</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">final</span> Term&lt;Calendar&gt; term = terms.get(i);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;360</td>  <td class="nbHitsCovered"><a title="Line 360: Conditional coverage 100% (2/2).">&nbsp;23414</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 360: Conditional coverage 100% (2/2).">                <span class="keyword">if</span>(term <span class="keyword">instanceof</span> DateTerm) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;361</td>  <td class="nbHitsCovered">&nbsp;11352</td>  <td class="src"><pre class="src">&nbsp;                    afterTerm = (DateTerm) term;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;362</td>  <td class="nbHitsCovered">&nbsp;11352</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">break</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;363</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;364</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;365</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;366</td>  <td class="nbHitsCovered"><a title="Line 366: Conditional coverage 100% (2/2).">&nbsp;8496</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 366: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(afterTerm != <span class="keyword">null</span>) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;367</td>  <td class="nbHitsUncovered"><a title="Line 367: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;7994</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 367: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">                <span class="keyword">if</span>(afterTerm <span class="keyword">instanceof</span> DateTerm.SecondTerm || afterTerm <span class="keyword">instanceof</span> DateTerm.ElapsedSecondTerm) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;368</td>  <td class="nbHitsCovered">&nbsp;420</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;366</td>  <td class="nbHitsCovered"><a title="Line 366: Conditional coverage 100% (2/2).">&nbsp;12062</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 366: Conditional coverage 100% (2/2).">            <span class="keyword">if</span>(afterTerm != <span class="keyword">null</span>) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;367</td>  <td class="nbHitsUncovered"><a title="Line 367: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;11352</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 367: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">                <span class="keyword">if</span>(afterTerm <span class="keyword">instanceof</span> DateTerm.SecondTerm || afterTerm <span class="keyword">instanceof</span> DateTerm.ElapsedSecondTerm) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;368</td>  <td class="nbHitsCovered">&nbsp;624</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;369</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;370</td>  <td class="nbHits">&nbsp;</td>
@@ -585,7 +585,7 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;372</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;373</td>  <td class="nbHitsCovered">&nbsp;8398</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;373</td>  <td class="nbHitsCovered">&nbsp;11898</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;374</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;375</td>  <td class="nbHits">&nbsp;</td>
@@ -594,6 +594,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 16/02/20 7:39.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 16/02/20 17:47.</div>
 </body>
 </html>

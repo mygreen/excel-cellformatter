@@ -273,14 +273,14 @@
 </div>
 <div class="section" id="id3">
 <h2>日時の内部表現<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の特徴を持ちます。</p>
+<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の仕様となっています。</p>
 <ul class="simple">
 <li>整数部が日付情報。<ul>
 <li>1日は、値は1.0。</li>
 </ul>
 </li>
 <li>小数部が時刻情報。<ul>
-<li>1秒は、 <code class="docutils literal"><span class="pre">1/(24*60*60)=1.15741e-5</span></code> 。</li>
+<li>1秒は、 <code class="docutils literal"><span class="pre">1/(24*60*60)≒1.15741e-5</span></code> 。</li>
 <li>Excelは、秒までの精度しか持たない。</li>
 </ul>
 </li>
@@ -304,9 +304,9 @@
 <p>グレゴリオ歴の閏年の定義</p>
 <p><a class="reference external" href="https://ja.wikipedia.org/wiki/%E9%96%8F%E5%B9%B4">グレゴリオ暦</a> では、次の規則に従って400年間に（100回ではなく）97回の閏年を設ける。</p>
 <ol class="last arabic simple">
-<li>西暦年が4で割り切れる年は閏年</li>
-<li>ただし、西暦年が100で割り切れる年は平年（閏年でない）</li>
-<li>ただし、西暦年が400で割り切れる年は閏年</li>
+<li>西暦年が4で割り切れる年は閏年。</li>
+<li>ただし、西暦年が100で割り切れる年は平年（閏年でない）。</li>
+<li>ただし、西暦年が400で割り切れる年は閏年。</li>
 </ol>
 </div>
 <table border="1" class="docutils" id="id8">

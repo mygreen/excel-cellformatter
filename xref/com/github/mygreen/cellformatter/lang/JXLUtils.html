@@ -29,10 +29,10 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger logger = LoggerFactory.getLogger(JXLUtils.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>      
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment">     * 1904年始まりの設定かどうか。</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment">     * @param workbook</em>
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException workbook is null.</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment">     * ファイルが1904年始まりの設定かどうか。</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment">     * @param workbook 判定対象のワークブック。</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * @return true:1904年始まり</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal workbook == null.}</em>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isDateStart1904(<strong class="jxr_keyword">final</strong> Workbook workbook) {
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>          ArgUtils.notNull(workbook, <span class="jxr_string">"workbook"</span>);
@@ -60,10 +60,10 @@
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * 日付が1904年始まりの設定かどうか。</em>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     * @param sheet</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException sheet is null.</em>
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * ファイルが1904年始まりの設定かどうか。</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     * @param sheet 判定対象のシート。</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment">     * @return true:1904年始まり</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException  {@literal sheet == null.}</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isDateStart1904(<strong class="jxr_keyword">final</strong> Sheet sheet) {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          ArgUtils.notNull(sheet, <span class="jxr_string">"sheet"</span>);

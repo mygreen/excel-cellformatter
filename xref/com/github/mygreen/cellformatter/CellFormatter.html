@@ -22,22 +22,24 @@
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>      
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment">     * セルの値をフォーマットする</em>
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">     * @param cell</em>
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell) {
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>          <strong class="jxr_keyword">return</strong> format(cell, Locale.getDefault());
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      }
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>      
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment">     * セルの値をロケールを指定してフォーマットする</em>
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * @param cell</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @param locale</em>
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     * @return</em>
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale locale);
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  }
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">     * @param cell フォーマット対象のセル。</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @return フォーマットした結果。</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal cell == null.}</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell) {
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          <strong class="jxr_keyword">return</strong> format(cell, Locale.getDefault());
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      }
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * セルの値をロケールを指定してフォーマットする</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @param cell フォーマット対象のセル。</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     * @param locale ロケール。指定しない場合は、実行環境のロケールが設定される。</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     * @return フォーマットした結果。</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal cell == null.}</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale locale);
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2016 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>

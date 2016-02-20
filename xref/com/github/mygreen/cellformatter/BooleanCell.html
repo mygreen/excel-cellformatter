@@ -23,7 +23,7 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment">     * @param value フォーマット対象の値。</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment">     * @param formatIndex 書式のインデックス番号。</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/BooleanCell.html">BooleanCell</a>(<strong class="jxr_keyword">final</strong> Boolean value, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">short</strong> formatIndex) {
@@ -36,7 +36,7 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     * @param value フォーマット対象の値。</em>
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     * @param formatPattern Excelの書式。</em>
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException fommatPattern is empty.</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/BooleanCell.html">BooleanCell</a>(<strong class="jxr_keyword">final</strong> Boolean value, <strong class="jxr_keyword">final</strong> String formatPattern) {
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>          <strong class="jxr_keyword">super</strong>(value, formatPattern);
@@ -49,7 +49,7 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * @param formatPattern Excelの書式。</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal value == null}</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException fommatPattern is empty.</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/BooleanCell.html">BooleanCell</a>(<strong class="jxr_keyword">final</strong> Boolean value, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">short</strong> formatIndex, <strong class="jxr_keyword">final</strong> String formatPattern) {

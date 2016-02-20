@@ -289,14 +289,14 @@
 </div>
 <div class="section" id="id3">
 <h3>5.1.3. 日時の内部表現<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の特徴を持ちます。</p>
+<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の仕様となっています。</p>
 <ul class="simple">
 <li>整数部が日付情報。<ul>
 <li>1日は、値は1.0。</li>
 </ul>
 </li>
 <li>小数部が時刻情報。<ul>
-<li>1秒は、 <code class="docutils literal"><span class="pre">1/(24*60*60)=1.15741e-5</span></code> 。</li>
+<li>1秒は、 <code class="docutils literal"><span class="pre">1/(24*60*60)≒1.15741e-5</span></code> 。</li>
 <li>Excelは、秒までの精度しか持たない。</li>
 </ul>
 </li>
@@ -320,9 +320,9 @@
 <p>グレゴリオ歴の閏年の定義</p>
 <p><a class="reference external" href="https://ja.wikipedia.org/wiki/%E9%96%8F%E5%B9%B4">グレゴリオ暦</a> では、次の規則に従って400年間に（100回ではなく）97回の閏年を設ける。</p>
 <ol class="last arabic simple">
-<li>西暦年が4で割り切れる年は閏年</li>
-<li>ただし、西暦年が100で割り切れる年は平年（閏年でない）</li>
-<li>ただし、西暦年が400で割り切れる年は閏年</li>
+<li>西暦年が4で割り切れる年は閏年。</li>
+<li>ただし、西暦年が100で割り切れる年は平年（閏年でない）。</li>
+<li>ただし、西暦年が400で割り切れる年は閏年。</li>
 </ol>
 </div>
 <table border="1" class="docutils" id="id12">
@@ -800,28 +800,28 @@
 <td>41</td>
 <td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0_);_(*</span> <span class="pre">(#,##0);_(*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></td>
 <td><code class="docutils literal"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>`` -123 ``</td>
+<td><code class="docutils literal"><span class="pre">-123</span></code></td>
 <td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>2a</td>
 <td>42</td>
 <td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0_);_($*</span> <span class="pre">(#,##0);_($*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></td>
 <td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>`` -123 ``</td>
+<td><code class="docutils literal"><span class="pre">\-123</span></code></td>
 <td>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>2b</td>
 <td>43</td>
 <td><code class="docutils literal"><span class="pre">_(*</span> <span class="pre">#,##0.00_);_(*</span> <span class="pre">(#,##0.00);_(*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></td>
 <td><code class="docutils literal"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>`` -123.46 ``</td>
+<td><code class="docutils literal"><span class="pre">-123.46</span></code></td>
 <td>数値の書式。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-even"><td>2c</td>
 <td>44</td>
 <td><code class="docutils literal"><span class="pre">_($*</span> <span class="pre">#,##0.00_);_($*</span> <span class="pre">(#,##0.00);_($*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></td>
 <td><code class="docutils literal"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></td>
-<td>`` -123.46 ``</td>
+<td><code class="docutils literal"><span class="pre">\-123.46</span></code></td>
 <td>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</td>
 </tr>
 <tr class="row-odd"><td>2d</td>

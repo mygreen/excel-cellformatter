@@ -15,7 +15,7 @@
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.util.concurrent.CopyOnWriteArrayList;
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * 色のパレットの定義クラス。</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * 書式中の色を表現するクラス。</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;色はパレットが指定可能。</em>
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Excelの色パレット一覧：&lt;a href="<a href="http://dmcritchie.mvps.org/excel/colors.htm" target="alexandria_uri">http://dmcritchie.mvps.org/excel/colors.htm</a>" target="_blank"&gt;Color Palette and the 56 Excel ColorIndex Colors&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * </em>
@@ -102,9 +102,9 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  <em class="jxr_javadoccomment">     * ロケールを指定し固有の色の名称の取得。</em>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>  <em class="jxr_javadoccomment">     * ロケールを指定し固有の色の名称の取得する。</em>
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment">     * @param locale ロケール</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * @return 別名がない場合は、nullを返す。</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * @return 固有の名称がない場合は、nullを返す。</em>
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>     <strong class="jxr_keyword">public</strong> String getLocaleName(<strong class="jxr_keyword">final</strong> Locale locale) {
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>         <strong class="jxr_keyword">return</strong> messageResolver.getMessage(locale, String.format(<span class="jxr_string">"color.%d.name"</span>, index));
