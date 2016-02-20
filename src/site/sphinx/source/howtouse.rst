@@ -133,8 +133,12 @@ Javaのオブジェクトを直接フォーマットすることもできます�
 
   * 文字列値： ``String``
   * ブール値： ``boolean/Boolean``
-  * 数値：プリミティブ型 ``byte/short/int/long/float/double`` のとそのラッパークラス ``Byte/Short/Integer/Long/Float/Double`` 。
-    ``java.math.Number`` のサブクラス ``AtomicInteger/AtomicLong/BigDecimal/BigInteger`` 。
+  * 数値
+    
+    * プリミティブ型 ``byte/short/int/long/float/double`` 
+    * プリミティブ型のラッパークラス ``Byte/Short/Integer/Long/Float/Double`` 。
+    * ``java.math.Number`` のサブクラス ``AtomicInteger/AtomicLong/BigDecimal/BigInteger`` 。
+    
   * 日時： ``java.util.Date`` とそのサブクラス ``java.sql.Date/java.sql.Time/java.sql.Timestamp`` 。
 
 .. sourcecode:: java
