@@ -8,12 +8,12 @@ Excelの書式は、ファイル内部では *インデックス番号* に対�
 
 * Excelのバージョンによっては、インデックス番号だけ持ち、書式を持たない場合があります。
 * 50番以降は、ユーザ定義用書式として、ファイルによって異なります。
-* ただし、50～59番第は、Excelの言語環境によって予約された番号で、インデックス番号だけ持ち、書式を持たない場合があります。
+* ただし、50～59番は、Excelの言語環境によって予約された番号で、インデックス番号だけ持ち、書式を持たない場合があります。
 * ビルインフォーマットは、JExcelAPIの場合とApaceh POIでは一部異なっています。
 * OSの言語環境によって変わるものがあります。
   
   * 日時、通貨記号を含む書式は、環境によって変わる可能性があります。
-  * JExcelAPI/Aaache POIとも英語環境の値で固定で定義されており、日本語の書式には対応していません。
+  * JExcelAPI/Apache POIとも英語環境の値で固定で定義されており、日本語の書式には対応していません。
 
 .. note::
    
@@ -23,7 +23,8 @@ Excelの書式は、ファイル内部では *インデックス番号* に対�
    * JExcel APIの場合、 非公開のクラス ``jxl.biff.BuiltInFormat`` で定義されています。
 
 
-本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、予め *FormatterResolver#registerDefaultFormat()* メソッド内で登録し、正しい書式で取得できるようにしています。
+本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、
+予め ``FormatterResolver#registerDefaultFormat()`` メソッド内で登録し、正しい書式で取得できるようにしています。
 
 .. list-table:: ビルドインフォーマットの一覧（0～49）
    :widths: 5 5 25 25 20 20
@@ -473,9 +474,9 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 JExcelAPIによる書式のインデックスの取得
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* JExcelAPIでは、書式のインデックスの取得は基本的には *DisplayFormat#getFormatIndex()* から取得します。
-* ビルトインフォーマットの定義は、非公開のクラス *jxl.biff.BuiltInfFomrat* で定義されています。
-* 本ライブラリでは、 *JXLCell#getFormatIndex()* で実装されている。
+* JExcelAPIでは、書式のインデックスの取得は ``DisplayFormat#getFormatIndex()`` から取得します。
+* ビルトインフォーマットの定義は、非公開のクラス ``jxl.biff.BuiltInfFomrat`` で定義されています。
+* 本ライブラリでは、 ``JXLCell#getFormatIndex()`` で実装されている。
 
 .. sourcecode:: java
 
@@ -508,7 +509,7 @@ JExcelAPIによる書式のインデックスの取得
 Apache POIによる書式のインデックスの取得
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* Apache POIの書式のインデックスは、 *CellSyle#getDataFormat()* から取得します。
+* Apache POIの書式のインデックスは、 ``CellSyle#getDataFormat()`` から取得します。
 
 .. sourcecode:: java
    

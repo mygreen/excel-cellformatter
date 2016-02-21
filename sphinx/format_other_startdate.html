@@ -290,12 +290,12 @@
 </li>
 <li>基準日の値は、 <code class="docutils literal"><span class="pre">0.0</span></code> となる。<ul>
 <li>ファイルの基準日の設定により、値が <code class="docutils literal"><span class="pre">0.0</span></code> のとき、1900年1月0日始まりか1904年1月1日始まりか変わります。</li>
-<li>内部的な値が負の数となる、基準日より前の日時は表現できない。</li>
 </ul>
 </li>
-<li>1900年始まりの場合、他のオフィスアプリと互換性を持たすために、以下の不良のような仕様となっています。<ul>
+<li>内部的な値が負の数とる基準日より前の日時は表現できない。</li>
+<li>1900年始まりの場合、他のオフィスアプリと互換性を持たすために、以下の不良のような仕様を引き継いでる。<ul>
 <li>1900年1月0日から始まる。</li>
-<li>グレゴリオ歴上は、閏年でないのに、1900年2月29日が存在する。</li>
+<li>グレゴリオ歴上は閏年でないのに、1900年2月29日が存在する。</li>
 </ul>
 </li>
 </ul>
@@ -387,9 +387,8 @@
 </table>
 <div class="section" id="excelutc">
 <h3>Excel上の日時の値をUTC表記に変換する方法<a class="headerlink" href="#excelutc" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>Excelは日時は内部では数値で保持しており、Javaの <code class="docutils literal"><span class="pre">java.util.Date</span></code> に渡す形式であるUTC表現とは異なる。
+<p>Excelは日時は内部では数値で保持しており、Javaの <code class="docutils literal"><span class="pre">java.util.Date</span></code> に渡す形式であるUTC表現とは異なります。
 また、基準日が複数あるため、UTC形式に変換するには次の計算を行う。</p>
-<p>本ライブラリでは、 <code class="docutils literal"><span class="pre">ExcelDateUtils#convertJavaDate(...)</span></code> メソッドで提供されています。</p>
 <ol class="arabic simple">
 <li>1904年始まりの場合。</li>
 </ol>
@@ -410,6 +409,15 @@
 <ol class="arabic simple" start="3">
 <li>値に24*60*60*1000を掛ける。(Excelは時刻が小数部なので、24*60*60で整数1桁目の精度を秒にする。UTCはミリ秒精度なので、さらに1000を掛ける。)</li>
 </ol>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>Excelの日時をUTCに返還する際の注意事項</p>
+<ul class="last simple">
+<li>本ライブラリでは、 <code class="docutils literal"><span class="pre">ExcelDateUtils#convertJavaDate(...)</span></code> メソッドで提供されています。</li>
+<li>1900年始まりの場合、1900年1月0日は、1899年12月31日と表現します。</li>
+<li>1900年始まりの場合、1900年2月29日は、1900年3月1日と表現します。、</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
