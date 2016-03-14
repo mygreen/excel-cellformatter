@@ -13,6 +13,20 @@ import jxl.ErrorCell;
 /**
  * JExcel APIのセルのフォーマッタ。
  * 
+ * <h3 class="description">基本的な使い方</h3> 
+ * <p>{@link JXLCellFormatter}のインスタンスを生成して利用します。</p>
+ * <ul>
+ *   <li>結果を単純に文字列で取得したい場合は、{@link #formatAsString(Cell, boolean)}を利用します。</li>
+ *   <li>Excelには、日時が1900年始まりか1904年始まりかの情報をもっており、その判定結果を渡す必要があります。
+ *       <br>1904年始まりかの判定は、{@link JXLUtils#isDateStart1904(jxl.Sheet)}や{@link JXLUtils#isDateStart1904(jxl.Workbook)}で判定します。</li>
+ *   <li>フォーマット対象のセルの値や書式に適用された文字色などを取得したい場合は、
+ *       {@link #format(Cell, boolean)}の結果である{@link CellFormatResult}から取得します。</li>
+ *   <li>書式「{@literal m/d/yy}」など、実行環境の言語設定によって切り替わるような場合は、
+ *       {@link #formatAsString(Cell, Locale, boolean)}でロケールを直接指定します。</li>
+ * </ul>
+ * 
+ * 
+ * 
  * <pre class="highlight"><code class="java">
  * // シートの読み込み
  * final WorkbookSettings settings = new WorkbookSettings();
@@ -25,22 +39,30 @@ import jxl.ErrorCell;
  * final Workbook workbook = Workbook.getWorkbook(in, settings);
  * 
  * // 基本的な使い方。
- * JXLCellFormatter   cellFormatter = new JXLCellFormatter  ();
+ * JXLCellFormatter cellFormatter = new JXLCellFormatter();
+ * 
+ * // 1904年始まりかの判定
+ * boolean startDate1904 = JXLUtils.isDateStart1904(workbook);
  * 
  * Cell cell = // セルの取得
- * String text1 = cellForrmatter.formatAsString(cell);
+ * String text1 = cellForrmatter.formatAsString(cell, startDate1904);
  * 
  * // ロケールに依存する書式の場合
- * String text2 = cellForrmatter.formatAsString(cell, Locale.US);
+ * String text2 = cellForrmatter.formatAsString(cell, Locale.US, startDate1904);
  *
  * // 文字色の条件が設定されている場合
  * CellFormatResult result = cellForrmatter.format(cell);
  * String text3 = result.getText(); // フォーマット結果の文字列
  * MSColor textColor = result.getTextColor(); // 書式の文字色
- * 
- * // 1904年始まりのシートの場合、JXLUtils.isDateStart1904(...) を使って判定を行います。
- * String text4 = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(sheet));
  * </code></pre>
+ * 
+ * <h3 class="description">注意事項</h3>
+ * <ul>
+ *   <li>日本語を含むExcelファイルの場合、文字コードを「ISO8859_1」 を指定します。
+ *       <br>指定しない場合は、会計の書式中の円記号 ￥ が文字化けします。
+ *       <br>「Windows-31j」と指定しても文字化けするため、注意してください。
+ *   </li>
+ * </ul> 
  * 
  * @version 0.6
  * @since 0.4
