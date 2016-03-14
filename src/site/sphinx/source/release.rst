@@ -3,6 +3,22 @@
 ======================================
 
 ------------------------
+ver.0.7 - 2016-03-20
+------------------------
+
+* `#12 <https://github.com/mygreen/excel-cellformatter/issues/12>`_ : ``POICellFormatter`` において、結合したセルの値を取得するときに、非ブランクセルが左上にない場合に正しく値が取得できない事象を修正。
+
+* ``POICellFormatter`` において、式が設定されているセルの評価に失敗したときに、例外をスローするかどうかのプロパティ ``throwFailEvaluateFormula`` を追加しました。
+  
+  * 初期値はfalseで、例外はスローされず、エラーセルとして扱われます。
+  * 値をtrueにした場合、例外 ``FormulaEvaluateException`` がスローされます。
+
+* ``POICellFormatter`` において、結合されてるセルを考慮するかどうかのプロパティ ``considerMergedCell`` を追加しました。
+  
+  * POIの場合、結合されている領域は、左上のセル以外はブランクセルとなるため、値が設定してあるセルを走査する必要があるためです。
+  * 初期値はtrueで、結合セルを考慮します。
+
+------------------------
 ver.0.6 - 2016-02-20
 ------------------------
 
@@ -20,7 +36,7 @@ ver.0.5.1 - 2016-01-31
 * `#9 <https://github.com/mygreen/excel-cellformatter/issues/9>`_ : ``MSLocale`` クラス内の綴り間違いを修正。
 
   * MSLocale.MSLocale.GERMAY → MSLocale.GERMAN
-  * MSLocale.isUnkownById(int) → MSLocale.isKnown(int)
+  * MSLocale.isUnkownById(int) → MSLocale.isKnownById(int)
 
 
 ------------------------
