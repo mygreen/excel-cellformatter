@@ -5,7 +5,7 @@
 	<groupId>com.github.mygreen</groupId>
 	<artifactId>excel-cellformatter</artifactId>
 	<packaging>jar</packaging>
-	<version>0.6</version>
+	<version>0.7</version>
 	<name>Excel-CellFormatter</name>
 	<url>http://mygreen.github.io/excel-cellformatter/</url>
 	<description><![CDATA[
@@ -135,7 +135,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 						<link>http://poi.apache.org/apidocs/</link>
 						<link>http://jexcelapi.sourceforge.net/resources/javadocs/2_6_10/docs/</link>
 					</links>
-					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
  					<header>${project.name} ${project.version}
  <![CDATA[
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
@@ -296,7 +296,7 @@ $(document).ready(function() {
 						<link>http://poi.apache.org/apidocs/</link>
 						<link>http://jexcelapi.sourceforge.net/resources/javadocs/2_6_10/docs/</link>
 					</links>
-					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
 					<header>${project.name} ${project.version}
  <![CDATA[
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
