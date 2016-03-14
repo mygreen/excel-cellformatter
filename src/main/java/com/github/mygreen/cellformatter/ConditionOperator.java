@@ -23,22 +23,22 @@ public abstract class ConditionOperator {
     };
     
     /**
-     * 正の値に一致する条件。(>0.0)
+     * 正の値に一致する条件。{@literal (>0.0)}
      */
     public static ConditionOperator POSITIVE = new GreaterThan(0.0);
     
     /**
-     * 負の値に一致する条件（<0.0）
+     * 負の値に一致する条件{@literal （<0.0）}
      */
     public static ConditionOperator NEGATIVE = new LessThan(0.0);
     
     /**
-     * ゼロの値に一致する条件（=0.0）
+     * ゼロの値に一致する条件{@literal （=0.0）}
      */
     public static ConditionOperator ZERO = new Equal(0.0);
     
     /**
-     * ゼロ以上の値に一致する条件（非負の数）（>= 0.0）;
+     * ゼロ以上の値に一致する条件（非負の数）{@literal （>= 0.0）}
      */
     public static ConditionOperator NON_NEGATIVE = new GreaterEqual(0.0);
     
@@ -50,7 +50,7 @@ public abstract class ConditionOperator {
     public abstract boolean isMatch(double value);
     
     /**
-     * 等しい(=条件値)かどうか。
+     * 等しい{@literal (=条件値)}かどうか。
      */
     public static class Equal extends ConditionOperator{
         
@@ -72,7 +72,7 @@ public abstract class ConditionOperator {
     }
     
     /**
-     * 等しいくない(<>条件値)かどうか。
+     * 等しいくない{@literal (<>条件値)}かどうか。
      */
     public static class NotEqual extends ConditionOperator{
         
@@ -94,7 +94,7 @@ public abstract class ConditionOperator {
     }
     
     /**
-     * より大きい（>条件値）
+     * より大きい{@literal （>条件値）}
      */
     public static class GreaterThan extends ConditionOperator{
         
@@ -116,7 +116,7 @@ public abstract class ConditionOperator {
     }
     
     /**
-     * より小さい（<条件値）
+     * より小さい{@literal （<条件値）}
      */
     public static class LessThan extends ConditionOperator{
         
@@ -138,7 +138,7 @@ public abstract class ConditionOperator {
     }
     
     /**
-     * 以上（>=条件値）
+     * 以上{@literal （>=条件値）}
      */
     public static class GreaterEqual extends ConditionOperator{
         
@@ -160,7 +160,7 @@ public abstract class ConditionOperator {
     }
     
     /**
-     * 以下（<=条件値）
+     * 以下{@literal （<=条件値）}
      */
     public static class LessEqual extends ConditionOperator{
         
