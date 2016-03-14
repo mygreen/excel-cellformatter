@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  * <ul>
  *  <li>Excel上は、1900年は閏年扱いで、1900年2月29日が存在する。</li>
  *  <li>Javaの形式に変換したときは、1900年3月1日扱いとする。</li>
+ * </ul>
  *
  * @since 0.6
  * @author T.TSUCHIE
