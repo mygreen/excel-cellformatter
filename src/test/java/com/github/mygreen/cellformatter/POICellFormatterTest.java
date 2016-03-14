@@ -36,7 +36,7 @@ import com.github.mygreen.cellformatter.lang.MSColor;
 /**
  * POIによるテスト
  * 
- * @version 0.6
+ * @version 0.7
  * @since 0.1
  * @author T.TSUCHIE
  *
@@ -142,39 +142,136 @@ public class POICellFormatterTest {
             Cell cell = null;
             CellFormatResult result = null;
             
-            // 全て空の場合
+         // 全て空の場合
             {
                 cell = getCell(sheet, "B4");
                 result = cellFormatter.format(cell);
-                assertThat("", is(result.getText()));
+                assertThat(result.getText(), is(""));
+                
+                cell = getCell(sheet, "C5");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
             }
             
             // 左上に値（文字列）
             {
                 cell = getCell(sheet, "B8");
                 result = cellFormatter.format(cell);
-                assertThat("ABC", is(result.getText()));
+                assertThat(result.getText(), is("ABC"));
+                
+                cell = getCell(sheet, "C9");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("ABC"));
             }
             
             // 左上に値（日付）
             {
                 cell = getCell(sheet, "B12");
                 result = cellFormatter.format(cell);
-                assertThat("2014年10月23日", is(result.getText()));
+                assertThat(result.getText(), is("2014年10月23日"));
+                
+                cell = getCell(sheet, "C13");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("2014年10月23日"));
             }
             
             // 右下に値（文字列）
             {
                 cell = getCell(sheet, "B16");
                 result = cellFormatter.format(cell);
-                assertThat("ABC", is(result.getText()));
+                assertThat(result.getText(), is("ABC"));
+                
+                cell = getCell(sheet, "C17");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("ABC"));
             }
             
             // 右下に値（日付）
             {
                 cell = getCell(sheet, "B20");
                 result = cellFormatter.format(cell);
-                assertThat("2014年10月23日", is(result.getText()));
+                assertThat(result.getText(), is("2014年10月23日"));
+                
+                cell = getCell(sheet, "C21");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("2014年10月23日"));
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        
+    }
+    
+    /**
+     * 結合セルのテスト - 結合セルを考慮しない
+     * @since 0.7
+     */
+    @Test
+    public void testMergedCell_considerMergedCell() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom_compatible.xls");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        cellFormatter.setConsiderMergedCell(false);
+        try {
+            Sheet sheet = loadSheetByName(file, "結合セル");
+            Cell cell = null;
+            CellFormatResult result = null;
+            
+         // 全て空の場合
+            {
+                cell = getCell(sheet, "B4");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
+                
+                cell = getCell(sheet, "C5");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
+            }
+            
+            // 左上に値（文字列）
+            {
+                cell = getCell(sheet, "B8");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("ABC"));
+                
+                cell = getCell(sheet, "C9");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
+            }
+            
+            // 左上に値（日付）
+            {
+                cell = getCell(sheet, "B12");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("2014年10月23日"));
+                
+                cell = getCell(sheet, "C13");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
+            }
+            
+            // 右下に値（文字列）
+            {
+                cell = getCell(sheet, "B16");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("ABC"));
+                
+                cell = getCell(sheet, "C17");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
+            }
+            
+            // 右下に値（日付）
+            {
+                cell = getCell(sheet, "B20");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is("2014年10月23日"));
+                
+                cell = getCell(sheet, "C21");
+                result = cellFormatter.format(cell);
+                assertThat(result.getText(), is(""));
             }
             
         } catch(Exception e) {
@@ -213,8 +310,8 @@ public class POICellFormatterTest {
     
     /**
      * エラーのテスト
-     * ・エラー時に空文字として取得する。
-     * @since 0.4
+     * <p>エラー時に空文字として取得する。
+     * @since 0.6
      */
     @Test
     public void testErrorCell_asEmpty() {
@@ -229,6 +326,30 @@ public class POICellFormatterTest {
         } catch(Exception e) {
             e.printStackTrace();
             fail();
+        }
+        
+    }
+    
+    /**
+     * エラーのテスト
+     * <p>式の評価に失敗した場合に、例外をスローする。
+     * @since 0.7
+     */
+    @Test
+    public void testErrorCell_throwFailEvaluateFormula() {
+        
+        File file = new File("src/test/data/cell_format_2010_custom.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        cellFormatter.setThrowFailEvaluateFormula(true);
+        try {
+            Sheet sheet = loadSheetByName(file, "エラー");
+            assertSheet(sheet, cellFormatter, null);
+            
+            fail();
+            
+        } catch(Exception e) {
+//            e.printStackTrace();
+            assertThat(e, instanceOf(FormulaEvaluateException.class));
         }
         
     }
