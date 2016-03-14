@@ -168,7 +168,7 @@ public class POICellFormatter {
      */
     private CellFormatResult createBlankCellResult() {
         CellFormatResult result = new CellFormatResult();
-        result.setCellType(FormatCellType.Unknown);
+        result.setCellType(FormatCellType.Blank);
         result.setText("");
         return result;
     }
