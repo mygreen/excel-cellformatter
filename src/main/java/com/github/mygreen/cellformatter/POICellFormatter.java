@@ -13,15 +13,20 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 
 /**
- * Apache POIのセルの値を文字列として取得する。
- * <p>参考URL</p>
+ * Apache POIのセルの値を文字列として取得するためのクラス。
+ * 
+ * 
+ * <h3 class="description">基本的な使い方</h3> 
+ * <p>{@link POICellFormatter}のインスタンスを生成して利用します。</p>
  * <ul>
- *   <li><a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html" target="_blank">{@code ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得}</a></li>
- *   <li><a href="http://shin-kawara.seesaa.net/article/159663314.html" target="_blank">{@code POIでセルの値をとるのは大変　日付編}</a></li>
+ *   <li>結果を単純に文字列で取得したい場合は、{@link #formatAsString(Cell)}を利用します。</li>
+ *   <li>フォーマット対象のセルの値や書式に適用された文字色などを取得したい場合は、
+ *       {@link #format(Cell)}の結果である{@link CellFormatResult}から取得します。</li>
+ *   <li>書式「{@literal m/d/yy}」など、実行環境の言語設定によって切り替わるような場合は、
+ *       {@link #formatAsString(Cell, Locale)}でロケールを直接指定します。</li>
  * </ul>
  * 
  * <pre class="highlight"><code class="java">
- * // 基本的な使い方。
  * POICellFormatter  cellFormatter = new POICellFormatter ();
  * 
  * Cell cell = // セルの取得
@@ -36,7 +41,21 @@ import org.apache.poi.ss.util.CellRangeAddress;
  * MSColor textColor = result.getTextColor(); // 書式の文字色
  * </code></pre>
  * 
- * @version 0.4
+ * <h3 class="description">注意事項</h3>
+ * <ul>
+ *   <li>Cellのインスタンスがnullの場合、空（Blank）セルとして扱います。
+ *       <br>POIの場合、データの入力がない領域のセルは、nullとなるためです。</li>
+ *   <li>結合されたセルの場合、結合領域を走査し、非空セルがそのセルの値を評価します。
+ *       <br>POIの場合、結合されたセルの領域は、基本的に左上のセルに値が設定され、それ以外のセルは空セルとなるためです。</li>
+ *   <li>数式や関数が設定されたセルの場合、それらを評価した結果を返します。
+ *       <br>POIが対応していない数式や関数の場合、Excel上では正しく表示されていても、エラーセルの扱いとなります。
+ *       <br>使用するPOIのバージョンによって対応する関数も異なります。</li>
+ * </ul>
+ * 
+ * @see <a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html" target="_blank">ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得</a>
+ * @see <a href="http://shin-kawara.seesaa.net/article/159663314.html" target="_blank">POIでセルの値をとるのは大変　日付編</a>
+ * 
+ * @version 0.7
  * @author T.TSUCHIE
  *
  */
@@ -53,6 +72,16 @@ public class POICellFormatter {
      * エラーセルの値を空文字として取得するかどうか。
      */
     private boolean errorCellAsEmpty = false;
+    
+    /**
+     * 式を評価する際に失敗したときに、例外をスローするかどうか。
+     */
+    private boolean throwFailEvaluateFormula = false;
+    
+    /**
+     * 結合セルを考慮するかどうか。
+     */
+    private boolean considerMergedCell = true;
     
     /**
      * セルの値を文字列として取得する
@@ -96,18 +125,18 @@ public class POICellFormatter {
     private CellFormatResult format(final Cell cell, final Locale locale) {
         
         if(cell == null) {
-            final CellFormatResult result = new CellFormatResult();
-            result.setCellType(FormatCellType.Blank);
-            result.setText("");
-            return result;
-        }
+            return createBlankCellResult();        }
         
         final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
         
         switch(cell.getCellType()) {
             case Cell.CELL_TYPE_BLANK:
-                // 結合しているセルの場合、左上のセル以外に値が設定されている場合がある。
-                return getMergedCellValue(cell, runtimeLocale);
+                if(isConsiderMergedCell()) {
+                    // 結合しているセルの場合、左上のセル以外に値が設定されている場合がある。
+                    return getMergedCellValue(cell, runtimeLocale);
+                } else {
+                    return createBlankCellResult();
+                }
                 
             case Cell.CELL_TYPE_BOOLEAN:
                 return getOtherCellValue(cell, runtimeLocale);
@@ -133,6 +162,18 @@ public class POICellFormatter {
     }
     
     /**
+     * ブランクセルの結果を作成する。
+     * @since 0.7
+     * @return
+     */
+    private CellFormatResult createBlankCellResult() {
+        CellFormatResult result = new CellFormatResult();
+        result.setCellType(FormatCellType.Unknown);
+        result.setText("");
+        return result;
+    }
+    
+    /**
      * 式が設定されているセルの値を評価する。
      * @param cell
      * @param locale
@@ -152,7 +193,11 @@ public class POICellFormatter {
             final Cell evalCell = evaluator.evaluateInCell(cell);
             return format(evalCell, locale);
         } catch(Exception e) {
-            return getErrorCellValue(cell, locale);
+            if(isThrowFailEvaluateFormula()) {
+                throw new FormulaEvaluateException(cell, e);
+            } else {
+                return getErrorCellValue(cell, locale);
+            }
         }
         
     }
@@ -204,7 +249,7 @@ public class POICellFormatter {
             }
             
             // 非BLANKまたはnullでないセルを取得する。
-            for(int rowIdx=range.getFirstRow(); rowIdx <= range.getFirstRow(); rowIdx++) {
+            for(int rowIdx=range.getFirstRow(); rowIdx <= range.getLastRow(); rowIdx++) {
                 final Row row = sheet.getRow(rowIdx);
                 if(row == null) {
                     continue;
@@ -222,10 +267,7 @@ public class POICellFormatter {
             
         }
         
-        final CellFormatResult result = new CellFormatResult();
-        result.setCellType(FormatCellType.Blank);
-        result.setText("");
-        return result;
+        return createBlankCellResult();
     }
     
     /**
@@ -347,6 +389,46 @@ public class POICellFormatter {
      */
     public void setErrorCellAsEmpty(boolean errorCellAsEmpty) {
         this.errorCellAsEmpty = errorCellAsEmpty;
+    }
+    
+    /**
+     * 式を評価する際に失敗したときに、例外{@link FormulaEvaluateException}をスローするかどうか。
+     * <p>初期値はfalseで、式の評価に失敗したときは、エラーセルとして扱われます。
+     * @since 0.7
+     * @return true: 例外をスローする。
+     */
+    public boolean isThrowFailEvaluateFormula() {
+        return throwFailEvaluateFormula;
+    }
+    
+    /**
+     * 式を評価する際に失敗したときに、例外{@link FormulaEvaluateException}をスローするかどうか設定する。
+     * @since 0.7
+     * @param throwFailEvaluateFromula true: 例外をスローする。
+     */
+    public void setThrowFailEvaluateFormula(boolean throwFailEvaluateFormula) {
+        this.throwFailEvaluateFormula = throwFailEvaluateFormula;
+    }
+    
+    /**
+     * 結合されたセルを考慮するかどうか。
+     * <p>POIの場合、結合されている領域は、左上のセル以外はブランクセルとなるため、値が設定してあるセルを操作する必要がある。
+     * <p>初期値はtrueで、ブランクセルを結合セルと見なして処理を行います。
+     * @since 0.7
+     * @return true: 結合セルを考慮する。
+     */
+    public boolean isConsiderMergedCell() {
+        return considerMergedCell;
+    }
+    
+    /**
+     * 結合されたセルを考慮するかどうか。
+     * <p>POIの場合、結合されている領域は、左上のセル以外はブランクセルとなるため、値が設定してあるセルを操作する必要がある。
+     * @since 0.7
+     * @param considerMergedCell true:結合セルを考慮して処理を行う。
+     */
+    public void setConsiderMergedCell(boolean considerMergedCell) {
+        this.considerMergedCell = considerMergedCell;
     }
     
 }
