@@ -21,7 +21,7 @@ public class MessageResolverTest {
     @Test
     public void testGetMessage() {
         
-        MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.cellformatter");
+        MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.label");
         
         assertThat(messageResolver.loadResource(Locale.JAPANESE).isNullObject(), is(false));
         
