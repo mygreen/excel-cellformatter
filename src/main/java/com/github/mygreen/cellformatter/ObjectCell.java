@@ -49,7 +49,7 @@ public abstract class ObjectCell<T> implements CommonCell {
     
     /**
      * 値とその書式を指定するコンストラクタ。
-     * <p>フォーマットのインデックス番号は、{@literal 0}となります。
+     * <p>フォーマットのインデックス番号は、存在しないことを示す{@literal -1}となります。
      * @param value フォーマット対象の値。
      * @param formatPattern Excelの書式。
      * @throws IllegalArgumentException {@literal value == null}
@@ -59,7 +59,7 @@ public abstract class ObjectCell<T> implements CommonCell {
         ArgUtils.notNull(value, "value");
         ArgUtils.notEmpty(formatPattern, "formatPattern");
         this.value = value;
-        this.formatIndex = (short)0;
+        this.formatIndex = (short)-1;
         this.formatPattern = formatPattern;
     }
     
