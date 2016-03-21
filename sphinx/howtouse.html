@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. 基本的な使い方 &mdash; Excel-CellFormatter 0.6 ドキュメント</title>
+    <title>2. 基本的な使い方 &mdash; Excel-CellFormatter 0.7 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.6',
+        VERSION:     '0.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.6 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.7 ドキュメント" href="index.html" />
     <link rel="next" title="3. カスタマイズ方法" href="customize.html" />
     <link rel="prev" title="1. はじめに" href="biginning.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="biginning.html" title="1. はじめに"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -93,17 +93,18 @@
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のロジック</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のアルゴリズム</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.1. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.2. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.3. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.4. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.5. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.6. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.7. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.1. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.2. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.3. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.4. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.5. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.6. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.7. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.8. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -152,7 +153,7 @@
 <div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.mygreen<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>excel-cellformatter<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>0.6<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.7<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 </div>
@@ -161,8 +162,25 @@
 <h2>2.2. Apaceh POIの場合<a class="headerlink" href="#apaceh-poi" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference external" href="http://poi.apache.org/">Apache POI</a> を利用する場合は、 <em>POICellFormatter</em> を利用します。</p>
 <ul class="simple">
-<li>書式が「m/d/yy」の時など、実行環境の言語環境によって異なる場合は、ロケールを指定します。<ul>
+<li>書式が「m/d/yy」の時など、実行環境の言語設定によって異なる場合は、ロケールを指定します。<ul>
 <li>ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。</li>
+</ul>
+</li>
+<li>Cellのインスタンスがnullの場合、空（Blank）セルとして扱います。<ul>
+<li>POIの場合、データの入力がない領域のセルは、nullとなるためです。</li>
+<li>これはJExcelAPIの仕様に合わせるためです。</li>
+</ul>
+</li>
+<li>結合されたセルの場合、結合領域を走査し、非空セルがそのセルの値を評価します。<ul>
+<li>POIの場合、結合されたセルの領域は、基本的に左上のセルに値が設定され、それ以外のセルは空セルとなるためです。</li>
+<li>ただし、古いバージョンのExcelだったり、プログラムから出力したExcelファイルの場合、
+必ずしも左上のセルに値が入っているとは限らないため、結合した全ての領域を走査します。</li>
+<li>これはJExcelAPIの仕様に合わせるためです。</li>
+</ul>
+</li>
+<li>数式や関数が設定されたセルの場合、それらを評価した結果を返します。<ul>
+<li>POIが対応していない数式や関数の場合、Excel上では正しく表示されていても、エラーセルの扱いとなります。</li>
+<li>使用するPOIのバージョンによって対応する関数も異なります。</li>
 </ul>
 </li>
 </ul>
@@ -218,13 +236,13 @@
 <li><em>Windows-31j</em> と指定しても文字化けするため、注意してください。</li>
 </ul>
 </li>
-<li>1904年始まり設定がされているExelファイルの設定かどうか、メソッド <em>JXLUtils.isDateStart1904(...)</em> で調べた値を渡します。<ul>
+<li>1904年始まりの設定がされているExelファイルの設定かどうか、メソッド <em>JXLUtils.isDateStart1904(...)</em> で調べた値を渡します。<ul>
 <li>通常は1899年12月31日（Excel表記上は 1900年1月0日）が基準です。</li>
 <li>JXLUtils.isDateStart1904(...)メソッドには、Sheetオブジェクトを引数にとるメソッドも用意されています。</li>
 </ul>
 </li>
-<li>書式が「m/d/yy」の時など、実行環境の言語環境によって異なる場合は、ロケールを指定します。<ul>
-<li>ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。</li>
+<li>書式が「m/d/yy」の時など、実行環境の言語設定によって切り替わる場合は、ロケールを指定します。<ul>
+<li>ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などでは注意してください。</li>
 </ul>
 </li>
 </ul>
@@ -238,15 +256,18 @@
 
 <span class="kd">final</span> <span class="n">Workbook</span> <span class="n">workbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="n">in</span><span class="o">,</span> <span class="n">settings</span><span class="o">);</span>
 
+<span class="c1">// 1904年始まりのシートか調べる。</span>
+<span class="kt">boolean</span> <span class="n">startDate1904</span> <span class="o">=</span> <span class="n">JXLUtils</span><span class="o">.</span><span class="na">isDateStart1904</span><span class="o">(</span><span class="n">workbook</span><span class="o">);</span>
+
 <span class="n">Cell</span> <span class="n">cell</span> <span class="o">=</span> <span class="cm">/* セルの値の取得 */</span><span class="o">;</span>
 
 <span class="kd">final</span> <span class="n">JXLCellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JXLCellFormatter</span><span class="o">();</span>
 
-<span class="c1">// JXLUtils.isDateStart1904(...)を利用して、1904年始まりのシートか調べる。</span>
-<span class="n">String</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">JXLUtils</span><span class="o">.</span><span class="na">isDateStart1904</span><span class="o">(</span><span class="n">workbook</span><span class="o">));</span>
+<span class="c1">// セルの値を文字列として取得</span>
+<span class="n">String</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">startDate1904</span><span class="o">);</span>
 
 <span class="c1">// ロケールを指定してフォーマットする。</span>
-<span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">Locale</span><span class="o">.</span><span class="na">JAPANESE</span><span class="o">,</span> <span class="n">JXLUtils</span><span class="o">.</span><span class="na">isDateStart1904</span><span class="o">(</span><span class="n">workbook</span><span class="o">));</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">Locale</span><span class="o">.</span><span class="na">JAPANESE</span><span class="o">,</span> <span class="n">startDate1904</span><span class="o">);</span>
 </pre></div>
 </div>
 </div>
@@ -315,7 +336,7 @@
         <li class="right" >
           <a href="biginning.html" title="1. はじめに"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.6 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

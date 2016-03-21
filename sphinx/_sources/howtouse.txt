@@ -13,7 +13,7 @@ Mavenのセントラルリポジトリに登録してあるため、依存関係
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.6</version>
+        <version>0.7</version>
     </dependency>
 
 
@@ -23,9 +23,30 @@ Apaceh POIの場合
 
 `Apache POI <http://poi.apache.org/>`_ を利用する場合は、 *POICellFormatter* を利用します。
 
-* 書式が「m/d/yy」の時など、実行環境の言語環境によって異なる場合は、ロケールを指定します。
+* 書式が「m/d/yy」の時など、実行環境の言語設定によって異なる場合は、ロケールを指定します。
   
   * ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。
+
+* Cellのインスタンスがnullの場合、空（Blank）セルとして扱います。
+
+  * POIの場合、データの入力がない領域のセルは、nullとなるためです。
+  * これはJExcelAPIの仕様に合わせるためです。
+
+* 結合されたセルの場合、結合領域を走査し、非空セルがそのセルの値を評価します。
+
+  * POIの場合、結合されたセルの領域は、基本的に左上のセルに値が設定され、それ以外のセルは空セルとなるためです。
+  
+  * ただし、古いバージョンのExcelだったり、プログラムから出力したExcelファイルの場合、
+    必ずしも左上のセルに値が入っているとは限らないため、結合した全ての領域を走査します。
+  
+  * これはJExcelAPIの仕様に合わせるためです。
+  
+* 数式や関数が設定されたセルの場合、それらを評価した結果を返します。
+
+  * POIが対応していない数式や関数の場合、Excel上では正しく表示されていても、エラーセルの扱いとなります。
+  * 使用するPOIのバージョンによって対応する関数も異なります。
+
+
 
 .. sourcecode:: java
     
@@ -85,15 +106,15 @@ JExcelAPIの場合
   
   * *Windows-31j* と指定しても文字化けするため、注意してください。
   
-* 1904年始まり設定がされているExelファイルの設定かどうか、メソッド *JXLUtils.isDateStart1904(...)* で調べた値を渡します。
+* 1904年始まりの設定がされているExelファイルの設定かどうか、メソッド *JXLUtils.isDateStart1904(...)* で調べた値を渡します。
   
   * 通常は1899年12月31日（Excel表記上は 1900年1月0日）が基準です。
   
   * JXLUtils.isDateStart1904(...)メソッドには、Sheetオブジェクトを引数にとるメソッドも用意されています。
 
-* 書式が「m/d/yy」の時など、実行環境の言語環境によって異なる場合は、ロケールを指定します。
+* 書式が「m/d/yy」の時など、実行環境の言語設定によって切り替わる場合は、ロケールを指定します。
   
-  * ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。
+  * ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などでは注意してください。
 
 .. sourcecode:: java
     
@@ -107,15 +128,19 @@ JExcelAPIの場合
     
     final Workbook workbook = Workbook.getWorkbook(in, settings);
     
+    // 1904年始まりのシートか調べる。
+    boolean startDate1904 = JXLUtils.isDateStart1904(workbook);
+    
     Cell cell = /* セルの値の取得 */;
     
     final JXLCellFormatter cellFormatter = new JXLCellFormatter();
     
-    // JXLUtils.isDateStart1904(...)を利用して、1904年始まりのシートか調べる。
-    String contents = cellForrmatter.formatAsString(cell, JXLUtils.isDateStart1904(workbook));
+    // セルの値を文字列として取得
+    String contents = cellForrmatter.formatAsString(cell, startDate1904);
     
     // ロケールを指定してフォーマットする。
-    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE, JXLUtils.isDateStart1904(workbook));
+    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE, startDate1904);
+
 
 .. _howObjectCellFormatter:
 
