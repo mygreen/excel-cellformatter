@@ -122,10 +122,11 @@ public class POICellFormatter {
      *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
      * @return フォーマット結果。cellがnullの場合、空セルとして値を返す。
      */
-    private CellFormatResult format(final Cell cell, final Locale locale) {
+    public CellFormatResult format(final Cell cell, final Locale locale) {
         
         if(cell == null) {
-            return createBlankCellResult();        }
+            return createBlankCellResult();
+        }
         
         final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
         
@@ -139,13 +140,13 @@ public class POICellFormatter {
                 }
                 
             case Cell.CELL_TYPE_BOOLEAN:
-                return getOtherCellValue(cell, runtimeLocale);
+                return getCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_STRING:
-                return getOtherCellValue(cell, runtimeLocale);
+                return getCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_NUMERIC:
-                return getNumericCellValue(cell, runtimeLocale);
+                return getCellValue(cell, runtimeLocale);
                 
             case Cell.CELL_TYPE_FORMULA:
                 return getFormulaCellValue(cell, runtimeLocale);
@@ -271,49 +272,12 @@ public class POICellFormatter {
     }
     
     /**
-     * 数値以外ののフォーマット
-     * @return
+     * セルの値をフォーマットする。
+     * @param cell フォーマット対象のセル
+     * @param locale ロケール
+     * @return フォーマットした結果
      */
-    private CellFormatResult getOtherCellValue(final Cell cell, final Locale locale) {
-        
-        final int cellType = cell.getCellType();
-        assert cellType == Cell.CELL_TYPE_STRING || cellType == Cell.CELL_TYPE_BOOLEAN;
-        
-        final POICell poiCell = new POICell(cell);
-        final short formatIndex = poiCell.getFormatIndex();
-        final String formatPattern = poiCell.getFormatPattern();
-        
-        if(formatterResolver.canResolve(formatIndex)) {
-            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);
-            return cellFormatter.format(poiCell, locale);
-            
-        } else if(formatterResolver.canResolve(formatPattern)) {
-            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);
-            return cellFormatter.format(poiCell, locale);
-            
-        } else {
-            // キャッシュに存在しない場合
-            final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;
-            if(isCache()) {
-                formatterResolver.registerFormatter(formatPattern, cellFormatter);
-            }
-            return cellFormatter.format(poiCell, locale);
-            
-        }
-        
-    }
-    
-    /**
-     * 数値型のセルの値を取得する。
-     * <p>書式付きの数字か日付のどちらかの場合がある。
-     * @param cell
-     * @param locale
-     * @return
-     */
-    private CellFormatResult getNumericCellValue(final Cell cell, final Locale locale) {
-        
-        final int cellType = cell.getCellType();
-        assert cellType == Cell.CELL_TYPE_NUMERIC;
+    private CellFormatResult getCellValue(final Cell cell, final Locale locale) {
         
         final POICell poiCell = new POICell(cell);
         final short formatIndex = poiCell.getFormatIndex();
