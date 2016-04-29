@@ -13,6 +13,7 @@ import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.term.AsteriskTerm;
 import com.github.mygreen.cellformatter.term.DateTerm;
 import com.github.mygreen.cellformatter.term.EscapedCharTerm;
+import com.github.mygreen.cellformatter.term.LocaelSymbolTerm;
 import com.github.mygreen.cellformatter.term.OtherTerm;
 import com.github.mygreen.cellformatter.term.Term;
 import com.github.mygreen.cellformatter.term.UnderscoreTerm;
@@ -152,6 +153,10 @@ public class ConditionDateFormatterFactory extends ConditionFormatterFactory<Con
                     
                 } else if(isConditionLocale(conditionToken)) {
                     setupConditionLocale(formatter, conditionToken);
+                    
+                } else if(isConditionLocaleSymbol(conditionToken)) {
+                    final LocaleSymbol localeSymbol = setupConditionLocaleSymbol(formatter, conditionToken);
+                    formatter.addTerm(new LocaelSymbolTerm<Calendar>(localeSymbol));
                     
                 } else if(isConditionDbNum(conditionToken)) {
                     setupConditionDbNum(formatter, conditionToken);

@@ -14,6 +14,7 @@ import com.github.mygreen.cellformatter.number.NumberFactory;
 import com.github.mygreen.cellformatter.number.NumberPartType;
 import com.github.mygreen.cellformatter.term.AsteriskTerm;
 import com.github.mygreen.cellformatter.term.EscapedCharTerm;
+import com.github.mygreen.cellformatter.term.LocaelSymbolTerm;
 import com.github.mygreen.cellformatter.term.NumberTerm;
 import com.github.mygreen.cellformatter.term.OtherTerm;
 import com.github.mygreen.cellformatter.term.Term;
@@ -106,6 +107,10 @@ public class ConditionNumberFormatterFactory extends ConditionFormatterFactory<C
                     
                 } else if(isConditionLocale(conditionToken)) {
                     setupConditionLocale(formatter, conditionToken);
+                    
+                } else if(isConditionLocaleSymbol(conditionToken)) {
+                    final LocaleSymbol localeSymbol = setupConditionLocaleSymbol(formatter, conditionToken);
+                    formatter.addTerm(new LocaelSymbolTerm<FormattedNumber>(localeSymbol));
                     
                 } else if(isConditionDbNum(conditionToken)) {
                     setupConditionDbNum(formatter, conditionToken);

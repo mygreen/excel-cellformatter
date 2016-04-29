@@ -20,6 +20,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
  * 条件付きの書式の組み立てるための抽象クラス。
  * <p>主にテンプレートメソッドの実装を行う。
  * 
+ * @version 0.8
  * @author T.TSUCHIE
  * @param <F> 組み立てるフォーマッタクラス
  */
@@ -43,6 +44,11 @@ public abstract class ConditionFormatterFactory<F> {
      * ロケールの条件式のパターン
      */
     private static final Pattern PATTERN_CONDITION_LOCALE = Pattern.compile("\\[\\$\\-([0-9a-zA-Z]+)\\]");
+    
+    /**
+     * 記号付きロケールの条件式のパターン
+     */
+    private static final Pattern PATTERN_CONDITION_LOCALE_SYMBOL = Pattern.compile("\\[\\$(.+)\\-([0-9a-zA-Z]+)\\]");
     
     /**
      * 特殊な処理の条件式のパターン
@@ -72,6 +78,15 @@ public abstract class ConditionFormatterFactory<F> {
      */
     protected boolean isConditionLocale(final Token.Condition token) {
         return PATTERN_CONDITION_LOCALE.matcher(token.getValue()).matches();
+    }
+    
+    /**
+     *'[$€-403]'などの記号付きロケールの条件式かどうか。
+     *@since 0.8
+     * @param token 判定対象のトークン。
+     * @return true: 記号付きロケールの条件式。     */
+    protected boolean isConditionLocaleSymbol(final Token.Condition token) {
+        return PATTERN_CONDITION_LOCALE_SYMBOL.matcher(token.getValue()).matches();
     }
     
     /**
@@ -172,6 +187,37 @@ public abstract class ConditionFormatterFactory<F> {
         formatter.setLocale(locale);
         
         return locale;
+        
+    }
+    
+    /**
+     * '[$€-403]'などの記号付きロケールの条件を組み立てる
+     * @since 0.8
+     * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
+     * @param token 条件式のトークン。
+     * @return 記号付きロケールの条件式。
+     * @throws IllegalArgumentException 処理対象の条件として一致しない場合
+     */
+    protected LocaleSymbol setupConditionLocaleSymbol(final ConditionFormatter formatter, final Token.Condition token) {
+        
+        final Matcher matcher = PATTERN_CONDITION_LOCALE_SYMBOL.matcher(token.getValue());
+        if(!matcher.matches()) {
+            throw new IllegalArgumentException("not match condition:" + token.getValue());
+        }
+        
+        final String symbol = matcher.group(1);
+        final String number = matcher.group(2);
+        
+        // 16進数=>10進数に直す
+        final int value = Integer.valueOf(number, 16);
+        MSLocale locale = MSLocale.createKnownLocale(value);
+        if(locale == null) {
+            locale = new MSLocale(value);
+        }
+        
+        formatter.setLocale(locale);
+        
+        return new LocaleSymbol(locale, symbol);
         
     }
     

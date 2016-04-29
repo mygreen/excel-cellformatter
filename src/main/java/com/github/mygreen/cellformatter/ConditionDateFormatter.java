@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import com.github.mygreen.cellformatter.callback.Callback;
 import com.github.mygreen.cellformatter.lang.ArgUtils;
 import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
-import com.github.mygreen.cellformatter.lang.Utils;
 import com.github.mygreen.cellformatter.term.DateTerm;
 import com.github.mygreen.cellformatter.term.Term;
 
@@ -136,7 +135,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
      * フォーマットの複数の項を追加する。
      * @param term
      */
-    public void addAllTerms(List<Term<Calendar>> terms) {
+    public void addAllTerms(final List<Term<Calendar>> terms) {
         this.terms.addAll(terms);
     }
     
