@@ -13,6 +13,8 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 
 /**
  * 数値の書式の項
+ * 
+ * @version 0.8
  * @author T.TSUCHIE
  *
  */
@@ -69,9 +71,49 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
         
         @Override
         public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
-            return formatter.get().format(Math.abs(number.getValue()));
+            
+            final double unsingedValue = Math.abs(number.getValue());
+            
+            if(isNumberAsExponent(unsingedValue)) {
+                final DecimalFormat format = new DecimalFormat("0.#####E0");
+                format.setRoundingMode(RoundingMode.HALF_UP);
+                
+                String str = format.format(unsingedValue);
+                if(unsingedValue >= 1) {
+                    // 指数に符号を付ける
+                    str = str.replace("E", "E+");
+                }
+                
+                return str;
+                
+            } else {
+                return formatter.get().format(unsingedValue);
+                
+            }
         }
         
+        /**
+         * 指数表示すべき数値を判定する
+         * @param unsingedValue 符号なしの数値
+         * @return true 指数表示する。
+         */
+        private boolean isNumberAsExponent(final double unsingedValue) {
+            
+            if(unsingedValue == 0.0d) {
+                return false;
+                
+            } else if(unsingedValue >= 100000000000.0d) {
+                return true;
+                
+            } else if(unsingedValue <= 0.0000000001d) {
+                return true;
+                
+            } else {
+                return false;
+            }
+            
+            
+        }
     }
     
     /**
