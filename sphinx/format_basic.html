@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. Excelの書式の基本について &mdash; Excel-CellFormatter 0.7 ドキュメント</title>
+    <title>4. Excelの書式の基本について &mdash; Excel-CellFormatter 0.8 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7',
+        VERSION:     '0.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.7 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.8 ドキュメント" href="index.html" />
     <link rel="next" title="5. Excelの書式のその他の情報" href="format_other.html" />
     <link rel="prev" title="3. カスタマイズ方法" href="customize.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="customize.html" title="3. カスタマイズ方法"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -85,26 +85,28 @@
 <li class="toctree-l2"><a class="reference internal" href="#id12">4.5. 日時用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id16">4.6. 文字列用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id17">4.7. 条件式について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">4.8. 他のオフィススイートの書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">4.8. 他のオフィススイートの書式記号</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のアルゴリズム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.1. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.2. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.3. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.4. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.5. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.6. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.7. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.8. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.1. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.2. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.3. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.4. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.5. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.6. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.7. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.8. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.9. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -185,14 +187,14 @@
 <ul class="simple">
 <li>セクションが4つの場合、それぞれ順番に <strong>「正の数」「負の数」「ゼロの値」「文字列」</strong> に一致する書式となります。</li>
 </ul>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="_images/format_section_4.png"><img alt="_images/format_section_4.png" src="_images/format_section_4.png" /></a>
 <p class="caption"><span class="caption-text">セクションが4つの場合の例</span></p>
 </div>
 <ul class="simple">
 <li>セクションが3つの場合、それぞれ順番に <strong>「正の数」「負の数」「ゼロの値」」</strong> に一致する書式となります。</li>
 </ul>
-<div class="figure align-center" id="id24">
+<div class="figure align-center" id="id25">
 <a class="reference internal image-reference" href="_images/format_section_3.png"><img alt="_images/format_section_3.png" src="_images/format_section_3.png" /></a>
 <p class="caption"><span class="caption-text">セクションが3つの場合の例</span></p>
 </div>
@@ -204,22 +206,22 @@
 </ul>
 </li>
 </ul>
-<div class="figure align-center" id="id25">
+<div class="figure align-center" id="id26">
 <a class="reference internal image-reference" href="_images/format_section_2_num.png"><img alt="_images/format_section_2_num.png" src="_images/format_section_2_num.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの場合の例（数値のフォーマット）</span></p>
 </div>
-<div class="figure align-center" id="id26">
+<div class="figure align-center" id="id27">
 <a class="reference internal image-reference" href="_images/format_section_2_text.png"><img alt="_images/format_section_2_text.png" src="_images/format_section_2_text.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの場合の例（文字列のフォーマット）</span></p>
 </div>
-<div class="figure align-center" id="id27">
+<div class="figure align-center" id="id28">
 <a class="reference internal image-reference" href="_images/format_section_2_date.png"><img alt="_images/format_section_2_date.png" src="_images/format_section_2_date.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの場合の例（日時のフォーマット）</span></p>
 </div>
 <ul class="simple">
 <li>セクションが1つの場合、それぞれ <strong>「全ての数」「日時」「文字列」</strong> に一致します。</li>
 </ul>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id29">
 <a class="reference internal image-reference" href="_images/format_section_1.png"><img alt="_images/format_section_1.png" src="_images/format_section_1.png" /></a>
 <p class="caption"><span class="caption-text">セクションが1つの場合の例</span></p>
 </div>
@@ -234,7 +236,7 @@
 </li>
 <li>条件式を記述しないセクションは、全ての条件に一致するため、最後のセクションに定義します。</li>
 </ul>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="_images/format_condition_section_2_ex.png"><img alt="_images/format_condition_section_2_ex.png" src="_images/format_condition_section_2_ex.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの任意の演算子の場合の例</span></p>
 </div>
@@ -245,11 +247,11 @@
 </ul>
 </li>
 </ul>
-<div class="figure align-center" id="id30">
+<div class="figure align-center" id="id31">
 <a class="reference internal image-reference" href="_images/format_condition_section_2.png"><img alt="_images/format_condition_section_2.png" src="_images/format_condition_section_2.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの任意の演算子の場合の形式</span></p>
 </div>
-<div class="figure align-center" id="id31">
+<div class="figure align-center" id="id32">
 <a class="reference internal image-reference" href="_images/format_condition_section_2_wrong.png"><img alt="_images/format_condition_section_2_wrong.png" src="_images/format_condition_section_2_wrong.png" /></a>
 <p class="caption"><span class="caption-text">セクションが2つの任意の演算子の場合の形式（表示が不正になる場合）</span></p>
 </div>
@@ -260,7 +262,7 @@
 </ul>
 </li>
 </ul>
-<div class="figure align-center" id="id32">
+<div class="figure align-center" id="id33">
 <a class="reference internal image-reference" href="_images/format_condition_section_3.png"><img alt="_images/format_condition_section_3.png" src="_images/format_condition_section_3.png" /></a>
 <p class="caption"><span class="caption-text">セクションが3つの任意の演算子の場合の形式</span></p>
 </div>
@@ -271,7 +273,7 @@
 </ul>
 </li>
 </ul>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id34">
 <a class="reference internal image-reference" href="_images/format_condition_section_3_text.png"><img alt="_images/format_condition_section_3_text.png" src="_images/format_condition_section_3_text.png" /></a>
 <p class="caption"><span class="caption-text">文字列用の書式があるセクションが3つの任意の演算子の場合の形式の例</span></p>
 </div>
@@ -279,8 +281,8 @@
 <div class="section" id="id5">
 <h3>4.2.3. 比較演算子の種類<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>様々な比較演算子を利用して条件式を定義することができます。</p>
-<table border="1" class="docutils" id="id34">
-<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id34" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id35">
+<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id35" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="20%" />
@@ -339,8 +341,8 @@
 </div>
 <div class="section" id="id6">
 <h2>4.3. 共通の書式記号<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<table border="1" class="docutils" id="id35">
-<caption><span class="caption-text">共通の書式記号</span><a class="headerlink" href="#id35" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id36">
+<caption><span class="caption-text">共通の書式記号</span><a class="headerlink" href="#id36" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="50%" />
@@ -451,8 +453,8 @@
 <h2>4.4. 数値用の書式記号<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Excelの数値関連の書式は分類すれば、「数値」「通貨」「会計」「パーセンテージ」「分数」「指数」に分けられます。</p>
 <p>これらの書式は、全て <a class="reference internal" href="format_basic_common.html"><em>共通の書式記号</em></a> と数値用の書式記号から構成されています。</p>
-<table border="1" class="docutils" id="id36">
-<caption><span class="caption-text">数値の書式記号</span><a class="headerlink" href="#id36" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id37">
+<caption><span class="caption-text">数値の書式記号</span><a class="headerlink" href="#id37" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -521,8 +523,8 @@
 <p>数値の桁を3桁ごとに区切る場合に、カンマ（,） を書式記号「# ? 0」の間に記述します。
 カンマは、6桁以上あっても、カンマは1つのみ記述すればよいです。</p>
 <p>書式記号「# ? 0」の最後に、カンマ（,）を記述すると、1000で割った千分率表示になります。</p>
-<table border="1" class="docutils" id="id37">
-<caption><span class="caption-text">桁数区切りの書式記号</span><a class="headerlink" href="#id37" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id38">
+<caption><span class="caption-text">桁数区切りの書式記号</span><a class="headerlink" href="#id38" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -581,8 +583,8 @@
 </div>
 <div class="section" id="id9">
 <h3>4.4.2. 百分率（パーセント）表示<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<table border="1" class="docutils" id="id38">
-<caption><span class="caption-text">百分率（パーセント）の書式記号</span><a class="headerlink" href="#id38" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id39">
+<caption><span class="caption-text">百分率（パーセント）の書式記号</span><a class="headerlink" href="#id39" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -618,8 +620,8 @@
 </div>
 <div class="section" id="id10">
 <h3>4.4.3. 指数表示<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<table border="1" class="docutils" id="id39">
-<caption><span class="caption-text">指数の書式記号</span><a class="headerlink" href="#id39" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id40">
+<caption><span class="caption-text">指数の書式記号</span><a class="headerlink" href="#id40" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -675,8 +677,8 @@
 <h3>4.4.4. 分数表示<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>分数の表示は、「# ? 0」をスラッシュ記号（/）で区切ります。</p>
 <p>帯分数、仮分数の表示もできます。</p>
-<table border="1" class="docutils" id="id40">
-<caption><span class="caption-text">分数の書式記号</span><a class="headerlink" href="#id40" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id41">
+<caption><span class="caption-text">分数の書式記号</span><a class="headerlink" href="#id41" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -722,8 +724,8 @@
 <p>Excelの表示形式で分類すれば、「日付」「時刻」に分けられます。</p>
 <div class="section" id="id13">
 <h3>4.5.1. 日付の書式<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<table border="1" class="docutils" id="id41">
-<caption><span class="caption-text">日付の書式記号</span><a class="headerlink" href="#id41" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id42">
+<caption><span class="caption-text">日付の書式記号</span><a class="headerlink" href="#id42" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -887,8 +889,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id42">
-<caption><span class="caption-text">曜日の書式記号</span><a class="headerlink" href="#id42" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id43">
+<caption><span class="caption-text">曜日の書式記号</span><a class="headerlink" href="#id43" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -978,8 +980,8 @@
 <h3>4.5.2. 和暦の書式<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>日本語固有の書式記号が和暦の表現が可能です。</p>
 <p>ただし、他の言語環境でExcelファイルを開いたときに表記が変わらないよう、日本語のロケール <em>[$-411]</em> を指定することをお薦めします。</p>
-<table border="1" class="docutils" id="id43">
-<caption><span class="caption-text">和暦の書式記号</span><a class="headerlink" href="#id43" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id44">
+<caption><span class="caption-text">和暦の書式記号</span><a class="headerlink" href="#id44" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -1118,8 +1120,8 @@
 </table>
 <p>日本語で表記可能な元号は、Excelで表現可能な1900年以降の明治からとなります。
 元号の始まりの年は、元年ではなく1年と表記されます。</p>
-<table border="1" class="docutils" id="id44">
-<caption><span class="caption-text">Excelで表記可能な元号</span><a class="headerlink" href="#id44" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id45">
+<caption><span class="caption-text">Excelで表記可能な元号</span><a class="headerlink" href="#id45" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="20%" />
@@ -1181,8 +1183,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 </div>
 <div class="section" id="id15">
 <h3>4.5.3. 時刻の書式<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<table border="1" class="docutils" id="id45">
-<caption><span class="caption-text">時間・時刻の書式</span><a class="headerlink" href="#id45" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id46">
+<caption><span class="caption-text">時間・時刻の書式</span><a class="headerlink" href="#id46" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -1297,8 +1299,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 さらに、時間経過を表現する「[h]」の書式が前にある場合も、分と判断します。
 分を表現する「m」は単体で使用すると月と認識されるため、注意が必要です。</p>
 </div>
-<table border="1" class="docutils" id="id46">
-<caption><span class="caption-text">AM/PM（午前/午後）の書式</span><a class="headerlink" href="#id46" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id47">
+<caption><span class="caption-text">AM/PM（午前/午後）の書式</span><a class="headerlink" href="#id47" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -1371,8 +1373,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <p>午前/午後の書式「AM/PM 、am/pm 、A/P 、a/p」は、書式の前後など書式中のどこに定義してもかまいません。</p>
 <p class="last">大文字・小文字は入力した通りに表示されるため、「Am/Pm」「aM/pM」などという設定もできます。</p>
 </div>
-<table border="1" class="docutils" id="id47">
-<caption><span class="caption-text">時間の経過の書式</span><a class="headerlink" href="#id47" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id48">
+<caption><span class="caption-text">時間の経過の書式</span><a class="headerlink" href="#id48" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -1452,8 +1454,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <li>記号「&#64;」がない場合、入力した文字列は表示されません。</li>
 <li>ここでの文字列とはExcelの表示形式では、数値・日時以外の「文字列」「ブール値」を指します。</li>
 </ul>
-<table border="1" class="docutils" id="id48">
-<caption><span class="caption-text">共通の書式記号</span><a class="headerlink" href="#id48" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id49">
+<caption><span class="caption-text">共通の書式記号</span><a class="headerlink" href="#id49" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="50%" />
@@ -1486,14 +1488,15 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <li>書式は、大括弧&#8221;[&#8221;, &#8220;]&#8221;で囲みます。</li>
 <li>比較演算子（[&gt;80]）</li>
 <li>色（[色名]）</li>
-<li>ロケール（[$-ロケールコード]）</li>
+<li>ロケール（[$-&lt;ロケールコード&gt;]）(例. [$-403])</li>
+<li>記号付きロケール（[$&lt;記号&gt;-&lt;ロケールコード&gt;]） (例. [$€-407])</li>
 <li>特殊な数値表示（[DBNum&lt;値&gt;]）</li>
 </ul>
 <div class="section" id="id18">
 <h3>4.7.1. 条件式（比較演算子）について<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>セクションごとに一致させる条件を比較演算子で指定することができます。</p>
-<table border="1" class="docutils" id="id49">
-<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id49" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id50">
+<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id50" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="20%" />
@@ -1553,8 +1556,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <h3>4.7.2. 色の条件について<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>色は名前付きの8色の他、番号で指定可能で、全56色を指定できます。</p>
 <p>Excel2003までは、Excelでの色のパレットは56色だったことに由来します。</p>
-<table border="1" class="docutils" id="id50">
-<caption><span class="caption-text">色の書式記号</span><a class="headerlink" href="#id50" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id51">
+<caption><span class="caption-text">色の書式記号</span><a class="headerlink" href="#id51" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -1606,8 +1609,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id51">
-<caption><span class="caption-text">名前付きの色</span><a class="headerlink" href="#id51" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id52">
+<caption><span class="caption-text">名前付きの色</span><a class="headerlink" href="#id52" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="20%" />
@@ -1682,8 +1685,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <h3>4.7.3. ロケールの条件について<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ロケールを書式に指定すると、その言語専用の表記に変換され表示されます。</p>
 <p>Miscrosoftでは、ロケールごとにIDを振り、 <em>ロケールID（LCID）</em> と呼ばれています。</p>
-<table border="1" class="docutils" id="id52">
-<caption><span class="caption-text">ロケールの書式記号</span><a class="headerlink" href="#id52" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id53">
+<caption><span class="caption-text">ロケールの書式記号</span><a class="headerlink" href="#id53" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -1717,8 +1720,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id53">
-<caption><span class="caption-text">よく使用するロケール</span><a class="headerlink" href="#id53" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id54">
+<caption><span class="caption-text">よく使用するロケール</span><a class="headerlink" href="#id54" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="40%" />
 <col width="20%" />
@@ -1760,11 +1763,18 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 </div>
 </div>
 <div class="section" id="id21">
-<h3>4.7.4. 言語固有の数値の表現について<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>4.7.4. 記号付きロケールの条件について<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>会計の書式において、単位の記号（ <code class="docutils literal"><span class="pre">￥,</span> <span class="pre">$</span></code> ）は、通常は先頭に付く。</p>
+<p>しかし、ドイツマルクの記号（ <code class="docutils literal"><span class="pre">€</span></code> ）など一部、最後尾に付く場合がある。
+そのような場合、特殊なロケールの条件式が使われる。</p>
+<p>形式は、 <code class="docutils literal"><span class="pre">[$&lt;記号&gt;-&lt;ロケールコード(LCID)&gt;]</span></code> (例. [$€-407]) であるが、記述した位置に、<code class="docutils literal"><span class="pre">&lt;記号&gt;</span></code> が出力される。</p>
+</div>
+<div class="section" id="id22">
+<h3>4.7.5. 言語固有の数値の表現について<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>全角の数字など言語固有の数値の表現を指定することができます。</p>
 <p>これは、 <strong>Excel2002以降（Excel XP）でのみ利用可能な機能</strong> であり、Excel2000以前ではサポートされません。</p>
-<table border="1" class="docutils" id="id54">
-<caption><span class="caption-text">日本語環境で利用可能な数値表示</span><a class="headerlink" href="#id54" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id55">
+<caption><span class="caption-text">日本語環境で利用可能な数値表示</span><a class="headerlink" href="#id55" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="10%" />
@@ -1835,8 +1845,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 </div>
 </div>
 </div>
-<div class="section" id="id22">
-<h2>4.8. 他のオフィススイートの書式記号<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id23">
+<h2>4.8. 他のオフィススイートの書式記号<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>OpenOffice、LibreOfficeなどの他のオフィススイートでも、Microsoft Excel形式を扱うことができますが、独自に拡張をしている書式があります。
 主に、日付の書式に対して拡張がされています。</p>
 <p>LibreOfficeはOpenOfficeから派生したので、書式も共通しています。</p>
@@ -1844,8 +1854,8 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
 <ul class="simple">
 <li><a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">数の書式コード（LibreOfficeのマニュアル）</a></li>
 </ul>
-<table border="1" class="docutils" id="id55">
-<caption><span class="caption-text">OpenOffice/LibreOfficeの独自の書式記号</span><a class="headerlink" href="#id55" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id56">
+<caption><span class="caption-text">OpenOffice/LibreOfficeの独自の書式記号</span><a class="headerlink" href="#id56" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="40%" />
@@ -1968,7 +1978,7 @@ Java標準のJRE <code class="docutils literal"><span class="pre">「lib/calenda
         <li class="right" >
           <a href="customize.html" title="3. カスタマイズ方法"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

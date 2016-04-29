@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>条件式について &mdash; Excel-CellFormatter 0.7 ドキュメント</title>
+    <title>条件式について &mdash; Excel-CellFormatter 0.8 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7',
+        VERSION:     '0.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.7 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.8 ドキュメント" href="index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -39,7 +39,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -77,26 +77,28 @@
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id22">4.8. 他のオフィススイートの書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. エラーのセルについて</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_other.html#id8">5.5. 漢数字／大字変換のアルゴリズム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.1. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.2. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.3. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.4. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.5. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.6. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.7. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.8. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.1. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.2. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.3. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.4. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.5. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.6. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.7. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.8. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.9. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -138,14 +140,15 @@
 <li>書式は、大括弧&#8221;[&#8221;, &#8220;]&#8221;で囲みます。</li>
 <li>比較演算子（[&gt;80]）</li>
 <li>色（[色名]）</li>
-<li>ロケール（[$-ロケールコード]）</li>
+<li>ロケール（[$-&lt;ロケールコード&gt;]）(例. [$-403])</li>
+<li>記号付きロケール（[$&lt;記号&gt;-&lt;ロケールコード&gt;]） (例. [$€-407])</li>
 <li>特殊な数値表示（[DBNum&lt;値&gt;]）</li>
 </ul>
 <div class="section" id="id2">
 <h2>条件式（比較演算子）について<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>セクションごとに一致させる条件を比較演算子で指定することができます。</p>
-<table border="1" class="docutils" id="id6">
-<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id6" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id7">
+<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id7" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="20%" />
@@ -205,8 +208,8 @@
 <h2>色の条件について<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>色は名前付きの8色の他、番号で指定可能で、全56色を指定できます。</p>
 <p>Excel2003までは、Excelでの色のパレットは56色だったことに由来します。</p>
-<table border="1" class="docutils" id="id7">
-<caption><span class="caption-text">色の書式記号</span><a class="headerlink" href="#id7" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id8">
+<caption><span class="caption-text">色の書式記号</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -258,8 +261,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id8">
-<caption><span class="caption-text">名前付きの色</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id9">
+<caption><span class="caption-text">名前付きの色</span><a class="headerlink" href="#id9" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="20%" />
@@ -334,8 +337,8 @@
 <h2>ロケールの条件について<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ロケールを書式に指定すると、その言語専用の表記に変換され表示されます。</p>
 <p>Miscrosoftでは、ロケールごとにIDを振り、 <em>ロケールID（LCID）</em> と呼ばれています。</p>
-<table border="1" class="docutils" id="id9">
-<caption><span class="caption-text">ロケールの書式記号</span><a class="headerlink" href="#id9" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id10">
+<caption><span class="caption-text">ロケールの書式記号</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="40%" />
@@ -369,8 +372,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id10">
-<caption><span class="caption-text">よく使用するロケール</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id11">
+<caption><span class="caption-text">よく使用するロケール</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="40%" />
 <col width="20%" />
@@ -412,11 +415,18 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h2>言語固有の数値の表現について<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>記号付きロケールの条件について<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>会計の書式において、単位の記号（ <code class="docutils literal"><span class="pre">￥,</span> <span class="pre">$</span></code> ）は、通常は先頭に付く。</p>
+<p>しかし、ドイツマルクの記号（ <code class="docutils literal"><span class="pre">€</span></code> ）など一部、最後尾に付く場合がある。
+そのような場合、特殊なロケールの条件式が使われる。</p>
+<p>形式は、 <code class="docutils literal"><span class="pre">[$&lt;記号&gt;-&lt;ロケールコード(LCID)&gt;]</span></code> (例. [$€-407]) であるが、記述した位置に、<code class="docutils literal"><span class="pre">&lt;記号&gt;</span></code> が出力される。</p>
+</div>
+<div class="section" id="id6">
+<h2>言語固有の数値の表現について<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>全角の数字など言語固有の数値の表現を指定することができます。</p>
 <p>これは、 <strong>Excel2002以降（Excel XP）でのみ利用可能な機能</strong> であり、Excel2000以前ではサポートされません。</p>
-<table border="1" class="docutils" id="id11">
-<caption><span class="caption-text">日本語環境で利用可能な数値表示</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id12">
+<caption><span class="caption-text">日本語環境で利用可能な数値表示</span><a class="headerlink" href="#id12" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="10%" />
@@ -500,7 +510,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

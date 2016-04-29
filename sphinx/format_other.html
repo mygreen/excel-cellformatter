@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5. Excelの書式のその他の情報 &mdash; Excel-CellFormatter 0.7 ドキュメント</title>
+    <title>5. Excelの書式のその他の情報 &mdash; Excel-CellFormatter 0.8 ドキュメント</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7',
+        VERSION:     '0.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
-    <link rel="top" title="Excel-CellFormatter 0.7 ドキュメント" href="index.html" />
+    <link rel="top" title="Excel-CellFormatter 0.8 ドキュメント" href="index.html" />
     <link rel="next" title="6. リリースノート" href="release.html" />
     <link rel="prev" title="4. Excelの書式の基本について" href="format_basic.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -47,7 +47,7 @@
         <li class="right" >
           <a href="format_basic.html" title="4. Excelの書式の基本について"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -85,26 +85,28 @@
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
 <li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id22">4.8. 他のオフィススイートの書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">5. Excelの書式のその他の情報</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">5.1. ファイル内部の日付の基準日の設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">5.2. ビルトインフォーマット（組み込み書式）について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">5.3. エラーのセルについて</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id-lcid">5.4. ロケールID(LCID)の一覧</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">5.5. 漢数字／大字変換のアルゴリズム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.1. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.2. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.3. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.4. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.5. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.6. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.7. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.8. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.1. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.2. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.3. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.4. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.5. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.6. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.7. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.8. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.9. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -148,14 +150,53 @@
   <div class="section" id="excel">
 <h1>5. Excelの書式のその他の情報<a class="headerlink" href="#excel" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>5.1. ファイル内部の日付の基準日の設定<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.1. 標準書式について<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>標準書式の場合、特に数値の場合、値によってフォーマットが変わります。</p>
+<p><code class="docutils literal"><span class="pre">100,000,000,000</span></code> 以上の値、または <code class="docutils literal"><span class="pre">0.0000000001</span></code> 以下の値の時、指数の書式 <code class="docutils literal"><span class="pre">0.#####E-0</span></code> となります。
+ただし、Excelのセルの幅が小さいと、表示される有効桁数が自動的に変わります。
+また、それ以外の値の場合は、書式 <code class="docutils literal"><span class="pre">0.##########</span></code> となります。</p>
+<table border="1" class="docutils" id="id10">
+<caption><span class="caption-text">数値の標準書式の表示例</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">値</th>
+<th class="head">Excel上の表記</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>100000000000</td>
+<td>1E+11</td>
+</tr>
+<tr class="row-odd"><td>99999999999</td>
+<td>99999999999</td>
+</tr>
+<tr class="row-even"><td>12345678901234</td>
+<td>1.23457E+13</td>
+</tr>
+<tr class="row-odd"><td>0.0000000001</td>
+<td>1E-10</td>
+</tr>
+<tr class="row-even"><td>0.999999999</td>
+<td>0.999999999</td>
+</tr>
+<tr class="row-odd"><td>0.000000000001234567</td>
+<td>1.23457E-12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h2>5.2. ファイル内部の日付の基準日の設定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Excelは、日付情報をファイル内部では数値型として値を保持しており、値が0の場合は基準日として、通常は <strong>「1899年12月31日（Excel表記上は1900年1月0日）」</strong> を表します。</p>
 <p>この基準日は、設定によって変更することができ、ファイルごとに設定を持ちます。</p>
 <ul class="simple">
 <li><a class="reference external" href="https://support.microsoft.com/ja-jp/kb/180162/ja">Miscrosoftのサポートページ</a></li>
 </ul>
 <div class="section" id="excel1904">
-<h3>5.1.1. Excelの1904年始まりの設定変更方法<a class="headerlink" href="#excel1904" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.2.1. Excelの1904年始まりの設定変更方法<a class="headerlink" href="#excel1904" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Excelのバージョンによって設定方法は変わります。</p>
 <ul class="simple">
 <li>Excel2000～2003の場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のタブ「計算方法」から設定できます。</li>
@@ -163,23 +204,23 @@
 <li>Excel2010の場合、メニュー「ファイル」の「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</li>
 <li>LibreOfficeの場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のペイン「LibreOffice Calc」-「計算式」から設定できます。</li>
 </ul>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_2002.png"><img alt="_images/excel_settings_date1904_2002.png" src="_images/excel_settings_date1904_2002.png" /></a>
 <p class="caption"><span class="caption-text">Excel2002(XP)の場合の1904年始まりの設定</span></p>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_2010.png"><img alt="_images/excel_settings_date1904_2010.png" src="_images/excel_settings_date1904_2010.png" /></a>
 <p class="caption"><span class="caption-text">Excel2010の場合の1904年始まりの設定</span></p>
 </div>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="_images/excel_settings_date1904_libre.png"><img alt="_images/excel_settings_date1904_libre.png" src="_images/excel_settings_date1904_libre.png" /></a>
 <p class="caption"><span class="caption-text">LibreOfficeの場合の1904年始まりの設定</span></p>
 </div>
 </div>
-<div class="section" id="id2">
-<h3>5.1.2. ライブラリによる1904年始まりの判定方法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>5.2.2. ライブラリによる1904年始まりの判定方法<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="apache-poi1904">
-<h4>5.1.2.1. Apache POIにおける1904年始まりの判定方法<a class="headerlink" href="#apache-poi1904" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>5.2.2.1. Apache POIにおける1904年始まりの判定方法<a class="headerlink" href="#apache-poi1904" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Apache POIの場合、ファイルのフォーマットによって取得方法が変わります。</p>
 <ul class="simple">
 <li>公開されていないメソッドなのでリフレクションを使用して取得します。</li>
@@ -226,7 +267,7 @@
 </div>
 </div>
 <div class="section" id="jexcelapi1904">
-<h4>5.1.2.2. JExcelAPIにおける1904年始まりの判定方法<a class="headerlink" href="#jexcelapi1904" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>5.2.2.2. JExcelAPIにおける1904年始まりの判定方法<a class="headerlink" href="#jexcelapi1904" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>JExcel APIの場合も同様にWorkbookから取得しますが、セルクラスから上位のSheetクラスなどを取得できないため不便です。</p>
 <ul class="simple">
 <li>公開されていないメソッドなのでリフレクションを使用して取得します。</li>
@@ -288,8 +329,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h3>5.1.3. 日時の内部表現<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>5.2.3. 日時の内部表現<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Excelの場合、日時ファイル内部では数値として値を保持し、次の仕様となっています。</p>
 <ul class="simple">
 <li>整数部が日付情報。<ul>
@@ -326,8 +367,8 @@
 <li>ただし、西暦年が400で割り切れる年は閏年。</li>
 </ol>
 </div>
-<table border="1" class="docutils" id="id12">
-<caption><span class="caption-text">Excelの日付の内部表現</span><a class="headerlink" href="#id12" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id14">
+<caption><span class="caption-text">Excelの日付の内部表現</span><a class="headerlink" href="#id14" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="25%" />
@@ -403,7 +444,7 @@
 </tbody>
 </table>
 <div class="section" id="excelutc">
-<h4>5.1.3.1. Excel上の日時の値をUTC表記に変換する方法<a class="headerlink" href="#excelutc" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>5.2.3.1. Excel上の日時の値をUTC表記に変換する方法<a class="headerlink" href="#excelutc" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>Excelは日時は内部では数値で保持しており、Javaの <code class="docutils literal"><span class="pre">java.util.Date</span></code> に渡す形式であるUTC表現とは異なります。
 また、基準日が複数あるため、UTC形式に変換するには次の計算を行う。</p>
 <ol class="arabic simple">
@@ -438,8 +479,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>5.2. ビルトインフォーマット（組み込み書式）について<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>5.3. ビルトインフォーマット（組み込み書式）について<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Excelの書式は、ファイル内部では <em>インデックス番号</em> に対して、 <em>書式のパターン</em> が割り振られています。</p>
 <p>その中で、インデックス番号が 0～49は予め固定のフォーマットを持ち、ビルトインフォーマット（組み込み書式）と呼ばれます。</p>
 <ul class="simple">
@@ -463,8 +504,8 @@
 </div>
 <p>本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、
 予め <code class="docutils literal"><span class="pre">FormatterResolver#registerDefaultFormat()</span></code> メソッド内で登録し、正しい書式で取得できるようにしています。</p>
-<table border="1" class="docutils" id="id13">
-<caption><span class="caption-text">ビルドインフォーマットの一覧（0～49）</span><a class="headerlink" href="#id13" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id15">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（0～49）</span><a class="headerlink" href="#id15" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="5%" />
 <col width="5%" />
@@ -871,8 +912,8 @@
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils" id="id14">
-<caption><span class="caption-text">ビルドインフォーマットの一覧（50～）</span><a class="headerlink" href="#id14" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id16">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（50～）</span><a class="headerlink" href="#id16" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="5%" />
 <col width="5%" />
@@ -935,8 +976,8 @@
 </table>
 <p>組み込み書式以外で、OSの言語環境によって変わる書式があります。
 Excel上では、書式の前にアスタリスク（*）が付いている書式です。</p>
-<table border="1" class="docutils" id="id15">
-<caption><span class="caption-text">言語によって書式が変わる</span><a class="headerlink" href="#id15" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id17">
+<caption><span class="caption-text">言語によって書式が変わる</span><a class="headerlink" href="#id17" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="20%" />
@@ -973,7 +1014,7 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 </tbody>
 </table>
 <div class="section" id="jexcelapi">
-<h3>5.2.1. JExcelAPIによる書式のインデックスの取得<a class="headerlink" href="#jexcelapi" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.3.1. JExcelAPIによる書式のインデックスの取得<a class="headerlink" href="#jexcelapi" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>JExcelAPIでは、書式のインデックスの取得は <code class="docutils literal"><span class="pre">DisplayFormat#getFormatIndex()</span></code> から取得します。</li>
 <li>ビルトインフォーマットの定義は、非公開のクラス <code class="docutils literal"><span class="pre">jxl.biff.BuiltInfFomrat</span></code> で定義されています。</li>
@@ -1006,7 +1047,7 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 </div>
 </div>
 <div class="section" id="apache-poi">
-<h3>5.2.2. Apache POIによる書式のインデックスの取得<a class="headerlink" href="#apache-poi" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>5.3.2. Apache POIによる書式のインデックスの取得<a class="headerlink" href="#apache-poi" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <ul class="simple">
 <li>Apache POIの書式のインデックスは、 <code class="docutils literal"><span class="pre">CellSyle#getDataFormat()</span></code> から取得します。</li>
 </ul>
@@ -1015,12 +1056,12 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>5.3. エラーのセルについて<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>5.4. エラーのセルについて<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Excelの計算結果などによって、エラー値が表示されます。</p>
 <p>エラー値は数種類あり、ライブラリではコード値から判断します。</p>
-<table border="1" class="docutils" id="id16">
-<caption><span class="caption-text">Excelのエラー値の一覧</span><a class="headerlink" href="#id16" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id18">
+<caption><span class="caption-text">Excelのエラー値の一覧</span><a class="headerlink" href="#id18" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="15%" />
@@ -1125,12 +1166,12 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 </div>
 </div>
 <div class="section" id="id-lcid">
-<h2>5.4. ロケールID(LCID)の一覧<a class="headerlink" href="#id-lcid" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.5. ロケールID(LCID)の一覧<a class="headerlink" href="#id-lcid" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Excelで指定可能なロケールの一覧は、外部サイトの <a class="reference external" href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a> で確認できます。</p>
 <p>Excelの書式で指定する際には、16進数表記の値で指定します。</p>
 <p>日本語の場合、LCIDは0x0411であるため、書式上では <code class="docutils literal"><span class="pre">[$-411]</span></code> と指定します。</p>
-<table border="1" class="docutils" id="id17">
-<caption><span class="caption-text">LCIDの一覧</span><a class="headerlink" href="#id17" title="このテーブルへのパーマリンク">¶</a></caption>
+<table border="1" class="docutils" id="id19">
+<caption><span class="caption-text">LCIDの一覧</span><a class="headerlink" href="#id19" title="このテーブルへのパーマリンク">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="10%" />
@@ -1678,8 +1719,8 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 </tbody>
 </table>
 </div>
-<div class="section" id="id8">
-<h2>5.5. 漢数字／大字変換のアルゴリズム<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id9">
+<h2>5.6. 漢数字／大字変換のアルゴリズム<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>漢数字や大字への変換は、下記のように行います。</p>
 <ol class="arabic simple" start="0">
 <li>値が0の時は、値を〇（ゼロ）として処理を終了。</li>
@@ -1704,7 +1745,7 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
 <ol class="arabic simple" start="3">
 <li>分割した変換結果に、4桁区切りの単位を付けて、結合する。</li>
 </ol>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="_images/convert_kansuji.png"><img alt="_images/convert_kansuji.png" src="_images/convert_kansuji.png" /></a>
 <p class="caption"><span class="caption-text">漢数字の変換の概要</span></p>
 </div>
@@ -1729,7 +1770,7 @@ Excel上では、書式の前にアスタリスク（*）が付いている書�
         <li class="right" >
           <a href="format_basic.html" title="4. Excelの書式の基本について"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.7 ドキュメント</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.8 ドキュメント</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
