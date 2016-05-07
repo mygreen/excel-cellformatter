@@ -6,7 +6,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 <dependency>
     <groupId>com.github.mygreen</groupId>
     <artifactId>excel-cellformatter</artifactId>
-    <version>0.8</version>
+    <version>0.8.1</version>
 </dependency>
 ```
 
