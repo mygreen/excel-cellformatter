@@ -119,7 +119,7 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
         this.dateStart1904 = dateStart1904;
     }
     
-    private double toDouble(final T value) {
+    private double toDouble(final Object value) {
         
         final Class<?> clazz = value.getClass();
         if(clazz.isPrimitive()) {
@@ -130,11 +130,11 @@ public class NumberCell<T extends Number> extends ObjectCell<T> {
             } else if(clazz.equals(Integer.TYPE)) {
                 return new BigDecimal((int) value).doubleValue();
             } else if(clazz.equals(Long.TYPE)) {
-                new BigDecimal((long) value).doubleValue();
+                return new BigDecimal((long) value).doubleValue();
             } else if(clazz.equals(Float.TYPE)) {
-                new BigDecimal((float) value).doubleValue();
+                return new BigDecimal((float) value).doubleValue();
             } else if(clazz.equals(Double.TYPE)) {
-                new BigDecimal((double) value).doubleValue();
+                return new BigDecimal((double) value).doubleValue();
             } 
         }
         

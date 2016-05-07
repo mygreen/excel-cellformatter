@@ -1,8 +1,7 @@
 package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -34,11 +33,11 @@ public class ObjectCellFormatterTest {
     }
     
     @Test
-    public void test_format_numeric() {
+    public void test_format_numeric_double() {
         
         ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
         
-        ObjectCell<?> cell = new NumberCell<Double>(-1234.5, "#,##0.0_);[Red]\\(#,##0.0\\)");
+        ObjectCell<?> cell = new NumberCell<Double>(-1234.5d, "#,##0.0_);[Red]\\(#,##0.0\\)");
         
         CellFormatResult result = cellFormatter.format(cell);
         
@@ -47,6 +46,22 @@ public class ObjectCellFormatterTest {
         assertThat(result.getTextColor(), is(MSColor.RED));
         assertThat(result.getSectionPattern(), is("[Red]\\(#,##0.0\\)"));
         assertThat(result.getValueAsDoulbe(), is(-1234.5));
+    }
+    
+    @Test
+    public void test_format_numeric_int() {
+        
+        ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+        
+        ObjectCell<?> cell = new NumberCell<Integer>(-12345, "#,##0.0_);[Red]\\(#,##0.0\\)");
+        
+        CellFormatResult result = cellFormatter.format(cell);
+        
+        assertThat(result.getCellType(), is(FormatCellType.Number));
+        assertThat(result.getText(), is("(12,345.0)"));
+        assertThat(result.getTextColor(), is(MSColor.RED));
+        assertThat(result.getSectionPattern(), is("[Red]\\(#,##0.0\\)"));
+        assertThat(result.getValueAsDoulbe(), is(-12345.0));
     }
     
     @Test
