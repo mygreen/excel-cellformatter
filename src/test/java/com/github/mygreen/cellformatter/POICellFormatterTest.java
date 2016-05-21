@@ -1,8 +1,7 @@
 package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +27,6 @@ import org.apache.poi.ss.util.CellReference;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.mygreen.cellformatter.lang.MSColor;

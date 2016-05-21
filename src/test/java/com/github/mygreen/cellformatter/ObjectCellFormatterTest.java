@@ -65,6 +65,23 @@ public class ObjectCellFormatterTest {
     }
     
     @Test
+    public void test_format_numeric_sp() {
+        
+        ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+        
+        ObjectCell<?> cell = new NumberCell<Integer>(-1234, "\"\\\"#,##0_);[Red]\\(\"\\\"#,##0\\)");
+        
+        CellFormatResult result = cellFormatter.format(cell);
+        
+        assertThat(result.getCellType(), is(FormatCellType.Number));
+        assertThat(result.getText(), is("(\\1,234)"));
+        assertThat(result.getTextColor(), is(MSColor.RED));
+        assertThat(result.getSectionPattern(), is("[Red]\\(\"\\\"#,##0\\)"));
+        assertThat(result.getValueAsDoulbe(), is(-1234.0));
+        
+    }
+    
+    @Test
     public void test_format_date() {
         
         ObjectCellFormatter cellFormatter = new ObjectCellFormatter();

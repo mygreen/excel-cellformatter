@@ -1,13 +1,8 @@
 package com.github.mygreen.cellformatter;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.github.mygreen.cellformatter.lang.MSColor;
@@ -20,18 +15,6 @@ import com.github.mygreen.cellformatter.lang.MSColor;
  */
 public class CustomFormatterFactoryTest {
     
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() throws Exception {
-    }
-    
-    @After
-    public void tearDown() throws Exception {
-    }
-    
     // エスケープ文字のテスト
     @Test
     public void testEscapedChar() {
@@ -42,6 +25,21 @@ public class CustomFormatterFactoryTest {
         
         CellFormatResult actual = formatter.format(testCell);
         assertThat(actual.getText(), is("aa23.10"));
+    }
+    
+    // エスケープ文字のテスト
+    @Test
+    public void testEscapedChar2() {
+        
+        // "\"#,##0_);[Red]\("\"#,##0\)
+        NumberCell<Integer> cell = new NumberCell<Integer>(-1234, "\"\\\"#,##0_);[Red]\\(\"\\\"#,##0\\)");
+        
+        CustomFormatterFactory factory = new CustomFormatterFactory();
+        CustomFormatter formatter = factory.create(cell.getFormatPattern());
+        
+        CellFormatResult actual = formatter.format(cell);
+        assertThat(actual.getText(), is("(\\1,234)"));
+        assertThat(actual.getTextColor(), is(MSColor.RED));
     }
     
     // セクションの個数のテスト

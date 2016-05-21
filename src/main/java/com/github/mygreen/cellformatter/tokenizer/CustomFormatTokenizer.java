@@ -39,6 +39,11 @@ public class CustomFormatTokenizer {
             
             if(StackUtils.equalsAnyTopElement(stack, Token.STR_ESCAPES)) {
                 
+                // スタックの一番上がエスケープの文字だが、文字列の囲み文字(")の終了の場合は、文字列として追加する
+                if(c == '"' && StackUtils.equalsBottomElement(stack, "\"")) {
+                    store.add(Token.word(StackUtils.popupAndConcat(stack) + c));
+                    continue;
+                }
                 // スタックの一番上がエスケープ文字の場合でかつ、括弧や文字列などの囲み文字の中の場合は、通常の文字として扱う。
                 if(StackUtils.equalsAnyBottomElement(stack, new String[]{"[", "\""})) {
                     stack.push(String.valueOf(c));
