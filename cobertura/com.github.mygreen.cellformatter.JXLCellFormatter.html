@@ -228,10 +228,10 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;108</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String formatAsString(<span class="keyword">final</span> Cell cell, <span class="keyword">final</span> Locale locale, <span class="keyword">final</span> <span class="keyword">boolean</span> isStartDate1904) {        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;109</td>  <td class="nbHitsCovered">&nbsp;900</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(cell, <span class="string">"cell"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;109</td>  <td class="nbHitsCovered">&nbsp;925</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(cell, <span class="string">"cell"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;110</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;900</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> format(cell, locale, isStartDate1904).getText();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;925</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> format(cell, locale, isStartDate1904).getText();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;112</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;113</td>  <td class="nbHits">&nbsp;</td>
@@ -288,38 +288,38 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;140</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> CellFormatResult format(<span class="keyword">final</span> Cell cell, <span class="keyword">final</span> Locale locale, <span class="keyword">final</span> <span class="keyword">boolean</span> isStartDate1904) {        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;141</td>  <td class="nbHitsCovered">&nbsp;907</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(cell, <span class="string">"cell"</span>);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;141</td>  <td class="nbHitsCovered">&nbsp;932</td>  <td class="src"><pre class="src">&nbsp;        ArgUtils.notNull(cell, <span class="string">"cell"</span>);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;142</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;143</td>  <td class="nbHitsUncovered"><a title="Line 143: Conditional coverage 50% (1/2).">&nbsp;907</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 143: Conditional coverage 50% (1/2).">        <span class="keyword">final</span> Locale runtimeLocale = locale != <span class="keyword">null</span> ? locale : Locale.getDefault();</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;144</td>  <td class="nbHitsCovered">&nbsp;907</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> CellType cellType = cell.getType();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;143</td>  <td class="nbHitsUncovered"><a title="Line 143: Conditional coverage 50% (1/2).">&nbsp;932</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 143: Conditional coverage 50% (1/2).">        <span class="keyword">final</span> Locale runtimeLocale = locale != <span class="keyword">null</span> ? locale : Locale.getDefault();</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;144</td>  <td class="nbHitsCovered">&nbsp;932</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> CellType cellType = cell.getType();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;145</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;146</td>  <td class="nbHitsCovered"><a title="Line 146: Conditional coverage 100% (2/2).">&nbsp;907</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 146: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(cellType == CellType.EMPTY) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;146</td>  <td class="nbHitsCovered"><a title="Line 146: Conditional coverage 100% (2/2).">&nbsp;932</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 146: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(cellType == CellType.EMPTY) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;147</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatResult result = <span class="keyword">new</span> CellFormatResult();</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;148</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;            result.setCellType(FormatCellType.Blank);</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;149</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;            result.setText(<span class="string">""</span>);</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;150</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> result;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;151</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;152</td>  <td class="nbHitsCovered"><a title="Line 152: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;903</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 152: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.LABEL || cellType == CellType.STRING_FORMULA) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;152</td>  <td class="nbHitsCovered"><a title="Line 152: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;928</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 152: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.LABEL || cellType == CellType.STRING_FORMULA) {</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;153</td>  <td class="nbHitsCovered">&nbsp;38</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;154</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;155</td>  <td class="nbHitsUncovered"><a title="Line 155: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;865</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 155: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.BOOLEAN || cellType == CellType.BOOLEAN_FORMULA) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;155</td>  <td class="nbHitsUncovered"><a title="Line 155: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;890</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 155: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.BOOLEAN || cellType == CellType.BOOLEAN_FORMULA) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;156</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;157</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;158</td>  <td class="nbHitsUncovered"><a title="Line 158: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">&nbsp;858</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 158: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.ERROR || cellType == CellType.FORMULA_ERROR) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;158</td>  <td class="nbHitsUncovered"><a title="Line 158: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">&nbsp;883</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 158: Conditional coverage 75% (3/4) [each condition: 50%, 100%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.ERROR || cellType == CellType.FORMULA_ERROR) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;159</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getErrorCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;160</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;161</td>  <td class="nbHitsUncovered"><a title="Line 161: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;844</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 161: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.DATE || cellType == CellType.DATE_FORMULA) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;161</td>  <td class="nbHitsUncovered"><a title="Line 161: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;869</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 161: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.DATE || cellType == CellType.DATE_FORMULA) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;162</td>  <td class="nbHitsCovered">&nbsp;333</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;163</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;164</td>  <td class="nbHitsUncovered"><a title="Line 164: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;511</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 164: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.NUMBER || cellType == CellType.NUMBER_FORMULA) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;511</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;164</td>  <td class="nbHitsUncovered"><a title="Line 164: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">&nbsp;536</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 164: Conditional coverage 75% (3/4) [each condition: 100%, 50%].">        } <span class="keyword">else</span> <span class="keyword">if</span>(cellType == CellType.NUMBER || cellType == CellType.NUMBER_FORMULA) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;536</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> getCellValue(cell, runtimeLocale, isStartDate1904);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;166</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;167</td>  <td class="nbHits">&nbsp;</td>
@@ -478,31 +478,31 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> CellFormatResult getCellValue(<span class="keyword">final</span> Cell cell, <span class="keyword">final</span> Locale locale, <span class="keyword">final</span> <span class="keyword">boolean</span> isStartDate1904) {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;258</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;259</td>  <td class="nbHitsCovered">&nbsp;889</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> JXLCell jxlCell = <span class="keyword">new</span> JXLCell(cell, isStartDate1904);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;260</td>  <td class="nbHitsCovered">&nbsp;889</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">short</span> formatIndex = jxlCell.getFormatIndex();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;261</td>  <td class="nbHitsCovered">&nbsp;889</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> String formatPattern = jxlCell.getFormatPattern();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;259</td>  <td class="nbHitsCovered">&nbsp;914</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> JXLCell jxlCell = <span class="keyword">new</span> JXLCell(cell, isStartDate1904);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;260</td>  <td class="nbHitsCovered">&nbsp;914</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">short</span> formatIndex = jxlCell.getFormatIndex();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;261</td>  <td class="nbHitsCovered">&nbsp;914</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> String formatPattern = jxlCell.getFormatPattern();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;262</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered"><a title="Line 263: Conditional coverage 100% (2/2).">&nbsp;889</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 263: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(formatterResolver.canResolve(formatIndex)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;264</td>  <td class="nbHitsCovered">&nbsp;289</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;265</td>  <td class="nbHitsCovered">&nbsp;289</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered"><a title="Line 263: Conditional coverage 100% (2/2).">&nbsp;914</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 263: Conditional coverage 100% (2/2).">        <span class="keyword">if</span>(formatterResolver.canResolve(formatIndex)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;264</td>  <td class="nbHitsCovered">&nbsp;312</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;265</td>  <td class="nbHitsCovered">&nbsp;312</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;266</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;267</td>  <td class="nbHitsCovered"><a title="Line 267: Conditional coverage 100% (2/2).">&nbsp;600</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 267: Conditional coverage 100% (2/2).">        } <span class="keyword">else</span> <span class="keyword">if</span>(formatterResolver.canResolve(formatPattern)) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered">&nbsp;269</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;269</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;267</td>  <td class="nbHitsCovered"><a title="Line 267: Conditional coverage 100% (2/2).">&nbsp;602</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 267: Conditional coverage 100% (2/2).">        } <span class="keyword">else</span> <span class="keyword">if</span>(formatterResolver.canResolve(formatPattern)) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered">&nbsp;270</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;270</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;270</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;271</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        } <span class="keyword">else</span> {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;272</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            <span class="comment">// キャッシュに登録する。</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;273</td>  <td class="nbHitsCovered">&nbsp;331</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsUncovered"><a title="Line 274: Conditional coverage 50% (1/2).">&nbsp;331</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 274: Conditional coverage 50% (1/2).">            <span class="keyword">if</span>(isCache()) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsCovered">&nbsp;331</td>  <td class="src"><pre class="src">&nbsp;                formatterResolver.registerFormatter(formatPattern, cellFormatter);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;273</td>  <td class="nbHitsCovered">&nbsp;332</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsUncovered"><a title="Line 274: Conditional coverage 50% (1/2).">&nbsp;332</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 274: Conditional coverage 50% (1/2).">            <span class="keyword">if</span>(isCache()) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsCovered">&nbsp;332</td>  <td class="src"><pre class="src">&nbsp;                formatterResolver.registerFormatter(formatPattern, cellFormatter);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;276</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;277</td>  <td class="nbHitsCovered">&nbsp;331</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;277</td>  <td class="nbHitsCovered">&nbsp;332</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> cellFormatter.format(jxlCell, locale);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;278</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            </pre></td></tr>
 <tr>  <td class="numLine">&nbsp;279</td>  <td class="nbHits">&nbsp;</td>
@@ -556,7 +556,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;305</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">boolean</span> isCache() {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsCovered">&nbsp;331</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> cache;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsCovered">&nbsp;332</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> cache;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;307</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;308</td>  <td class="nbHits">&nbsp;</td>
@@ -614,6 +614,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 16/05/07 12:29.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 16/05/21 14:55.</div>
 </body>
 </html>
