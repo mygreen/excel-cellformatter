@@ -65,7 +65,7 @@ public class ObjectCellFormatterTest {
     }
     
     @Test
-    public void test_format_numeric_sp() {
+    public void test_format_numeric_escapeFormat() {
         
         ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
         
@@ -78,6 +78,21 @@ public class ObjectCellFormatterTest {
         assertThat(result.getTextColor(), is(MSColor.RED));
         assertThat(result.getSectionPattern(), is("[Red]\\(\"\\\"#,##0\\)"));
         assertThat(result.getValueAsDoulbe(), is(-1234.0));
+        
+    }
+    
+    // Java8の場合、丸め誤差により結果が 1.234E-05 となるため注意が必要
+    @Test
+    public void test_format_num() {
+        
+        ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+        
+        ObjectCell<?> cell = new NumberCell<Double>(0.000012345d, "0.000E+00");
+        
+        CellFormatResult result = cellFormatter.format(cell);
+        
+        assertThat(result.getCellType(), is(FormatCellType.Number));
+        assertThat(result.getText(), is("1.235E-05"));
         
     }
     
