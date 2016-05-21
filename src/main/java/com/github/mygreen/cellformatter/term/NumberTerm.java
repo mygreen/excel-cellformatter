@@ -1,5 +1,6 @@
 package com.github.mygreen.cellformatter.term;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -58,22 +59,12 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
      */
     public static class GeneralTerm extends NumberTerm {
         
-        private final ThreadLocal<DecimalFormat> formatter = new ThreadLocal<DecimalFormat>() {
-            
-            @Override
-            protected DecimalFormat initialValue() {
-                final DecimalFormat format = new DecimalFormat("0.##########");
-                format.setRoundingMode(RoundingMode.HALF_UP);
-                return format;
-            }
-            
-        };
-        
         @Override
         public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
             
             final double unsingedValue = Math.abs(number.getValue());
             
+            // 指数表記の場合
             if(isNumberAsExponent(unsingedValue)) {
                 final DecimalFormat format = new DecimalFormat("0.#####E0");
                 format.setRoundingMode(RoundingMode.HALF_UP);
@@ -86,10 +77,46 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
                 
                 return str;
                 
-            } else {
-                return formatter.get().format(unsingedValue);
-                
             }
+            
+            final BigDecimal num = new BigDecimal(unsingedValue);
+            final String strNum = num.toPlainString();
+            
+            /*
+             * 小数部がない場合
+             * ・小数点で判断
+             */
+            if(!strNum.contains(".")) {
+                return strNum;
+            }
+            
+            /*
+             * 小数部がある場合、整数部の桁数によって精度を変える
+             * ・整数部が10桁以上ある場合は、小数部は省略される。
+             * ・整数部が10桁未満の場合、有効桁数が10桁になるように少数の精度が増える。
+             */
+            final String strIntPart = strNum.substring(0, strNum.indexOf("."));
+            final int intLength = strIntPart.length();
+            
+            final String pattern;
+            if(intLength < 10) {
+                StringBuilder f = new StringBuilder();
+                f.append("0.");
+                for(int i=0; i < 10-intLength; i++) {
+                    f.append("#");
+                }
+                
+                pattern = f.toString();
+                
+            } else {
+                pattern = "0";
+            }
+            
+            final DecimalFormat format = new DecimalFormat(pattern);
+            format.setRoundingMode(RoundingMode.HALF_UP);
+            return format.format(unsingedValue);
+            
+        
         }
         
         /**
@@ -111,7 +138,6 @@ public abstract class NumberTerm implements Term<FormattedNumber> {
             } else {
                 return false;
             }
-            
             
         }
     }
