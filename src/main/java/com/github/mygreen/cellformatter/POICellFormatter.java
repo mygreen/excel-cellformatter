@@ -3,6 +3,7 @@ package com.github.mygreen.cellformatter;
 import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FormulaError;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -55,7 +56,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
  * @see <a href="http://www.ne.jp/asahi/hishidama/home/tech/apache/poi/cell.html" target="_blank">ひしだま's 技術メモページ - Apache POI Cell : Cellの値の取得</a>
  * @see <a href="http://shin-kawara.seesaa.net/article/159663314.html" target="_blank">POIでセルの値をとるのは大変　日付編</a>
  * 
- * @version 0.7
+ * @version 0.8.3
  * @author T.TSUCHIE
  *
  */
@@ -190,9 +191,30 @@ public class POICellFormatter {
         final FormulaEvaluator evaluator = helper.createFormulaEvaluator();
         
         try {
-            // 再帰的に処理する
-            final Cell evalCell = evaluator.evaluateInCell(cell);
-            return format(evalCell, locale);
+            final CellValue value = evaluator.evaluate(cell);
+            final POIEvaluatedCell evaluatedCell = new POIEvaluatedCell(cell, value);
+            
+            switch(value.getCellType()) {
+                
+                case Cell.CELL_TYPE_BOOLEAN:
+                    return getCellValue(evaluatedCell, locale);
+                    
+                case Cell.CELL_TYPE_STRING:
+                    return getCellValue(evaluatedCell, locale);
+                    
+                case Cell.CELL_TYPE_NUMERIC:
+                    return getCellValue(evaluatedCell, locale);
+                    
+                case Cell.CELL_TYPE_ERROR:
+                    return getErrorCellValue(value.getErrorValue(), locale);
+                    
+                default:
+                    final CellFormatResult result = new CellFormatResult();
+                    result.setCellType(FormatCellType.Unknown);
+                    result.setText("");
+                    return result;
+            }
+            
         } catch(Exception e) {
             if(isThrowFailEvaluateFormula()) {
                 throw new FormulaEvaluateException(cell, e);
@@ -203,6 +225,7 @@ public class POICellFormatter {
         
     }
     
+    
     /**
      * エラーセルの値を評価する。
      * @param cell
@@ -211,11 +234,22 @@ public class POICellFormatter {
      */
     private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale) {
         
-       final int cellType = cell.getCellType();
-       assert cellType == Cell.CELL_TYPE_ERROR;
-       
-       final FormulaError error = FormulaError.forInt(cell.getErrorCellValue());
-       
+        final int cellType = cell.getCellType();
+        assert cellType == Cell.CELL_TYPE_ERROR;
+        
+        return getErrorCellValue(cell.getErrorCellValue(), locale);
+    }
+    
+    /**
+     * エラーセルの値を評価する。
+     * @since 0.8.3
+     * @param errorValue エラーセルの値。
+     * @param locale
+     * @return
+     */
+    private CellFormatResult getErrorCellValue(final byte errorValue, final Locale locale) {
+        
+       final FormulaError error = FormulaError.forInt(errorValue);
        final CellFormatResult result = new CellFormatResult();
        result.setCellType(FormatCellType.Error);
        result.setValue(error.getCode());
@@ -278,8 +312,17 @@ public class POICellFormatter {
      * @return フォーマットした結果
      */
     private CellFormatResult getCellValue(final Cell cell, final Locale locale) {
+        return getCellValue(new POICell(cell), locale);
+    }
+    
+    /**
+     * セルの値をフォーマットする。
+     * @param poiCell フォーマット対象のセル
+     * @param locale ロケール
+     * @return フォーマットした結果
+     */
+    private CellFormatResult getCellValue(final POICell poiCell, final Locale locale) {
         
-        final POICell poiCell = new POICell(cell);
         final short formatIndex = poiCell.getFormatIndex();
         final String formatPattern = poiCell.getFormatPattern();
         
