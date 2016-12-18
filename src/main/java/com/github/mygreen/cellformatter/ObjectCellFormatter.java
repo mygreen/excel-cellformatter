@@ -281,6 +281,25 @@ public class ObjectCellFormatter {
     }
     
     /**
+     * {@link FormatterResolver}を取得する。
+     * @since 0.9
+     * @return
+     */
+    public FormatterResolver getFormatterResolver() {
+        return formatterResolver;
+    }
+    
+    /**
+     * {@link FormatterResolver}を設定する。
+     * 独自のものに入れ替える際に利用します。
+     * @since 0.9
+     * @param formatterResolver
+     */
+    public void setFormatterResolver(FormatterResolver formatterResolver) {
+        this.formatterResolver = formatterResolver;
+    }
+    
+    /**
      * パースしたフォーマッタをキャッシュするかどうか。
      * 初期値はtrueです。
      * @return
@@ -296,5 +315,6 @@ public class ObjectCellFormatter {
     public void setCache(boolean cache) {
         this.cache = cache;
     }
+    
     
 }
