@@ -71,6 +71,15 @@ public class MessageResource {
     }
     
     /**
+     * 既存のメッセージソースを追加する
+     * @param resource
+     */
+    public void addMessage(final MessageResource resource) {
+        this.messages.putAll(resource.messages);
+        
+    }
+    
+    /**
      * 存在しないメッセージソースを示すかどうか。
      * @return {@link #NULL_OBJECT}のインスタンスの場合、trueを返す。
      */

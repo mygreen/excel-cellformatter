@@ -1,8 +1,7 @@
 package com.github.mygreen.cellformatter.lang;
 
+import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.Locale;
 
@@ -11,6 +10,7 @@ import org.junit.Test;
 /**
  * {@link MessageResolver}のテスタ
  *
+ * @version 0.9
  * @since 0.5
  * @author T.TSUCHIE
  *
@@ -41,10 +41,23 @@ public class MessageResolverTest {
     @Test
     public void testNullObject() {
         
-        MessageResolver messageResolver = new MessageResolver("com.sample", true);
+        MessageResolver messageResolver = new MessageResolver("com.sample", true, true);
         
         // default
         assertThat(messageResolver.loadResource(Locale.JAPANESE).isNullObject(), is(true));
+        
+    }
+    
+    /**
+     * クラスパスのルートにあるファイルの読み込み - 既存の年号の場合
+     * @since 0.9
+     */
+    @Test
+    public void testUserResource_era() {
+        
+        MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.era", true, true);
+        
+        assertThat(messageResolver.getMessage(Locale.JAPANESE, "era.karigou.name"), is("仮号"));
         
     }
     

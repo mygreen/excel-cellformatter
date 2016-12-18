@@ -33,6 +33,11 @@ public class MessageResolver {
     private final boolean allowedNoDefault;
     
     /**
+     * クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
+     */
+    private final boolean appendUserResource;
+    
+    /**
      * デフォルトのメッセージ情報
      */
     private MessageResource defaultResource;
@@ -48,7 +53,7 @@ public class MessageResolver {
      * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
      */
     public MessageResolver(final String resourceName) {
-        this(resourceName, false);
+        this(resourceName, false, false);
         
     }
     
@@ -56,11 +61,14 @@ public class MessageResolver {
      * リソース名を指定してインスタンスを生成する。
      * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
      * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
+     * @param appendUserResouce クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
+     *      引数resourceNameの値が {@literal sample.SampleMessages}のとき、クラスパスのルート上にある「SampleMessages」を読み込みます。
      */
-    public MessageResolver(final String resourceName, final boolean allowedNoDefault) {
+    public MessageResolver(final String resourceName, final boolean allowedNoDefault, final boolean appendUserResouce) {
         this.resourceName = resourceName;
         this.allowedNoDefault = allowedNoDefault;
-        this.defaultResource = loadDefaultResource(allowedNoDefault);
+        this.appendUserResource = appendUserResouce;
+        this.defaultResource = loadDefaultResource(allowedNoDefault, appendUserResouce);
         this.resources = new ConcurrentHashMap<>();
     }
     
@@ -78,7 +86,7 @@ public class MessageResolver {
     
     private String[] getPropertyPath(final Locale locale) {
         
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         
         final String baseName = getResourceName().replaceAll("\\.", "/");
         if(Utils.isNotEmpty(locale.getLanguage())) {
@@ -112,9 +120,10 @@ public class MessageResolver {
      * <p>プロパティ名を補完する。
      * @param path プロパティファイルのパス名
      * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
+     * @param appendUserResource クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
      * @return
      */
-    private MessageResource loadDefaultResource(boolean allowedNoDefault) {
+    private MessageResource loadDefaultResource(final boolean allowedNoDefault, final boolean appendUserResource) {
         
         final String path = getPropertyPath();
         Properties props = new Properties();
@@ -130,11 +139,16 @@ public class MessageResolver {
         
         final MessageResource resource = new MessageResource();
         
-        Enumeration<?> keys = props.propertyNames();
+        final Enumeration<?> keys = props.propertyNames();
         while(keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             String value = props.getProperty(key);
             resource.addMessage(key, value);
+        }
+        
+        // ユーザのリソースの読み込み
+        if(appendUserResource) {
+            resource.addMessage(loadUserResource(path));
         }
         
         return resource;
@@ -162,16 +176,21 @@ public class MessageResolver {
             for(String path : getPropertyPath(locale)) {
                 
                 try {
-                    Properties props = new Properties();
+                    final Properties props = new Properties();
                     props.load(MessageResolver.class.getResourceAsStream(path));
                     
                     localeResource = new MessageResource();
                     
-                    Enumeration<?> keys = props.propertyNames();
+                    final Enumeration<?> keys = props.propertyNames();
                     while(keys.hasMoreElements()) {
                         String key = (String) keys.nextElement();
                         String value = props.getProperty(key);
                         localeResource.addMessage(key, value);
+                    }
+                    
+                    // ユーザのリソースの読み込み
+                    if(appendUserResource) {
+                        localeResource.addMessage(loadUserResource(path));
                     }
                     
                     break;
@@ -191,6 +210,40 @@ public class MessageResolver {
         }
         
         return localeResource;
+        
+    }
+    
+    /**
+     * 
+     * @param basePath 基準となるプロパティファイルパス。「/」区切りで、拡張子、ロケール名が付いている。
+     * @return 読み込んだメッセージソース。存在しない場合は、{@link MessageResource#NULL_OBJECT}を返す。
+     */
+    private MessageResource loadUserResource(final String basePath) {
+        
+        // ファイル名の切り出し
+        final int index = basePath.lastIndexOf("/");
+        if(index <= 0) {
+            return MessageResource.NULL_OBJECT;
+        }
+        
+        final String userPropertyPath = "/" + basePath.substring(index+1);
+        try {
+            Properties props = new Properties();
+            props.load(MessageResolver.class.getResourceAsStream(userPropertyPath));
+            
+            final MessageResource resource = new MessageResource();
+            final Enumeration<?> keys = props.propertyNames();
+            while(keys.hasMoreElements()) {
+                String key = (String) keys.nextElement();
+                String value = props.getProperty(key);
+                resource.addMessage(key, value);
+            }
+            
+            return resource;
+            
+        } catch(NullPointerException | IOException e) {
+            return MessageResource.NULL_OBJECT;
+        }
         
     }
     
