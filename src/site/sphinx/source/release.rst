@@ -3,6 +3,13 @@
 ======================================
 
 ------------------------
+ver.0.9 - 2016-12-19
+------------------------
+* `#18 <https://github.com/mygreen/excel-cellformatter/issues/18>`_ : ``ObejctCellFormatter`` に formatterResolverのアクセッサメソッドを追加しました。
+* `#19 <https://github.com/mygreen/excel-cellformatter/issues/19>`_ : 元号をカスタマイズできるようにしました。
+  詳細は、 :doc:`カスタマイズ方法 <customize.rst>` を参照してください。
+
+------------------------
 ver.0.8.3 - 2016-07-02
 ------------------------
 * `#17 <https://github.com/mygreen/excel-cellformatter/issues/17>`_ : 数式を含んだセルの値を評価する際にCellの値を更新しないように修正。
