@@ -40,7 +40,7 @@ public class ArgUtils {
      * 配列のサイズが0または、nullでないかどうか検証する。
      * @param arg 検証対象の値
      * @param name 検証対象の引数の名前
-     * @throws IllegalArgumentException {@literalarg == null || arg.length == 0.}
+     * @throws IllegalArgumentException {@literal arg == null || arg.length == 0.}
      */
     public static void notEmpty(final Object[] arg, final String name) {
         if(arg == null || arg.length == 0) {
@@ -52,7 +52,7 @@ public class ArgUtils {
      * Collection(リスト、セット)のサイズが0または、nullでないかどうか検証する。
      * @param arg 検証対象の値
      * @param name 検証対象の引数の名前
-     * @throws IllegalArgumentException {@literalarg == null || arg.size() == 0.}
+     * @throws IllegalArgumentException {@literal arg == null || arg.size() == 0.}
      */
     public static void notEmpty(final Collection<?> arg, final String name) {
         if(arg == null || arg.isEmpty()) {

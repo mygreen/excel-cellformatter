@@ -53,7 +53,7 @@ public class CellFormatResult {
     /**
      * フォーマット対象の値をdouble型として取得する。
      * @return 数値の値を返す。{@link #isNumber()}の値が{@literal true}の時に値が取得可能。
-     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
+     * @throws ClassCastException 書式が一致しない場合
      */
     public double getValueAsDoulbe() {
         return (double) value;
@@ -63,7 +63,7 @@ public class CellFormatResult {
      * フォーマット対象の値を日時型として取得する。
      * @return タイムゾーンが考慮された日時です。タイムゾーンはデフォルトです。
      *         {@link #isDate()}の値が{@literal true}の時に値が取得可能。
-     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
+     * @throws ClassCastException 書式が一致しない場合
      */
     public Date getValueAsDate() {
         return getValueAsDate(null);
@@ -75,7 +75,7 @@ public class CellFormatResult {
      * @param tz タイムゾーン。値がnullの場合は、デフォルトを使用します。
      * @return タイムゾーンを考慮した日時オブジェクト。
      *          {@link #isDate()}の値が{@literal true}の時に値が取得可能。
-     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
+     * @throws ClassCastException 書式が一致しない場合
      */
     public Date getValueAsDate(final TimeZone tz) {
         long time = ((Date) value).getTime();
@@ -91,8 +91,8 @@ public class CellFormatResult {
     
     /**
      * フォーマット対象の値を文字列型として取得する。
-     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      * @return 文字列の値。{@link #isText()}の値が{@literal true}の時に値が取得可能。
+     * @throws ClassCastException 書式が一致しない場合
      */
     public String getValueAsString() {
         return (String) value;
@@ -100,8 +100,8 @@ public class CellFormatResult {
     
     /**
      * フォーマット対象の値をブール型として取得する。
-     * @throws 書式が一致しない場合は、{@link ClassCastException}をスローする。
      * @return {@link #isBoolean()}の値が{@literal true}の時に値が取得可能。
+     * @throws ClassCastException 書式が一致しない場合
      */
     public boolean getValueAsBoolean() {
         return (boolean) value;
@@ -113,6 +113,14 @@ public class CellFormatResult {
      */
     public boolean isBlank() {
         return getCellType() == FormatCellType.Blank;
+    }
+    
+    /**
+     * 値がブール値かどうか
+     * @return true：ブール型の場合
+     */
+    public boolean isBoolean() {
+        return getCellType() == FormatCellType.Boolean;
     }
     
     /**
@@ -165,7 +173,7 @@ public class CellFormatResult {
     
     /**
      * 書式の文字色を設定する。
-     * @param color 文字色。
+     * @param textColor 文字色。
      */
     public void setTextColor(MSColor textColor) {
         this.textColor = textColor;
@@ -181,7 +189,7 @@ public class CellFormatResult {
     
     /**
      * フォーマットした文字列を設定する
-     * @param value
+     * @param text
      */
     public void setText(String text) {
         this.text = text;

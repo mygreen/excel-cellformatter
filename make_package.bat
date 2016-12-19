@@ -3,9 +3,7 @@
 %~d0
 cd %~p0
 
-if NOT "%JAVA_HOME_7%" == "" (
-    set JAVA_HOME="%JAVA_HOME_7%"
-)
+set JAVA_HOME=%JAVA_HOME_7%
 
 call mvn clean
 call mvn compile -Dmaven.test.skip=true

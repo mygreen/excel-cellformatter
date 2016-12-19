@@ -1,6 +1,7 @@
 package com.github.mygreen.cellformatter.lang;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -128,7 +129,7 @@ public class MessageResolver {
         final String path = getPropertyPath();
         Properties props = new Properties();
         try {
-            props.load(MessageResolver.class.getResourceAsStream(path));
+            props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(path), "UTF-8"));
         } catch (NullPointerException | IOException e) {
             if(allowedNoDefault) {
                 return MessageResource.NULL_OBJECT;
@@ -177,7 +178,7 @@ public class MessageResolver {
                 
                 try {
                     final Properties props = new Properties();
-                    props.load(MessageResolver.class.getResourceAsStream(path));
+                    props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(path), "UTF-8"));
                     
                     localeResource = new MessageResource();
                     
@@ -229,7 +230,7 @@ public class MessageResolver {
         final String userPropertyPath = "/" + basePath.substring(index+1);
         try {
             Properties props = new Properties();
-            props.load(MessageResolver.class.getResourceAsStream(userPropertyPath));
+            props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(userPropertyPath), "UTF-8"));
             
             final MessageResource resource = new MessageResource();
             final Enumeration<?> keys = props.propertyNames();

@@ -15,7 +15,6 @@ import com.github.mygreen.cellformatter.lang.MSLocale;
  * <p>区切り文字';'で区切られたもの。
  * 
  * @version 0.3
- * @param <T> 扱う処理のタイプ
  * @author T.TSUCHIE
  *
  */
@@ -155,7 +154,7 @@ public abstract class ConditionFormatter {
     
     /**
      * 一致条件を設定する。
-     * @return
+     * @param operator 一致条件
      */
     public void setOperator(ConditionOperator operator) {
         this.operator = operator;
@@ -201,7 +200,7 @@ public abstract class ConditionFormatter {
     
     /**
      * コールバック処理を取得する
-     * @param callback
+     * @return
      */
     public List<Callback<?>> getCallbacks() {
         return callbacks;

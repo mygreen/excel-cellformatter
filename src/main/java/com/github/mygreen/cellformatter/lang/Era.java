@@ -62,7 +62,7 @@ public class Era {
     /**
      * 指定した日時に該当する期間情報を取得する。
      * @param date 判定対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
-     * @return 見つからない場合は、存在しない期間を示すクラス{@link EraPeriod.UnknownPeriod}のインスタンスを返す。
+     * @return 見つからない場合は、存在しない期間を示すクラス{@link EraPeriod#UNKNOWN_PERIOD}のインスタンスを返す。
      * @throws IllegalArgumentException {@literal date == null.}
      */
     public EraPeriod getTargetPeriod(final Date date) {

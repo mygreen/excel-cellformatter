@@ -109,7 +109,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、ブール型をフォーマットし、結果を直接文字列として取得する。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果の文字列。
      */    
     public String formatAsString(final String formatPattern, final boolean value) {
@@ -120,7 +119,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、ブール型をフォーマットする。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果。
      */
     public CellFormatResult format(final String formatPattern, final boolean value) {
@@ -151,7 +149,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、数値型をフォーマットし、結果を直接文字列として取得する。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果の文字列。
      */
     public <N extends Number>String formatAsString(final String formatPattern, final N value) {
@@ -162,7 +159,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、数値型をフォーマットする。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果。
      */
     public <N extends Number> CellFormatResult format(final String formatPattern, final N value) {
@@ -193,7 +189,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、日付型をフォーマットし、結果を直接文字列として取得する。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果の文字列。
      */
     public String formatAsString(final String formatPattern, final Date value) {
@@ -204,7 +199,6 @@ public class ObjectCellFormatter {
      * ロケールを指定して、日付型をフォーマットする。
      * @param formatPattern フォーマットの書式。
      * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
-     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
      * @return フォーマットした結果。
      */
     public CellFormatResult format(final String formatPattern, final Date value) {

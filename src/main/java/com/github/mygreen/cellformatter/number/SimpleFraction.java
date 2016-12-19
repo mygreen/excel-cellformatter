@@ -2,7 +2,7 @@ package com.github.mygreen.cellformatter.number;
 
 /**
  * 簡易的な分数を表現するクラス。
- * <p>古いPOIだと提供されていないため、同じものを実装。
+ * <p>古いPOIだと提供されていないため、同じものを実装。</p>
  *
  * @author T.TSUCHIE
  *
@@ -49,7 +49,7 @@ public class SimpleFraction {
      * @param maxDenominator 分母の最大値。
      * 
      * @throws RuntimeException if the continued fraction failed to converge.
-     * @throws IllegalArgumentException if value > Integer.MAX_VALUE
+     * @throws IllegalArgumentException {@literal if value > Integer.MAX_VALUE}
      */
     public static SimpleFraction createFractionMaxDenominator(final double value, final int maxDenominator){
         return buildFractionMaxDenominator(value, 0, maxDenominator, 100);
