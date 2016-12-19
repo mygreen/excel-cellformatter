@@ -12,6 +12,7 @@ import org.junit.Test;
 /**
  * {@link EraResolver}のテスタ
  *
+ * @version 0.9
  * @since 0.5
  * @author T.TSUCHIE
  *
@@ -36,22 +37,55 @@ public class EraResolverTest {
         
         Era era = resolver.getEra(MSLocale.JAPANESE);
         
-        Date date = null;
-        EraPeriod period = null;
+        {
+            // 存在する期間
+            Date date = ExcelDateUtils.parseDate("2015-01-01 00:00:00.000");
+            assertThat(era.contains(date), is(true));
+            
+            EraPeriod period = era.getTargetPeriod(date);
+            assertThat(period.isUnknown(), is(false));
+        }
         
-        // 存在する期間
-        date = Timestamp.valueOf("2015-01-01 00:00:00.000");
-        assertThat(era.contains(date), is(true));
+        {
+            // 存在しない期間
+            Date date = ExcelDateUtils.parseDate("1850-01-01 00:00:00.000");
+            assertThat(era.contains(date), is(false));
+            
+            EraPeriod period = era.getTargetPeriod(date);
+            assertThat(period.isUnknown(), is(true));
+        }
         
-        period = era.getTargetPeriod(date);
-        assertThat(period.isUnknown(), is(false));
+    }
+    
+    /**
+     * ユーザのクラスパスのルートに配置している定義を読み込む
+     * <p>2018-12-31で平成が終わる定義</p>
+     */
+    @Test
+    public void testUserSetting() {
         
-        // 存在しない期間
-        date = Timestamp.valueOf("1850-01-01 00:00:00.000");
-        assertThat(era.contains(date), is(false));
+        EraResolver resolver = new EraResolver();
         
-        period = era.getTargetPeriod(date);
-        assertThat(period.isUnknown(), is(true));
+        Era era = resolver.getEra(MSLocale.JAPANESE);
+        
+        {
+            // 平成の終わり
+            Date date = ExcelDateUtils.parseDate("2018-12-31 23:59:59.999");
+            EraPeriod period = era.getTargetPeriod(date);
+            
+            assertThat(period.getName(), is("平成"));
+            assertThat(period.getEndDate(), is(not(nullValue())));
+            
+        }
+        
+        {
+            // 平成の次の仮号の場合
+            Date date = ExcelDateUtils.parseDate("2019-01-01 00:00:00.000");
+            EraPeriod period = era.getTargetPeriod(date);
+            
+            assertThat(period.getName(), is("仮号"));
+            assertThat(period.getEndDate(), is(nullValue()));
+        }
         
     }
 }

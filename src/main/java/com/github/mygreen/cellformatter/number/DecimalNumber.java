@@ -3,6 +3,8 @@ package com.github.mygreen.cellformatter.number;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+import com.github.mygreen.cellformatter.ConditionNumberFormatter;
+
 
 /**
  * 小数表現を含む数値を表現するクラス。

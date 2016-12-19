@@ -411,7 +411,7 @@ public class POICellFormatter {
     /**
      * 式を評価する際に失敗したときに、例外{@link FormulaEvaluateException}をスローするかどうか設定する。
      * @since 0.7
-     * @param throwFailEvaluateFromula true: 例外をスローする。
+     * @param throwFailEvaluateFormula true: 例外をスローする。
      */
     public void setThrowFailEvaluateFormula(boolean throwFailEvaluateFormula) {
         this.throwFailEvaluateFormula = throwFailEvaluateFormula;

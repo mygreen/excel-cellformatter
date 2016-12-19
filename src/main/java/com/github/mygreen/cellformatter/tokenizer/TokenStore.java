@@ -54,7 +54,7 @@ public class TokenStore {
         
         for(Token token : tokens) {
             
-            if(token.equals(Token.SYMBOL_SEMI_COLON)) {
+            if(token.equals(symbol)) {
                 store = new TokenStore();
                 list.add(store);
                 

@@ -153,7 +153,7 @@ public class CustomFormatter extends CellFormatter {
     
     /**
      * 条件付きのフォーマッタを取得する。
-     * @param formatter
+     * @return
      */
     public List<ConditionFormatter> getConditionFormatters() {
         return conditionFormatters;

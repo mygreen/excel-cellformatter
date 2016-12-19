@@ -77,7 +77,7 @@ public class ExcelDateUtils {
      *   <li>値{@literal 60.0}は、Excel上は1900年2月29日だが、グレゴリオ歴上は閏日ではあにため、1900年3月1日となります。</li>
      * </ul>
      * 
-     * @param value 変換対象のExcel表現上の数値。
+     * @param numValue 変換対象のExcel表現上の数値。
      * @param startDate1904 基準日が1904年始まりかどうか。
      * @return Java表現上に変換した日時。
      *         ただし、この値はタイムゾーンは考慮されていない（=GMT-00:00）ため、

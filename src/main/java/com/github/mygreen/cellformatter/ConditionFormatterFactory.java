@@ -61,7 +61,7 @@ public abstract class ConditionFormatterFactory<F> {
     private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile("\\[(色|Color)([0-9]+)\\]");
     
     /**
-     * '[<=1000]'などの演算子の条件式かどうか。
+     * {@literal '[<=1000]'}などの演算子の条件式かどうか。
      * @param token 判定対象のトークン。
      * @return true: 演算子の条件式。
      *
@@ -71,7 +71,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[$-403]'などのロケールの条件式かどうか。
+     * {@literal '[$-403]'}などのロケールの条件式かどうか。
      * @param token 判定対象のトークン。
      * @return true: ロケールの条件式。
      *
@@ -81,8 +81,8 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     *'[$€-403]'などの記号付きロケールの条件式かどうか。
-     *@since 0.8
+     * {@literal '[$€-403]'}などの記号付きロケールの条件式かどうか。
+     * @since 0.8
      * @param token 判定対象のトークン。
      * @return true: 記号付きロケールの条件式。     */
     protected boolean isConditionLocaleSymbol(final Token.Condition token) {
@@ -90,7 +90,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[DBNum1]'などの組み込み処理の条件式かどうか。
+     * {@literal '[DBNum1]'}などの組み込み処理の条件式かどうか。
      * @param token 判定対象のトークン。
      * @return true: 特殊な処理の条件式。
      *
@@ -100,7 +100,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[Red]'などの色の条件式の書式かどうか
+     * {@literal '[Red]'}などの色の条件式の書式かどうか
      * @param token 判定対象のトークン。
      * @return true: 色の条件式。
      *
@@ -113,7 +113,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[<=1000]'などの数値の条件を組み立てる
+     * {@literal '[<=1000]'}などの数値の条件を組み立てる
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
      * @param token 条件式のトークン。
      * @return 演算子の条件式。
@@ -162,7 +162,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[$-403]'などのロケールの条件を組み立てる
+     * {@literal '[$-403]'}などのロケールの条件を組み立てる
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
      * @param token 条件式のトークン。
      * @return ロケールの条件式。
@@ -191,7 +191,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[$€-403]'などの記号付きロケールの条件を組み立てる
+     * {@literal '[$€-403]'}などの記号付きロケールの条件を組み立てる
      * @since 0.8
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
      * @param token 条件式のトークン。
@@ -222,7 +222,7 @@ public abstract class ConditionFormatterFactory<F> {
     }
     
     /**
-     * '[DBNum1]'などの組み込み処理の条件を組み立てる。
+     * {@literal '[DBNum1]'}などの組み込み処理の条件を組み立てる。
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
      * @param token 条件式のトークン。
      * @return 組み込みの条件式。
@@ -257,7 +257,7 @@ public abstract class ConditionFormatterFactory<F> {
     
     
     /**
-     * '[Red]'などの色の条件の組み立てる。
+     * {@literal '[Red]'}などの色の条件の組み立てる。
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
      * @param token 条件式のトークン。
      * @return 色の条件式。

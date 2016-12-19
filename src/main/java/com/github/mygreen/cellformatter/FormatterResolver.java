@@ -107,7 +107,7 @@ public class FormatterResolver {
     
     /**
      * 指定したインデックスでプロパティに定義されているフォーマットを作成する。
-     * @param name 書式の名前。({@link format.<書式の名前>=})
+     * @param name 書式の名前。({@literal format.<書式の名前>=})
      * @param locales 検索するロケール。
      * @return 存在しないインデックス番号の時は、nullを返す。
      */
@@ -185,7 +185,7 @@ public class FormatterResolver {
     
     /**
      * 書式のパターンを指定して、キャッシュに登録されているフォーマッタを取得する。
-     * @param pattern
+     * @param formatPattern 書式
      * @return 登録されていないインデックスの場合は、nullを返す。
      */
     public CellFormatter getFormatter(final String formatPattern) {

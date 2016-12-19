@@ -25,7 +25,7 @@ public class EraResolver {
     /**
      * 時代の定義用のプロパティファイル
      */
-    private static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.era", true);
+    private static final MessageResolver messageResolver = new MessageResolver("com.github.mygreen.cellformatter.era", true, true);
     
     /**
      * ロケールごとの時代

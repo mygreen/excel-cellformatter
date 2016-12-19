@@ -8,8 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Microsoftで使用しているロケールを表現するクラス。
  * <ul>
- *  <li><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" target="_blank">ロケール ID (LCID) の一覧</a>
- *  <li><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" target="_blank">Locale IDs Assigned by Microsoft</a>
+ *  <li><a href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx" target="_blank">ロケール ID (LCID) の一覧</a></li>
+ *  <li><a href="https://msdn.microsoft.com/ja-jp/goglobal/bb964664.aspx" target="_blank">Locale IDs Assigned by Microsoft</a></li>
+ * </ul>
  * 
  * @version 0.5
  * @author T.TSUCHIE

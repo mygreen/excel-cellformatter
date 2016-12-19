@@ -133,7 +133,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
     
     /**
      * フォーマットの複数の項を追加する。
-     * @param term
+     * @param terms
      */
     public void addAllTerms(final List<Term<Calendar>> terms) {
         this.terms.addAll(terms);
