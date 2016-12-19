@@ -99,7 +99,10 @@ Excelの書式をパースする処理はコストがかかるため、一度パ
 定義を変更することができます。 *[ver.0.9+]*
 
 プロパティファイルは、既存の定義に対して差分のみ定義すれば問題ありません。
-ただし、プロパティファイルは、コマンド「native2ascii」でUnicodeに変更してください。
+ただし、プロパティファイルは、UTF-で定義してください。
+*native2ascii* コマンドでUnicodeへ変換する必要はありません。
+
+元のファイルは、jarファイル中の ``com/github/mygreen/cellformatter/era_ja.properties`` に格納してあります。
 
 .. sourcecode:: properties
     
