@@ -219,7 +219,7 @@ public class POICellFormatter {
             if(isThrowFailEvaluateFormula()) {
                 throw new FormulaEvaluateException(cell, e);
             } else {
-                return getErrorCellValue(cell, locale);
+                return getErrorCellValue(cell.getErrorCellValue(), locale);
             }
         }
         

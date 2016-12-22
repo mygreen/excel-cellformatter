@@ -3,6 +3,17 @@
 ======================================
 
 ------------------------
+ver.0.9.2 - 2017-09-22
+------------------------
+* `#22 <https://github.com/mygreen/excel-cellformatter/issues/22>`_ : ４つ目のセクションが文字列以外の場合に対応。
+* FindBugsによる指摘による、無駄なコードの修正。
+
+------------------------
+ver.0.9.1 - 2016-12-22
+------------------------
+* `#20 <https://github.com/mygreen/excel-cellformatter/issues/20>`_ : ``POICellFormatter`` のテスタにおいて、不明な数式の場合、テストに失敗する事象を修正しました。
+
+------------------------
 ver.0.9 - 2016-12-19
 ------------------------
 * `#18 <https://github.com/mygreen/excel-cellformatter/issues/18>`_ : ``ObejctCellFormatter`` に formatterResolverのアクセッサメソッドを追加しました。
