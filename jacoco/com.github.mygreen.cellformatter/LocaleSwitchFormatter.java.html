@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocaleSwitchFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">LocaleSwitchFormatter.java</span></div><h1>LocaleSwitchFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+
+
+/**
+ * ロケールによって、フォーマッタを切り替えるフォーマッタ。
+ * &lt;p&gt;該当するロケールがない場合、標準のフォーマッタを返す。
+ * 
+ * @author T.TSUCHIE
+ *
+ */
+public class LocaleSwitchFormatter extends CellFormatter {
+    
+    private final CellFormatter defaultFormatter;
+    
+<span class="fc" id="L21">    private final Map&lt;Locale, CellFormatter&gt; formatterMap = new ConcurrentHashMap&lt;&gt;();</span>
+    
+    /**
+     * 標準のフォーマッタを指定するコンストラクタ
+     * @param defaultFormatter 標準のフォーマッタ。
+     * @throws IllegalArgumentException {@literal defaultFormatter == null.}
+     */
+<span class="fc" id="L28">    public LocaleSwitchFormatter(final CellFormatter defaultFormatter) {</span>
+<span class="fc" id="L29">        ArgUtils.notNull(defaultFormatter, &quot;defaultFormatter&quot;);</span>
+<span class="fc" id="L30">        this.defaultFormatter = defaultFormatter;</span>
+<span class="fc" id="L31">    }</span>
+    
+    @Override
+    public CellFormatResult format(final CommonCell cell, final Locale locale) {
+        
+<span class="fc" id="L36">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
+        
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if(locale == null) {</span>
+<span class="nc" id="L39">            return defaultFormatter.format(cell, locale);</span>
+            
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        } else if(formatterMap.containsKey(locale)) {</span>
+<span class="fc" id="L42">            return formatterMap.get(locale).format(cell, locale);</span>
+        }
+        
+<span class="fc" id="L45">        return defaultFormatter.format(cell, locale);</span>
+    }
+    
+    /**
+     * ローケールとフォーマッタを登録する。
+     * @param cellFormatter 登録対象のフォーマッタ。
+     * @param locales 登録対象のロケール。複数指定可能。
+     * @return 現在の自身のインスタンス。
+     * @throws IllegalArgumentException {@literal cellFormatter == null.}
+     * @throws IllegalArgumentException {@literal locales == null || locales.length == 0.}
+     */
+    public LocaleSwitchFormatter register(final CellFormatter cellFormatter, final Locale... locales) {
+<span class="fc" id="L57">        ArgUtils.notNull(cellFormatter, &quot;cellFormatter&quot;);</span>
+<span class="fc" id="L58">        ArgUtils.notEmpty(locales, &quot;locales&quot;);</span>
+        
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(Locale locale : locales) {</span>
+<span class="fc" id="L61">            formatterMap.put(locale, cellFormatter);</span>
+        }
+        
+<span class="fc" id="L64">        return this;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

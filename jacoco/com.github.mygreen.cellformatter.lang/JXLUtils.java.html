@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JXLUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">JXLUtils.java</span></div><h1>JXLUtils.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.lang.reflect.Field;
+
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.SheetImpl;
+import jxl.read.biff.WorkbookParser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+ * JExcelAPIのユーティリティクラス。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="nc" id="L19">public class JXLUtils {</span>
+    
+<span class="fc" id="L21">    private static final Logger logger = LoggerFactory.getLogger(JXLUtils.class);</span>
+    
+    /**
+     * ファイルが1904年始まりの設定かどうか。
+     * @param workbook 判定対象のワークブック。
+     * @return true:1904年始まり
+     * @throws IllegalArgumentException {@literal workbook == null.}
+     */
+    public static boolean isDateStart1904(final Workbook workbook) {
+<span class="nc" id="L30">        ArgUtils.notNull(workbook, &quot;workbook&quot;);</span>
+        
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if(workbook instanceof WorkbookParser) {</span>
+            try {
+<span class="nc" id="L34">                Field field = WorkbookParser.class.getDeclaredField(&quot;nineteenFour&quot;);</span>
+<span class="nc" id="L35">                field.setAccessible(true);</span>
+                
+<span class="nc" id="L37">                boolean value = field.getBoolean(workbook);</span>
+<span class="nc" id="L38">                return value;</span>
+                
+<span class="nc" id="L40">            } catch (NoSuchFieldException | SecurityException e) {</span>
+<span class="nc" id="L41">                logger.warn(&quot;fail access field WrokbookParser#nineteenFour&quot;, e);</span>
+<span class="nc" id="L42">                return false;</span>
+                
+<span class="nc" id="L44">            } catch (IllegalArgumentException | IllegalAccessException e) {</span>
+<span class="nc" id="L45">                logger.warn(&quot;fail invoke field WrokbookParser#nineteenFour&quot;, e);</span>
+<span class="nc" id="L46">                return false;</span>
+            }
+            
+        }
+        
+<span class="nc" id="L51">        return false;</span>
+    }
+    
+    /**
+     * ファイルが1904年始まりの設定かどうか。
+     * @param sheet 判定対象のシート。
+     * @return true:1904年始まり
+     * @throws IllegalArgumentException  {@literal sheet == null.}
+     */
+    public static boolean isDateStart1904(final Sheet sheet) {
+<span class="fc" id="L61">        ArgUtils.notNull(sheet, &quot;sheet&quot;);</span>
+        
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if(sheet instanceof SheetImpl) {</span>
+            try {
+<span class="fc" id="L65">                Field field = SheetImpl.class.getDeclaredField(&quot;nineteenFour&quot;);</span>
+<span class="fc" id="L66">                field.setAccessible(true);</span>
+                
+<span class="fc" id="L68">                boolean value = field.getBoolean(sheet);</span>
+<span class="fc" id="L69">                return value;</span>
+                
+<span class="nc" id="L71">            } catch (NoSuchFieldException | SecurityException e) {</span>
+<span class="nc" id="L72">                logger.warn(&quot;fail access field SheetImpl#nineteenFour&quot;, e);</span>
+<span class="nc" id="L73">                return false;</span>
+                
+<span class="nc" id="L75">            } catch (IllegalArgumentException | IllegalAccessException e) {</span>
+<span class="nc" id="L76">                logger.warn(&quot;fail invoke field SheetImpl#nineteenFour&quot;, e);</span>
+<span class="nc" id="L77">                return false;</span>
+            }
+            
+        }
+        
+<span class="nc" id="L82">        return false;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

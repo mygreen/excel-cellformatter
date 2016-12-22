@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConditionNumberFormatterFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">ConditionNumberFormatterFactory.java</span></div><h1>ConditionNumberFormatterFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
+import com.github.mygreen.cellformatter.number.FormattedNumber;
+import com.github.mygreen.cellformatter.number.NumberFactory;
+import com.github.mygreen.cellformatter.number.NumberPartType;
+import com.github.mygreen.cellformatter.term.AsteriskTerm;
+import com.github.mygreen.cellformatter.term.EscapedCharTerm;
+import com.github.mygreen.cellformatter.term.LocaelSymbolTerm;
+import com.github.mygreen.cellformatter.term.NumberTerm;
+import com.github.mygreen.cellformatter.term.OtherTerm;
+import com.github.mygreen.cellformatter.term.Term;
+import com.github.mygreen.cellformatter.term.UnderscoreTerm;
+import com.github.mygreen.cellformatter.term.WordTerm;
+import com.github.mygreen.cellformatter.tokenizer.Token;
+import com.github.mygreen.cellformatter.tokenizer.TokenStore;
+
+
+/**
+ * {@link ConditionNumberFormatter}のインスタンスを作成するクラス。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L32">public class ConditionNumberFormatterFactory extends ConditionFormatterFactory&lt;ConditionNumberFormatter&gt; {</span>
+    
+<span class="fc" id="L34">    private static final Logger logger = LoggerFactory.getLogger(ConditionNumberFormatterFactory.class);</span>
+    
+<span class="fc" id="L36">    private static final String[] FORMAT_CHARS = {</span>
+        &quot;#&quot;, &quot;0&quot;, &quot;?&quot;,
+    };
+    
+<span class="fc" id="L40">    public static final String[] SYMBOL_CHARS = {</span>
+        &quot;.&quot;, &quot;,&quot;,
+        &quot;%&quot;, &quot;/&quot;,
+    };
+    
+<span class="fc" id="L45">    public static final String[] OTHER_CHARS = {</span>
+        &quot;E+&quot;, &quot;E-&quot;,
+        &quot;General&quot;,
+    };
+    
+<span class="fc" id="L50">    public static final String[] DIGITS_START_CHARS = {</span>
+        &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;,
+    };
+    
+<span class="fc" id="L54">    public static final String[] DIGITS_CHARS = {</span>
+        &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;0&quot;,
+    };
+    
+    /**
+     * 数値の書式かどうかを決定するためのキーワード。
+     */
+<span class="fc" id="L61">    private static final String[] NUMBER_DECISTION_CHARS = toArray(</span>
+            FORMAT_CHARS,
+            SYMBOL_CHARS
+    );
+    
+    /**
+     * 数値の項としてのキーワード
+     */
+<span class="fc" id="L69">    private static final String[] NUMBER_TERM_CHARS = toArray(</span>
+            FORMAT_CHARS,
+            SYMBOL_CHARS,
+            OTHER_CHARS,
+            DIGITS_START_CHARS
+    );
+    
+    /**
+     * {@link #NUMBER_TERM_CHARS}を、検索用に並び替えたもの。
+     * ・フォーマットのキーワードを①文字列の長い順、辞書順に並び変え、比較していく。
+     */
+<span class="fc" id="L80">    private static final List&lt;String&gt; SORTED_NUMBER_TERM_CHARS = Utils.reverse(NUMBER_TERM_CHARS);</span>
+    
+    /**
+     * 数値の書式かどうか判定する。
+     * @param store
+     * @return
+     */
+    public boolean isNumberPattern(final TokenStore store) {
+<span class="fc" id="L88">        return store.containsAnyInFactor(NUMBER_DECISTION_CHARS);</span>
+    }
+    
+    @Override
+    public ConditionNumberFormatter create(final TokenStore store) {
+<span class="fc" id="L93">        ArgUtils.notNull(store, &quot;store&quot;);</span>
+        
+<span class="fc" id="L95">        final ConditionNumberFormatter formatter = new ConditionNumberFormatter(store.getConcatenatedToken());</span>
+        
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for(Token token : store.getTokens()) {</span>
+            
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if(token instanceof Token.Condition) {</span>
+                // 条件の場合
+<span class="fc" id="L101">                final Token.Condition conditionToken = token.asCondition();</span>
+<span class="fc" id="L102">                final String condition = conditionToken.getCondition();</span>
+<span class="fc" id="L103">                formatter.addCondition(condition);</span>
+                
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                if(isConditionOperator(conditionToken)) {</span>
+<span class="fc" id="L106">                    setupConditionOperator(formatter, conditionToken);</span>
+                    
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                } else if(isConditionLocale(conditionToken)) {</span>
+<span class="fc" id="L109">                    setupConditionLocale(formatter, conditionToken);</span>
+                    
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                } else if(isConditionLocaleSymbol(conditionToken)) {</span>
+<span class="fc" id="L112">                    final LocaleSymbol localeSymbol = setupConditionLocaleSymbol(formatter, conditionToken);</span>
+<span class="fc" id="L113">                    formatter.addTerm(new LocaelSymbolTerm&lt;FormattedNumber&gt;(localeSymbol));</span>
+                    
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                } else if(isConditionDbNum(conditionToken)) {</span>
+<span class="fc" id="L116">                    setupConditionDbNum(formatter, conditionToken);</span>
+                    
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                } else if(isConditionColor(conditionToken)) {</span>
+<span class="fc" id="L119">                    setupConditionColor(formatter, conditionToken);</span>
+                    
+                }
+                
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            } else if(token instanceof Token.Word) {</span>
+<span class="fc" id="L124">                formatter.addTerm(new WordTerm&lt;FormattedNumber&gt;(token.asWord()));</span>
+                
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            } else if(token instanceof Token.EscapedChar) {</span>
+<span class="fc" id="L127">                formatter.addTerm(new EscapedCharTerm&lt;FormattedNumber&gt;(token.asEscapedChar()));</span>
+                
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            } else if(token instanceof Token.Underscore) {</span>
+<span class="fc" id="L130">                formatter.addTerm(new UnderscoreTerm&lt;FormattedNumber&gt;(token.asUnderscore()));</span>
+                
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            } else if(token instanceof Token.Asterisk) {</span>
+<span class="fc" id="L133">                formatter.addTerm(new AsteriskTerm&lt;FormattedNumber&gt;(token.asAsterisk()));</span>
+                
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">            } else if(token instanceof Token.Factor) {</span>
+                // 因子を数値の書式に分解する
+<span class="fc" id="L137">                final List&lt;Token&gt; list = convertFactor(token.asFactor());</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">                for(Token item : list) {</span>
+                    
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                    if(item instanceof Token.Formatter) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                        if(item.getValue().equals(&quot;#&quot;)) {</span>
+<span class="fc" id="L142">                            formatter.addTerm(NumberTerm.sharp());</span>
+                            
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                        } else if(item.getValue().equals(&quot;0&quot;)) {</span>
+<span class="fc" id="L145">                            formatter.addTerm(NumberTerm.zero());</span>
+                            
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                        } else if(item.getValue().equals(&quot;?&quot;)) {</span>
+<span class="fc" id="L148">                            formatter.addTerm(NumberTerm.question());</span>
+                            
+                        } else {
+<span class="nc" id="L151">                            logger.warn(&quot;unknown formatter : '{}'&quot;, item.getValue());</span>
+                        }
+                        
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                    } else if(item instanceof Token.Factor) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">                        if(Utils.startsWithIgnoreCase(item.getValue(), &quot;E&quot;)) {</span>
+<span class="fc" id="L156">                            formatter.addTerm(NumberTerm.exponnet(item));</span>
+                            
+<span class="fc bfc" id="L158" title="All 2 branches covered.">                        } else if(item.getValue().equals(&quot;General&quot;)) {</span>
+<span class="fc" id="L159">                            formatter.addTerm(NumberTerm.general());</span>
+                            
+                        } else {
+<span class="fc" id="L162">                            formatter.addTerm(new OtherTerm&lt;FormattedNumber&gt;(item));</span>
+                            
+                        }
+                        
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                    } else if(item instanceof Token.Symbol) {</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                        if(item == Token.SYMBOL_COLON) {</span>
+<span class="fc" id="L168">                            formatter.addTerm(NumberTerm.separator(item.asSymbol()));</span>
+                            
+                        } else {
+<span class="fc" id="L171">                            formatter.addTerm(NumberTerm.symbol(item.asSymbol()));</span>
+                        }
+                        
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">                    } else if(item instanceof Token.Digits) {</span>
+<span class="fc" id="L175">                        formatter.addTerm(NumberTerm.digits(item.asDigits()));</span>
+                        
+                    } else {
+<span class="nc" id="L178">                        formatter.addTerm(new OtherTerm&lt;FormattedNumber&gt;(item));</span>
+                    }
+                    
+<span class="fc" id="L181">                }</span>
+                
+<span class="fc" id="L183">            } else {</span>
+<span class="nc" id="L184">                formatter.addTerm(new OtherTerm&lt;FormattedNumber&gt;(token));</span>
+            }
+<span class="fc" id="L186">        }</span>
+        
+        // 書式に付加情報を設定する
+<span class="fc" id="L189">        setupFormat(formatter);</span>
+        
+<span class="fc" id="L191">        return formatter;</span>
+    }
+    
+    private List&lt;Token&gt; convertFactor(final Token.Factor factor) {
+        
+<span class="fc" id="L196">        final String item = factor.getValue();</span>
+<span class="fc" id="L197">        final int itemLength = item.length();</span>
+        
+<span class="fc" id="L199">        final List&lt;Token&gt; list = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L201">        int idx = 0;</span>
+        // フォーマット以外の文字列を積む
+<span class="fc" id="L203">        StringBuilder noTermChar = new StringBuilder();</span>
+        
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        while(idx &lt; itemLength) {</span>
+            
+<span class="fc" id="L207">            String matchChars = null;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            for(String chars : SORTED_NUMBER_TERM_CHARS) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                if(Utils.startsWithIgnoreCase(item, chars, idx)) {</span>
+<span class="fc" id="L210">                    matchChars = item.substring(idx, idx + chars.length());</span>
+<span class="fc" id="L211">                    break;</span>
+                }
+<span class="fc" id="L213">            }</span>
+            
+<span class="fc bfc" id="L215" title="All 2 branches covered.">            if(matchChars == null) {</span>
+                // フォーマット出ない場合は、文字列としてバッファに追加する。
+<span class="fc" id="L217">                noTermChar.append(item.charAt(idx));</span>
+<span class="fc" id="L218">                idx++;</span>
+                
+            } else {
+                // 数値の書式の場合
+                
+<span class="fc bfc" id="L223" title="All 2 branches covered.">                if(noTermChar.length() &gt; 0) {</span>
+                    // 今まで積んだバッファを、文字列として分割する。
+<span class="fc" id="L225">                    list.add(Token.factor(noTermChar.toString()));</span>
+<span class="fc" id="L226">                    noTermChar = new StringBuilder();</span>
+                }
+                
+<span class="fc bfc" id="L229" title="All 2 branches covered.">                if(Utils.equalsAny(matchChars, DIGITS_START_CHARS)) {</span>
+                    // 数字として切り出す。
+<span class="fc" id="L231">                    StringBuilder digits = new StringBuilder();</span>
+<span class="fc" id="L232">                    digits.append(matchChars);</span>
+                    
+<span class="fc bfc" id="L234" title="All 2 branches covered.">                    for(int i=idx+1; i &lt; itemLength; i++) {</span>
+<span class="fc" id="L235">                        final String str = String.valueOf(item.charAt(i));</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">                        if(Utils.equalsAny(str, DIGITS_CHARS)) {</span>
+<span class="fc" id="L237">                            digits.append(str);</span>
+                        } else {
+                            break;
+                        }
+                    }
+                    
+<span class="fc" id="L243">                    list.add(Token.digits(digits.toString()));</span>
+<span class="fc" id="L244">                    idx += digits.length();</span>
+                    
+<span class="fc" id="L246">                } else {</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">                    if(Utils.equalsAny(matchChars, FORMAT_CHARS)) {</span>
+<span class="fc" id="L248">                        list.add(Token.formatter(matchChars));</span>
+                        
+<span class="fc bfc" id="L250" title="All 2 branches covered.">                    } else if(Utils.equalsAny(matchChars, SYMBOL_CHARS)) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">                        if(matchChars.equals(&quot;.&quot;)) {</span>
+<span class="fc" id="L252">                            list.add(Token.SYMBOL_DOT);</span>
+                            
+<span class="fc bfc" id="L254" title="All 2 branches covered.">                        } else if(matchChars.equals(&quot;,&quot;)) {</span>
+<span class="fc" id="L255">                            list.add(Token.SYMBOL_COLON);</span>
+                            
+<span class="fc bfc" id="L257" title="All 2 branches covered.">                        } else if(matchChars.equals(&quot;%&quot;)) {</span>
+<span class="fc" id="L258">                            list.add(Token.SYMBOL_PERCENT);</span>
+                            
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">                        } else if(matchChars.equals(&quot;/&quot;)) {</span>
+<span class="fc" id="L261">                            list.add(Token.SYMBOL_SLASH);</span>
+                            
+                        } else {
+<span class="nc" id="L264">                            logger.warn(&quot;unknown symbol : '{}'&quot;, matchChars);</span>
+                        }
+                        
+                    } else {
+<span class="fc" id="L268">                        list.add(Token.factor(matchChars));</span>
+                    }
+                    
+<span class="fc" id="L271">                    idx += matchChars.length();</span>
+                    
+                }
+                
+            }
+            
+<span class="fc" id="L277">        }</span>
+        
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        if(noTermChar.length() &gt; 0) {</span>
+<span class="fc" id="L280">            list.add(Token.factor(noTermChar.toString()));</span>
+<span class="fc" id="L281">            noTermChar = new StringBuilder();   </span>
+        }
+        
+<span class="fc" id="L284">        return list;</span>
+        
+    }
+    
+    /**
+     * 構築した項に対してインデックス番号などを付与する。
+     * @param formatter
+     */
+    private void setupFormat(final ConditionNumberFormatter formatter) {
+        
+<span class="fc bfc" id="L294" title="All 2 branches covered.">        if(formatter.containsSymbolTerm(Token.SYMBOL_SLASH)) {</span>
+            // 分数として処理する
+<span class="fc" id="L296">            setupFormatAsFraction(formatter);</span>
+        } else {
+            // 数値として処理する
+<span class="fc" id="L299">            setupFormatAsDecimal(formatter);</span>
+        }
+        
+<span class="fc" id="L302">    }</span>
+    
+    private void setupFormatAsFraction(final ConditionNumberFormatter formatter) {
+        
+<span class="fc" id="L306">        final int termSize = formatter.getTerms().size();</span>
+        
+        // 分数の区切り記号の位置
+<span class="fc" id="L309">        int slashIndex = -1;</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">        for(int i=0; i &lt; termSize; i++) {</span>
+            
+<span class="fc" id="L312">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_SLASH)) {</span>
+<span class="fc" id="L314">                slashIndex = i;</span>
+<span class="fc" id="L315">                break;</span>
+            }
+            
+        }
+        
+        // 分子、帯分数の情報の設定
+<span class="fc" id="L321">        boolean wholeType = false;</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if(slashIndex &gt; 0) {</span>
+<span class="fc" id="L323">            NumberPartType partType = NumberPartType.Numerator;</span>
+<span class="fc" id="L324">            int countNumeratorTerm = 0;</span>
+<span class="fc" id="L325">            int countWholeNumberTerm = 0;</span>
+<span class="fc" id="L326">            boolean foundFirst = false;</span>
+            
+<span class="fc bfc" id="L328" title="All 2 branches covered.">            for(int i=slashIndex-1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L329">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+                
+<span class="fc bfc" id="L331" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L332">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L333">                    formattedTerm.setPart(partType);</span>
+                    
+<span class="fc bfc" id="L335" title="All 2 branches covered.">                    if(partType.equals(NumberPartType.Numerator)) {</span>
+<span class="fc" id="L336">                        countNumeratorTerm++;</span>
+<span class="fc" id="L337">                        formattedTerm.setIndex(countNumeratorTerm);</span>
+                        
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">                    } else if(partType.equals(NumberPartType.WholeNumber)) {</span>
+<span class="fc" id="L340">                        countWholeNumberTerm++;</span>
+<span class="fc" id="L341">                        formattedTerm.setIndex(countWholeNumberTerm);</span>
+                    }
+                    
+<span class="fc bfc" id="L344" title="All 2 branches covered.">                    if(!foundFirst) {</span>
+<span class="fc" id="L345">                        foundFirst = true;</span>
+                    }
+                    
+<span class="fc" id="L348">                } else {</span>
+                    // 連続する書式の間に他の文字が入る場合は、帯分数として処理する。
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">                    if(foundFirst) {</span>
+<span class="fc" id="L351">                        partType = NumberPartType.WholeNumber;</span>
+                    }
+                }
+                
+            }
+            
+<span class="fc bfc" id="L357" title="All 2 branches covered.">            if(countWholeNumberTerm &gt; 0) {</span>
+                // 帯分数かどうか
+<span class="fc" id="L359">                wholeType = true;</span>
+            }
+        }
+        
+        // 分母の処理
+<span class="fc" id="L364">        boolean exactDenom=false;</span>
+<span class="fc" id="L365">        int denominator = -1;</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">        if(slashIndex &lt; termSize) {</span>
+<span class="fc" id="L367">            int countDenominatorTerm = 0;</span>
+<span class="fc" id="L368">            int exactDenominator = -1;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">            for(int i=termSize-1; i &gt; slashIndex; i--) {</span>
+                
+<span class="fc" id="L371">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L373">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L374">                    formattedTerm.setPart(NumberPartType.Denominator);</span>
+                    
+<span class="fc" id="L376">                    countDenominatorTerm++;</span>
+<span class="fc" id="L377">                    formattedTerm.setIndex(countDenominatorTerm);</span>
+                    
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                } else if(term instanceof NumberTerm.DigitsTerm) {</span>
+<span class="fc" id="L380">                    final NumberTerm.DigitsTerm digitsTerm = (NumberTerm.DigitsTerm) term;</span>
+<span class="fc" id="L381">                    exactDenominator = digitsTerm.getToken().intValue();</span>
+                    
+                }
+            }
+            
+<span class="fc bfc" id="L386" title="All 2 branches covered.">            if(exactDenominator &gt; 0) {</span>
+<span class="fc" id="L387">                denominator = exactDenominator;</span>
+<span class="fc" id="L388">                exactDenom = true;</span>
+                
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">            } else if(countDenominatorTerm &gt; 0) {</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">                if(countDenominatorTerm &gt;= 5) {</span>
+                    // 5桁以上は対応していない
+<span class="nc" id="L393">                    denominator = (int) Math.pow(10, 5);</span>
+                } else {
+<span class="fc" id="L395">                    denominator = (int) Math.pow(10, countDenominatorTerm);</span>
+                }
+            } else {
+<span class="nc" id="L398">                denominator = 10;</span>
+            }
+        }
+        
+        // 最後の項かどうかのフラグを設定する
+<span class="fc" id="L403">        boolean foundFistWholeNumber = false;</span>
+<span class="fc" id="L404">        boolean foundFistNumerator = false;</span>
+<span class="fc" id="L405">        boolean foundFistDenominator = false;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+            
+<span class="fc bfc" id="L408" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L409">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+                
+<span class="fc bfc" id="L411" title="All 4 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.WholeNumber) &amp;&amp; !foundFistWholeNumber) {</span>
+<span class="fc" id="L412">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L413">                    foundFistWholeNumber = true;</span>
+                    
+<span class="fc bfc" id="L415" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Numerator) &amp;&amp; !foundFistNumerator) {</span>
+<span class="fc" id="L416">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L417">                    foundFistNumerator = true;</span>
+                    
+<span class="fc bfc" id="L419" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Denominator) &amp;&amp; !foundFistDenominator) {</span>
+<span class="fc" id="L420">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L421">                    foundFistDenominator = true;</span>
+                }
+                
+            }
+<span class="fc" id="L425">        }</span>
+        
+<span class="fc" id="L427">        formatter.setNumberFactory(NumberFactory.fractionNumber(denominator, exactDenom, wholeType));</span>
+        
+<span class="fc" id="L429">    }</span>
+    
+    private void setupFormatAsDecimal(final ConditionNumberFormatter formatter) {
+        
+<span class="fc" id="L433">        NumberPartType partType = NumberPartType.Integer;</span>
+<span class="fc" id="L434">        boolean foundFirst = false;</span>
+<span class="fc" id="L435">        int countDecimalTerm = 0;   // 小数部分の書式のカウント</span>
+<span class="fc" id="L436">        boolean foundPercentTerm = false;</span>
+        
+<span class="fc bfc" id="L438" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+            
+<span class="fc bfc" id="L440" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_PERCENT)) {</span>
+<span class="fc" id="L441">                foundPercentTerm = true;</span>
+                
+<span class="fc bfc" id="L443" title="All 2 branches covered.">            } else if(isSymbolTerm(term, Token.SYMBOL_DOT)) {</span>
+<span class="fc" id="L444">                partType = NumberPartType.Decimal;</span>
+<span class="fc" id="L445">                foundFirst = false;</span>
+                
+<span class="fc bfc" id="L447" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.ExponentTerm) {</span>
+<span class="fc" id="L448">                partType = NumberPartType.Exponent;</span>
+<span class="fc" id="L449">                foundFirst = false;</span>
+                
+<span class="fc bfc" id="L451" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L452">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L453">                formattedTerm.setPart(partType);</span>
+                
+<span class="fc bfc" id="L455" title="All 2 branches covered.">                if(partType.equals(NumberPartType.Decimal)) {</span>
+                    // 小数部分の場合のインデックス番号を振る
+<span class="fc" id="L457">                    countDecimalTerm++;</span>
+<span class="fc" id="L458">                    formattedTerm.setIndex(countDecimalTerm);</span>
+                    
+<span class="fc bfc" id="L460" title="All 2 branches covered.">                } else if(!foundFirst) {</span>
+                    // 整数部分、指数部分の先頭の書式、最後の桁となる
+<span class="fc" id="L462">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L463">                    foundFirst = true;</span>
+                }
+                
+            }
+<span class="fc" id="L467">        }</span>
+        
+        // 最後から探索し、インデックス番号を振る
+<span class="fc" id="L470">        foundFirst = false;</span>
+<span class="fc" id="L471">        int countIntegerTerm = 0;</span>
+<span class="fc" id="L472">        int countExponentTerm = 0;</span>
+        
+<span class="fc" id="L474">        final int termSize = formatter.getTerms().size();</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L476">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
+            
+<span class="fc bfc" id="L478" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+                
+<span class="fc" id="L480">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+                
+<span class="fc bfc" id="L482" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Decimal)) {</span>
+                    // 小数部分の場合、はじめに見つかったものが、最後の桁
+<span class="fc bfc" id="L484" title="All 2 branches covered.">                    if(!foundFirst) {</span>
+<span class="fc" id="L485">                        formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L486">                        foundFirst = true;</span>
+                    }
+                    
+<span class="fc bfc" id="L489" title="All 2 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
+<span class="fc" id="L490">                    countIntegerTerm++;</span>
+<span class="fc" id="L491">                    formattedTerm.setIndex(countIntegerTerm);</span>
+                    
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Exponent)) {</span>
+<span class="fc" id="L494">                    countExponentTerm++;</span>
+<span class="fc" id="L495">                    formattedTerm.setIndex(countExponentTerm);</span>
+                }
+                
+            }
+            
+        }
+        
+        // 桁区切りの判定処理
+<span class="fc" id="L503">        boolean useSeparator = false;</span>
+<span class="fc" id="L504">        boolean inIntegerPater = false;</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L507">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+                // 整数の書式でかつ途中の書式の場合
+<span class="fc bfc" id="L509" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
+<span class="fc bfc" id="L510" title="All 4 branches covered.">                    if(formattedTerm.isLastPart() &amp;&amp; formattedTerm.getIndex() &gt; 1) {</span>
+<span class="fc" id="L511">                        inIntegerPater = true;</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">                    } else if(formattedTerm.getIndex() &lt;= 1) {</span>
+<span class="fc" id="L513">                        inIntegerPater = false;</span>
+                    }
+                }
+            }
+            
+<span class="fc bfc" id="L518" title="All 2 branches covered.">            if(term instanceof NumberTerm.SeparatorTerm) {</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">                if(inIntegerPater) {</span>
+<span class="fc" id="L520">                    useSeparator = true;</span>
+                }
+                
+            }
+<span class="fc" id="L524">        }</span>
+        
+        // 最後の書式の直後の区切り文字の判定
+<span class="fc" id="L527">        int indexLastFormatterdTerm = -1;</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L529">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L531">                indexLastFormatterdTerm = termSize-i-1;</span>
+<span class="fc" id="L532">                break;</span>
+            }
+        }
+        
+<span class="fc" id="L536">        int countLastColon = 0;</span>
+<span class="fc bfc" id="L537" title="All 4 branches covered.">        if(indexLastFormatterdTerm &gt;= 0 &amp;&amp; indexLastFormatterdTerm+1 &lt; termSize) {</span>
+            // 最後の書式の直後の連続するカンマの個数をカウントする
+<span class="fc bfc" id="L539" title="All 2 branches covered.">            for(int i=indexLastFormatterdTerm+1; i &lt; termSize; i++) {</span>
+<span class="fc" id="L540">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L541" title="All 2 branches covered.">                if(term instanceof NumberTerm.SeparatorTerm) {</span>
+<span class="fc" id="L542">                    countLastColon++;</span>
+                } else {
+                    break;
+                }
+            }
+        }
+        
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        if(countExponentTerm &gt; 0) {</span>
+            // 指数の場合
+<span class="fc" id="L551">            formatter.setNumberFactory(NumberFactory.exponentNumber(countDecimalTerm, useSeparator));</span>
+            
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        } else if(foundPercentTerm) {</span>
+            // 百分率の場合
+<span class="fc" id="L555">            formatter.setNumberFactory(NumberFactory.percentNumber(countDecimalTerm, useSeparator, countLastColon));</span>
+            
+        } else {
+<span class="fc" id="L558">            formatter.setNumberFactory(NumberFactory.decimalNumber(countDecimalTerm, useSeparator, countLastColon));</span>
+            
+        }
+        
+<span class="fc" id="L562">    }</span>
+    
+    private static boolean isSymbolTerm(final Term&lt;FormattedNumber&gt; term, final Token.Symbol symbol) {
+        
+<span class="fc bfc" id="L566" title="All 2 branches covered.">        if(!(term instanceof NumberTerm.SymbolTerm)) {</span>
+<span class="fc" id="L567">            return false;</span>
+        }
+        
+<span class="fc" id="L570">        final NumberTerm.SymbolTerm symbolTerm = (NumberTerm.SymbolTerm) term;</span>
+<span class="fc" id="L571">        return symbolTerm.getToken().equals(symbol);</span>
+        
+    }
+    
+    private static String[] toArray(final String[]... arrays) {
+<span class="fc" id="L576">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L577" title="All 2 branches covered.">        for(String[] array : arrays) {</span>
+<span class="fc" id="L578">            list.addAll(Arrays.asList(array));</span>
+        }
+        
+<span class="fc" id="L581">        return list.toArray(new String[list.size()]);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

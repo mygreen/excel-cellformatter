@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StackUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.tokenizer</a> &gt; <span class="el_source">StackUtils.java</span></div><h1>StackUtils.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.tokenizer;
+
+import java.util.LinkedList;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+
+
+/**
+ * {@link LinkedList}に対するユーティリティクラス。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="nc" id="L13">public class StackUtils {</span>
+    
+    /**
+     * スタックの最後の要素（一番下の要素）が引数で指定した文字列と等しいかどうか比較する。
+     * @param stack
+     * @param str 比較対象の文字列
+     * @return 
+     */
+    public static boolean equalsBottomElement(final LinkedList&lt;String&gt; stack, final String str) {
+        
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if(stack.isEmpty()) {</span>
+<span class="fc" id="L24">            return false;</span>
+        }
+        
+<span class="fc" id="L27">        return stack.peekLast().equals(str);</span>
+        
+    }
+    
+    /**
+     *  スタックの最後の要素（一番下の要素）が引数で指定した文字列の何れかと等しいかどうか比較する。
+     * @param stack
+     * @param strs
+     * @return
+     */
+    public static boolean equalsAnyBottomElement(final LinkedList&lt;String&gt; stack, final String[] strs) {
+        
+<span class="fc" id="L39">        ArgUtils.notNull(stack, &quot;stack&quot;);</span>
+<span class="fc" id="L40">        ArgUtils.notEmpty(strs, &quot;strs&quot;);</span>
+        
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if(stack.isEmpty()) {</span>
+<span class="nc" id="L43">            return false;</span>
+        }
+        
+<span class="fc" id="L46">        final String bottom = stack.peekLast();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for(String str : strs) {</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">            if(str.equals(bottom)) {</span>
+<span class="nc" id="L49">                return true;</span>
+            }
+        }
+        
+<span class="fc" id="L53">        return false;</span>
+        
+    }
+    
+    /**
+     * スタックの先頭の要素（一番上の要素）が引数で指定した文字列と等しいかどうか比較する。
+     * @param stack
+     * @param str 比較対象の文字列
+     * @return 
+     */
+    public static  boolean equalsTopElement(final LinkedList&lt;String&gt; stack, final String str) {
+        
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if(stack.isEmpty()) {</span>
+<span class="nc" id="L66">            return false;</span>
+        }
+        
+<span class="nc" id="L69">        return stack.peekFirst().equals(str);</span>
+        
+    }
+    
+    /**
+     * スタックの先頭の要素（一番上の要素）が引数で指定した文字列の何れかと等しいかどうか比較する。
+     * @param stack
+     * @param strs 比較する文字列の配列
+     * @return
+     */
+    public static boolean equalsAnyTopElement(final LinkedList&lt;String&gt; stack, final String[] strs) {
+        
+<span class="fc" id="L81">        ArgUtils.notNull(stack, &quot;stack&quot;);</span>
+<span class="fc" id="L82">        ArgUtils.notEmpty(strs, &quot;strs&quot;);</span>
+        
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if(stack.isEmpty()) {</span>
+<span class="fc" id="L85">            return false;</span>
+        }
+        
+<span class="fc" id="L88">        final String top = stack.peekFirst();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        for(String str : strs) {</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            if(str.equals(top)) {</span>
+<span class="fc" id="L91">                return true;</span>
+            }
+        }
+        
+<span class="fc" id="L95">        return false;</span>
+        
+    }
+    
+    /**
+     * スタックの値を取り出し、文字列として結合する。
+     * @param stack
+     * @return
+     */
+    public static String popupAndConcat(final LinkedList&lt;String&gt; stack) {
+        
+<span class="fc" id="L106">        StringBuilder value = new StringBuilder();</span>
+        
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        while(!stack.isEmpty()) {</span>
+<span class="fc" id="L109">            value.append(stack.pollLast());</span>
+        }
+        
+<span class="fc" id="L112">        return value.toString();</span>
+        
+    }
+    
+    /**
+     * スタックから先頭の値を取り出す。
+     * @param stack
+     * @return スタックが空の場合は空文字を返す。
+     */
+    public static String popup(final LinkedList&lt;String&gt; stack) {
+        
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if(stack.isEmpty()) {</span>
+<span class="nc" id="L124">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L127">        return stack.pollFirst();</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
