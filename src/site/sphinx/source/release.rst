@@ -3,6 +3,11 @@
 ======================================
 
 ------------------------
+ver.0.9.1 - 2016-12-22
+------------------------
+* `#20 <https://github.com/mygreen/excel-cellformatter/issues/20>`_ : ``POICellFormatter`` のテスタにおいて、不明な数式の場合、テストに失敗する事象を修正しました。
+
+------------------------
 ver.0.9 - 2016-12-19
 ------------------------
 * `#18 <https://github.com/mygreen/excel-cellformatter/issues/18>`_ : ``ObejctCellFormatter`` に formatterResolverのアクセッサメソッドを追加しました。
