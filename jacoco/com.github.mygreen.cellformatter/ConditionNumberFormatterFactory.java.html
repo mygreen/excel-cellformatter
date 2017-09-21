@@ -278,10 +278,9 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
         
 <span class="fc bfc" id="L279" title="All 2 branches covered.">        if(noTermChar.length() &gt; 0) {</span>
 <span class="fc" id="L280">            list.add(Token.factor(noTermChar.toString()));</span>
-<span class="fc" id="L281">            noTermChar = new StringBuilder();   </span>
         }
         
-<span class="fc" id="L284">        return list;</span>
+<span class="fc" id="L283">        return list;</span>
         
     }
     
@@ -291,208 +290,208 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      */
     private void setupFormat(final ConditionNumberFormatter formatter) {
         
-<span class="fc bfc" id="L294" title="All 2 branches covered.">        if(formatter.containsSymbolTerm(Token.SYMBOL_SLASH)) {</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        if(formatter.containsSymbolTerm(Token.SYMBOL_SLASH)) {</span>
             // 分数として処理する
-<span class="fc" id="L296">            setupFormatAsFraction(formatter);</span>
+<span class="fc" id="L295">            setupFormatAsFraction(formatter);</span>
         } else {
             // 数値として処理する
-<span class="fc" id="L299">            setupFormatAsDecimal(formatter);</span>
+<span class="fc" id="L298">            setupFormatAsDecimal(formatter);</span>
         }
         
-<span class="fc" id="L302">    }</span>
+<span class="fc" id="L301">    }</span>
     
     private void setupFormatAsFraction(final ConditionNumberFormatter formatter) {
         
-<span class="fc" id="L306">        final int termSize = formatter.getTerms().size();</span>
+<span class="fc" id="L305">        final int termSize = formatter.getTerms().size();</span>
         
         // 分数の区切り記号の位置
-<span class="fc" id="L309">        int slashIndex = -1;</span>
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L308">        int slashIndex = -1;</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">        for(int i=0; i &lt; termSize; i++) {</span>
             
-<span class="fc" id="L312">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
-<span class="fc bfc" id="L313" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_SLASH)) {</span>
-<span class="fc" id="L314">                slashIndex = i;</span>
-<span class="fc" id="L315">                break;</span>
+<span class="fc" id="L311">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_SLASH)) {</span>
+<span class="fc" id="L313">                slashIndex = i;</span>
+<span class="fc" id="L314">                break;</span>
             }
             
         }
         
         // 分子、帯分数の情報の設定
-<span class="fc" id="L321">        boolean wholeType = false;</span>
-<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        if(slashIndex &gt; 0) {</span>
-<span class="fc" id="L323">            NumberPartType partType = NumberPartType.Numerator;</span>
-<span class="fc" id="L324">            int countNumeratorTerm = 0;</span>
-<span class="fc" id="L325">            int countWholeNumberTerm = 0;</span>
-<span class="fc" id="L326">            boolean foundFirst = false;</span>
+<span class="fc" id="L320">        boolean wholeType = false;</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">        if(slashIndex &gt; 0) {</span>
+<span class="fc" id="L322">            NumberPartType partType = NumberPartType.Numerator;</span>
+<span class="fc" id="L323">            int countNumeratorTerm = 0;</span>
+<span class="fc" id="L324">            int countWholeNumberTerm = 0;</span>
+<span class="fc" id="L325">            boolean foundFirst = false;</span>
             
-<span class="fc bfc" id="L328" title="All 2 branches covered.">            for(int i=slashIndex-1; i &gt;= 0; i--) {</span>
-<span class="fc" id="L329">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">            for(int i=slashIndex-1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L328">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
                 
-<span class="fc bfc" id="L331" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L332">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
-<span class="fc" id="L333">                    formattedTerm.setPart(partType);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L331">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L332">                    formattedTerm.setPart(partType);</span>
                     
-<span class="fc bfc" id="L335" title="All 2 branches covered.">                    if(partType.equals(NumberPartType.Numerator)) {</span>
-<span class="fc" id="L336">                        countNumeratorTerm++;</span>
-<span class="fc" id="L337">                        formattedTerm.setIndex(countNumeratorTerm);</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                    if(partType.equals(NumberPartType.Numerator)) {</span>
+<span class="fc" id="L335">                        countNumeratorTerm++;</span>
+<span class="fc" id="L336">                        formattedTerm.setIndex(countNumeratorTerm);</span>
                         
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">                    } else if(partType.equals(NumberPartType.WholeNumber)) {</span>
-<span class="fc" id="L340">                        countWholeNumberTerm++;</span>
-<span class="fc" id="L341">                        formattedTerm.setIndex(countWholeNumberTerm);</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">                    } else if(partType.equals(NumberPartType.WholeNumber)) {</span>
+<span class="fc" id="L339">                        countWholeNumberTerm++;</span>
+<span class="fc" id="L340">                        formattedTerm.setIndex(countWholeNumberTerm);</span>
                     }
                     
-<span class="fc bfc" id="L344" title="All 2 branches covered.">                    if(!foundFirst) {</span>
-<span class="fc" id="L345">                        foundFirst = true;</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">                    if(!foundFirst) {</span>
+<span class="fc" id="L344">                        foundFirst = true;</span>
                     }
                     
-<span class="fc" id="L348">                } else {</span>
+<span class="fc" id="L347">                } else {</span>
                     // 連続する書式の間に他の文字が入る場合は、帯分数として処理する。
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">                    if(foundFirst) {</span>
-<span class="fc" id="L351">                        partType = NumberPartType.WholeNumber;</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">                    if(foundFirst) {</span>
+<span class="fc" id="L350">                        partType = NumberPartType.WholeNumber;</span>
                     }
                 }
                 
             }
             
-<span class="fc bfc" id="L357" title="All 2 branches covered.">            if(countWholeNumberTerm &gt; 0) {</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">            if(countWholeNumberTerm &gt; 0) {</span>
                 // 帯分数かどうか
-<span class="fc" id="L359">                wholeType = true;</span>
+<span class="fc" id="L358">                wholeType = true;</span>
             }
         }
         
         // 分母の処理
-<span class="fc" id="L364">        boolean exactDenom=false;</span>
-<span class="fc" id="L365">        int denominator = -1;</span>
-<span class="pc bpc" id="L366" title="1 of 2 branches missed.">        if(slashIndex &lt; termSize) {</span>
-<span class="fc" id="L367">            int countDenominatorTerm = 0;</span>
-<span class="fc" id="L368">            int exactDenominator = -1;</span>
-<span class="fc bfc" id="L369" title="All 2 branches covered.">            for(int i=termSize-1; i &gt; slashIndex; i--) {</span>
+<span class="fc" id="L363">        boolean exactDenom=false;</span>
+<span class="fc" id="L364">        int denominator = -1;</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">        if(slashIndex &lt; termSize) {</span>
+<span class="fc" id="L366">            int countDenominatorTerm = 0;</span>
+<span class="fc" id="L367">            int exactDenominator = -1;</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">            for(int i=termSize-1; i &gt; slashIndex; i--) {</span>
                 
-<span class="fc" id="L371">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L373">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
-<span class="fc" id="L374">                    formattedTerm.setPart(NumberPartType.Denominator);</span>
+<span class="fc" id="L370">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">                if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L372">                    final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L373">                    formattedTerm.setPart(NumberPartType.Denominator);</span>
                     
-<span class="fc" id="L376">                    countDenominatorTerm++;</span>
-<span class="fc" id="L377">                    formattedTerm.setIndex(countDenominatorTerm);</span>
+<span class="fc" id="L375">                    countDenominatorTerm++;</span>
+<span class="fc" id="L376">                    formattedTerm.setIndex(countDenominatorTerm);</span>
                     
-<span class="pc bpc" id="L379" title="1 of 2 branches missed.">                } else if(term instanceof NumberTerm.DigitsTerm) {</span>
-<span class="fc" id="L380">                    final NumberTerm.DigitsTerm digitsTerm = (NumberTerm.DigitsTerm) term;</span>
-<span class="fc" id="L381">                    exactDenominator = digitsTerm.getToken().intValue();</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">                } else if(term instanceof NumberTerm.DigitsTerm) {</span>
+<span class="fc" id="L379">                    final NumberTerm.DigitsTerm digitsTerm = (NumberTerm.DigitsTerm) term;</span>
+<span class="fc" id="L380">                    exactDenominator = digitsTerm.getToken().intValue();</span>
                     
                 }
             }
             
-<span class="fc bfc" id="L386" title="All 2 branches covered.">            if(exactDenominator &gt; 0) {</span>
-<span class="fc" id="L387">                denominator = exactDenominator;</span>
-<span class="fc" id="L388">                exactDenom = true;</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">            if(exactDenominator &gt; 0) {</span>
+<span class="fc" id="L386">                denominator = exactDenominator;</span>
+<span class="fc" id="L387">                exactDenom = true;</span>
                 
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">            } else if(countDenominatorTerm &gt; 0) {</span>
-<span class="pc bpc" id="L391" title="1 of 2 branches missed.">                if(countDenominatorTerm &gt;= 5) {</span>
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">            } else if(countDenominatorTerm &gt; 0) {</span>
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">                if(countDenominatorTerm &gt;= 5) {</span>
                     // 5桁以上は対応していない
-<span class="nc" id="L393">                    denominator = (int) Math.pow(10, 5);</span>
+<span class="nc" id="L392">                    denominator = (int) Math.pow(10, 5);</span>
                 } else {
-<span class="fc" id="L395">                    denominator = (int) Math.pow(10, countDenominatorTerm);</span>
+<span class="fc" id="L394">                    denominator = (int) Math.pow(10, countDenominatorTerm);</span>
                 }
             } else {
-<span class="nc" id="L398">                denominator = 10;</span>
+<span class="nc" id="L397">                denominator = 10;</span>
             }
         }
         
         // 最後の項かどうかのフラグを設定する
-<span class="fc" id="L403">        boolean foundFistWholeNumber = false;</span>
-<span class="fc" id="L404">        boolean foundFistNumerator = false;</span>
-<span class="fc" id="L405">        boolean foundFistDenominator = false;</span>
-<span class="fc bfc" id="L406" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+<span class="fc" id="L402">        boolean foundFistWholeNumber = false;</span>
+<span class="fc" id="L403">        boolean foundFistNumerator = false;</span>
+<span class="fc" id="L404">        boolean foundFistDenominator = false;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
             
-<span class="fc bfc" id="L408" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L409">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L408">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
                 
-<span class="fc bfc" id="L411" title="All 4 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.WholeNumber) &amp;&amp; !foundFistWholeNumber) {</span>
-<span class="fc" id="L412">                    formattedTerm.setLastPart(true);</span>
-<span class="fc" id="L413">                    foundFistWholeNumber = true;</span>
+<span class="fc bfc" id="L410" title="All 4 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.WholeNumber) &amp;&amp; !foundFistWholeNumber) {</span>
+<span class="fc" id="L411">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L412">                    foundFistWholeNumber = true;</span>
                     
-<span class="fc bfc" id="L415" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Numerator) &amp;&amp; !foundFistNumerator) {</span>
-<span class="fc" id="L416">                    formattedTerm.setLastPart(true);</span>
-<span class="fc" id="L417">                    foundFistNumerator = true;</span>
+<span class="fc bfc" id="L414" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Numerator) &amp;&amp; !foundFistNumerator) {</span>
+<span class="fc" id="L415">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L416">                    foundFistNumerator = true;</span>
                     
-<span class="fc bfc" id="L419" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Denominator) &amp;&amp; !foundFistDenominator) {</span>
-<span class="fc" id="L420">                    formattedTerm.setLastPart(true);</span>
-<span class="fc" id="L421">                    foundFistDenominator = true;</span>
+<span class="fc bfc" id="L418" title="All 4 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Denominator) &amp;&amp; !foundFistDenominator) {</span>
+<span class="fc" id="L419">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L420">                    foundFistDenominator = true;</span>
                 }
                 
             }
-<span class="fc" id="L425">        }</span>
+<span class="fc" id="L424">        }</span>
         
-<span class="fc" id="L427">        formatter.setNumberFactory(NumberFactory.fractionNumber(denominator, exactDenom, wholeType));</span>
+<span class="fc" id="L426">        formatter.setNumberFactory(NumberFactory.fractionNumber(denominator, exactDenom, wholeType));</span>
         
-<span class="fc" id="L429">    }</span>
+<span class="fc" id="L428">    }</span>
     
     private void setupFormatAsDecimal(final ConditionNumberFormatter formatter) {
         
-<span class="fc" id="L433">        NumberPartType partType = NumberPartType.Integer;</span>
-<span class="fc" id="L434">        boolean foundFirst = false;</span>
-<span class="fc" id="L435">        int countDecimalTerm = 0;   // 小数部分の書式のカウント</span>
-<span class="fc" id="L436">        boolean foundPercentTerm = false;</span>
+<span class="fc" id="L432">        NumberPartType partType = NumberPartType.Integer;</span>
+<span class="fc" id="L433">        boolean foundFirst = false;</span>
+<span class="fc" id="L434">        int countDecimalTerm = 0;   // 小数部分の書式のカウント</span>
+<span class="fc" id="L435">        boolean foundPercentTerm = false;</span>
         
-<span class="fc bfc" id="L438" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
             
-<span class="fc bfc" id="L440" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_PERCENT)) {</span>
-<span class="fc" id="L441">                foundPercentTerm = true;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">            if(isSymbolTerm(term, Token.SYMBOL_PERCENT)) {</span>
+<span class="fc" id="L440">                foundPercentTerm = true;</span>
                 
-<span class="fc bfc" id="L443" title="All 2 branches covered.">            } else if(isSymbolTerm(term, Token.SYMBOL_DOT)) {</span>
-<span class="fc" id="L444">                partType = NumberPartType.Decimal;</span>
-<span class="fc" id="L445">                foundFirst = false;</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">            } else if(isSymbolTerm(term, Token.SYMBOL_DOT)) {</span>
+<span class="fc" id="L443">                partType = NumberPartType.Decimal;</span>
+<span class="fc" id="L444">                foundFirst = false;</span>
                 
-<span class="fc bfc" id="L447" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.ExponentTerm) {</span>
-<span class="fc" id="L448">                partType = NumberPartType.Exponent;</span>
-<span class="fc" id="L449">                foundFirst = false;</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.ExponentTerm) {</span>
+<span class="fc" id="L447">                partType = NumberPartType.Exponent;</span>
+<span class="fc" id="L448">                foundFirst = false;</span>
                 
-<span class="fc bfc" id="L451" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L452">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
-<span class="fc" id="L453">                formattedTerm.setPart(partType);</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">            } else if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L451">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L452">                formattedTerm.setPart(partType);</span>
                 
-<span class="fc bfc" id="L455" title="All 2 branches covered.">                if(partType.equals(NumberPartType.Decimal)) {</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">                if(partType.equals(NumberPartType.Decimal)) {</span>
                     // 小数部分の場合のインデックス番号を振る
-<span class="fc" id="L457">                    countDecimalTerm++;</span>
-<span class="fc" id="L458">                    formattedTerm.setIndex(countDecimalTerm);</span>
+<span class="fc" id="L456">                    countDecimalTerm++;</span>
+<span class="fc" id="L457">                    formattedTerm.setIndex(countDecimalTerm);</span>
                     
-<span class="fc bfc" id="L460" title="All 2 branches covered.">                } else if(!foundFirst) {</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">                } else if(!foundFirst) {</span>
                     // 整数部分、指数部分の先頭の書式、最後の桁となる
-<span class="fc" id="L462">                    formattedTerm.setLastPart(true);</span>
-<span class="fc" id="L463">                    foundFirst = true;</span>
+<span class="fc" id="L461">                    formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L462">                    foundFirst = true;</span>
                 }
                 
             }
-<span class="fc" id="L467">        }</span>
+<span class="fc" id="L466">        }</span>
         
         // 最後から探索し、インデックス番号を振る
-<span class="fc" id="L470">        foundFirst = false;</span>
-<span class="fc" id="L471">        int countIntegerTerm = 0;</span>
-<span class="fc" id="L472">        int countExponentTerm = 0;</span>
+<span class="fc" id="L469">        foundFirst = false;</span>
+<span class="fc" id="L470">        int countIntegerTerm = 0;</span>
+<span class="fc" id="L471">        int countExponentTerm = 0;</span>
         
-<span class="fc" id="L474">        final int termSize = formatter.getTerms().size();</span>
-<span class="fc bfc" id="L475" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
-<span class="fc" id="L476">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
+<span class="fc" id="L473">        final int termSize = formatter.getTerms().size();</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L475">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
             
-<span class="fc bfc" id="L478" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
                 
-<span class="fc" id="L480">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L479">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
                 
-<span class="fc bfc" id="L482" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Decimal)) {</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Decimal)) {</span>
                     // 小数部分の場合、はじめに見つかったものが、最後の桁
-<span class="fc bfc" id="L484" title="All 2 branches covered.">                    if(!foundFirst) {</span>
-<span class="fc" id="L485">                        formattedTerm.setLastPart(true);</span>
-<span class="fc" id="L486">                        foundFirst = true;</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">                    if(!foundFirst) {</span>
+<span class="fc" id="L484">                        formattedTerm.setLastPart(true);</span>
+<span class="fc" id="L485">                        foundFirst = true;</span>
                     }
                     
-<span class="fc bfc" id="L489" title="All 2 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
-<span class="fc" id="L490">                    countIntegerTerm++;</span>
-<span class="fc" id="L491">                    formattedTerm.setIndex(countIntegerTerm);</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
+<span class="fc" id="L489">                    countIntegerTerm++;</span>
+<span class="fc" id="L490">                    formattedTerm.setIndex(countIntegerTerm);</span>
                     
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Exponent)) {</span>
-<span class="fc" id="L494">                    countExponentTerm++;</span>
-<span class="fc" id="L495">                    formattedTerm.setIndex(countExponentTerm);</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">                } else if(formattedTerm.getPartType().equals(NumberPartType.Exponent)) {</span>
+<span class="fc" id="L493">                    countExponentTerm++;</span>
+<span class="fc" id="L494">                    formattedTerm.setIndex(countExponentTerm);</span>
                 }
                 
             }
@@ -500,85 +499,85 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
         }
         
         // 桁区切りの判定処理
-<span class="fc" id="L503">        boolean useSeparator = false;</span>
-<span class="fc" id="L504">        boolean inIntegerPater = false;</span>
-<span class="fc bfc" id="L505" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
-<span class="fc bfc" id="L506" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L507">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
+<span class="fc" id="L502">        boolean useSeparator = false;</span>
+<span class="fc" id="L503">        boolean inIntegerPater = false;</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        for(Term&lt;FormattedNumber&gt; term : formatter.getTerms()) {</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L506">                final NumberTerm.FormattedTerm formattedTerm = (NumberTerm.FormattedTerm) term;</span>
                 // 整数の書式でかつ途中の書式の場合
-<span class="fc bfc" id="L509" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
-<span class="fc bfc" id="L510" title="All 4 branches covered.">                    if(formattedTerm.isLastPart() &amp;&amp; formattedTerm.getIndex() &gt; 1) {</span>
-<span class="fc" id="L511">                        inIntegerPater = true;</span>
-<span class="fc bfc" id="L512" title="All 2 branches covered.">                    } else if(formattedTerm.getIndex() &lt;= 1) {</span>
-<span class="fc" id="L513">                        inIntegerPater = false;</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">                if(formattedTerm.getPartType().equals(NumberPartType.Integer)) {</span>
+<span class="fc bfc" id="L509" title="All 4 branches covered.">                    if(formattedTerm.isLastPart() &amp;&amp; formattedTerm.getIndex() &gt; 1) {</span>
+<span class="fc" id="L510">                        inIntegerPater = true;</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">                    } else if(formattedTerm.getIndex() &lt;= 1) {</span>
+<span class="fc" id="L512">                        inIntegerPater = false;</span>
                     }
                 }
             }
             
-<span class="fc bfc" id="L518" title="All 2 branches covered.">            if(term instanceof NumberTerm.SeparatorTerm) {</span>
-<span class="fc bfc" id="L519" title="All 2 branches covered.">                if(inIntegerPater) {</span>
-<span class="fc" id="L520">                    useSeparator = true;</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">            if(term instanceof NumberTerm.SeparatorTerm) {</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">                if(inIntegerPater) {</span>
+<span class="fc" id="L519">                    useSeparator = true;</span>
                 }
                 
             }
-<span class="fc" id="L524">        }</span>
+<span class="fc" id="L523">        }</span>
         
         // 最後の書式の直後の区切り文字の判定
-<span class="fc" id="L527">        int indexLastFormatterdTerm = -1;</span>
-<span class="fc bfc" id="L528" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
-<span class="fc" id="L529">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
-<span class="fc bfc" id="L530" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
-<span class="fc" id="L531">                indexLastFormatterdTerm = termSize-i-1;</span>
-<span class="fc" id="L532">                break;</span>
+<span class="fc" id="L526">        int indexLastFormatterdTerm = -1;</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L528">            final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(termSize-i-1);</span>
+<span class="fc bfc" id="L529" title="All 2 branches covered.">            if(term instanceof NumberTerm.FormattedTerm) {</span>
+<span class="fc" id="L530">                indexLastFormatterdTerm = termSize-i-1;</span>
+<span class="fc" id="L531">                break;</span>
             }
         }
         
-<span class="fc" id="L536">        int countLastColon = 0;</span>
-<span class="fc bfc" id="L537" title="All 4 branches covered.">        if(indexLastFormatterdTerm &gt;= 0 &amp;&amp; indexLastFormatterdTerm+1 &lt; termSize) {</span>
+<span class="fc" id="L535">        int countLastColon = 0;</span>
+<span class="fc bfc" id="L536" title="All 4 branches covered.">        if(indexLastFormatterdTerm &gt;= 0 &amp;&amp; indexLastFormatterdTerm+1 &lt; termSize) {</span>
             // 最後の書式の直後の連続するカンマの個数をカウントする
-<span class="fc bfc" id="L539" title="All 2 branches covered.">            for(int i=indexLastFormatterdTerm+1; i &lt; termSize; i++) {</span>
-<span class="fc" id="L540">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
-<span class="fc bfc" id="L541" title="All 2 branches covered.">                if(term instanceof NumberTerm.SeparatorTerm) {</span>
-<span class="fc" id="L542">                    countLastColon++;</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">            for(int i=indexLastFormatterdTerm+1; i &lt; termSize; i++) {</span>
+<span class="fc" id="L539">                final Term&lt;FormattedNumber&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">                if(term instanceof NumberTerm.SeparatorTerm) {</span>
+<span class="fc" id="L541">                    countLastColon++;</span>
                 } else {
                     break;
                 }
             }
         }
         
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if(countExponentTerm &gt; 0) {</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">        if(countExponentTerm &gt; 0) {</span>
             // 指数の場合
-<span class="fc" id="L551">            formatter.setNumberFactory(NumberFactory.exponentNumber(countDecimalTerm, useSeparator));</span>
+<span class="fc" id="L550">            formatter.setNumberFactory(NumberFactory.exponentNumber(countDecimalTerm, useSeparator));</span>
             
-<span class="fc bfc" id="L553" title="All 2 branches covered.">        } else if(foundPercentTerm) {</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">        } else if(foundPercentTerm) {</span>
             // 百分率の場合
-<span class="fc" id="L555">            formatter.setNumberFactory(NumberFactory.percentNumber(countDecimalTerm, useSeparator, countLastColon));</span>
+<span class="fc" id="L554">            formatter.setNumberFactory(NumberFactory.percentNumber(countDecimalTerm, useSeparator, countLastColon));</span>
             
         } else {
-<span class="fc" id="L558">            formatter.setNumberFactory(NumberFactory.decimalNumber(countDecimalTerm, useSeparator, countLastColon));</span>
+<span class="fc" id="L557">            formatter.setNumberFactory(NumberFactory.decimalNumber(countDecimalTerm, useSeparator, countLastColon));</span>
             
         }
         
-<span class="fc" id="L562">    }</span>
+<span class="fc" id="L561">    }</span>
     
     private static boolean isSymbolTerm(final Term&lt;FormattedNumber&gt; term, final Token.Symbol symbol) {
         
-<span class="fc bfc" id="L566" title="All 2 branches covered.">        if(!(term instanceof NumberTerm.SymbolTerm)) {</span>
-<span class="fc" id="L567">            return false;</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">        if(!(term instanceof NumberTerm.SymbolTerm)) {</span>
+<span class="fc" id="L566">            return false;</span>
         }
         
-<span class="fc" id="L570">        final NumberTerm.SymbolTerm symbolTerm = (NumberTerm.SymbolTerm) term;</span>
-<span class="fc" id="L571">        return symbolTerm.getToken().equals(symbol);</span>
+<span class="fc" id="L569">        final NumberTerm.SymbolTerm symbolTerm = (NumberTerm.SymbolTerm) term;</span>
+<span class="fc" id="L570">        return symbolTerm.getToken().equals(symbol);</span>
         
     }
     
     private static String[] toArray(final String[]... arrays) {
-<span class="fc" id="L576">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L577" title="All 2 branches covered.">        for(String[] array : arrays) {</span>
-<span class="fc" id="L578">            list.addAll(Arrays.asList(array));</span>
+<span class="fc" id="L575">        List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L576" title="All 2 branches covered.">        for(String[] array : arrays) {</span>
+<span class="fc" id="L577">            list.addAll(Arrays.asList(array));</span>
         }
         
-<span class="fc" id="L581">        return list.toArray(new String[list.size()]);</span>
+<span class="fc" id="L580">        return list.toArray(new String[list.size()]);</span>
     }
     
 }

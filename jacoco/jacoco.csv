@@ -1,10 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,Era.new Era() {...},0,6,0,0,0,2,0,2,0,2
-Excel-CellFormatter,com.github.mygreen.cellformatter.lang,EraResolver,11,214,4,16,2,46,4,11,0,5
+Excel-CellFormatter,com.github.mygreen.cellformatter.lang,EraResolver,6,204,4,16,2,43,4,11,0,5
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,MSColor,36,253,9,11,13,40,7,15,1,11
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,EraPeriod,57,97,7,9,9,27,6,18,2,14
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,ExcelDateUtils,17,176,0,10,3,37,1,11,1,6
-Excel-CellFormatter,com.github.mygreen.cellformatter.lang,MSLocale,106,219,13,7,25,46,14,13,6,11
+Excel-CellFormatter,com.github.mygreen.cellformatter.lang,MSLocale,99,212,13,7,25,44,14,13,6,11
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,Utils.new Comparator() {...},0,24,0,2,0,6,0,3,0,2
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,MessageResource,0,38,0,0,0,11,0,7,0,7
 Excel-CellFormatter,com.github.mygreen.cellformatter.lang,JXLUtils,54,23,3,1,21,7,4,2,2,2
@@ -50,7 +50,7 @@ Excel-CellFormatter,com.github.mygreen.cellformatter,CustomFormatterParseExcepti
 Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionOperator.GreaterEqual,3,15,0,2,1,4,1,3,1,2
 Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionOperator.GreaterThan,3,15,0,2,1,4,1,3,1,2
 Excel-CellFormatter,com.github.mygreen.cellformatter,FormatterType,9,39,0,0,0,4,2,2,2,2
-Excel-CellFormatter,com.github.mygreen.cellformatter,CustomFormatterFactory,21,204,3,35,2,50,3,18,0,2
+Excel-CellFormatter,com.github.mygreen.cellformatter,CustomFormatterFactory,21,231,3,43,2,58,3,22,0,2
 Excel-CellFormatter,com.github.mygreen.cellformatter,TextCell,11,11,0,0,4,4,2,3,2,3
 Excel-CellFormatter,com.github.mygreen.cellformatter,CustomFormatter,33,144,5,15,6,39,4,15,1,8
 Excel-CellFormatter,com.github.mygreen.cellformatter,NoMatchConditionFormatterException,10,0,0,0,4,0,2,0,2,0
@@ -73,7 +73,7 @@ Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionFormatter,36,79,0,
 Excel-CellFormatter,com.github.mygreen.cellformatter,CellFormatter,0,8,0,0,0,2,0,2,0,2
 Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionNumberFormatter,5,169,1,19,2,44,2,17,1,8
 Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionOperator.NotEqual,4,14,1,1,1,4,2,2,1,2
-Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionNumberFormatterFactory,31,1163,15,175,6,265,15,90,0,10
+Excel-CellFormatter,com.github.mygreen.cellformatter,ConditionNumberFormatterFactory,31,1159,15,175,6,264,15,90,0,10
 Excel-CellFormatter,com.github.mygreen.cellformatter,FormatCellType,9,79,0,0,0,8,2,2,2,2
 Excel-CellFormatter,com.github.mygreen.cellformatter,JXLCellFormatter,29,250,5,35,9,68,8,28,3,10
 Excel-CellFormatter,com.github.mygreen.cellformatter,CellFormatResult,55,72,13,1,8,23,14,15,7,15

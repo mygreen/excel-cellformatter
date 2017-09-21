@@ -60,74 +60,72 @@ public class EraResolver {
 <span class="fc" id="L60">            return eras.get(locale);</span>
         }
         
-<span class="fc" id="L63">        Era era = null;</span>
-<span class="fc" id="L64">        synchronized (eras) {</span>
-<span class="fc" id="L65">            MessageResource resource = messageResolver.loadResource(locale);</span>
-            
-            // 該当する時代情報の定義のメッセージプロパティが存在するか。
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            if(resource.isNullObject()) {</span>
-<span class="fc" id="L69">                era = Era.UNKNOWN_ERA;</span>
-            } else {
-<span class="fc" id="L71">                era = createEra(resource);</span>
-            }
-            
-<span class="fc" id="L74">            eras.put(locale, era);</span>
-<span class="pc" id="L75">        }</span>
+<span class="fc" id="L63">        MessageResource resource = messageResolver.loadResource(locale);</span>
         
-<span class="fc" id="L77">        return era;</span>
+        // 該当する時代情報の定義のメッセージプロパティが存在するか。
+        final Era era;
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(resource.isNullObject()) {</span>
+<span class="fc" id="L68">            era = Era.UNKNOWN_ERA;</span>
+        } else {
+<span class="fc" id="L70">            era = createEra(resource);</span>
+        }
+        
+<span class="fc" id="L73">        eras.put(locale, era);</span>
+        
+<span class="fc" id="L75">        return era;</span>
         
     }
     
     private Era createEra(final MessageResource resource) {
         
         // メッセージから時代情報キー名を取得する。
-<span class="fc" id="L84">        Pattern keyPattern = Pattern.compile(&quot;^era\\.(.+)\\.name$&quot;);</span>
-<span class="fc" id="L85">        Set&lt;String&gt; keyNameSet = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        for(String key : resource.getKeys()) {</span>
+<span class="fc" id="L82">        Pattern keyPattern = Pattern.compile(&quot;^era\\.(.+)\\.name$&quot;);</span>
+<span class="fc" id="L83">        Set&lt;String&gt; keyNameSet = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for(String key : resource.getKeys()) {</span>
             
-<span class="fc" id="L88">            Matcher matcher = keyPattern.matcher(key);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(!matcher.matches()) {</span>
-<span class="fc" id="L90">                continue;</span>
+<span class="fc" id="L86">            Matcher matcher = keyPattern.matcher(key);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if(!matcher.matches()) {</span>
+<span class="fc" id="L88">                continue;</span>
             }
             
-<span class="fc" id="L93">            String keyName = matcher.group(1);</span>
-<span class="fc" id="L94">            keyNameSet.add(keyName);</span>
+<span class="fc" id="L91">            String keyName = matcher.group(1);</span>
+<span class="fc" id="L92">            keyNameSet.add(keyName);</span>
             
-<span class="fc" id="L96">        }</span>
+<span class="fc" id="L94">        }</span>
         
         // 時代情報の組み立て
-<span class="fc" id="L99">        List&lt;EraPeriod&gt; periodList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        for(String keyName : keyNameSet) {</span>
+<span class="fc" id="L97">        List&lt;EraPeriod&gt; periodList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for(String keyName : keyNameSet) {</span>
             
-<span class="fc" id="L102">            EraPeriod period = new EraPeriod();</span>
-<span class="fc" id="L103">            String name = resource.getMessage(String.format(&quot;era.%s.name&quot;, keyName));</span>
-<span class="fc" id="L104">            period.setName(name);</span>
+<span class="fc" id="L100">            EraPeriod period = new EraPeriod();</span>
+<span class="fc" id="L101">            String name = resource.getMessage(String.format(&quot;era.%s.name&quot;, keyName));</span>
+<span class="fc" id="L102">            period.setName(name);</span>
             
-<span class="fc" id="L106">            String abbrevName = resource.getMessage(String.format(&quot;era.%s.abbrevName&quot;, keyName));</span>
-<span class="fc" id="L107">            period.setAbbrevName(abbrevName);</span>
+<span class="fc" id="L104">            String abbrevName = resource.getMessage(String.format(&quot;era.%s.abbrevName&quot;, keyName));</span>
+<span class="fc" id="L105">            period.setAbbrevName(abbrevName);</span>
             
-<span class="fc" id="L109">            String abbrevRomanName = resource.getMessage(String.format(&quot;era.%s.abbrevRomanName&quot;, keyName));</span>
-<span class="fc" id="L110">            period.setAbbrevRomanName(abbrevRomanName);</span>
+<span class="fc" id="L107">            String abbrevRomanName = resource.getMessage(String.format(&quot;era.%s.abbrevRomanName&quot;, keyName));</span>
+<span class="fc" id="L108">            period.setAbbrevRomanName(abbrevRomanName);</span>
             
-<span class="fc" id="L112">            String start = resource.getMessage(String.format(&quot;era.%s.start&quot;, keyName));</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            if(Utils.isNotEmpty(start)) {</span>
-<span class="fc" id="L114">                period.setStartDate(ExcelDateUtils.parseDate(start));</span>
+<span class="fc" id="L110">            String start = resource.getMessage(String.format(&quot;era.%s.start&quot;, keyName));</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if(Utils.isNotEmpty(start)) {</span>
+<span class="fc" id="L112">                period.setStartDate(ExcelDateUtils.parseDate(start));</span>
             }
             
-<span class="fc" id="L117">            String end = resource.getMessage(String.format(&quot;era.%s.end&quot;, keyName));</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">            if(Utils.isNotEmpty(end)) {</span>
-<span class="fc" id="L119">                period.setEndDate(ExcelDateUtils.parseDate(end));</span>
+<span class="fc" id="L115">            String end = resource.getMessage(String.format(&quot;era.%s.end&quot;, keyName));</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if(Utils.isNotEmpty(end)) {</span>
+<span class="fc" id="L117">                period.setEndDate(ExcelDateUtils.parseDate(end));</span>
             }
             
-<span class="fc" id="L122">            periodList.add(period);</span>
-<span class="fc" id="L123">        }</span>
+<span class="fc" id="L120">            periodList.add(period);</span>
+<span class="fc" id="L121">        }</span>
         
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if(periodList.isEmpty()) {</span>
-<span class="nc" id="L126">            return Era.UNKNOWN_ERA;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if(periodList.isEmpty()) {</span>
+<span class="nc" id="L124">            return Era.UNKNOWN_ERA;</span>
         }
         
-<span class="fc" id="L129">        final Era era = new Era(periodList);</span>
-<span class="fc" id="L130">        return era;</span>
+<span class="fc" id="L127">        final Era era = new Era(periodList);</span>
+<span class="fc" id="L128">        return era;</span>
         
     }
     
