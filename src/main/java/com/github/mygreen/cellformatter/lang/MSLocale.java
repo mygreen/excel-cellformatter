@@ -122,30 +122,27 @@ public class MSLocale {
         
         final MSLocale locale = new MSLocale(id);
         
-        synchronized (KNOWN_LOCALES) {
-            
-            // IDを16進数に変換する
-            final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
-            
-            String code = messageResolver.getMessage(String.format("locale.%s.code", hexId));
-            if(Utils.isEmpty(code)) {
-                return null;
-            }
-            
-            locale.code = code;
-            locale.language = messageResolver.getMessage(String.format("locale.%s.language", hexId));
-            locale.country = messageResolver.getMessage(String.format("locale.%s.country", hexId));
-            locale.name = messageResolver.getMessage(String.format("locale.%s.name", hexId));
-            
-            // Javaのロケールの設定
-            String jid = messageResolver.getMessage(String.format("locale.%s.jid", hexId));
-            if(Utils.isNotEmpty(jid)) {
-                locale.locale = parseLocale(jid);
-            }
-            
-            // キャッシュに登録する。
-            KNOWN_LOCALES.put(id, locale);
+        // IDを16進数に変換する
+        final String hexId = Utils.supplyZero(Integer.toHexString(id).toUpperCase(), 4);
+        
+        String code = messageResolver.getMessage(String.format("locale.%s.code", hexId));
+        if(Utils.isEmpty(code)) {
+            return null;
         }
+        
+        locale.code = code;
+        locale.language = messageResolver.getMessage(String.format("locale.%s.language", hexId));
+        locale.country = messageResolver.getMessage(String.format("locale.%s.country", hexId));
+        locale.name = messageResolver.getMessage(String.format("locale.%s.name", hexId));
+        
+        // Javaのロケールの設定
+        String jid = messageResolver.getMessage(String.format("locale.%s.jid", hexId));
+        if(Utils.isNotEmpty(jid)) {
+            locale.locale = parseLocale(jid);
+        }
+        
+        // キャッシュに登録する。
+        KNOWN_LOCALES.put(id, locale);
         
         return locale;
         
