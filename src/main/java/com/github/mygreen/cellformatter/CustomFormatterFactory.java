@@ -9,6 +9,8 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 
 /**
  * ユーザ定義の書式を解析して、{@link CustomFormatter}のインスタンスを作成するクラス。
+ * 
+ * @version 0.9.2
  * @author T.TSUCHIE
  *
  */
@@ -122,14 +124,33 @@ public class CustomFormatterFactory {
                     
                 }
                 
+            } else if(sectionSize == 4) {
+                if(i==0) {
+                    // 正の書式
+                    conditionFormatter.setOperator(ConditionOperator.POSITIVE);
+                    
+                } else if(i==1) {
+                    // 負の数の書式
+                    conditionFormatter.setOperator(ConditionOperator.NEGATIVE);
+                    
+                } else if(i==2) {
+                    // ゼロの書式
+                    conditionFormatter.setOperator(ConditionOperator.ZERO);
+                    
+                } else {
+                    // その他の書式
+                    conditionFormatter.setOperator(ConditionOperator.ALL);
+                    
+                }
+                
             } else {
                 throw new CustomFormatterParseException(pattern,
-                        String.format("section size over 4. but '%s' number of %d secitions.", pattern, sections.size())); 
+                        String.format("section size over 4. but '%s' number of %d secitions.", pattern, sections.size()));
             }
             
         }
         
         return formatter;
     }
-    
+
 }

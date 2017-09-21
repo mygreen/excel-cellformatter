@@ -60,19 +60,17 @@ public class EraResolver {
             return eras.get(locale);
         }
         
-        Era era = null;
-        synchronized (eras) {
-            MessageResource resource = messageResolver.loadResource(locale);
-            
-            // 該当する時代情報の定義のメッセージプロパティが存在するか。
-            if(resource.isNullObject()) {
-                era = Era.UNKNOWN_ERA;
-            } else {
-                era = createEra(resource);
-            }
-            
-            eras.put(locale, era);
+        MessageResource resource = messageResolver.loadResource(locale);
+        
+        // 該当する時代情報の定義のメッセージプロパティが存在するか。
+        final Era era;
+        if(resource.isNullObject()) {
+            era = Era.UNKNOWN_ERA;
+        } else {
+            era = createEra(resource);
         }
+        
+        eras.put(locale, era);
         
         return era;
         
