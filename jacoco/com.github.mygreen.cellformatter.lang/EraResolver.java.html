@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EraResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">EraResolver.java</span></div><h1>EraResolver.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * 時代の情報を解決するクラス。
+ * &lt;p&gt;各ロケールごとに情報を保持する。
+ * &lt;p&gt;一度読み込んだ情報はキャッシュする。
+ * 
+ * @version 0.5
+ * @since 0.5
+ * @author T.TSUCHIE
+ *
+ */
+public class EraResolver {
+    
+    /**
+     * 時代の定義用のプロパティファイル
+     */
+<span class="fc" id="L28">    private static final MessageResolver messageResolver = new MessageResolver(&quot;com.github.mygreen.cellformatter.era&quot;, true, true);</span>
+    
+    /**
+     * ロケールごとの時代
+     */
+    private Map&lt;Locale, Era&gt; eras;
+    
+<span class="fc" id="L35">    public EraResolver() {</span>
+<span class="fc" id="L36">        this.eras = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L37">    }</span>
+    
+    /**
+     * ロケールに該当する時代情報を取得する。
+     * @param locale ロケール。null指定可能。
+     * @return 見つからない場合は、nullを返す。
+     */
+    public Era getEra(final MSLocale locale) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        return locale == null ? Era.UNKNOWN_ERA : getEra(locale.getLocale());</span>
+    }
+    
+    /**
+     * ロケールに該当する時代情報を取得する。
+     * @param locale ロケール。null指定可能。
+     * @return 見つからない場合は、不明な時代情報を返す{@link Era#UNKNOWN_ERA}を返す。
+     */
+    public Era getEra(final Locale locale) {
+        
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if(locale == null) {</span>
+<span class="nc" id="L56">            return Era.UNKNOWN_ERA;</span>
+        }
+        
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if(eras.containsKey(locale)) {</span>
+<span class="fc" id="L60">            return eras.get(locale);</span>
+        }
+        
+<span class="fc" id="L63">        MessageResource resource = messageResolver.loadResource(locale);</span>
+        
+        // 該当する時代情報の定義のメッセージプロパティが存在するか。
+        final Era era;
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if(resource.isNullObject()) {</span>
+<span class="fc" id="L68">            era = Era.UNKNOWN_ERA;</span>
+        } else {
+<span class="fc" id="L70">            era = createEra(resource);</span>
+        }
+        
+<span class="fc" id="L73">        eras.put(locale, era);</span>
+        
+<span class="fc" id="L75">        return era;</span>
+        
+    }
+    
+    private Era createEra(final MessageResource resource) {
+        
+        // メッセージから時代情報キー名を取得する。
+<span class="fc" id="L82">        Pattern keyPattern = Pattern.compile(&quot;^era\\.(.+)\\.name$&quot;);</span>
+<span class="fc" id="L83">        Set&lt;String&gt; keyNameSet = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for(String key : resource.getKeys()) {</span>
+            
+<span class="fc" id="L86">            Matcher matcher = keyPattern.matcher(key);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if(!matcher.matches()) {</span>
+<span class="fc" id="L88">                continue;</span>
+            }
+            
+<span class="fc" id="L91">            String keyName = matcher.group(1);</span>
+<span class="fc" id="L92">            keyNameSet.add(keyName);</span>
+            
+<span class="fc" id="L94">        }</span>
+        
+        // 時代情報の組み立て
+<span class="fc" id="L97">        List&lt;EraPeriod&gt; periodList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for(String keyName : keyNameSet) {</span>
+            
+<span class="fc" id="L100">            EraPeriod period = new EraPeriod();</span>
+<span class="fc" id="L101">            String name = resource.getMessage(String.format(&quot;era.%s.name&quot;, keyName));</span>
+<span class="fc" id="L102">            period.setName(name);</span>
+            
+<span class="fc" id="L104">            String abbrevName = resource.getMessage(String.format(&quot;era.%s.abbrevName&quot;, keyName));</span>
+<span class="fc" id="L105">            period.setAbbrevName(abbrevName);</span>
+            
+<span class="fc" id="L107">            String abbrevRomanName = resource.getMessage(String.format(&quot;era.%s.abbrevRomanName&quot;, keyName));</span>
+<span class="fc" id="L108">            period.setAbbrevRomanName(abbrevRomanName);</span>
+            
+<span class="fc" id="L110">            String start = resource.getMessage(String.format(&quot;era.%s.start&quot;, keyName));</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if(Utils.isNotEmpty(start)) {</span>
+<span class="fc" id="L112">                period.setStartDate(ExcelDateUtils.parseDate(start));</span>
+            }
+            
+<span class="fc" id="L115">            String end = resource.getMessage(String.format(&quot;era.%s.end&quot;, keyName));</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if(Utils.isNotEmpty(end)) {</span>
+<span class="fc" id="L117">                period.setEndDate(ExcelDateUtils.parseDate(end));</span>
+            }
+            
+<span class="fc" id="L120">            periodList.add(period);</span>
+<span class="fc" id="L121">        }</span>
+        
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if(periodList.isEmpty()) {</span>
+<span class="nc" id="L124">            return Era.UNKNOWN_ERA;</span>
+        }
+        
+<span class="fc" id="L127">        final Era era = new Era(periodList);</span>
+<span class="fc" id="L128">        return era;</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

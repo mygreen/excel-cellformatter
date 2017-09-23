@@ -1,989 +1,363 @@
 
 
-<!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>1. 基本的な使い方 &mdash; Super CSV Annotation 2.1 ドキュメント</title>
-  
+<!doctype html>
 
-  
-  
-  
-  
 
-  
-
-  
-  
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
+    <title>2. 基本的な使い方 &#8212; Excel-CellFormatter 0.9.2 ドキュメント</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="索引"
-              href="genindex.html"/>
-        <link rel="search" title="検索" href="search.html"/>
-    <link rel="top" title="Super CSV Annotation 2.1 ドキュメント" href="index.html"/>
-        <link rel="next" title="2. 機能概要" href="basic.html"/>
-        <link rel="prev" title="Welcome to Super CSV Annotation" href="index.html"/>
- 
-<!-- my theme custom extrahead beacon -->
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-   
-  <div class="wy-grid-for-nav">
-
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="index.html" class="icon icon-home"> Super CSV Annotation
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                2.1
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-<p class="caption"><span class="caption-text">関連リンク</span></p>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/mytheme.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="top" title="Excel-CellFormatter 0.9.2 ドキュメント" href="index.html" />
+    <link rel="next" title="3. カスタマイズ方法" href="customize.html" />
+    <link rel="prev" title="1. はじめに" href="biginning.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="customize.html" title="3. カスタマイズ方法"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="biginning.html" title="1. はじめに"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.9.2 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">関連リンク</a></h3>
 <ul>
-	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
 	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
-	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/super-csv-annotation">GitHub</a></li>
-	<li class="toctree-l1"><a class="reference internal" href="http://super-csv.github.io/super-csv/index.html">Super CSV</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/excel-cellformatter">GitHub</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
 </ul>
 
-
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">目次</span></p>
+<h3><a href="index.html">目次</a></h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 基本的な使い方</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">1.1. ダウンロード</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#csvbean">1.2. CSV用のBeanクラスの定義</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">1.3. 読み込み方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">1.4. 書き込み方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">1.5. 値の加工方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#csv">1.6. タブ区切りCSVファイルへの対応</a></li>
+<li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id3">1.2. 前提環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#restriction">1.3. 制限事項</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">2. 機能概要</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id2">2.1. 前提条件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id4">2.2. 対応しているクラスタイプ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#id5">2.3. 処理の流れ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#apaceh-poi">2.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#java">2.4. Javaオブジェクトの場合</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="format.html">3. 書式の指定方法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="format.html#id2">3.1. 書式指定用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="format.html#csvbooleanformat">3.1.1. &#64;CsvBooleanFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id7">3.1.1.1. 読み込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id8">3.1.1.2. 書き込み時の値の指定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id9">3.1.1.3. 読み込み時の値のパースに失敗した際の処理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id10">3.1.1.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">3.1. キャッシュの制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id5">3.2. フォーマッタの事前登録</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id6">3.3. 元号の定義の変更</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="format.html#csvnumberformat">3.1.2. &#64;CsvNumberFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id13">3.1.2.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id14">3.1.2.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id15">3.1.2.3. 丸めの精度と方法を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id16">3.1.2.4. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">4. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">4.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">4.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">4.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">4.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="format.html#csvdatetimeformat">3.1.3. &#64;CsvDateTimeFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id19">3.1.3.1. 読み込み/書き込み時の書式を指定したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id20">3.1.3.2. 読み込み時に曖昧に解析したい場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id21">3.1.3.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="format.html#csvenumformat">3.1.4. &#64;CsvEnumFormat</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id24">3.1.4.1. 基本的な使い方</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id25">3.1.4.2. 別名でマッピングする場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="format.html#id26">3.1.4.3. 読み込み時の値のパースに失敗した際のメッセージ</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="format.html#id29">3.2. 独自のクラスタイプへの対応</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="format.html#textformatter">3.2.1. TextFormatterの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="format.html#id31">3.2.2. 作成したTextFormatterの指定</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="conversion.html">4. 値の変換方法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="conversion.html#id2">4.1. 変換処理用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id17">4.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id18">4.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id19">4.1.3. グループの指定</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="conversion.html#id20">4.2. 独自の変換処理の作成方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#cellprocessor">4.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id23">4.2.2. 変換処理用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conversion.html#id25">4.2.3. 変換処理用のファクトリクラスの作成</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="validation.html">5. 値の検証方法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id2">5.1. 値の検証用の既存のアノテーション</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id20">5.1.1. 処理順序の指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id21">5.1.2. 処理ケースの指定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id22">5.1.3. グループの指定</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id23">5.2. 独自の検証処理の作成方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#cellprocessor">5.2.1. CellProcessorの実装クラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id27">5.2.2. 値の検証用のアノテーションクラスの作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id30">5.2.3. 値の検証用のファクトリクラスの作成</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#bean">5.3. Bean単位での値の検証方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#csvvalidator">5.3.1. CsvValidatorの実装</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id32">5.3.2. エラーメッセージの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id33">5.3.3. エラーのハンドリング</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id34">5.4. エラー処理の方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id35">5.4.1. 例外の種類とハンドリング</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id36">5.4.2. 書き込み時の値の検証のスキップ</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#id37">5.5. 値の検証時のエラーメッセージ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="validation.html#bean-validation">5.6. Bean Validationとの連携</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id38">5.6.1. ライブラリの追加</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id41">5.6.2. Bean Validationの利用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#id42">5.6.3. Bean Validationのカスタマイズ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="validation.html#beanvalidationspring-framework">5.6.4. BeanValidationとSpring Frameworkとの連携</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#xml">5.6.4.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#javaconfig">5.6.4.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#constraintvalidator">5.6.4.3. 独自のConstraintValidatorの作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#csvbean">5.6.4.4. CsvBeanの定義</a></li>
-<li class="toctree-l4"><a class="reference internal" href="validation.html#id44">5.6.4.5. 値の検証方法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="composition.html">6. アノテーションの合成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="composition.html#id2">6.1. アノテーションの合成の基本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composition.html#id3">6.2. 属性の上書き</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composition.html#id5">6.3. 共通の属性の上書き</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="partialization.html">7. 部分的なカラムの読み書き</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="partialization.html#id2">7.1. 部分的なカラムの読み込み</a></li>
-<li class="toctree-l2"><a class="reference internal" href="partialization.html#id3">7.2. 部分的なカラムの書き込み</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fixedsizecolumn.html">8. 固定長のカラムの読み書き</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id4">8.1. 基本的な設定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id5">8.2. ヘッダー行の固定長の指定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fixedsizecolumn.html#id7">8.3. パディング処理方式の切り替え</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="labelledcolumn.html">9. ラベルによるカラムのマッピング</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#bean">9.1. Beanの定義</a></li>
-<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id2">9.2. 読み込み方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="labelledcolumn.html#id3">9.3. 書き出し方法</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="processorbuilder.html">10. 独自のProcessorBuilderの作成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#cellprocessor">10.1. CellProcessorを直接組み立てる場合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processorbuilder.html#id1">10.2. エラー処理</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">11. ライフサイクルイベントの管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id2">11.1. ライフサイクル・コールバック用のアノテーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lifecycle.html#id9">11.2. リスナークラスによるライフサイクルの管理</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="spring.html">12. Spring Frameworkとの連携</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id2">12.1. ライブラリの追加</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#springbeanfactory">12.2. SpringBeanFactoryの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#xml">12.2.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#javaconfig">12.2.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springbean">12.2.3. SpringBeanとしての定義</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id3">12.2.3.1. 独自の書式の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id4">12.2.3.2. 独自の変換/検証の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#processorbuilder">12.2.3.3. 独自のProcessorBuilderクラスの作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#csvvalidator">12.2.3.4. CsvValidator の作成</a></li>
-<li class="toctree-l4"><a class="reference internal" href="spring.html#id5">12.2.3.5. リスナクラスの作成</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#csvbean">12.2.4. CsvBeanの定義</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id6">12.2.5. SpringBeanFactoryの使用方法</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="spring.html#id7">12.3. エラーメッセージの設定方法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id8">12.3.1. XMLによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#id9">12.3.2. JavaConfigによるコンテナの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="spring.html#springmessageresolver">12.3.3. SpringMessageResolverの使用方法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">13. システム設定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id2">13.1. システム設定の変更方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#id4">13.2. システム設定の項目一覧</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">14. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-1-2017-09-23">14.1. ver.2.1 - 2017-09-23</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-3-2017-02-20">14.2. ver.2.0.3 - 2017-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2-2017-01-30">14.3. ver.2.0.2 - 2017-01-30</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-1-2016-12-18">14.4. ver.2.0.1 - 2016-12-18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-2-0-2016-12-11">14.5. ver.2.0 - 2016-12-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-2-2016-09-03">14.6. ver.1.2 - 2016-09-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-1-1-2014-11-30">14.7. ver.1.1 - 2014-11-30</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.1. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.2. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.3. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.4. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.5. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.6. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.7. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.8. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.9. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.10. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.11. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.12. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.13. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.14. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.15. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
 
-            
-          
-<!-- my theme custom extramenu beacon -->
+
+</div>
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="biginning.html"
+                        title="前の章へ">1. はじめに</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="customize.html"
+                        title="次の章へ">3. カスタマイズ方法</a></p>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/howtouse.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-    </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Super CSV Annotation</a>
-        
-      </nav>
-
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
-      <li>1. 基本的な使い方</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="_sources/howtouse.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
   <div class="section" id="id1">
-<h1>1. 基本的な使い方<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>2. 基本的な使い方<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id2">
-<h2>1.1. ダウンロード<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Mavenを使用する場合は <em>pom.xml</em> に以下の記述を追加してください。</p>
-<div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-number">コード - 1.1.1 </span><span class="caption-text">pom.xmlの依存関係</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+<h2>2.1. ダウンロード<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Mavenのセントラルリポジトリに登録してあるため、依存関係として下記を追加します。</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.mygreen<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>super-csv-annotation<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>2.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>excel-cellformatter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.9.2<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
-</td></tr></table></div>
-</div>
-<p>本ライブラリは、ロギングライブラリ <a class="reference external" href="https://www.slf4j.org/">SLF4j</a> を使用しているため、好きな実装を追加してください。</p>
-<div class="literal-block-wrapper docutils container" id="id10">
-<div class="code-block-caption"><span class="caption-number">コード - 1.1.2 </span><span class="caption-text">ロギングライブラリの実装の追加（Log4jの場合）</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>org.slf4j<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>slf4j-log4j12<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.7.1<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;dependency&gt;</span>
-    <span class="nt">&lt;groupId&gt;</span>log4j<span class="nt">&lt;/groupId&gt;</span>
-    <span class="nt">&lt;artifactId&gt;</span>log4j<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.2.14<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-</td></tr></table></div>
 </div>
 </div>
-<div class="section" id="csvbean">
-<h2>1.2. CSV用のBeanクラスの定義<a class="headerlink" href="#csvbean" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>CSVの1レコード分をマッピングするためのPOJOクラスを作成します。</p>
+<div class="section" id="apaceh-poi">
+<h2>2.2. Apaceh POIの場合<a class="headerlink" href="#apaceh-poi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference external" href="http://poi.apache.org/">Apache POI</a> を利用する場合は、 <em>POICellFormatter</em> を利用します。</p>
 <ul class="simple">
-<li>CSV用のクラスは、 <code class="docutils literal"><span class="pre">public</span></code> である必要があります。<ul>
-<li>引数なしの <code class="docutils literal"><span class="pre">public</span></code> なコンストラクタが必要です。</li>
-<li>コンストラクタを定義しない場合は、デフォルトコンストラクタでもかまいません。</li>
+<li>書式が「m/d/yy」の時など、実行環境の言語設定によって異なる場合は、ロケールを指定します。<ul>
+<li>ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。</li>
 </ul>
 </li>
-<li>CSV用のクラスであることを示すために、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvBean</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvBean.html">JavaDoc</a> ] をクラスに付与します。<ul>
-<li>属性 <code class="docutils literal"><span class="pre">header</span></code> をtrueとすると、 <em>CsvAnnotationBeanReader#readAll(…)</em> と <em>CsvAnnotationBeanWriter#writeAll(…)</em> メソッドの呼び出し時に、ヘッダー行がある前提として処理します。</li>
+<li>Cellのインスタンスがnullの場合、空（Blank）セルとして扱います。<ul>
+<li>POIの場合、データの入力がない領域のセルは、nullとなるためです。</li>
+<li>これはJExcelAPIの仕様に合わせるためです。</li>
 </ul>
 </li>
-<li>カラムをフィールドにマッピングするために、アノテーション <code class="docutils literal"><span class="pre">&#64;CsvColumn</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/annotation/CsvColumn.html">JavaDoc</a> ]をフィールドに付与します。<ul>
-<li>属性 <code class="docutils literal"><span class="pre">number</span></code> で、マッピングするカラムの番号を指定します。カラムの番号は1から始まります。</li>
-<li>属性 <code class="docutils literal"><span class="pre">label</span></code> で、ヘッダー行のラベル名を指定することができます。省略した場合はフィールド名が適用されます。</li>
+<li>結合されたセルの場合、結合領域を走査し、非空セルがそのセルの値を評価します。<ul>
+<li>POIの場合、結合されたセルの領域は、基本的に左上のセルに値が設定され、それ以外のセルは空セルとなるためです。</li>
+<li>ただし、古いバージョンのExcelだったり、プログラムから出力したExcelファイルの場合、
+必ずしも左上のセルに値が入っているとは限らないため、結合した全ての領域を走査します。</li>
+<li>これはJExcelAPIの仕様に合わせるためです。</li>
 </ul>
 </li>
-<li>フィールドに対応するgetter/setterのアクセッサメソッドを作成します。</li>
+<li>数式や関数が設定されたセルの場合、それらを評価した結果を返します。<ul>
+<li>POIが対応していない数式や関数の場合、Excel上では正しく表示されていても、エラーセルの扱いとなります。</li>
+<li>使用するPOIのバージョンによって対応する関数も異なります。</li>
 </ul>
-<div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-number">コード - 1.2.1 </span><span class="caption-text">Beanクラスのサンプル</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="n">Cell</span> <span class="n">cell</span> <span class="o">=</span> <span class="cm">/* セルの値の取得 */</span><span class="o">;</span>
 
+<span class="kd">final</span> <span class="n">POICellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">POICellFormatter</span><span class="o">();</span>
 
-<span class="c1">// レコード用のPOJOクラスの定義</span>
-<span class="nd">@CsvBean</span><span class="o">(</span><span class="n">header</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserCsv</span> <span class="o">{</span>
+<span class="n">String</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
 
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">no</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;名前&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="c1">// 引数なしのコンストラクタ</span>
-    <span class="kd">public</span> <span class="nf">UserCsv</span><span class="o">()</span> <span class="o">{</span>
-
-    <span class="o">}</span>
-
-    <span class="c1">// 以下、フィールドに対するsetter/getterメソッド</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getNo</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">no</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNo</span><span class="o">(</span><span class="kt">int</span> <span class="n">no</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">naem</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<span class="c1">// ロケールを指定してフォーマットする。</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">Locale</span><span class="o">.</span><span class="na">JAPANESE</span><span class="o">);</span>
 </pre></div>
-</td></tr></table></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">注釈</p>
-<p class="last">アクセッサメソッドを動的に生成する <a class="reference external" href="http://projectlombok.org/">Lombok</a> を使用すると、コード量を減らすことができます。</p>
-</div>
-</div>
-<div class="section" id="id4">
-<h2>1.3. 読み込み方法<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
-<li>CSVファイルを読み込む場合は、クラス <code class="docutils literal"><span class="pre">CsvAnnotationBeanReader</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanReader.html">JavaDoc</a> ]を使用します。</li>
-<li>一度に全レコードを読み込む場合は、メソッド <code class="docutils literal"><span class="pre">readAll(...)</span></code> を使用します。</li>
-<li>1件ずつ読み込む場合は、メソッド <code class="docutils literal"><span class="pre">read(...)</span></code> を使用します。</li>
+<li>書式に色の条件式など指定されている場合、詳細の結果を取得することもできます。</li>
 </ul>
-<div class="literal-block-wrapper docutils container" id="id12">
-<div class="code-block-caption"><span class="caption-number">コード - 1.3.1 </span><span class="caption-text">読み込むサンプル</span><a class="headerlink" href="#id12" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="o">;</span>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">final</span> <span class="n">POICellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">POICellFormatter</span><span class="o">();</span>
 
-<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="c1">// フォーマット結果の詳細を取得する</span>
+<span class="n">CellFormatResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
 
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
+<span class="c1">// フォーマットした文字列の取得</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
+<span class="c1">// 文字色が設定されている場合、その色の取得。</span>
+<span class="c1">// 色が設定されていない場合は、nullを返す。</span>
+<span class="n">MSColor</span> <span class="n">color</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getTextColor</span><span class="o">();</span>
 
-    <span class="c1">// 全レコードを一度に読み込む場合</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleReadAll</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">// フォーマット対象の値を取得します。</span>
+<span class="c1">// どのタイプの書式として処理されたかによって、値の取得方法がことなります。</span>
+<span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isDate</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">Date</span> <span class="n">dateValue</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getValueAsDate</span><span class="o">();</span>
 
-        <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;(</span>
-                <span class="n">UserCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isNumber</span><span class="o">())</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">numberValue</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getValueAsDouble</span><span class="o">();</span>
 
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">readAll</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isText</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">stringValue</span> <span class="o">=</span> <span class="n">rsult</span><span class="o">.</span><span class="na">getValueAsString</span><span class="o">();</span>
 
-        <span class="n">csvReader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="c1">// エラー用セルやブランクセルの場合</span>
 
-    <span class="c1">// レコードを1件ずつ読み込む場合</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleRead</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanReader</span><span class="o">&lt;&gt;(</span>
-                <span class="n">UserCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span>
-
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-
-        <span class="c1">// ヘッダー行の読み込み</span>
-        <span class="n">String</span> <span class="n">headers</span><span class="o">[]</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-
-        <span class="n">UserCsv</span> <span class="n">record</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="k">while</span><span class="o">((</span><span class="n">record</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
-        <span class="o">}</span>
-
-        <span class="n">csvReader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
-</td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>1.4. 書き込み方法<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="jexcelapi">
+<h2>2.3. JExcelAPIの場合<a class="headerlink" href="#jexcelapi" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference external" href="http://jexcelapi.sourceforge.net/">JExcelAPI</a> を利用する場合は、 <em>JXLCellFormatter</em> を利用します。</p>
 <ul class="simple">
-<li>CSVファイルを書き込む場合は、クラス <code class="docutils literal"><span class="pre">CsvAnnotationBeanWriter</span></code> [ <a class="reference external" href="../apidocs/com/github/mygreen/supercsv/io/CsvAnnotationBeanWriter.html">JavaDoc</a> ]を使用します。</li>
-<li>一度に全レコードを書き込む場合は、メソッド <code class="docutils literal"><span class="pre">writeAll(...)</span></code> を使用します。</li>
-<li>1件ずつ書き込む場合は、メソッド <code class="docutils literal"><span class="pre">write(...)</span></code> を使用します。</li>
+<li>日本語を含むExcelファイルの場合、文字コードを <em>ISO8859_1</em> を指定します。<ul>
+<li>指定しない場合は、会計の書式中の円記号 <em>￥</em> が文字化けします。</li>
+<li><em>Windows-31j</em> と指定しても文字化けするため、注意してください。</li>
 </ul>
-<div class="literal-block-wrapper docutils container" id="id13">
-<div class="code-block-caption"><span class="caption-number">コード - 1.4.1 </span><span class="caption-text">書き込むサンプル</span><a class="headerlink" href="#id13" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanWriter</span><span class="o">;</span>
+</li>
+<li>1904年始まりの設定がされているExelファイルの設定かどうか、メソッド <em>JXLUtils.isDateStart1904(...)</em> で調べた値を渡します。<ul>
+<li>通常は1899年12月31日（Excel表記上は 1900年1月0日）が基準です。</li>
+<li>JXLUtils.isDateStart1904(...)メソッドには、Sheetオブジェクトを引数にとるメソッドも用意されています。</li>
+</ul>
+</li>
+<li>書式が「m/d/yy」の時など、実行環境の言語設定によって切り替わる場合は、ロケールを指定します。<ul>
+<li>ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などでは注意してください。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// シートの読み込み</span>
+<span class="kd">final</span> <span class="n">WorkbookSettings</span> <span class="n">settings</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WorkbookSettings</span><span class="o">();</span>
+<span class="n">settings</span><span class="o">.</span><span class="na">setSuppressWarnings</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="n">settings</span><span class="o">.</span><span class="na">setGCDisabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
 
-<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="c1">// 文字コードを「ISO8859_1」にしないと、一部の文字が文字化けします。</span>
+<span class="n">settings</span><span class="o">.</span><span class="na">setEncoding</span><span class="o">(</span><span class="s">&quot;ISO8859_1&quot;</span><span class="o">);</span>
 
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
+<span class="kd">final</span> <span class="n">Workbook</span> <span class="n">workbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="n">in</span><span class="o">,</span> <span class="n">settings</span><span class="o">);</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
+<span class="c1">// 1904年始まりのシートか調べる。</span>
+<span class="kt">boolean</span> <span class="n">startDate1904</span> <span class="o">=</span> <span class="n">JXLUtils</span><span class="o">.</span><span class="na">isDateStart1904</span><span class="o">(</span><span class="n">workbook</span><span class="o">);</span>
 
-    <span class="c1">// 全レコードを一度に書き込む場合</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWriteAll</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">Cell</span> <span class="n">cell</span> <span class="o">=</span> <span class="cm">/* セルの値の取得 */</span><span class="o">;</span>
 
-        <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                <span class="n">UserCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span>
+<span class="kd">final</span> <span class="n">JXLCellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JXLCellFormatter</span><span class="o">();</span>
 
-        <span class="c1">// 書き込み用のデータの作成</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-        <span class="n">UserCsv</span> <span class="n">record1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserCsv</span><span class="o">();</span>
-        <span class="n">record1</span><span class="o">.</span><span class="na">setNo</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-        <span class="n">record1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;山田太郎&quot;</span><span class="o">);</span>
-        <span class="n">liad</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">record1</span><span class="o">);</span>
+<span class="c1">// セルの値を文字列として取得</span>
+<span class="n">String</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">startDate1904</span><span class="o">);</span>
 
-        <span class="n">UserCsv</span> <span class="n">record2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserCsv</span><span class="o">();</span>
-        <span class="n">record2</span><span class="o">.</span><span class="na">setNo</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-        <span class="n">record2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;鈴木次郎&quot;</span><span class="o">);</span>
-        <span class="n">liad</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">record2</span><span class="o">);</span>
-
-        <span class="c1">// ヘッダー行と全レコードデータの書き込み</span>
-        <span class="n">csvWriter</span><span class="o">.</span><span class="na">writeAll</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
-
-        <span class="n">csvWriter</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="c1">// レコードを1件ずつ書き込む場合</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWrite</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">csvWriter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                <span class="n">UserCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">CsvPreference</span><span class="o">.</span><span class="na">STANDARD_PREFERENCE</span><span class="o">);</span>
-
-        <span class="c1">// ヘッダー行の書き込み</span>
-        <span class="n">csvWriter</span><span class="o">.</span><span class="na">writeHeader</span><span class="o">();</span>
-
-        <span class="c1">// レコードのデータの書き込み</span>
-        <span class="n">UserCsv</span> <span class="n">record1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserCsv</span><span class="o">();</span>
-        <span class="n">record1</span><span class="o">.</span><span class="na">setNo</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-        <span class="n">record1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;山田太郎&quot;</span><span class="o">);</span>
-        <span class="n">csvWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record1</span><span class="o">);</span>
-
-        <span class="n">UserCsv</span> <span class="n">record2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserCsv</span><span class="o">();</span>
-        <span class="n">record2</span><span class="o">.</span><span class="na">setNo</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-        <span class="n">record2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;鈴木次郎&quot;</span><span class="o">);</span>
-        <span class="n">csvWriter</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record2</span><span class="o">);</span>
-
-        <span class="n">csvWrier</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-        <span class="n">csvWrier</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-
-    <span class="o">}</span>
-<span class="o">}</span>
+<span class="c1">// ロケールを指定してフォーマットする。</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">cellForrmatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="n">cell</span><span class="o">,</span> <span class="n">Locale</span><span class="o">.</span><span class="na">JAPANESE</span><span class="o">,</span> <span class="n">startDate1904</span><span class="o">);</span>
 </pre></div>
-</td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>1.5. 値の加工方法<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>本ライブラリには、様々なアノテーションが用意されており、<a class="reference internal" href="format.html"><span class="doc">書式の指定</span></a> 、<a class="reference internal" href="conversion.html"><span class="doc">トリムなどの値の変換</span></a> 、 <a class="reference internal" href="validation.html"><span class="doc">値の検証</span></a> を行うことができます。
-もちろん、独自のアノテーションを作成することもできます。</p>
-<p>また、値を変換するアノテーションと検証を行うアノテーションにおいては、適用順や読み込み／書き込み時に適用するケースを指定する属性がそれぞれ <code class="docutils literal"><span class="pre">order</span></code> 、 <code class="docutils literal"><span class="pre">cases</span></code> にて可能です。</p>
-<div class="literal-block-wrapper docutils container" id="id14">
-<div class="code-block-caption"><span class="caption-number">コード - 1.5.1 </span><span class="caption-text">値を加工するアノテーションのサンプル</span><a class="headerlink" href="#id14" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.time.LocalDate</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvBean</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.CsvColumn</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.CsvNumberMin</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.CsvRequire</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.constraint.CsvUnique</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.CsvDefaultValue</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.conversion.CsvNullConvert</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvDateTimeFormat</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.annotation.format.CsvNumberFormat</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.builder.BuildCase</span><span class="o">;</span>
-
-<span class="nd">@CsvBean</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleCsv</span> <span class="o">{</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;ID&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvRequire</span>                        <span class="c1">// 必須チェックを行う</span>
-    <span class="nd">@CsvUnique</span><span class="o">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>                <span class="c1">// 全レコード内で値がユニークか検証する(順番指定)</span>
-    <span class="nd">@CsvNumberMin</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>  <span class="c1">// 下限値以上か検証する(順番指定)</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;名前&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;誕生日&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvDateTimeFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;yyyy年MM月dd日&quot;</span><span class="o">)</span>   <span class="c1">// 日時の書式を指定する</span>
-    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">birthday</span><span class="o">;</span>
-
-    <span class="nd">@CsvColumn</span><span class="o">(</span><span class="n">number</span><span class="o">=</span><span class="mi">4</span><span class="o">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;給料&quot;</span><span class="o">)</span>
-    <span class="nd">@CsvNumberFormat</span><span class="o">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&quot;#,##0&quot;</span><span class="o">)</span>                    <span class="c1">// 数値の書式を指定する</span>
-    <span class="nd">@CsvDefaultValue</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;N/A&quot;</span><span class="o">,</span> <span class="n">cases</span><span class="o">=</span><span class="n">BuildCase</span><span class="o">.</span><span class="na">Write</span><span class="o">)</span>  <span class="c1">// 書き込み時に値がnull(空)の場合、「N/A」として出力します。</span>
-    <span class="nd">@CsvNullConvert</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;N/A&quot;</span><span class="o">,</span> <span class="n">cases</span><span class="o">=</span><span class="n">BuildCase</span><span class="o">.</span><span class="na">Read</span><span class="o">)</span>    <span class="c1">// 読み込み時に値が「N/A」のとき、nullとして読み込みます。</span>
-    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">salary</span><span class="o">;</span>
-
-    <span class="c1">// getter/setterは省略</span>
-
-<span class="o">}</span>
+<div class="section" id="java">
+<span id="howobjectcellformatter"></span><h2>2.4. Javaオブジェクトの場合<a class="headerlink" href="#java" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Javaのオブジェクトを直接フォーマットすることもできます。</p>
+<p>直接フォーマットをする場合、<code class="docutils literal"><span class="pre">ObjectCellFormatter</span></code> (<strong>ver0.6から利用可能</strong>)を使用します。</p>
+<ul class="simple">
+<li>フォーマットするには、<code class="docutils literal"><span class="pre">ObjectCellFormatter#formatAsString(&lt;書式&gt;,</span> <span class="pre">&lt;値&gt;)</span></code> を利用します。</li>
+<li>フォーマット可能なクラスは、Excelの型に対応する次のクラスになります。<ul>
+<li>文字列値： <code class="docutils literal"><span class="pre">String</span></code></li>
+<li>ブール値： <code class="docutils literal"><span class="pre">boolean/Boolean</span></code></li>
+<li>数値<ul>
+<li>プリミティブ型 <code class="docutils literal"><span class="pre">byte/short/int/long/float/double</span></code></li>
+<li>プリミティブ型のラッパークラス <code class="docutils literal"><span class="pre">Byte/Short/Integer/Long/Float/Double</span></code> 。</li>
+<li><code class="docutils literal"><span class="pre">java.math.Number</span></code> のサブクラス <code class="docutils literal"><span class="pre">AtomicInteger/AtomicLong/BigDecimal/BigInteger</span></code> 。</li>
+</ul>
+</li>
+<li>日時： <code class="docutils literal"><span class="pre">java.util.Date</span></code> とそのサブクラス <code class="docutils literal"><span class="pre">java.sql.Date/java.sql.Time/java.sql.Timestamp</span></code> 。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// 各型に対応したインタフェースを利用します。</span>
+<span class="n">ObjectCellFormatter</span> <span class="n">cellFormatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectCellFormatter</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">cellFormatter</span><span class="o">.</span><span class="na">formatAsString</span><span class="o">(</span><span class="s">&quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;</span><span class="o">,</span> <span class="n">Timestamp</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">&quot;2012-02-01 12:10:00.000&quot;</span><span class="o">));</span>
 </pre></div>
-</td></tr></table></div>
 </div>
-</div>
-<div class="section" id="csv">
-<h2>1.6. タブ区切りCSVファイルへの対応<a class="headerlink" href="#csv" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>本ライブラリは、CSVの処理はSuper CSVの機能をそのまま使用しているため、
-<em>CsvAnnotationBeanReader/CsvAnnotationBeanWriter</em> に渡す <a class="reference external" href="http://super-csv.github.io/super-csv/preferences.html">CsvPreference</a> をカスタマイズすることで、タブ区切りなどに対応できます。</p>
-<div class="literal-block-wrapper docutils container" id="id15">
-<div class="code-block-caption"><span class="caption-number">コード - 1.6.1 </span><span class="caption-text">CSVの書式を変更するサンプル</span><a class="headerlink" href="#id15" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.github.mygreen.supercsv.io.CsvAnnotationBeanReader</span><span class="o">;</span>
+<ul class="simple">
+<li>細かく設定を行いたい場合は、仮想的なセル <code class="docutils literal"><span class="pre">ObjectCell</span></code> のサブクラスのインスタンスを引数に渡します。<ul>
+<li>文字列型を表すセル： <code class="docutils literal"><span class="pre">TextCell</span></code></li>
+<li>ブール型を表すセル： <code class="docutils literal"><span class="pre">BooleanCell</span></code></li>
+<li>数値型を表すセル： <code class="docutils literal"><span class="pre">NumberCell</span></code></li>
+<li>日時型を表すセル： <code class="docutils literal"><span class="pre">DateCell</span></code> 。1904年始まりなどの設定ができます。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">//仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。</span>
+<span class="n">ObejctCell</span> <span class="n">cell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DateCell</span><span class="o">(</span><span class="n">Timestamp</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="s">&quot;2012-02-01 12:10:00.000&quot;</span><span class="o">),</span> <span class="s">&quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+<span class="n">CellFormatResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cellFormatter</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">cell</span><span class="o">);</span>
 
-<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="c1">// フォーマットした文字列の取得</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
 
-<span class="kn">import</span> <span class="nn">org.supercsv.prefs.CsvPreference</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.supercsv.quote.AlwaysQuoteMode</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Sample</span> <span class="o">{</span>
-
-    <span class="c1">// 書き込む場合</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sampleWrite</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="c1">// CsvPreferencesのカスタマイズ</span>
-        <span class="c1">// タブ区切り、改行コード「LF」、必ずダブルクウォートで囲む設定</span>
-        <span class="kd">final</span> <span class="n">CsvPreference</span> <span class="n">preference</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvPreference</span><span class="o">.</span><span class="na">Builder</span><span class="o">(</span><span class="sc">&#39;\&quot;&#39;</span><span class="o">,</span> <span class="sc">&#39;\t&#39;</span><span class="o">,</span> <span class="s">&quot;\n&quot;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">useQuoteMode</span><span class="o">(</span><span class="k">new</span> <span class="n">AlwaysQuoteMode</span><span class="o">())</span>
-            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-
-        <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;</span><span class="n">UserCsv</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvAnnotationBeanWriter</span><span class="o">&lt;&gt;(</span>
-                <span class="n">UserCsv</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                <span class="n">Files</span><span class="o">.</span><span class="na">newBufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">&quot;sample.csv&quot;</span><span class="o">).</span><span class="na">toPath</span><span class="o">(),</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&quot;Windows-31j&quot;</span><span class="o">)),</span>
-                <span class="n">preference</span><span class="o">);</span>
-
-        <span class="c1">// 省略</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
+<span class="c1">// 文字色が設定されている場合、その色の取得。</span>
+<span class="n">MSColor</span> <span class="n">color</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="na">getTextColor</span><span class="o">();</span>
 </pre></div>
-</td></tr></table></div>
 </div>
 </div>
 </div>
 
 
-           </div>
-           <div class="articleComments">
-            
-           </div>
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="basic.html" class="btn btn-neutral float-right" title="2. 機能概要" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Super CSV Annotation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2016-2017, T.TSUCHIE.
-      最終更新: 2017-09-23 19:13:00
-
-    </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
-
         </div>
       </div>
-
-    </section>
-
-  </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.1',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/translations.js"></script>
-      <script type="text/javascript" src="_static/mytheme.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
-      });
-  </script>
-  
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="customize.html" title="3. カスタマイズ方法"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="biginning.html" title="1. はじめに"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.9.2 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
 <!-- my theme custom extrahead beacon -->
 <script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
 <script type="text/javascript">
 	jQuery(function () {
-		// ナビゲーション用のアイコン
-		$('div.wy-menu').externalLink({cssClass : 'externalink-img', iconUrl:'_static/external-link-12.png', startUrl:'../apidocs/'});
-		
 		// コンテンツ用
-		$('div.wy-nav-content').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
+		$('body').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
 		
 	});
 </script>
@@ -994,13 +368,16 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-37313068-3', 'auto');
+  ga('create', 'UA-37313068-4', 'auto');
   ga('send', 'pageview');
   
 </script>
 
- 
 
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2017, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.9 で生成しました。
+    </div>
 
-</body>
+  </body>
 </html>

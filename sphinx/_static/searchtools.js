@@ -4,7 +4,7 @@
  *
  * Sphinx JavaScript utilities for the full-text search.
  *
- * :copyright: Copyright 2007-2017 by the Sphinx team, see AUTHORS.
+ * :copyright: Copyright 2007-2016 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
  *
  */
@@ -265,10 +265,6 @@ var Search = {
       }
       // stem the word
       var word = stemmer.stemWord(tmp[i].toLowerCase());
-      // prevent stemmer from cutting word smaller than two chars
-      if(word.length < 3 && tmp[i].length >= 3) {
-        word = tmp[i];
-      }
       var toAppend;
       // select the correct list
       if (word[0] == '-') {
@@ -366,8 +362,7 @@ var Search = {
             displayNextItem();
           });
         } else if (DOCUMENTATION_OPTIONS.HAS_SOURCE) {
-          var suffix = DOCUMENTATION_OPTIONS.SOURCELINK_SUFFIX;
-          $.ajax({url: DOCUMENTATION_OPTIONS.URL_ROOT + '_sources/' + item[5] + (item[5].slice(-suffix.length) === suffix ? '' : suffix),
+          $.ajax({url: DOCUMENTATION_OPTIONS.URL_ROOT + '_sources/' + item[0] + '.txt',
                   dataType: "text",
                   complete: function(jqxhr, textstatus) {
                     var data = jqxhr.responseText;
@@ -406,7 +401,6 @@ var Search = {
    */
   performObjectSearch : function(object, otherterms) {
     var filenames = this._index.filenames;
-    var docnames = this._index.docnames;
     var objects = this._index.objects;
     var objnames = this._index.objnames;
     var titles = this._index.titles;
@@ -460,7 +454,7 @@ var Search = {
           } else {
             score += Scorer.objPrioDefault;
           }
-          results.push([docnames[match[0]], fullname, '#'+anchor, descr, score, filenames[match[0]]]);
+          results.push([filenames[match[0]], fullname, '#'+anchor, descr, score]);
         }
       }
     }
@@ -472,7 +466,6 @@ var Search = {
    * search for full-text terms in the index
    */
   performTermsSearch : function(searchterms, excluded, terms, titleterms) {
-    var docnames = this._index.docnames;
     var filenames = this._index.filenames;
     var titles = this._index.titles;
 
@@ -547,7 +540,7 @@ var Search = {
         // select one (max) score for the file.
         // for better ranking, we should calculate ranking by using words statistics like basic tf-idf...
         var score = $u.max($u.map(fileMap[file], function(w){return scoreMap[file][w]}));
-        results.push([docnames[file], titles[file], '', null, score, filenames[file]]);
+        results.push([filenames[file], titles[file], '', null, score]);
       }
     }
     return results;

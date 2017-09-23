@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatterResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">FormatterResolver.java</span></div><h1>FormatterResolver.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.github.mygreen.cellformatter.lang.MessageResolver;
+
+
+/**
+ * セルのフォーマッタを解決するクラス。
+ * &lt;p&gt;解析したフォーマットをキャッシュし、性能を向上する。
+ * @author T.TSUCHIE
+ *
+ */
+public class FormatterResolver {
+    
+<span class="fc" id="L18">    private static final MessageResolver messageResolver = new MessageResolver(&quot;com.github.mygreen.cellformatter.format&quot;);</span>
+    
+    /**
+     * カスタム書式のインスタンスを作成する。
+     */
+<span class="fc" id="L23">    private CustomFormatterFactory customFormatterFactory = new CustomFormatterFactory();</span>
+    
+    /**
+     * 書式のインデックスとフォーマッターのマップ
+     */
+<span class="fc" id="L28">    private Map&lt;Short, CellFormatter&gt; indexFormatterMap = new ConcurrentHashMap&lt;&gt;();</span>
+    
+    /**
+     * 和暦用の日本語のロケール
+     */
+<span class="fc" id="L33">    private static final Locale LOCALE_JAPANESE = new Locale(&quot;ja&quot;, &quot;JP&quot;, &quot;JP&quot;);</span>
+    
+    /**
+     * 日本語に関するロケール
+     */
+<span class="fc" id="L38">    private static final Locale[] JAPANESE_LOCALES = new Locale[]{Locale.JAPANESE, Locale.JAPAN, LOCALE_JAPANESE};</span>
+    
+    /**
+     * 書式のパターンとフォーマッターのマップ
+     */
+<span class="fc" id="L43">    private Map&lt;String, CellFormatter&gt; patternFormatterMap = new ConcurrentHashMap&lt;&gt;();</span>
+    
+    /**
+     * インスタンスを作成する。
+     * &lt;p&gt;ビルドインフォーマットなどのキャッシュ情報を予め登録する。
+     */
+<span class="fc" id="L49">    public FormatterResolver() {</span>
+<span class="fc" id="L50">        clearFormat();</span>
+        
+<span class="fc" id="L52">        registerDefaultFormat();</span>
+<span class="fc" id="L53">    }</span>
+    
+    /**
+     * キャッシュを初期化する。
+     */
+    public synchronized void clearFormat() {
+        
+        // インデックス番号指定のフォーマッタの初期化
+<span class="fc" id="L61">        indexFormatterMap.clear();</span>
+        
+        // パターン指定の指定のフォーマッタの初期化
+<span class="fc" id="L64">        patternFormatterMap.clear();</span>
+        
+<span class="fc" id="L66">    }</span>
+    
+    /**
+     * キャッシュに初期値データを登録する。
+     * ・ロケールによって切り替わるフォーマットや、間違った組み込みフォーマットの場合を登録しておく。
+     */
+    public synchronized void registerDefaultFormat() {
+        
+        
+<span class="fc" id="L75">        final Locale[] availableLocales = new Locale[]{Locale.JAPANESE};</span>
+        
+        
+        // 組み込み書式の登録
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for(int i=0; i &lt;= 58; i++) {</span>
+            
+<span class="fc" id="L81">            final CellFormatter formatter = createDefaultFormatter(String.valueOf(i), availableLocales);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if(formatter != null) {</span>
+<span class="fc" id="L83">                registerFormatter((short) i, formatter);</span>
+                
+            }
+            
+        }
+        
+        // 特別な書式
+<span class="fc" id="L90">        final String[] names = new String[]{&quot;F800&quot;, &quot;F400&quot;};</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for(String name : names) {</span>
+            
+<span class="fc" id="L93">            final String key = String.format(&quot;format.%s&quot;, name);</span>
+            
+<span class="fc" id="L95">            final String defaultFormat = messageResolver.getMessage(key);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if(defaultFormat == null) {</span>
+<span class="nc" id="L97">                continue;</span>
+            }
+            
+<span class="fc" id="L100">            final CellFormatter formatter = createDefaultFormatter(name, availableLocales);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">            if(formatter != null) {</span>
+<span class="fc" id="L102">                registerFormatter(defaultFormat, formatter);</span>
+            }
+        }
+        
+<span class="fc" id="L106">    }</span>
+    
+    /**
+     * 指定したインデックスでプロパティに定義されているフォーマットを作成する。
+     * @param name 書式の名前。({@literal format.&lt;書式の名前&gt;=})
+     * @param locales 検索するロケール。
+     * @return 存在しないインデックス番号の時は、nullを返す。
+     */
+    protected CellFormatter createDefaultFormatter(final String name, final Locale... locales) {
+        
+<span class="fc" id="L116">        final String key = String.format(&quot;format.%s&quot;, name);</span>
+        
+<span class="fc" id="L118">        final String defaultFormat = messageResolver.getMessage(key);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if(defaultFormat == null) {</span>
+<span class="fc" id="L120">            return null;</span>
+        }
+        
+<span class="fc" id="L123">        CellFormatter formatter = createFormatter(defaultFormat);</span>
+        
+        // ロケールのフォーマットの取得
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for(Locale locale : locales) {</span>
+            
+<span class="fc" id="L128">            final String localeFormat = messageResolver.getMessage(locale, key, null);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if(localeFormat == null) {</span>
+<span class="fc" id="L130">                continue;</span>
+            }
+            
+            final LocaleSwitchFormatter switchFormatter;
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">            if(formatter instanceof LocaleSwitchFormatter) {</span>
+<span class="nc" id="L135">                switchFormatter = (LocaleSwitchFormatter) formatter;</span>
+                
+            } else {
+                // LocaleSwitchFormatterに入れ替える。
+<span class="fc" id="L139">                switchFormatter = new LocaleSwitchFormatter(formatter);</span>
+<span class="fc" id="L140">                formatter = switchFormatter;</span>
+            }
+            
+            // ロケールごとのフォーマットの登録
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">            if(locale.equals(Locale.JAPANESE)) {</span>
+<span class="fc" id="L145">                switchFormatter.register(createFormatter(localeFormat), JAPANESE_LOCALES);</span>
+                
+            } else {
+<span class="nc" id="L148">                switchFormatter.register(createFormatter(localeFormat), locale);</span>
+            }
+            
+        }
+        
+<span class="fc" id="L153">        return formatter;</span>
+        
+    }
+    
+    /**
+     * インデックス形式の書式指定がキャッシュに登録され、解決可能かどうか。
+     * @param formatIndex 検証対象の書式のインデックス番号。
+     * @return true: 事前に登録されているものやキャッシュされているインデックス番号の場合。
+     */
+    public boolean canResolve(final short formatIndex) {
+<span class="fc" id="L163">        return indexFormatterMap.containsKey(formatIndex);</span>
+    }
+    
+    /**
+     * パターン形式の書式指定がキャッシュに登録され、解決可能かどうか。
+     * @param formatPattern 検証対象の書式パターン。
+     * @return true:  事前に登録されているものやキャッシュされている書式パターンの場合。
+     */
+    public boolean canResolve(final String formatPattern) {
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        final String key = (formatPattern == null ? &quot;&quot; : formatPattern);</span>
+<span class="fc" id="L173">        return patternFormatterMap.containsKey(key);</span>
+    }
+    
+    /**
+     * インデックス番号を指定して、キャッシュに登録されているフォーマッタを取得する。
+     * @param formatIndex 検証対象の書式のインデックス番号。
+     * @return 登録されていないインデックスの場合は、nullを返す。
+     */
+    public CellFormatter getFormatter(final short formatIndex) {
+        
+<span class="fc" id="L183">        return indexFormatterMap.get(formatIndex);</span>
+    }
+    
+    /**
+     * 書式のパターンを指定して、キャッシュに登録されているフォーマッタを取得する。
+     * @param formatPattern 書式
+     * @return 登録されていないインデックスの場合は、nullを返す。
+     */
+    public CellFormatter getFormatter(final String formatPattern) {
+        
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        final String key = (formatPattern == null ? &quot;&quot; : formatPattern);</span>
+<span class="fc" id="L194">        return patternFormatterMap.get(key);</span>
+    }
+    
+    /**
+     * パターンを指定して新たに書式を作成する。
+     * @param formatPattern 書式パターン。
+     * @return パースしたフォーマッタ。
+     */
+    public CellFormatter createFormatter(final String formatPattern) {
+        
+<span class="fc" id="L204">        final CellFormatter formatter = customFormatterFactory.create(formatPattern);</span>
+<span class="fc" id="L205">        return formatter;</span>
+        
+    }
+    
+    /**
+     * 書式インデックス番号を指定してフォーマッタをキャッシュに登録する。
+     * @param formatIndex 書式のインデックス番号。
+     * @param cellFormatter 登録対象のフォーマッタ。
+     * @return 以前に登録されたフォーマッタのインスタンス。登録されたフォーマッタがなければ、nullを返す。
+     */
+    public synchronized CellFormatter registerFormatter(final short formatIndex, final CellFormatter cellFormatter) {
+<span class="fc" id="L216">        return indexFormatterMap.put(formatIndex, cellFormatter);</span>
+    }
+    
+    /**
+     * 書式パターンを指定してフォーマッタをキャッシュに登録する。
+     * @param formatPattern 書式パターン。
+     * @param cellFormatter 登録対象のフォーマッタ。
+     * @return 以前に登録されたフォーマッタのインスタンス。登録されたフォーマッタがなければ、nullを返す。
+     */
+    public synchronized CellFormatter registerFormatter(final String formatPattern, final CellFormatter cellFormatter) {
+<span class="fc" id="L226">        return patternFormatterMap.put(formatPattern, cellFormatter);</span>
+    }
+    
+    /**
+     * 書式パターンを解析して、{@link CellFormatter}のインスタンスを作成するクラスの取得。
+     * @return デフォルトは標準のクラスが設定されています。
+     */
+    public CustomFormatterFactory getCustomFormatterFactory() {
+<span class="nc" id="L234">        return customFormatterFactory;</span>
+    }
+    
+    /**
+     * 書式パターンを解析して、{@link CellFormatter}のインスタンスを作成するクラスの設定。
+     * &lt;p&gt;独自のカスタマイズしたものが設定可能。
+     * @param customFormatterFactory
+     */
+    public void setCustomFormatterFactory(CustomFormatterFactory customFormatterFactory) {
+<span class="nc" id="L243">        this.customFormatterFactory = customFormatterFactory;</span>
+<span class="nc" id="L244">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KansujiCallback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.callback</a> &gt; <span class="el_source">KansujiCallback.java</span></div><h1>KansujiCallback.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.callback;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+/**
+ * 数字の表現を漢数字に変換する。
+ * &lt;p&gt;数字が連続しないと、桁数を考慮した変換はできない。
+ * &lt;p&gt;途中に区切り文字などがあると、そこで途切れる。
+ * &lt;p&gt;大字の定義：&lt;a href=&quot;http://www.benricho.org/kanji/kansuji.html&quot;&gt;漢数字と大字〔だいじ〕の書き方&lt;/a&gt;
+ * 
+ * @version 0.5
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L21">public class KansujiCallback extends JapaneseCallback&lt;Object&gt;{</span>
+    
+    /**
+     * インスタンスを取得する
+     * @return
+     */
+    public static KansujiCallback create() {
+<span class="fc" id="L28">        return new KansujiCallback();</span>
+    }
+    
+    /**
+     * 整数部分の切り出し用正規表現
+     */
+<span class="fc" id="L34">    private static final Pattern PATTERN_NUM = Pattern.compile(&quot;([\\D]*)([\\d]+)([\\.]{0,1}[.\\s\\w]*)&quot;);</span>
+    
+    @Override
+    public String call(final Object data, final String value, final Locale locale) {
+        
+<span class="fc" id="L39">        final Matcher matcher = PATTERN_NUM.matcher(value);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if(!matcher.matches()) {</span>
+            // 単純に数値の変換
+<span class="fc" id="L42">            return replaceSimple(value);</span>
+        }
+        
+<span class="fc" id="L45">        final String before = matcher.group(1);</span>
+<span class="fc" id="L46">        final String num = matcher.group(2);</span>
+<span class="fc" id="L47">        final String after = matcher.group(3);</span>
+        
+<span class="fc" id="L49">        return replaceSimple(before) + replaceDisits(num) + replaceSimple(after);</span>
+    }
+    
+    /**
+     * 数字のマップ
+     */
+<span class="fc" id="L55">    private static final String[][] NUM_MAP = {</span>
+        {&quot;0&quot;, &quot;〇&quot;},
+        {&quot;1&quot;, &quot;一&quot;},
+        {&quot;2&quot;, &quot;二&quot;},
+        {&quot;3&quot;, &quot;三&quot;},
+        {&quot;4&quot;, &quot;四&quot;},
+        {&quot;5&quot;, &quot;五&quot;},
+        {&quot;6&quot;, &quot;六&quot;},
+        {&quot;7&quot;, &quot;七&quot;},
+        {&quot;8&quot;, &quot;八&quot;},
+        {&quot;9&quot;, &quot;九&quot;},
+    };
+    
+    /**
+     * 数字を単純に変換する。
+     * @param value
+     * @return
+     */
+    private String replaceSimple(final String value) {
+<span class="fc" id="L74">        String str = value;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for(String[] item : NUM_MAP) {</span>
+<span class="fc" id="L76">            str = str.replaceAll(item[0], item[1]);</span>
+        }
+        
+<span class="fc" id="L79">        return str;</span>
+    }
+    
+    /**
+     * 10^4ごとの桁数のマップ
+     * &lt;p&gt;&lt;a href=&quot;http://www2s.biglobe.ne.jp/~hotori/kazu.html&quot;&gt;桁数の名前&lt;/a&gt;
+     */
+<span class="fc" id="L86">    private static final String[] DIGITS_10_MAP = {</span>
+        &quot;&quot;,      // 10^0
+        &quot;万&quot;,    // 10^4
+        &quot;億&quot;,    // 10^8
+        &quot;兆&quot;,    // 10^12
+        &quot;京&quot;,    // 10^16
+    };
+    
+    /**
+     * 数字を桁数に合わせて変換する。
+     * @param value
+     * @return
+     */
+    private String replaceDisits(final String value) {
+        
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(value.equals(&quot;0&quot;)) {</span>
+<span class="fc" id="L102">            return NUM_MAP[0][1];</span>
+        }
+        
+        // 4桁ごとに、分割する。
+<span class="fc" id="L106">        final int length = value.length();</span>
+<span class="fc" id="L107">        final List&lt;String&gt; split4 = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for(int i=0; i &lt; length; i=i+4) {</span>
+            
+            // 下の桁から切り出す
+<span class="fc" id="L111">            int end = length -i;</span>
+            int start;
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            if(i + 4 &lt; length) {</span>
+<span class="fc" id="L114">                start = end - 4;</span>
+            } else {
+<span class="fc" id="L116">                start = 0;</span>
+            }
+<span class="fc" id="L118">            String item = value.substring(start, end);</span>
+<span class="fc" id="L119">            split4.add(item);</span>
+        }
+        
+        // 4桁ごとに変換を行う。
+<span class="fc" id="L123">        final List&lt;String&gt; digits = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        for(int i=0; i &lt; split4.size(); i++) {</span>
+<span class="fc" id="L125">            String item = split4.get(i);</span>
+<span class="fc" id="L126">            item = replace4Digits(item) + DIGITS_10_MAP[i];</span>
+            
+<span class="fc" id="L128">            digits.add(item);</span>
+        }
+        
+        /*
+         * 文字列に直す。
+         * ・桁数が逆順になっているので、戻し結合する。
+         */
+<span class="fc" id="L135">        Collections.reverse(digits);</span>
+<span class="fc" id="L136">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for(String item : digits) {</span>
+<span class="fc" id="L138">            sb.append(item);</span>
+<span class="fc" id="L139">        }</span>
+        
+<span class="fc" id="L141">        return sb.toString();        </span>
+    }
+    
+    /**
+     * 4桁の桁数のマップ
+     */
+<span class="fc" id="L147">    private static final String[] DIGITS_4_MAP = {</span>
+        &quot;&quot;,
+        &quot;十&quot;,
+        &quot;百&quot;,
+        &quot;千&quot;,
+    };
+    
+    /**
+     * 4桁以下の数字を、漢数字に変換する。
+     * @param value
+     * @return
+     */
+    private String replace4Digits(final String value) {
+        
+        // 桁ごとに変換を行う。
+<span class="fc" id="L162">        final int length = value.length();</span>
+<span class="fc" id="L163">        final List&lt;String&gt; digits = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
+            // 下の桁から処理する
+<span class="fc" id="L167">            final char c = value.charAt(length-i-1);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            if(c == '0') {</span>
+<span class="fc" id="L169">                continue;</span>
+                
+            }
+            
+            String item;
+<span class="fc bfc" id="L174" title="All 4 branches covered.">            if(c == '1' &amp;&amp; i &gt; 0) {</span>
+                // 10の位以上で、かつ1の場合、数字部分は省略し、桁数のみにする。
+<span class="fc" id="L176">                item = DIGITS_4_MAP[i];</span>
+            } else {
+<span class="fc" id="L178">                item = replaceSimple(String.valueOf(c)) + DIGITS_4_MAP[i];</span>
+            }
+            
+<span class="fc" id="L181">            digits.add(item);</span>
+            
+        }
+        
+        /*
+         * 文字列に直す。
+         * ・桁数が逆順になっているので、戻し結合する。
+         */
+<span class="fc" id="L189">        Collections.reverse(digits);</span>
+<span class="fc" id="L190">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        for(String item : digits) {</span>
+<span class="fc" id="L192">            sb.append(item);</span>
+<span class="fc" id="L193">        }</span>
+        
+<span class="fc" id="L195">        return sb.toString();</span>
+        
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

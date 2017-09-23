@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.number</a> &gt; <span class="el_source">NumberFactory.java</span></div><h1>NumberFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.number;
+
+
+/**
+ * 数値オブジェクトのファクトリクラス。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L9">public abstract class NumberFactory {</span>
+    
+    /**
+     * 小数のファクトリクラスの取得
+     * @param scale
+     * @return
+     */
+    public static DecimalNumberFactory decimalNumber(int scale, boolean useSeparator, final int permilles) {
+<span class="fc" id="L17">        return new DecimalNumberFactory(scale, useSeparator, permilles);</span>
+    }
+    
+    /**
+     * 百分率のファクトリクラスの取得
+     * @param scale
+     * @return
+     */
+    public static PercentNumberFactory percentNumber(int scale, boolean useSeparator, final int permilles) {
+<span class="fc" id="L26">        return new PercentNumberFactory(scale, useSeparator, permilles);</span>
+    }
+    
+    /**
+     * 指数のファクトリクラスの取得
+     * @param scale
+     * @return
+     */
+    public static ExponentNumberFactory exponentNumber(int scale, boolean useSeparator) {
+<span class="fc" id="L35">        return new ExponentNumberFactory(scale, useSeparator);</span>
+    }
+    
+    /**
+     * 分数のファクトリクラスの取得
+     * @param denominator
+     * @param exactDenom
+     * @param wholeType
+     * @return
+     */
+    public static FractionNumberFactory fractionNumber(final int denominator,
+            final boolean exactDenom, final boolean wholeType) {
+<span class="fc" id="L47">        return new FractionNumberFactory(denominator, exactDenom, wholeType);</span>
+    }
+    
+    /**
+     * 数値オブジェクトのインスタンスを取得する。
+     * @param value
+     * @return
+     */
+    public abstract FormattedNumber create(double value);
+    
+    public static class DecimalNumberFactory extends NumberFactory {
+        
+        private int scale;
+        
+        private boolean useSeparator;
+        
+        private int permilles;
+        
+<span class="fc" id="L65">        public DecimalNumberFactory(final int scale, final boolean useSeparator, final int permilles) {</span>
+<span class="fc" id="L66">            this.scale = scale;</span>
+<span class="fc" id="L67">            this.useSeparator = useSeparator;</span>
+<span class="fc" id="L68">            this.permilles = permilles;</span>
+<span class="fc" id="L69">        }</span>
+        
+        @Override
+        public FormattedNumber create(double value) {
+<span class="fc" id="L73">            FormattedNumber number = new DecimalNumber(value, scale, permilles);</span>
+<span class="fc" id="L74">            number.setUseSeparator(useSeparator);</span>
+<span class="fc" id="L75">            return number;</span>
+        }
+        
+    }
+    
+    public static class ExponentNumberFactory extends NumberFactory {
+        
+        private int scale;
+        
+        private boolean useSeparator;
+        
+<span class="fc" id="L86">        public ExponentNumberFactory(final int scale, final boolean useSeparator) {</span>
+<span class="fc" id="L87">            this.scale = scale;</span>
+<span class="fc" id="L88">            this.useSeparator = useSeparator;</span>
+<span class="fc" id="L89">        }</span>
+        
+        @Override
+        public FormattedNumber create(double value) {
+<span class="fc" id="L93">            FormattedNumber number = new ExponentNumber(value, scale);</span>
+<span class="fc" id="L94">            number.setUseSeparator(useSeparator);</span>
+<span class="fc" id="L95">            return number;</span>
+        }
+        
+    }
+    
+    public static class PercentNumberFactory extends NumberFactory {
+        
+        private int scale;
+        
+        private boolean useSeparator;
+        
+        private int permilles;
+        
+<span class="fc" id="L108">        public PercentNumberFactory(final int scale, final boolean useSeparator, final int permilles) {</span>
+<span class="fc" id="L109">            this.scale = scale;</span>
+<span class="fc" id="L110">            this.useSeparator = useSeparator;</span>
+<span class="fc" id="L111">            this.permilles = permilles;</span>
+<span class="fc" id="L112">        }</span>
+        
+        @Override
+        public FormattedNumber create(double value) {
+<span class="fc" id="L116">            FormattedNumber number = new PercentNumber(value, scale, permilles);</span>
+<span class="fc" id="L117">            number.setUseSeparator(useSeparator);</span>
+<span class="fc" id="L118">            return number;</span>
+        }
+        
+    }
+    
+<span class="fc" id="L123">    public static class FractionNumberFactory extends NumberFactory {</span>
+        
+        /** 分母の値 */
+        private int denominator;
+        
+        /** 分母を直接指定かどうか */
+        private boolean exactDenom;
+        
+        /** 帯分数形式かどうか */
+        private boolean wholeType;
+        
+<span class="fc" id="L134">        public FractionNumberFactory(final int denominator, final boolean exactDenom, final boolean wholeType) {</span>
+<span class="fc" id="L135">            this.denominator = denominator;</span>
+<span class="fc" id="L136">            this.exactDenom = exactDenom;</span>
+<span class="fc" id="L137">            this.wholeType = wholeType;</span>
+<span class="fc" id="L138">        }</span>
+        
+        @Override
+        public FormattedNumber create(double value) {
+            
+            FractionNumber number;
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if(exactDenom) {</span>
+<span class="fc" id="L145">                number = FractionNumber.createExactDenominator(value, denominator, wholeType);</span>
+            } else {
+<span class="fc" id="L147">                number = FractionNumber.createMaxDenominator(value, denominator, wholeType);</span>
+            }
+            
+<span class="fc" id="L150">            return number;</span>
+        }
+        
+        
+        
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConditionDateFormatterFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">ConditionDateFormatterFactory.java</span></div><h1>ConditionDateFormatterFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
+import com.github.mygreen.cellformatter.term.AsteriskTerm;
+import com.github.mygreen.cellformatter.term.DateTerm;
+import com.github.mygreen.cellformatter.term.EscapedCharTerm;
+import com.github.mygreen.cellformatter.term.LocaelSymbolTerm;
+import com.github.mygreen.cellformatter.term.OtherTerm;
+import com.github.mygreen.cellformatter.term.Term;
+import com.github.mygreen.cellformatter.term.UnderscoreTerm;
+import com.github.mygreen.cellformatter.term.WordTerm;
+import com.github.mygreen.cellformatter.tokenizer.Token;
+import com.github.mygreen.cellformatter.tokenizer.TokenStore;
+
+
+/**
+ * 書式を解析して{@link ConditionDateFormatter}のインスタンスを作成するクラス。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L30">public class ConditionDateFormatterFactory extends ConditionFormatterFactory&lt;ConditionDateFormatter&gt; {</span>
+    
+<span class="fc" id="L32">    private static Logger logger = LoggerFactory.getLogger(ConditionDateFormatterFactory.class);</span>
+    
+    /**
+     * 日時の書式かどうかを決定するためのキーワード。
+     */
+<span class="fc" id="L37">    private static final String[] DATE_DECISTION_CHARS = {</span>
+        &quot;yy&quot;, &quot;yyyy&quot;,
+        &quot;m&quot;, &quot;mm&quot;, &quot;mmm&quot;, &quot;mmmm&quot;, &quot;mmmmm&quot;,
+        &quot;d&quot;, &quot;dd&quot;, &quot;ddd&quot;, &quot;dddd&quot;,
+        &quot;g&quot;, &quot;gg&quot;, &quot;ggg&quot;,
+        /*&quot;e&quot;,*/ &quot;ee&quot;,  // e単体だと指数と区別がつかないので除外する。
+        &quot;aaa&quot;, &quot;aaaa&quot;,
+        &quot;r&quot;, &quot;rr&quot;,
+        &quot;h&quot;, &quot;hh&quot;,
+        &quot;s&quot;, &quot;ss&quot;,
+        &quot;am/pm&quot;, &quot;a/p&quot;,
+        &quot;q&quot;, &quot;qq&quot;,    // OpenOffice用
+        &quot;nn&quot;, &quot;nnn&quot;,  // OpenOffice用
+        &quot;ww&quot;,         // OpenOffice用
+    };
+    
+    /**
+     * 日時で使用するフォーマット用の文字
+     */
+<span class="fc" id="L56">    private static final String[] DATE_TERM_CHARS = {</span>
+        &quot;yy&quot;, &quot;yyyy&quot;,
+        &quot;m&quot;, &quot;mm&quot;, &quot;mmm&quot;, &quot;mmmm&quot;, &quot;mmmmm&quot;,
+        &quot;d&quot;, &quot;dd&quot;, &quot;ddd&quot;, &quot;dddd&quot;,
+        &quot;g&quot;, &quot;gg&quot;, &quot;ggg&quot;,
+        &quot;e&quot;, &quot;ee&quot;,
+        &quot;aaa&quot;, &quot;aaaa&quot;,
+        &quot;r&quot;, &quot;rr&quot;,
+        &quot;h&quot;, &quot;hh&quot;,
+        &quot;s&quot;, &quot;ss&quot;,
+        &quot;am/pm&quot;, &quot;a/p&quot;,
+        &quot;q&quot;, &quot;qq&quot;,  // OpenOffice用
+        &quot;nn&quot;,       // OpenOffice用
+        &quot;ww&quot;,       // OpenOffice用
+    };
+    
+    /**
+     * {@link #DATE_TERM_CHARS}を、検索用に並び替えたもの。
+     * ・フォーマットのキーワードを①文字列の長い順、辞書順に並び変え、比較していく。
+     */
+<span class="fc" id="L76">    private static final List&lt;String&gt; SORTED_DATE_CHARS = Utils.reverse(DATE_TERM_CHARS);</span>
+    
+    /**
+     * 経過時間の時刻のパターン
+     */
+<span class="fc" id="L81">    private static final Pattern PATTERN_ELAPSED_TIME = Pattern.compile(&quot;\\[([h]+|[m]+|[s]+)\\]&quot;, Pattern.CASE_INSENSITIVE);</span>
+    
+    /**
+     * 日時の書式かどうか判定する。
+     * @param store
+     * @return
+     */
+    public boolean isDatePattern(final TokenStore store) {
+        
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(store.containsInFactor(&quot;General&quot;)) {</span>
+<span class="fc" id="L91">            return false;</span>
+        }
+        
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if(store.containsAnyInFactorIgnoreCase(DATE_DECISTION_CHARS)) {</span>
+<span class="fc" id="L95">            return true;</span>
+        }
+        
+        // [h][m][s]の形式のチェック
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for(Token token : store.getTokens()) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if(!(token instanceof Token.Condition)) {</span>
+<span class="fc" id="L101">                continue;</span>
+            }
+            
+<span class="fc" id="L104">            final Token.Condition condition = token.asCondition();</span>
+<span class="fc" id="L105">            final String value = condition.getValue();</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if(PATTERN_ELAPSED_TIME.matcher(value).matches()) {</span>
+<span class="fc" id="L107">                return true;</span>
+            }
+            
+<span class="fc" id="L110">        }</span>
+        
+<span class="fc" id="L112">        return false;</span>
+    }
+    
+    /**
+     * {@link ConditionDateFormatter}インスタンスを作成する。
+     * @param store
+     * @return
+     * @throws IllegalArgumentException store is null.
+     */
+    @Override
+    public ConditionDateFormatter create(final TokenStore store) {
+<span class="fc" id="L123">        ArgUtils.notNull(store, &quot;store&quot;);</span>
+        
+<span class="fc" id="L125">        final ConditionDateFormatter formatter = new ConditionDateFormatter(store.getConcatenatedToken());</span>
+        
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        for(Token token : store.getTokens()) {</span>
+            
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if(token instanceof Token.Condition) {</span>
+                // 条件の場合
+<span class="fc" id="L131">                final Token.Condition conditionToken = token.asCondition();</span>
+<span class="fc" id="L132">                final String condition = conditionToken.getCondition();</span>
+                
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if(PATTERN_ELAPSED_TIME.matcher(token.getValue()).matches()) {</span>
+                    // [h][m][s]などの経過時刻のパターン
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                    if(Utils.startsWithIgnoreCase(condition, &quot;h&quot;)) {</span>
+<span class="fc" id="L137">                        formatter.addTerm(DateTerm.elapsedHour(condition));</span>
+                        
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                    } else if(Utils.startsWithIgnoreCase(condition, &quot;m&quot;)) {</span>
+<span class="fc" id="L140">                        formatter.addTerm(DateTerm.elapsedMinute(condition));</span>
+                        
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">                    } else if(Utils.startsWithIgnoreCase(condition, &quot;s&quot;)) {</span>
+<span class="fc" id="L143">                        formatter.addTerm(DateTerm.elapsedSecond(condition));</span>
+                        
+                    }
+                    continue;
+                }
+                
+<span class="fc" id="L149">                formatter.addCondition(condition);</span>
+                
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                if(isConditionOperator(conditionToken)) {</span>
+<span class="nc" id="L152">                    setupConditionOperator(formatter, conditionToken);</span>
+                    
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                } else if(isConditionLocale(conditionToken)) {</span>
+<span class="fc" id="L155">                    setupConditionLocale(formatter, conditionToken);</span>
+                    
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">                } else if(isConditionLocaleSymbol(conditionToken)) {</span>
+<span class="nc" id="L158">                    final LocaleSymbol localeSymbol = setupConditionLocaleSymbol(formatter, conditionToken);</span>
+<span class="nc" id="L159">                    formatter.addTerm(new LocaelSymbolTerm&lt;Calendar&gt;(localeSymbol));</span>
+                    
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">                } else if(isConditionDbNum(conditionToken)) {</span>
+<span class="fc" id="L162">                    setupConditionDbNum(formatter, conditionToken);</span>
+                    
+<span class="nc bnc" id="L164" title="All 2 branches missed.">                } else if(isConditionColor(conditionToken)) {</span>
+<span class="nc" id="L165">                    setupConditionColor(formatter, conditionToken);</span>
+                    
+                }
+                
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            } else if(token instanceof Token.Word) {</span>
+<span class="fc" id="L170">                formatter.addTerm(new WordTerm&lt;Calendar&gt;(token.asWord()));</span>
+                
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            } else if(token instanceof Token.EscapedChar) {</span>
+<span class="fc" id="L173">                formatter.addTerm(new EscapedCharTerm&lt;Calendar&gt;(token.asEscapedChar()));</span>
+                
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            } else if(token instanceof Token.Underscore) {</span>
+<span class="nc" id="L176">                formatter.addTerm(new UnderscoreTerm&lt;Calendar&gt;(token.asUnderscore()));</span>
+                
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            } else if(token instanceof Token.Asterisk) {</span>
+<span class="nc" id="L179">                formatter.addTerm(new AsteriskTerm&lt;Calendar&gt;(token.asAsterisk()));</span>
+                
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">            } else if(token instanceof Token.Factor) {</span>
+                // 因子を日時用の書式に分解する
+<span class="fc" id="L183">                final List&lt;Token&gt; list = convertFactor(token.asFactor());</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">                for(Token item : list) {</span>
+                    
+<span class="fc bfc" id="L186" title="All 2 branches covered.">                    if(item instanceof Token.Formatter) {</span>
+<span class="fc" id="L187">                        final String formatterItem = item.asFormatter().getValue();</span>
+                        
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                        if(Utils.equalsAnyIgnoreCase(formatterItem, new String[]{&quot;am/pm&quot;, &quot;a/p&quot;})) {</span>
+<span class="fc" id="L190">                            formatter.addTerm(DateTerm.amPm(formatterItem));</span>
+                            
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;w&quot;)) {</span>
+<span class="fc" id="L193">                            formatter.addTerm(DateTerm.weekNumber(formatterItem));</span>
+                            
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;y&quot;)) {</span>
+<span class="fc" id="L196">                            formatter.addTerm(DateTerm.year(formatterItem));</span>
+                            
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;g&quot;)) {</span>
+<span class="fc" id="L199">                            formatter.addTerm(DateTerm.eraName(formatterItem));</span>
+                            
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;e&quot;)) {</span>
+<span class="fc" id="L202">                            formatter.addTerm(DateTerm.eraYear(formatterItem));</span>
+                            
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;r&quot;)) {</span>
+<span class="fc" id="L205">                            formatter.addTerm(DateTerm.eraNameYear(formatterItem));</span>
+                            
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;m&quot;)) {</span>
+                            // 月か分かの判定は、全ての書式を組み立て後に行う。
+<span class="fc" id="L209">                            formatter.addTerm(DateTerm.month(formatterItem));</span>
+                            
+<span class="fc bfc" id="L211" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;d&quot;)) {</span>
+<span class="fc" id="L212">                            formatter.addTerm(DateTerm.day(formatterItem));</span>
+                            
+<span class="fc bfc" id="L214" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;a&quot;)) {</span>
+<span class="fc" id="L215">                            formatter.addTerm(DateTerm.weekName(formatterItem));</span>
+                            
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;n&quot;)) {</span>
+<span class="nc" id="L218">                            formatter.addTerm(DateTerm.weekNameForOO(formatterItem));</span>
+                            
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;h&quot;)) {</span>
+<span class="fc" id="L221">                            final boolean halfHour = store.containsAnyInFactorIgnoreCase(new String[]{&quot;am/pm&quot;, &quot;a/p&quot;});</span>
+<span class="fc" id="L222">                            formatter.addTerm(DateTerm.hour(formatterItem, halfHour));</span>
+                            
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;s&quot;)) {</span>
+<span class="fc" id="L225">                            formatter.addTerm(DateTerm.second(formatterItem));</span>
+                            
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">                        } else if(Utils.startsWithIgnoreCase(formatterItem, &quot;q&quot;)) {</span>
+<span class="fc" id="L228">                            formatter.addTerm(DateTerm.quater(formatterItem));</span>
+                            
+                        } else {
+                            // ここには到達しない
+<span class="nc bnc" id="L232" title="All 2 branches missed.">                            if(logger.isWarnEnabled()) {</span>
+<span class="nc" id="L233">                                logger.warn(&quot;unknown date format terms '{}'.&quot;, formatterItem);</span>
+                            }
+<span class="nc" id="L235">                            formatter.addTerm(new OtherTerm&lt;Calendar&gt;(item));</span>
+                        }
+                        
+<span class="fc" id="L238">                    } else {</span>
+<span class="fc" id="L239">                        formatter.addTerm(new OtherTerm&lt;Calendar&gt;(item));</span>
+                    }
+                    
+<span class="fc" id="L242">                }</span>
+<span class="fc" id="L243">            } else {</span>
+<span class="nc" id="L244">                formatter.addTerm(new OtherTerm&lt;Calendar&gt;(token));</span>
+            }
+<span class="fc" id="L246">        }</span>
+        
+        // 書式'm'の項を分に変換する処理を行う
+<span class="fc" id="L249">        convertMinuteTerm(formatter);</span>
+        
+<span class="fc" id="L251">        return formatter;</span>
+        
+    }
+    
+    /**
+     * 書式の因子を日時用とそれ以外に変換する。
+     * @param factor
+     * @return
+     */
+    private List&lt;Token&gt; convertFactor(final Token.Factor factor) {
+        
+<span class="fc" id="L262">        final String item = factor.getValue();</span>
+<span class="fc" id="L263">        final int itemLength = item.length();</span>
+        
+<span class="fc" id="L265">        final List&lt;Token&gt; list = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L267">        int idx = 0;</span>
+<span class="fc" id="L268">        StringBuilder noTermChar = new StringBuilder(); // フォーマット以外の文字列を積む。</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        while(idx &lt; itemLength) {</span>
+            
+<span class="fc" id="L271">            String matchChars = null;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">            for(String chars : SORTED_DATE_CHARS) {</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">                if(Utils.startsWithIgnoreCase(item, chars, idx)) {</span>
+<span class="fc" id="L274">                    matchChars = item.substring(idx, idx + chars.length());</span>
+<span class="fc" id="L275">                    break;</span>
+                }
+<span class="fc" id="L277">            }</span>
+            
+<span class="fc bfc" id="L279" title="All 2 branches covered.">            if(matchChars == null) {</span>
+                // フォーマットでない場合は、文字列としてバッファに追加する。
+<span class="fc" id="L281">                noTermChar.append(item.charAt(idx));</span>
+<span class="fc" id="L282">                idx++;</span>
+            } else {
+<span class="fc bfc" id="L284" title="All 2 branches covered.">                if(noTermChar.length() &gt; 0) {</span>
+                    // 今まで積んだバッファを、文字列として分割する。
+<span class="fc" id="L286">                    list.add(Token.factor(noTermChar.toString()));</span>
+<span class="fc" id="L287">                    noTermChar = new StringBuilder();</span>
+                }
+                
+<span class="fc" id="L290">                list.add(Token.formatter(matchChars));</span>
+<span class="fc" id="L291">                idx += matchChars.length();</span>
+                
+            }
+<span class="fc" id="L294">        }</span>
+        
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        if(noTermChar.length() &gt; 0) {</span>
+<span class="fc" id="L297">            list.add(Token.factor(noTermChar.toString()));</span>
+        }
+        
+<span class="fc" id="L300">        return list;</span>
+    }
+    
+    /**
+     * 組み立てた項の中で、月の項を分に変換する。
+     * 
+     * @param formatter
+     */
+    private void convertMinuteTerm(final ConditionDateFormatter formatter) {
+        
+<span class="fc" id="L310">        final int termSize = formatter.getTerms().size();</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        for(int i=0; i &lt; termSize; i++) {</span>
+<span class="fc" id="L312">            final Term&lt;Calendar&gt; term = formatter.getTerms().get(i);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">            if(!(term instanceof DateTerm.MonthTerm)) {</span>
+<span class="fc" id="L314">                continue;</span>
+            }
+            
+<span class="fc bfc" id="L317" title="All 2 branches covered.">            if(isMinuteTerm(i, formatter.getTerms())) {</span>
+                // '分'の項に入れ替える
+<span class="fc" id="L319">                final DateTerm.MonthTerm monthTerm = (DateTerm.MonthTerm) term;</span>
+<span class="fc" id="L320">                formatter.getTerms().set(i, DateTerm.minute(monthTerm.getFormat()));</span>
+            }
+            
+        }
+        
+<span class="fc" id="L325">    }</span>
+    
+    /**
+     * 現在の項が'分'が判定する。
+     * ・現在の直前の項が、'h'（時間）を示すフォーマットがあるかどうか。
+     * ・現在の直後の項が、's'（秒）を示すフォーマットがあるかどうか。
+     * 
+     * @param currentTermIdx
+     * @param terms
+     * @return
+     */
+    private boolean isMinuteTerm(final int currentTermIdx, final List&lt;Term&lt;Calendar&gt;&gt; terms) {
+        
+<span class="fc" id="L338">        final int termSize = terms.size();</span>
+        
+        // 直前の項のチェック
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        if(currentTermIdx -1 &gt; 0) {</span>
+<span class="fc" id="L342">            DateTerm beforeTerm = null;</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">            for(int i=currentTermIdx-1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L344">                final Term&lt;Calendar&gt; term = terms.get(i);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">                if(term instanceof DateTerm) {</span>
+<span class="fc" id="L346">                    beforeTerm = (DateTerm) term;</span>
+<span class="fc" id="L347">                    break;</span>
+                }
+                
+            }
+            
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">            if(beforeTerm != null) {</span>
+<span class="fc bfc" id="L353" title="All 4 branches covered.">                if(beforeTerm instanceof DateTerm.HourTerm || beforeTerm instanceof DateTerm.ElapsedHourTerm) {</span>
+<span class="fc" id="L354">                    return true;</span>
+                }
+            }
+            
+        }
+        
+        // 直後の項のチェック
+<span class="fc bfc" id="L361" title="All 2 branches covered.">        if(currentTermIdx +1 &lt; termSize) {</span>
+<span class="fc" id="L362">            DateTerm afterTerm = null;</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">            for(int i=currentTermIdx+1; i &lt; termSize; i++) {</span>
+<span class="fc" id="L364">                final Term&lt;Calendar&gt; term = terms.get(i);</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">                if(term instanceof DateTerm) {</span>
+<span class="fc" id="L366">                    afterTerm = (DateTerm) term;</span>
+<span class="fc" id="L367">                    break;</span>
+                }
+            }
+            
+<span class="fc bfc" id="L371" title="All 2 branches covered.">            if(afterTerm != null) {</span>
+<span class="pc bpc" id="L372" title="1 of 4 branches missed.">                if(afterTerm instanceof DateTerm.SecondTerm || afterTerm instanceof DateTerm.ElapsedSecondTerm) {</span>
+<span class="fc" id="L373">                    return true;</span>
+                }
+            }
+        }
+        
+<span class="fc" id="L378">        return false;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

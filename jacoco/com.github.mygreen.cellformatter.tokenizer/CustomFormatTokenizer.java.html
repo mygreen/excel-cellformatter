@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomFormatTokenizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.tokenizer</a> &gt; <span class="el_source">CustomFormatTokenizer.java</span></div><h1>CustomFormatTokenizer.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.tokenizer;
+
+import java.util.LinkedList;
+
+import com.github.mygreen.cellformatter.lang.Utils;
+
+
+/**
+ * カスタム定義の書式をトークンに分割する。
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L13">public class CustomFormatTokenizer {</span>
+    
+    /**
+     * 書式をトークンに分割する。
+     * @param pattern Excelの書式
+     * @return
+     */
+    public TokenStore parse(final String pattern) {
+        
+<span class="fc" id="L22">        final TokenStore store = new TokenStore();</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if(Utils.isEmpty(pattern)) {</span>
+<span class="nc" id="L24">            return store;</span>
+        }
+        
+<span class="fc" id="L27">        splitToken(store, pattern);</span>
+<span class="fc" id="L28">        return store;</span>
+    }
+    
+    private void splitToken(final TokenStore store, final String pattern) {
+        
+        // 解析時の途中の文字を一時的に補完しておく。
+<span class="fc" id="L34">        final LinkedList&lt;String&gt; stack = new LinkedList&lt;String&gt;();</span>
+        
+<span class="fc" id="L36">        final int length = pattern.length();</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        for(int i=0; i &lt; length; i++) {</span>
+<span class="fc" id="L38">            final char c = pattern.charAt(i);</span>
+            
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if(StackUtils.equalsAnyTopElement(stack, Token.STR_ESCAPES)) {</span>
+                
+                // スタックの一番上がエスケープの文字だが、文字列の囲み文字(&quot;)の終了の場合は、文字列として追加する
+<span class="fc bfc" id="L43" title="All 4 branches covered.">                if(c == '&quot;' &amp;&amp; StackUtils.equalsBottomElement(stack, &quot;\&quot;&quot;)) {</span>
+<span class="fc" id="L44">                    store.add(Token.word(StackUtils.popupAndConcat(stack) + c));</span>
+<span class="fc" id="L45">                    continue;</span>
+                }
+                // スタックの一番上がエスケープ文字の場合でかつ、括弧や文字列などの囲み文字の中の場合は、通常の文字として扱う。
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">                if(StackUtils.equalsAnyBottomElement(stack, new String[]{&quot;[&quot;, &quot;\&quot;&quot;})) {</span>
+<span class="nc" id="L49">                    stack.push(String.valueOf(c));</span>
+                    
+                } else {
+                    // エスケープ文字として分割する。
+<span class="fc" id="L53">                    final String escapedChar = StackUtils.popup(stack);</span>
+<span class="fc" id="L54">                    final String concatStr = StackUtils.popupAndConcat(stack);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                    if(concatStr.length() &gt;= 1) {</span>
+                        // エスケープ文字以前の文字を追加する。
+<span class="fc" id="L57">                        store.add(Token.factor(concatStr));</span>
+                    }
+                    
+<span class="fc" id="L60">                    store.add(Token.escapedChar(escapedChar + c));</span>
+                    
+                }
+                
+<span class="fc" id="L64">                continue;</span>
+            }
+            
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if(c == '&quot;') {</span>
+                
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if(StackUtils.equalsBottomElement(stack, &quot;\&quot;&quot;)) {</span>
+                    // 文字列の囲み文字'&quot;'の終わりの場合、文字列として追加する。
+<span class="fc" id="L71">                    store.add(Token.word(StackUtils.popupAndConcat(stack) + c));</span>
+                    
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                } else if(!stack.isEmpty()) {</span>
+                    // 文字列の引用符で始まらず、既に文字が入っている場合は、既存のものを取り出し分割する。
+                    // 既存のものはFactorとする。
+<span class="fc" id="L76">                    store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+<span class="fc" id="L77">                    stack.push(String.valueOf(c));</span>
+                    
+                } else {
+                    // 文字列の開始の場合
+<span class="fc" id="L81">                    stack.push(String.valueOf(c));</span>
+                    
+                }
+                
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            } else if(c == '[') {</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">                if(!stack.isEmpty() &amp;&amp; !StackUtils.equalsBottomElement(stack, &quot;\&quot;&quot;)) {</span>
+                    // 文字列の引用符の中ではなく、既に文字が入っている場合は、既存のものを取り出し分割する。
+                    // 既存のものはFactorとする。
+<span class="nc" id="L89">                    store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+                }
+                
+<span class="fc" id="L92">                stack.push(String.valueOf(c));</span>
+                
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            } else if(c == ']') {</span>
+                
+<span class="fc bfc" id="L96" title="All 2 branches covered.">                if(StackUtils.equalsBottomElement(stack, &quot;[&quot;)) {</span>
+                    // 条件の終わりの場合
+<span class="fc" id="L98">                    store.add(Token.condition(StackUtils.popupAndConcat(stack) + c));</span>
+                    
+                } else {
+<span class="fc" id="L101">                    stack.push(String.valueOf(c));</span>
+                }
+                
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            } else if(c == ';') {</span>
+                
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                if(!stack.isEmpty()) {</span>
+                    // 既に文字が入っている場合は、既存のものを取り出し分割する。
+<span class="fc" id="L108">                    store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+                }
+                
+<span class="fc" id="L111">                store.add(Token.SYMBOL_SEMI_COLON);</span>
+                
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            } else if(c == '_') {</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                if(StackUtils.equalsBottomElement(stack, &quot;\&quot;&quot;)) {</span>
+                    // 文字列の中の場合の場合は、文字列として処理する。
+<span class="nc" id="L116">                    stack.push(String.valueOf(c));</span>
+                    
+<span class="nc" id="L118">                    continue;</span>
+                }
+                
+                // スタックに文字がある場合、既存のものを取り出し分割する。
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                if(!stack.isEmpty()) {</span>
+<span class="fc" id="L123">                    store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+                    
+                }
+                
+                // 次に続く１文字を取得する
+<span class="fc" id="L128">                StringBuilder next = new StringBuilder();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">                if(i + 1 &lt; length) {</span>
+<span class="fc" id="L130">                    i++;</span>
+<span class="fc" id="L131">                    final char c2 = pattern.charAt(i);</span>
+<span class="fc" id="L132">                    next.append(c2);</span>
+                    
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                    if(c2 == '\\') {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                        if(i + 1 &lt; length) {</span>
+<span class="nc" id="L136">                            i++;</span>
+<span class="nc" id="L137">                            i++;</span>
+<span class="nc" id="L138">                            final char c3 = pattern.charAt(i);</span>
+<span class="nc" id="L139">                            next.append(c3);</span>
+                        }
+                    }
+                    
+<span class="fc" id="L143">                    store.add(Token.underscore(c + next.toString()));</span>
+                    
+<span class="fc" id="L145">                } else {</span>
+<span class="nc" id="L146">                    store.add(Token.factor(String.valueOf(c)));</span>
+                }
+                
+                
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            } else if(c == '*') {</span>
+                
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">                if(StackUtils.equalsBottomElement(stack, &quot;\&quot;&quot;)) {</span>
+                    // 文字列の中の場合の場合は、文字列として処理する。
+<span class="nc" id="L154">                    stack.push(String.valueOf(c));</span>
+                    
+<span class="nc" id="L156">                    continue;</span>
+                }
+                
+                // スタックに文字がある場合、既存のものを取り出し分割する。
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                if(!stack.isEmpty()) {</span>
+<span class="fc" id="L161">                    store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+                    
+                }
+                
+                // 次に続く１文字を取得する
+<span class="fc" id="L166">                StringBuilder next = new StringBuilder();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">                if(i + 1 &lt; length) {</span>
+<span class="fc" id="L168">                    i++;</span>
+<span class="fc" id="L169">                    final char c2 = pattern.charAt(i);</span>
+<span class="fc" id="L170">                    next.append(c2);</span>
+                    
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">                    if(c2 == '\\') {</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">                        if(i + 1 &lt; length) {</span>
+<span class="nc" id="L174">                            i++;</span>
+<span class="nc" id="L175">                            i++;</span>
+<span class="nc" id="L176">                            final char c3 = pattern.charAt(i);</span>
+<span class="nc" id="L177">                            next.append(c3);</span>
+                        }
+                    }
+                    
+<span class="fc" id="L181">                    store.add(Token.asterisk(c + next.toString()));</span>
+                    
+<span class="fc" id="L183">                } else {</span>
+<span class="nc" id="L184">                    store.add(Token.factor(String.valueOf(c)));</span>
+                }
+                
+<span class="fc" id="L187">            } else {</span>
+                
+<span class="fc" id="L189">                stack.push(String.valueOf(c));</span>
+            }
+            
+            
+        }
+        
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if(!stack.isEmpty()) {</span>
+<span class="fc" id="L196">            store.add(Token.factor(StackUtils.popupAndConcat(stack)));</span>
+        }
+        
+<span class="fc" id="L199">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
