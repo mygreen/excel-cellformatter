@@ -15,13 +15,13 @@ import com.github.mygreen.cellformatter.tokenizer.Token;
 /**
  * ユーザ定義の書式を表現するフォーマッタ。
  * <p>{@link CustomFormatterFactory}からインスタンスを作成する。
- * 
- * @version 0.4
+ *
+ * @version 0.10
  * @author T.TSUCHIE
  *
  */
 public class CustomFormatter extends CellFormatter {
-    
+
     /**
      * 書式がない、標準フォーマッター
      */
@@ -32,29 +32,29 @@ public class CustomFormatter extends CellFormatter {
         numberFormatter.addTerm(NumberTerm.general());
         numberFormatter.setOperator(ConditionOperator.ALL);
         numberFormatter.setNumberFactory(NumberFactory.decimalNumber(0, false, 0));
-        
+
         // 文字列の場合
         final ConditionTextFormatter textFormatter = new ConditionTextFormatter("General");
         textFormatter.addTerm(TextTerm.atMark(Token.SYMBOL_AT_MARK));
         textFormatter.setOperator(ConditionOperator.ALL);
-        
+
         final CustomFormatter formatter = new CustomFormatter("");
         formatter.addConditionFormatter(numberFormatter);
         formatter.addConditionFormatter(textFormatter);
-        
+
         DEFAULT_FORMATTER = formatter;
     }
-    
+
     /**
      * 書式のパターン
      */
     private final String pattern;
-    
+
     /**
      * 条件付きのフォーマッタ
      */
     private List<ConditionFormatter> conditionFormatters = new CopyOnWriteArrayList<>();
-    
+
     /**
      * 書式を指定してインスタンスを作成する。
      * @param pattern ユーザ定義の書式。
@@ -62,18 +62,18 @@ public class CustomFormatter extends CellFormatter {
     public CustomFormatter(final String pattern) {
         this.pattern = pattern;
     }
-    
+
     @Override
     public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
-        
+
         ArgUtils.notNull(cell, "cell");
-        
+
         for(ConditionFormatter formatter : conditionFormatters) {
             if(formatter.isMatch(cell)) {
                 return formatter.format(cell, runtimeLocale);
             }
         }
-        
+
         /*
          * 一致するものがない場合は、デフォルトのフォーマッタで処理する。
          * ・セクションとセルの属性が一致していない場合に発生する。
@@ -81,24 +81,21 @@ public class CustomFormatter extends CellFormatter {
          */
         if(cell.isText()) {
             return DEFAULT_FORMATTER.format(cell, runtimeLocale);
-            
+
         } else if(cell.isNumber()) {
             return DEFAULT_FORMATTER.format(cell, runtimeLocale);
         }
-        
+
         throw new NoMatchConditionFormatterException(cell, String.format(
                 "not match format for cell : '%s'", cell.getCellAddress()));
-        
+
     }
-    
-    /**
-     * 書式のパターンを取得する。
-     * @return
-     */
-    public String getPattern() {
+
+    @Override
+    public String getPattern(Locale locale) {
         return pattern;
     }
-    
+
     /**
      * 文字列の書式を持つかどうか。
      * @return
@@ -109,10 +106,10 @@ public class CustomFormatter extends CellFormatter {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * 日時のフォーマッタを持つかどうか。
      * <p>ただし、';'で区切り数値と日時の書式を同時に持つ可能性がある。
@@ -124,10 +121,10 @@ public class CustomFormatter extends CellFormatter {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * 数値のフォーマッタを持つかどうか。
      * <p>ただし、';'で区切り数値と日時の書式を同時に持つ可能性がある。
@@ -139,10 +136,10 @@ public class CustomFormatter extends CellFormatter {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * 条件付きのフォーマッタを追加する。
      * @param formatter
@@ -150,7 +147,7 @@ public class CustomFormatter extends CellFormatter {
     public void addConditionFormatter(ConditionFormatter formatter) {
         this.conditionFormatters.add(formatter);
     }
-    
+
     /**
      * 条件付きのフォーマッタを取得する。
      * @return
@@ -158,5 +155,5 @@ public class CustomFormatter extends CellFormatter {
     public List<ConditionFormatter> getConditionFormatters() {
         return conditionFormatters;
     }
-    
+
 }
