@@ -25,9 +25,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellReference;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.github.mygreen.cellformatter.lang.MSColor;
@@ -35,24 +32,12 @@ import com.github.mygreen.cellformatter.lang.MSColor;
 /**
  * POIによるテスト
  *
- * @version 0.7
+ * @version 0.10
  * @since 0.1
  * @author T.TSUCHIE
  *
  */
 public class POICellFormatterTest {
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
 
     /**
      * 引数がnullの場合のテスト
@@ -439,6 +424,24 @@ public class POICellFormatterTest {
     }
 
     @Test
+    public void testFormatExcel2016() {
+
+        File file = new File("src/test/data/cell_format_2016.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForFormat(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, null);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+    @Test
     public void testFormatExcel2010_compatible() {
 
         File file = new File("src/test/data/cell_format_2010_compatible.xls");
@@ -728,6 +731,79 @@ public class POICellFormatterTest {
 
     }
 
+    @Test
+    public void testFormatChinese() {
+
+        File file = new File("src/test/data/cell_format_chinese.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForFormat(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, null);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testFormatChinese_test() {
+
+        File file = new File("src/test/data/cell_format_chinese.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, null);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+    @Test
+    public void testFormatKorea() {
+
+        File file = new File("src/test/data/cell_format_korean.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForFormat(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, null);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+
+    @Test
+    public void testFormatKorean_test() {
+
+        File file = new File("src/test/data/cell_format_korean.xlsx");
+        POICellFormatter cellFormatter = new POICellFormatter();
+        try {
+            List<Sheet> sheetList = loadSheetForTest(file);
+            for(Sheet sheet : sheetList) {
+                assertSheet(sheet, cellFormatter, null);
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
     /**
      * 書式確認用のシートの取得
      * @param file
@@ -757,6 +833,7 @@ public class POICellFormatterTest {
 
         return list;
     }
+
 
     /**
      * テスト用のシートの取得
