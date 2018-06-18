@@ -15,49 +15,50 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * メッセージソースを管理するクラス。
  * <p>ロケールを指定した場合、そのロケールで存在しないキーがあるときに、標準の値を返す。
- * 
+ *
+ * @version 0.10
  * @since 0.5
  * @author T.TSUCHIE
  *
  */
 public class MessageResolver {
-    
+
     /**
      * 解決するリソース名。
      * <p>リソースバンドル名の形式。
      */
     private final String resourceName;
-    
+
     /**
      * デフォルトのメッセージがない場合を許可するかどうか。
      */
     private final boolean allowedNoDefault;
-    
+
     /**
      * クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
      */
     private final boolean appendUserResource;
-    
+
     /**
      * デフォルトのメッセージ情報
      */
     private MessageResource defaultResource;
-    
-    
+
+
     /**
      * ロケールごとのメッセージリソースの取得
      */
     private Map<Locale, MessageResource> resources;
-    
+
     /**
      * リソース名を指定してインスタンスを生成する。
      * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
      */
     public MessageResolver(final String resourceName) {
         this(resourceName, false, false);
-        
+
     }
-    
+
     /**
      * リソース名を指定してインスタンスを生成する。
      * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
@@ -72,23 +73,23 @@ public class MessageResolver {
         this.defaultResource = loadDefaultResource(allowedNoDefault, appendUserResouce);
         this.resources = new ConcurrentHashMap<>();
     }
-    
+
     private String getPropertyPath() {
-        
+
         final String baseName = getResourceName().replaceAll("\\.", "/");
         String path = new StringBuilder()
                 .append("/")
                 .append(baseName)
                 .append(".properties")
                 .toString();
-        
+
         return path;
     }
-    
+
     private String[] getPropertyPath(final Locale locale) {
-        
+
         final List<String> list = new ArrayList<>();
-        
+
         final String baseName = getResourceName().replaceAll("\\.", "/");
         if(Utils.isNotEmpty(locale.getLanguage())) {
             String path = new StringBuilder()
@@ -99,7 +100,7 @@ public class MessageResolver {
                     .toString();
             list.add(path);
         }
-        
+
         if(Utils.isNotEmpty(locale.getLanguage()) && Utils.isNotEmpty(locale.getCountry())) {
             String path = new StringBuilder()
                     .append("/")
@@ -110,12 +111,12 @@ public class MessageResolver {
                     .toString();
             list.add(path);
         }
-        
+
         Collections.reverse(list);
-        
+
         return list.toArray(new String[list.size()]);
     }
-    
+
     /**
      * プロパティファイルから取得する。
      * <p>プロパティ名を補完する。
@@ -125,7 +126,7 @@ public class MessageResolver {
      * @return
      */
     private MessageResource loadDefaultResource(final boolean allowedNoDefault, final boolean appendUserResource) {
-        
+
         final String path = getPropertyPath();
         Properties props = new Properties();
         try {
@@ -137,25 +138,25 @@ public class MessageResolver {
                 throw new RuntimeException("fail default properties. :" + path, e);
             }
         }
-        
+
         final MessageResource resource = new MessageResource();
-        
+
         final Enumeration<?> keys = props.propertyNames();
         while(keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             String value = props.getProperty(key);
             resource.addMessage(key, value);
         }
-        
+
         // ユーザのリソースの読み込み
         if(appendUserResource) {
             resource.addMessage(loadUserResource(path));
         }
-        
+
         return resource;
-        
+
     }
-    
+
     /**
      * 指定したロケールのリソースを取得する。
      * <p>該当するロケールのリソースが存在しない場合は、デフォルトのリソースを返す。
@@ -163,75 +164,75 @@ public class MessageResolver {
      * @return
      */
     MessageResource loadResource(final Locale locale) {
-        
+
         if(locale == null) {
             return defaultResource;
         }
-        
+
         if(resources.containsKey(locale)) {
             return resources.get(locale);
         }
-        
+
         MessageResource localeResource = null;
         synchronized (resources) {
             for(String path : getPropertyPath(locale)) {
-                
+
                 try {
                     final Properties props = new Properties();
                     props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(path), "UTF-8"));
-                    
+
                     localeResource = new MessageResource();
-                    
+
                     final Enumeration<?> keys = props.propertyNames();
                     while(keys.hasMoreElements()) {
                         String key = (String) keys.nextElement();
                         String value = props.getProperty(key);
                         localeResource.addMessage(key, value);
                     }
-                    
+
                     // ユーザのリソースの読み込み
                     if(appendUserResource) {
                         localeResource.addMessage(loadUserResource(path));
                     }
-                    
+
                     break;
-                    
+
                 } catch(NullPointerException | IOException e) {
                     continue;
                 }
-                
+
             }
-            
+
             if(localeResource == null) {
                 // 該当するリソースが見つからない場合は、デフォルトの値を返す。
                 localeResource = defaultResource;
             }
-            
+
             resources.put(locale, localeResource);
         }
-        
+
         return localeResource;
-        
+
     }
-    
+
     /**
-     * 
+     *
      * @param basePath 基準となるプロパティファイルパス。「/」区切りで、拡張子、ロケール名が付いている。
      * @return 読み込んだメッセージソース。存在しない場合は、{@link MessageResource#NULL_OBJECT}を返す。
      */
     private MessageResource loadUserResource(final String basePath) {
-        
+
         // ファイル名の切り出し
         final int index = basePath.lastIndexOf("/");
         if(index <= 0) {
             return MessageResource.NULL_OBJECT;
         }
-        
+
         final String userPropertyPath = "/" + basePath.substring(index+1);
         try {
             Properties props = new Properties();
             props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(userPropertyPath), "UTF-8"));
-            
+
             final MessageResource resource = new MessageResource();
             final Enumeration<?> keys = props.propertyNames();
             while(keys.hasMoreElements()) {
@@ -239,15 +240,15 @@ public class MessageResolver {
                 String value = props.getProperty(key);
                 resource.addMessage(key, value);
             }
-            
+
             return resource;
-            
+
         } catch(NullPointerException | IOException e) {
             return MessageResource.NULL_OBJECT;
         }
-        
+
     }
-    
+
     /**
      * リソース名の取得。
      * @return
@@ -255,7 +256,7 @@ public class MessageResolver {
     public String getResourceName() {
         return resourceName;
     }
-    
+
     /**
      * デフォルトのメッセージ情報がない場合を許可するかどうか。
      * @return
@@ -263,7 +264,7 @@ public class MessageResolver {
     public boolean isAllowedNoDefault() {
         return allowedNoDefault;
     }
-    
+
     /**
      * キーを指定してメッセージを取得する。
      * @param key メッセージキー
@@ -272,23 +273,23 @@ public class MessageResolver {
     public String getMessage(final String key) {
         return defaultResource.getMessage(key);
     }
-    
+
     /**
      * ロケールとキーを指定してメッセージを取得する。
      * <p>ロケールに該当する値を取得する。
      * @param locale ロケール
      * @param key メッセージキー
-     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
      */
     public String getMessage(final MSLocale locale, final String key) {
         if(locale == null) {
             return loadResource(null).getMessage(key);
-            
+
         } else {
             return loadResource(locale.getLocale()).getMessage(key);
         }
     }
-    
+
     /**
      * ロケールとキーを指定してメッセージを取得する。
      * @param locale ロケール
@@ -300,18 +301,18 @@ public class MessageResolver {
         String message = getMessage(locale, key);
         return message == null ? defaultValue : message;
     }
-    
+
     /**
      * ロケールとキーを指定してメッセージを取得する。
      * <p>ロケールに該当する値を取得する。
      * @param locale ロケール
      * @param key メッセージキー
-     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのメッセージを返す。
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
      */
     public String getMessage(final Locale locale, final String key) {
         return loadResource(locale).getMessage(key);
     }
-    
+
     /**
      * 値がnullの場合、defaultValueの値を返す。
      * @param locale ロケール
@@ -323,4 +324,47 @@ public class MessageResolver {
         String message = getMessage(locale, key);
         return message == null ? defaultValue : message;
     }
+
+    /**
+     * 書式のロケールを優先して、キーに対するメッセージを取得する。
+     * formatLocaleがnullのとき、runtimeLocaleから値を取得する。
+     *
+     * @since 0.10
+     * @param formatLocale 書式に指定されているロケール。nullの場合がある。
+     * @param runtimeLocale 実行時のロケール。
+     * @param key メッセージキー
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
+     */
+    public String getMessage(final MSLocale formatLocale, Locale runtimeLocale, final String key) {
+
+        if(formatLocale != null) {
+            return getMessage(formatLocale, key);
+        } else {
+            return getMessage(runtimeLocale, key);
+        }
+
+    }
+
+    /**
+     * 書式のロケールを優先して、キーに対するメッセージを取得する。
+     * formatLocaleがnullのとき、runtimeLocaleから値を取得する。
+     *
+     * @since 0.10
+     * @param formatLocale 書式に指定されているロケール。nullの場合がある。
+     * @param runtimeLocale 実行時のロケール。
+     * @param key メッセージキー
+     * @param defaultValue
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
+     */
+    public String getMessage(final MSLocale formatLocale, Locale runtimeLocale, final String key, final String defaultValue) {
+
+        if(formatLocale != null) {
+            return getMessage(formatLocale, key, defaultValue);
+        } else {
+            return getMessage(runtimeLocale, key, defaultValue);
+        }
+
+    }
+
+
 }
