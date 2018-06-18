@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import org.apache.poi.hssf.model.InternalWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
@@ -20,18 +21,18 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 
 /**
  * POIのセルのラッパークラス。
- * 
- * @version 0.6
+ *
+ * @version 0.10
  * @since 0.4
  * @author T.TSUCHIE
  *
  */
 public class POICell implements CommonCell {
-    
+
     private static Logger logger = LoggerFactory.getLogger(POICell.class);
-    
+
     private final Cell cell;
-    
+
     /**
      * セルを渡してインスタンスを作成する。
      * @param cell フォーマット対象のセルのインスタンス。
@@ -41,7 +42,7 @@ public class POICell implements CommonCell {
         ArgUtils.notNull(cell, "cell");
         this.cell = cell;
     }
-    
+
     /**
      * POIの元々のセルのインスタンスを取得する。
      * @return
@@ -49,77 +50,77 @@ public class POICell implements CommonCell {
     public Cell getCell() {
         return cell;
     }
-    
+
     @Override
     public short getFormatIndex() {
         final short formatIndex = getCell().getCellStyle().getDataFormat();
         return formatIndex;
     }
-    
+
     @Override
     public String getFormatPattern() {
         final DataFormat dataFormat = cell.getSheet().getWorkbook().createDataFormat();
         final short formatIndex = getFormatIndex();
-        
+
         String formatPattern = dataFormat.getFormat(formatIndex);
         if(formatPattern == null) {
             formatPattern = "";
         }
-        
+
         return formatPattern;
-        
+
     }
-    
+
     @Override
     public boolean isText() {
-        return cell.getCellType() == Cell.CELL_TYPE_STRING;
+        return cell.getCellTypeEnum() == CellType.STRING;
     }
-    
+
     @Override
     public String getTextCellValue() {
         return cell.getStringCellValue();
     }
-    
+
     @Override
     public boolean isBoolean() {
-        return cell.getCellType() == Cell.CELL_TYPE_BOOLEAN;
+        return cell.getCellTypeEnum() == CellType.BOOLEAN;
     }
-    
+
     @Override
     public boolean getBooleanCellValue() {
         return cell.getBooleanCellValue();
     }
-    
+
     @Override
     public boolean isNumber() {
-        return cell.getCellType() == Cell.CELL_TYPE_NUMERIC;
+        return cell.getCellTypeEnum() == CellType.NUMERIC;
     }
-    
+
     @Override
     public double getNumberCellValue() {
         return cell.getNumericCellValue();
     }
-    
+
     @Override
     public Date getDateCellValue() {
         final Date date = cell.getDateCellValue();
-        
+
         // タイムゾーン分、引かれているので調整する。
         return new Date(date.getTime() + TimeZone.getDefault().getRawOffset());
     }
-    
+
     @Override
     public boolean isDateStart1904() {
-        
+
         final Workbook workbook = cell.getSheet().getWorkbook();
         if(workbook instanceof HSSFWorkbook) {
             try {
                 Method method = HSSFWorkbook.class.getDeclaredMethod("getWorkbook");
                 method.setAccessible(true);
-                
+
                 InternalWorkbook iw = (InternalWorkbook) method.invoke(workbook);
                 return iw.isUsing1904DateWindowing();
-                
+
             } catch(NoSuchMethodException | SecurityException e) {
                 logger.warn("fail access method HSSFWorkbook.getWorkbook.", e);
                 return false;
@@ -127,15 +128,15 @@ public class POICell implements CommonCell {
                 logger.warn("fail invoke method HSSFWorkbook.getWorkbook.", e);
                 return false;
             }
-            
+
         } else if(workbook instanceof XSSFWorkbook) {
             try {
                 Method method = XSSFWorkbook.class.getDeclaredMethod("isDate1904");
                 method.setAccessible(true);
-                
+
                 boolean value = (boolean) method.invoke(workbook);
                 return value;
-                
+
             } catch(NoSuchMethodException | SecurityException e) {
                 logger.warn("fail access method XSSFWorkbook.isDate1904.", e);
                 return false;
@@ -143,17 +144,17 @@ public class POICell implements CommonCell {
                 logger.warn("fail invoke method XSSFWorkbook.isDate1904.", e);
                 return false;
             }
-            
+
         } else {
             logger.warn("unknown workbook type.", workbook.getClass().getName());
         }
-        
+
         return false;
     }
-    
+
     @Override
     public String getCellAddress() {
         return CellReference.convertNumToColString(cell.getColumnIndex()) + String.valueOf(cell.getRowIndex()+1);
     }
-    
+
 }
