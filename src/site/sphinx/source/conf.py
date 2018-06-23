@@ -337,4 +337,5 @@ epub_exclude_files = ['search.html']
 # -- Options for manual search ---------------------------------------
 html_search_language = 'ja'
 
+html_search_options = {'type': 'janome'}
 
