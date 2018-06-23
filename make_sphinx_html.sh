@@ -5,10 +5,13 @@ echo "Building sphinx documentation for version $1"
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 cd $SCRIPT_DIR
 
+if [ -e ./src/site/sphinx/build ]; then
+  /bin/rm -rf ./src/site/sphinx/build
+fi
+
 cd ./src/site/sphinx
-make clean
 make html PACKAGE_VERSION=$1
-chown -R jenkins:jenkins /src/site/sphinx/build
+/usr/bin/chown -R jenkins:jenkins ./src/site/sphinx/build
 
 ## copy html dir
 cd $SCRIPT_DIR
