@@ -17,10 +17,11 @@ echo "step3"
 make html PACKAGE_VERSION=$1
 
 echo "step4"
-sudo /usr/bin/chown -R jenkins:jenkins ./src/site/sphinx/build
+sudo /usr/bin/chown -R jenkins:jenkins ./build
 
 ## copy html dir
 cd $SCRIPT_DIR
+
 echo "step5"
 sudo /bin/rm -rf ./target/site/sphinx
 /bin/mkdir -p ./target/site/sphinx
