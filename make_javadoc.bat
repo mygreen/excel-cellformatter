@@ -7,7 +7,7 @@ if NOT "%JAVA_HOME_7%" == "" (
     set JAVA_HOME="%JAVA_HOME_7%"
 )
 
-call mvn javadoc:javadoc > target/javadoc.log 2>&1 
+call mvn javadoc:javadoc -Dhttps.protocols=TLSv1.2 > target/javadoc.log 2>&1 
 
 start target/javadoc.log
 
