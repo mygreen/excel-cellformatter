@@ -139,9 +139,9 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
  					<header>${project.name} ${project.version}
  <![CDATA[
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
@@ -179,7 +179,7 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
+				<version>1.6.0</version>
 				<executions>
 					<execution>
 						<id>sphinx-doc</id>
@@ -188,7 +188,7 @@ $(document).ready(function() {
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>make_sphinx_html.bat</executable>
+							<executable>make_sphinx_html</executable>
 							<arguments>
 								<argument>${project.version}</argument>
 							</arguments>
@@ -206,7 +206,7 @@ $(document).ready(function() {
 			<plugin>
 		        <groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.8</version>
+				<version>0.7.9</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -327,9 +327,9 @@ $(document).ready(function() {
 					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
 					<header>${project.name} ${project.version}
  <![CDATA[
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script>
 $(document).ready(function() {
   $('pre.highlight code').each(function(i, block) {
