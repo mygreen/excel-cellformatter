@@ -14,7 +14,7 @@ make html PACKAGE_VERSION=$1
 cd $SCRIPT_DIR
 /bin/rm -rf ./target/site/sphinx
 /bin/mkdir -p ./target/site/sphinx
-cp -vr ./src/site/sphinx/build/html/* ./target/site/sphinx/
+/bin/cp -vr ./src/site/sphinx/build/html/* ./target/site/sphinx/
 
 ## github-pagesのsphinx対応
 touch ./target/site/.nojekyll
