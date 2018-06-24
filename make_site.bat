@@ -9,6 +9,8 @@ if NOT "%JAVA_HOME_7%" == "" (
 
 set MAVEN_OPTS=-Dhttps.protocols=TLSv1.1,TLSv1.2
 
+call mvn clean
+mkdir target
 call mvn site -Dgpg.skip=true > target/site.log 2>&1 
 
 start target/site.log
