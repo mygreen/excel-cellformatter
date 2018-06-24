@@ -4,16 +4,33 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
 # 前提条件
 + Java1.7-1.8
 + Apache POI v3.17
++ Slf4j v1.7+
 
 
-# ダウンロード
-```xml
-<dependency>
-    <groupId>com.github.mygreen</groupId>
-    <artifactId>excel-cellformatter</artifactId>
-    <version>0.10</version>
-</dependency>
-```
+# 設定
+
+1. excel-cellformatterのライブラリの依存の追加
+    ```xml
+    <dependency>
+        <groupId>com.github.mygreen</groupId>
+        <artifactId>excel-cellformatter</artifactId>
+        <version>0.10</version>
+    </dependency>
+    ```
+
+2. ログライブラリの依存関係を追加します。例として、log4jのケースを以下に示します。
+    ```xml
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.1</version>
+    </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
+    </dependency>
+    ```
 
 # ビルド方法
 
@@ -27,6 +44,11 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
     # pip install janome
     ```
 4. Mavenによるビルド
+    a. jarの作成
+    ```console
+    # mven clean package
+    ```
+    b.サイト生成
     ```console
     # mven site -Dgpg.skip=true
     ```

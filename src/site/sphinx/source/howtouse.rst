@@ -6,14 +6,33 @@
 ダウンロード
 -----------------
 
-Mavenのセントラルリポジトリに登録してあるため、依存関係として下記を追加します。
+Mavenを使用する場合は *pom.xml* に以下の記述を追加してください。
 
 .. sourcecode:: xml
+    :linenos:
+    :caption: pom.xmlの依存関係
     
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
         <version>0.10</version>
+    </dependency>
+
+本ライブラリは、ロギングライブラリ `SLF4j <https://www.slf4j.org/>`_ を使用しているため、好きな実装を追加してください。
+
+.. sourcecode:: xml
+    :linenos:
+    :caption: ロギングライブラリの実装の追加（Log4jの場合）
+    
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>1.7.1</version>
+    </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
     </dependency>
 
 
