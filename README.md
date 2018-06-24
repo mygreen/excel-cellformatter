@@ -46,11 +46,11 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
 4. Mavenによるビルド
     a. jarの作成
     ```console
-    # mvn clean package
+    # mvn clean package -Dhttps.protocols=TLSv1.1,TLSv1.2
     ```
     b.サイト生成
     ```console
-    # mvn site -Dgpg.skip=true
+    # mvn site -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2
     ```
 
 # 簡単な使い方
