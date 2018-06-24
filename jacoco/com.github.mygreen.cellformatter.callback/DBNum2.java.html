@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBNum2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.callback</a> &gt; <span class="el_source">DBNum2.java</span></div><h1>DBNum2.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.callback;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.github.mygreen.cellformatter.term.Term;
+
+/**
+ * DBNum2を処理する。
+ * &lt;p&gt;大字(だいじ)に変換する&lt;/p&gt;
+ *
+ * @since 2.0
+ * @author T.TSUCHIE
+ *
+ */
+public class DBNum2 extends DBNumBase {
+
+   /**
+    * インスタンスを取得する
+    * @return {@link DBNum2}のインスタンス
+    */
+   public static DBNum2 create() {
+<span class="fc" id="L27">       return new DBNum2();</span>
+   }
+
+   /**
+    * 言語ごとの変換処理のマップ
+    */
+<span class="fc" id="L33">   private Map&lt;String, KansujiConverter&gt; converters = new ConcurrentHashMap&lt;&gt;();</span>
+
+   public DBNum2() {
+<span class="fc" id="L36">       super(&quot;ja&quot;, &quot;zh&quot;, &quot;ko&quot;);</span>
+
+<span class="fc" id="L38">       this.converters.put(&quot;ja&quot;, new JapaneseConverter());</span>
+<span class="fc" id="L39">       this.converters.put(&quot;zh&quot;, new ChineseConverter());</span>
+<span class="fc" id="L40">       this.converters.put(&quot;ko&quot;, new KoreanConverter());</span>
+<span class="fc" id="L41">   }</span>
+
+   @Override
+   public String call(Object data, String value, Locale locale, Term&lt;?&gt; term) {
+
+<span class="fc" id="L46">       final String language = locale.getLanguage().toLowerCase();</span>
+
+<span class="fc" id="L48">       return converters.get(language).convert(value, is4YearTerm(term));</span>
+   }
+
+   /**
+    * 日本語の場合の変換処理
+    *
+    * @since 2.0
+    * @author T.TSUCHIE
+    *
+    */
+   public static class JapaneseConverter extends KansujiConverter {
+
+<span class="fc" id="L60">       public JapaneseConverter() {</span>
+
+           // 数字のマップ
+<span class="fc" id="L63">           setNumMap(new String[] {</span>
+                   &quot;〇&quot;,
+                   &quot;壱&quot;,
+                   &quot;弐&quot;,
+                   &quot;参&quot;,
+                   &quot;四&quot;,
+                   &quot;伍&quot;,
+                   &quot;六&quot;,
+                   &quot;七&quot;,
+                   &quot;八&quot;,
+                   &quot;九&quot;
+           });
+
+           // 10^4桁ごと単位のマップ
+<span class="fc" id="L77">           setDigits10Map(new String[] {</span>
+                   &quot;&quot;,      // 10^0
+                   &quot;萬&quot;,    // 10^4
+                   &quot;億&quot;,    // 10^8
+                   &quot;兆&quot;,    // 10^12
+                   &quot;京&quot;     // 10^16
+           });
+
+           // 4桁の単位のマップ
+<span class="fc" id="L86">           setDigits4Map(new String[] {</span>
+                   &quot;&quot;,
+                   &quot;拾&quot;,
+                   &quot;百&quot;,
+                   &quot;阡&quot;
+           });
+
+<span class="fc" id="L93">       }</span>
+
+       @Override
+       protected String replace4Digits(final String value) {
+
+           // 桁ごとに変換を行う。
+<span class="fc" id="L99">           final int length = value.length();</span>
+<span class="fc" id="L100">           final List&lt;String&gt; digits = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">           for(int i=0; i &lt; length; i++) {</span>
+               // 下の桁から処理する
+<span class="fc" id="L104">               final char c = value.charAt(length-i-1);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">               if(c == '0') {</span>
+<span class="fc" id="L106">                   continue;</span>
+
+               }
+
+               // 12の場合も、「壱拾弐」と1を省略さない。
+<span class="fc" id="L111">               String item = replaceSimple(String.valueOf(c)) + digits4Map[i];</span>
+
+<span class="fc" id="L113">               digits.add(item);</span>
+
+           }
+
+           /*
+            * 文字列に直す。
+            * ・桁数が逆順になっているので、戻し結合する。
+            */
+<span class="fc" id="L121">           Collections.reverse(digits);</span>
+<span class="fc" id="L122">           StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">           for(String item : digits) {</span>
+<span class="fc" id="L124">               sb.append(item);</span>
+<span class="fc" id="L125">           }</span>
+
+<span class="fc" id="L127">           return sb.toString();</span>
+
+       }
+
+   }
+
+   /**
+    * 中国語の場合の変換処理
+    *
+    * @since 2.0
+    * @author T.TSUCHIE
+    *
+    */
+   public static class ChineseConverter extends DBNum1.ChineseConverter {
+
+<span class="fc" id="L142">       public ChineseConverter() {</span>
+
+           // 数字のマップ
+<span class="fc" id="L145">           setNumMap(new String[] {</span>
+                   &quot;零&quot;,
+                   &quot;壹&quot;,
+                   &quot;贰&quot;,
+                   &quot;叁&quot;,
+                   &quot;肆&quot;,
+                   &quot;伍&quot;,
+                   &quot;陆&quot;,
+                   &quot;柒&quot;,
+                   &quot;捌&quot;,
+                   &quot;玖&quot;
+           });
+
+           // 10^4桁ごと単位のマップ
+<span class="fc" id="L159">           setDigits10Map(new String[] {</span>
+                   &quot;&quot;,      // 10^0
+                   &quot;万&quot;,    // 10^4  日本語の万(0x969c)とは異なる、万(0x8DC0)
+                   &quot;亿&quot;,    // 10^8
+                   &quot;兆&quot;,    // 10^12
+                   &quot;京&quot;     // 10^16
+           });
+
+           // 4桁の単位のマップ
+<span class="fc" id="L168">           setDigits4Map(new String[] {</span>
+                   &quot;&quot;,
+                   &quot;拾&quot;,
+                   &quot;佰&quot;,
+                   &quot;仟&quot;
+           });
+
+<span class="fc" id="L175">       }</span>
+   }
+
+   /**
+    * 韓国国の場合の変換処理
+    *
+    * @since 2.0
+    * @author T.TSUCHIE
+    *
+    */
+   public static class KoreanConverter extends DBNum1.KoreanConverter {
+
+<span class="fc" id="L187">       public KoreanConverter() {</span>
+
+           // 数字のマップ
+<span class="fc" id="L190">           setNumMap(new String[] {</span>
+                   &quot;零&quot;,
+                   &quot;壹&quot;,
+                   &quot;貳&quot;,
+                   &quot;參&quot;,
+                   &quot;四&quot;,
+                   &quot;伍&quot;,
+                   &quot;六&quot;,
+                   &quot;七&quot;,
+                   &quot;八&quot;,
+                   &quot;九&quot;
+           });
+
+           // 10^4桁ごと単位のマップ
+<span class="fc" id="L204">           setDigits10Map(new String[] {</span>
+                   &quot;&quot;,      // 10^0
+                   &quot;萬&quot;,    // 10^4
+                   &quot;億&quot;,    // 10^8
+                   &quot;兆&quot;,    // 10^12
+                   &quot;京&quot;     // 10^16
+           });
+
+           // 4桁の単位のマップ
+<span class="fc" id="L213">           setDigits4Map(new String[] {</span>
+                   &quot;&quot;,
+                   &quot;拾&quot;,
+                   &quot;百&quot;,
+                   &quot;阡&quot;
+           });
+
+<span class="fc" id="L220">       }</span>
+
+   }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

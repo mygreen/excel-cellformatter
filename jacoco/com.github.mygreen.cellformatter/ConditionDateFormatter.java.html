@@ -19,29 +19,29 @@ import com.github.mygreen.cellformatter.term.Term;
 
 /**
  * ユーザ定義型の日時を解釈するフォーマッタ
- * 
- * @version 0.5
+ *
+ * @version 0.10
  * @author T.TSUCHIE
  *
  */
 public class ConditionDateFormatter extends ConditionFormatter {
-    
+
 <span class="fc" id="L29">    private static final Logger logger = LoggerFactory.getLogger(ConditionDateFormatter.class);</span>
-    
+
     /**
      * 日時の各項
      */
 <span class="fc" id="L34">    private List&lt;Term&lt;Calendar&gt;&gt; terms = new CopyOnWriteArrayList&lt;&gt;();</span>
-    
+
     public ConditionDateFormatter(final String pattern) {
 <span class="fc" id="L37">        super(pattern);</span>
 <span class="fc" id="L38">    }</span>
-    
+
     @Override
     public FormatterType getType() {
 <span class="fc" id="L42">        return FormatterType.Date;</span>
     }
-    
+
     /**
      * 値が条件に一致するかどうか。
      * &lt;p&gt;Excelの1900年1月1日を基準に、ミリ秒に直して判定する。
@@ -53,27 +53,27 @@ public class ConditionDateFormatter extends ConditionFormatter {
 <span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if(!cell.isNumber()) {</span>
 <span class="nc" id="L54">            return false;</span>
         }
-        
+
 <span class="fc" id="L57">        final long zeroTime = ExcelDateUtils.getExcelZeroDateTime(cell.isDateStart1904());</span>
 <span class="fc" id="L58">        final Date date = cell.getDateCellValue();</span>
 <span class="fc" id="L59">        final long value = date.getTime() - zeroTime;</span>
-        
+
 <span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(logger.isDebugEnabled()) {</span>
 <span class="nc" id="L62">            logger.debug(&quot;isMatch::date={}, zeroTime={}, diff={}&quot;,</span>
                     ExcelDateUtils.formatDate(date), ExcelDateUtils.formatDate(new Date(zeroTime)), value);
         }
-        
+
 <span class="fc" id="L66">        return getOperator().isMatch(value);</span>
     }
-    
+
     @Override
     public CellFormatResult format(final CommonCell cell, final Locale runtimeLocale) {
 <span class="fc" id="L71">        ArgUtils.notNull(cell, &quot;date&quot;);</span>
-        
+
 <span class="fc" id="L73">        final Date date = cell.getDateCellValue();</span>
 <span class="fc" id="L74">        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(&quot;GMT-00:00&quot;));</span>
 <span class="fc" id="L75">        cal.setTime(date);</span>
-        
+
         // 各項の処理
 <span class="fc" id="L78">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L79" title="All 2 branches covered.">        for(Term&lt;Calendar&gt; term : terms) {</span>
@@ -83,46 +83,46 @@ public class ConditionDateFormatter extends ConditionFormatter {
             } else {
 <span class="fc" id="L84">                formatValue = term.format(cal, getLocale(), runtimeLocale);</span>
             }
-<span class="fc" id="L86">            sb.append(applyFormatCallback(cal, formatValue, runtimeLocale));</span>
+<span class="fc" id="L86">            sb.append(applyFormatCallback(cal, formatValue, runtimeLocale, term));</span>
 <span class="fc" id="L87">        }</span>
-        
+
 <span class="fc" id="L89">        String value = sb.toString();</span>
-        
+
 <span class="fc" id="L91">        final CellFormatResult result = new CellFormatResult();</span>
 <span class="fc" id="L92">        result.setValue(date);</span>
 <span class="fc" id="L93">        result.setText(value);</span>
 <span class="fc" id="L94">        result.setTextColor(getColor());</span>
 <span class="fc" id="L95">        result.setSectionPattern(getPattern());</span>
 <span class="fc" id="L96">        result.setCellType(FormatCellType.Date);</span>
-        
+
 <span class="fc" id="L98">        return result;</span>
     }
-    
+
     @SuppressWarnings({&quot;rawtypes&quot;, &quot;unchecked&quot;})
-    private String applyFormatCallback(final Calendar cal, final String str, final Locale runtimeLocale) {
-        
+    private String applyFormatCallback(final Calendar cal, final String str, final Locale runtimeLocale, Term&lt;Calendar&gt; term) {
+
 <span class="fc" id="L104">        String value = str;</span>
-        
+
 <span class="fc bfc" id="L106" title="All 2 branches covered.">        for(Callback callback : getCallbacks()) {</span>
-            
+
             final Locale locale;
 <span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if(getLocale() != null) {</span>
 <span class="fc" id="L110">                locale = getLocale().getLocale();</span>
             } else {
 <span class="nc" id="L112">                locale = runtimeLocale;</span>
             }
-            
+
 <span class="fc bfc" id="L115" title="All 2 branches covered.">            if(!callback.isApplicable(locale)) {</span>
 <span class="fc" id="L116">                continue;</span>
             }
-            
-<span class="fc" id="L119">            value = callback.call(cal, value, locale);</span>
+
+<span class="fc" id="L119">            value = callback.call(cal, value, locale, term);</span>
 <span class="fc" id="L120">        }</span>
-        
+
 <span class="fc" id="L122">        return value;</span>
-        
+
     }
-    
+
     /**
      * フォーマットの項を追加する。
      * @param term
@@ -130,7 +130,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
     public void addTerm(final Term&lt;Calendar&gt; term) {
 <span class="fc" id="L131">        this.terms.add(term);</span>
 <span class="fc" id="L132">    }</span>
-    
+
     /**
      * フォーマットの複数の項を追加する。
      * @param terms
@@ -138,7 +138,7 @@ public class ConditionDateFormatter extends ConditionFormatter {
     public void addAllTerms(final List&lt;Term&lt;Calendar&gt;&gt; terms) {
 <span class="nc" id="L139">        this.terms.addAll(terms);</span>
 <span class="nc" id="L140">    }</span>
-    
+
     /**
      * フォーマットの項を全て取得する。
      * @return
@@ -147,4 +147,4 @@ public class ConditionDateFormatter extends ConditionFormatter {
 <span class="fc" id="L147">        return terms;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -10,41 +10,51 @@ import com.github.mygreen.cellformatter.lang.ArgUtils;
 /**
  * ロケールによって、フォーマッタを切り替えるフォーマッタ。
  * &lt;p&gt;該当するロケールがない場合、標準のフォーマッタを返す。
- * 
+ *
+ * @version 0.10
  * @author T.TSUCHIE
  *
  */
 public class LocaleSwitchFormatter extends CellFormatter {
-    
+
     private final CellFormatter defaultFormatter;
-    
-<span class="fc" id="L21">    private final Map&lt;Locale, CellFormatter&gt; formatterMap = new ConcurrentHashMap&lt;&gt;();</span>
-    
+
+<span class="fc" id="L22">    private final Map&lt;Locale, CellFormatter&gt; formatterMap = new ConcurrentHashMap&lt;&gt;();</span>
+
     /**
      * 標準のフォーマッタを指定するコンストラクタ
      * @param defaultFormatter 標準のフォーマッタ。
      * @throws IllegalArgumentException {@literal defaultFormatter == null.}
      */
-<span class="fc" id="L28">    public LocaleSwitchFormatter(final CellFormatter defaultFormatter) {</span>
-<span class="fc" id="L29">        ArgUtils.notNull(defaultFormatter, &quot;defaultFormatter&quot;);</span>
-<span class="fc" id="L30">        this.defaultFormatter = defaultFormatter;</span>
-<span class="fc" id="L31">    }</span>
-    
+<span class="fc" id="L29">    public LocaleSwitchFormatter(final CellFormatter defaultFormatter) {</span>
+<span class="fc" id="L30">        ArgUtils.notNull(defaultFormatter, &quot;defaultFormatter&quot;);</span>
+<span class="fc" id="L31">        this.defaultFormatter = defaultFormatter;</span>
+<span class="fc" id="L32">    }</span>
+
     @Override
     public CellFormatResult format(final CommonCell cell, final Locale locale) {
-        
-<span class="fc" id="L36">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
-        
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if(locale == null) {</span>
-<span class="nc" id="L39">            return defaultFormatter.format(cell, locale);</span>
-            
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        } else if(formatterMap.containsKey(locale)) {</span>
-<span class="fc" id="L42">            return formatterMap.get(locale).format(cell, locale);</span>
-        }
-        
-<span class="fc" id="L45">        return defaultFormatter.format(cell, locale);</span>
+
+<span class="fc" id="L37">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
+
+<span class="fc" id="L39">        return getCellFormatter(locale).format(cell, locale);</span>
     }
-    
+
+    /**
+     * ロケールに対応するセルフォーマットを取得する
+     * @param locale ロケール
+     * @return ロケールに対応するセルフォーマッタ。ロケールがnullの場合は、デフォルトのフォーマッタを返す。
+     */
+    private CellFormatter getCellFormatter(final Locale locale) {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if(locale == null) {</span>
+<span class="nc" id="L49">            return defaultFormatter;</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        } else if(formatterMap.containsKey(locale)) {</span>
+<span class="fc" id="L52">            return formatterMap.get(locale);</span>
+        }
+
+<span class="fc" id="L55">        return defaultFormatter;</span>
+    }
+
     /**
      * ローケールとフォーマッタを登録する。
      * @param cellFormatter 登録対象のフォーマッタ。
@@ -54,15 +64,20 @@ public class LocaleSwitchFormatter extends CellFormatter {
      * @throws IllegalArgumentException {@literal locales == null || locales.length == 0.}
      */
     public LocaleSwitchFormatter register(final CellFormatter cellFormatter, final Locale... locales) {
-<span class="fc" id="L57">        ArgUtils.notNull(cellFormatter, &quot;cellFormatter&quot;);</span>
-<span class="fc" id="L58">        ArgUtils.notEmpty(locales, &quot;locales&quot;);</span>
-        
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(Locale locale : locales) {</span>
-<span class="fc" id="L61">            formatterMap.put(locale, cellFormatter);</span>
+<span class="fc" id="L67">        ArgUtils.notNull(cellFormatter, &quot;cellFormatter&quot;);</span>
+<span class="fc" id="L68">        ArgUtils.notEmpty(locales, &quot;locales&quot;);</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for(Locale locale : locales) {</span>
+<span class="fc" id="L71">            formatterMap.put(locale, cellFormatter);</span>
         }
-        
-<span class="fc" id="L64">        return this;</span>
+
+<span class="fc" id="L74">        return this;</span>
     }
-    
+
+    @Override
+    public String getPattern(final Locale locale) {
+<span class="nc" id="L79">        return getCellFormatter(locale).getPattern();</span>
+    }
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

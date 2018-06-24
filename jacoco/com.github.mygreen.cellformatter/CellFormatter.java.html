@@ -5,13 +5,13 @@ import java.util.Locale;
 
 /**
  * セルのフォーマッタの共通インタフェース
- * 
- * @version 0.3
+ *
+ * @version 0.10
  * @author T.TSUCHIE
  *
  */
 <span class="fc" id="L13">public abstract class CellFormatter {</span>
-    
+
     /**
      * セルの値をフォーマットする
      * @param cell フォーマット対象のセル。
@@ -21,7 +21,7 @@ import java.util.Locale;
     public CellFormatResult format(final CommonCell cell) {
 <span class="fc" id="L22">        return format(cell, Locale.getDefault());</span>
     }
-    
+
     /**
      * セルの値をロケールを指定してフォーマットする
      * @param cell フォーマット対象のセル。
@@ -30,6 +30,24 @@ import java.util.Locale;
      * @throws IllegalArgumentException {@literal cell == null.}
      */
     public abstract CellFormatResult format(final CommonCell cell, final Locale locale);
-    
+
+    /**
+     * 書式を取得する
+     * @since 0.10
+     * @return フォーマッタの書式
+     */
+    public String getPattern() {
+<span class="nc" id="L40">        return getPattern(Locale.getDefault());</span>
+    }
+
+    /**
+     * ロケールを指定して書式を取得する
+     * @since 0.10
+     * @param locale ロケール。指定しない場合は、実行環境のロケールが設定される。
+     * @return フォーマッタの書式
+     */
+    public abstract String getPattern(final Locale locale);
+
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

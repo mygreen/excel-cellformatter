@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.mygreen.cellformatter.callback.Callback;
-import com.github.mygreen.cellformatter.callback.DaijiCallback;
-import com.github.mygreen.cellformatter.callback.KansujiCallback;
-import com.github.mygreen.cellformatter.callback.ZenkakuNumberCallback;
+import com.github.mygreen.cellformatter.callback.DBNum1;
+import com.github.mygreen.cellformatter.callback.DBNum2;
+import com.github.mygreen.cellformatter.callback.DBNum3;
 import com.github.mygreen.cellformatter.lang.MSColor;
 import com.github.mygreen.cellformatter.lang.MSLocale;
 import com.github.mygreen.cellformatter.tokenizer.Token;
@@ -19,47 +19,47 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 /**
  * 条件付きの書式の組み立てるための抽象クラス。
  * &lt;p&gt;主にテンプレートメソッドの実装を行う。
- * 
- * @version 0.8
+ *
+ * @version 0.10
  * @author T.TSUCHIE
  * @param &lt;F&gt; 組み立てるフォーマッタクラス
  */
 <span class="fc" id="L27">public abstract class ConditionFormatterFactory&lt;F&gt; {</span>
-    
+
 <span class="fc" id="L29">    private static Logger logger = LoggerFactory.getLogger(ConditionFormatterFactory.class);</span>
-    
+
     /**
      * 条件付き書式を組み立てる
      * @param store
      * @return
      */
     public abstract F create(TokenStore store);
-    
+
     /**
      * 演算子を使用した条件式のパターン
      */
 <span class="fc" id="L41">    private static final Pattern PATTERN_CONDITION_OPERATOR = Pattern.compile(&quot;\\[([&gt;&lt;=]+)([+-]*[0-9\\.]+)\\]&quot;);</span>
-    
+
     /**
      * ロケールの条件式のパターン
      */
 <span class="fc" id="L46">    private static final Pattern PATTERN_CONDITION_LOCALE = Pattern.compile(&quot;\\[\\$\\-([0-9a-zA-Z]+)\\]&quot;);</span>
-    
+
     /**
      * 記号付きロケールの条件式のパターン
      */
 <span class="fc" id="L51">    private static final Pattern PATTERN_CONDITION_LOCALE_SYMBOL = Pattern.compile(&quot;\\[\\$(.+)\\-([0-9a-zA-Z]+)\\]&quot;);</span>
-    
+
     /**
      * 特殊な処理の条件式のパターン
      */
 <span class="fc" id="L56">    private static final Pattern PATTERN_CONDITION_DBNUM = Pattern.compile(&quot;\\[DBNum([0-9]+)\\]&quot;);</span>
-    
+
     /**
      * インデックス形式の色の条件式のパターン
      */
 <span class="fc" id="L61">    private static final Pattern PATTERN_CONDITION_INDEX_COLOR = Pattern.compile(&quot;\\[(色|Color)([0-9]+)\\]&quot;);</span>
-    
+
     /**
      * {@literal '[&lt;=1000]'}などの演算子の条件式かどうか。
      * @param token 判定対象のトークン。
@@ -69,7 +69,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
     protected boolean isConditionOperator(final Token.Condition token) {
 <span class="fc" id="L70">        return PATTERN_CONDITION_OPERATOR.matcher(token.getValue()).matches();</span>
     }
-    
+
     /**
      * {@literal '[$-403]'}などのロケールの条件式かどうか。
      * @param token 判定対象のトークン。
@@ -79,7 +79,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
     protected boolean isConditionLocale(final Token.Condition token) {
 <span class="fc" id="L80">        return PATTERN_CONDITION_LOCALE.matcher(token.getValue()).matches();</span>
     }
-    
+
     /**
      * {@literal '[$€-403]'}などの記号付きロケールの条件式かどうか。
      * @since 0.8
@@ -88,7 +88,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
     protected boolean isConditionLocaleSymbol(final Token.Condition token) {
 <span class="fc" id="L89">        return PATTERN_CONDITION_LOCALE_SYMBOL.matcher(token.getValue()).matches();</span>
     }
-    
+
     /**
      * {@literal '[DBNum1]'}などの組み込み処理の条件式かどうか。
      * @param token 判定対象のトークン。
@@ -98,7 +98,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
     protected boolean isConditionDbNum(final Token.Condition token) {
 <span class="fc" id="L99">        return PATTERN_CONDITION_DBNUM.matcher(token.getValue()).matches();</span>
     }
-    
+
     /**
      * {@literal '[Red]'}などの色の条件式の書式かどうか
      * @param token 判定対象のトークン。
@@ -111,7 +111,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
         }
 <span class="fc" id="L112">        return PATTERN_CONDITION_INDEX_COLOR.matcher(token.getValue()).matches();</span>
     }
-    
+
     /**
      * {@literal '[&lt;=1000]'}などの数値の条件を組み立てる
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
@@ -120,16 +120,16 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected ConditionOperator setupConditionOperator(final ConditionFormatter formatter, final Token.Condition token) {
-        
+
 <span class="fc" id="L124">        final Matcher matcher = PATTERN_CONDITION_OPERATOR.matcher(token.getValue());</span>
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if(!matcher.matches()) {</span>
 <span class="nc" id="L126">            throw new IllegalArgumentException(&quot;not match condition:&quot; + token.getValue());</span>
         }
-        
+
 <span class="fc" id="L129">        final String operator = matcher.group(1);</span>
 <span class="fc" id="L130">        final String number = matcher.group(2);</span>
 <span class="fc" id="L131">        final double condition = Double.valueOf(number);</span>
-        
+
         final ConditionOperator conditionOperator;
 <span class="pc bpc" id="L134" title="8 of 26 branches missed.">        switch(operator) {</span>
             case &quot;=&quot;:
@@ -154,13 +154,13 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 <span class="nc" id="L154">                logger.warn(&quot;unknown operator : {}&quot;, operator);</span>
 <span class="nc" id="L155">                conditionOperator = ConditionOperator.ALL;</span>
                 break;
-            
+
         }
-        
+
 <span class="fc" id="L160">        formatter.setOperator(conditionOperator);</span>
 <span class="fc" id="L161">        return conditionOperator;</span>
     }
-    
+
     /**
      * {@literal '[$-403]'}などのロケールの条件を組み立てる
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
@@ -169,27 +169,27 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected MSLocale setupConditionLocale(final ConditionFormatter formatter, final Token.Condition token) {
-        
+
 <span class="fc" id="L173">        final Matcher matcher = PATTERN_CONDITION_LOCALE.matcher(token.getValue());</span>
 <span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if(!matcher.matches()) {</span>
 <span class="nc" id="L175">            throw new IllegalArgumentException(&quot;not match condition:&quot; + token.getValue());</span>
         }
-        
+
 <span class="fc" id="L178">        final String number = matcher.group(1);</span>
-        
+
         // 16進数=&gt;10進数に直す
 <span class="fc" id="L181">        final int value = Integer.valueOf(number, 16);</span>
 <span class="fc" id="L182">        MSLocale locale = MSLocale.createKnownLocale(value);</span>
 <span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if(locale == null) {</span>
 <span class="nc" id="L184">            locale = new MSLocale(value);</span>
         }
-        
+
 <span class="fc" id="L187">        formatter.setLocale(locale);</span>
-        
+
 <span class="fc" id="L189">        return locale;</span>
-        
+
     }
-    
+
     /**
      * {@literal '[$€-403]'}などの記号付きロケールの条件を組み立てる
      * @since 0.8
@@ -199,28 +199,28 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected LocaleSymbol setupConditionLocaleSymbol(final ConditionFormatter formatter, final Token.Condition token) {
-        
+
 <span class="fc" id="L203">        final Matcher matcher = PATTERN_CONDITION_LOCALE_SYMBOL.matcher(token.getValue());</span>
 <span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if(!matcher.matches()) {</span>
 <span class="nc" id="L205">            throw new IllegalArgumentException(&quot;not match condition:&quot; + token.getValue());</span>
         }
-        
+
 <span class="fc" id="L208">        final String symbol = matcher.group(1);</span>
 <span class="fc" id="L209">        final String number = matcher.group(2);</span>
-        
+
         // 16進数=&gt;10進数に直す
 <span class="fc" id="L212">        final int value = Integer.valueOf(number, 16);</span>
 <span class="fc" id="L213">        MSLocale locale = MSLocale.createKnownLocale(value);</span>
 <span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if(locale == null) {</span>
 <span class="nc" id="L215">            locale = new MSLocale(value);</span>
         }
-        
+
 <span class="fc" id="L218">        formatter.setLocale(locale);</span>
-        
+
 <span class="fc" id="L220">        return new LocaleSymbol(locale, symbol);</span>
-        
+
     }
-    
+
     /**
      * {@literal '[DBNum1]'}などの組み込み処理の条件を組み立てる。
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
@@ -229,33 +229,33 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected Callback&lt;?&gt; setupConditionDbNum(final ConditionFormatter formatter, final Token.Condition token) {
-        
+
 <span class="fc" id="L233">        final Matcher matcher = PATTERN_CONDITION_DBNUM.matcher(token.getValue());</span>
 <span class="pc bpc" id="L234" title="1 of 2 branches missed.">        if(!matcher.matches()) {</span>
 <span class="nc" id="L235">            throw new IllegalArgumentException(&quot;not match condition:&quot; + token.getValue());</span>
         }
-        
+
 <span class="fc" id="L238">        Callback&lt;?&gt; callback = null;</span>
 <span class="fc" id="L239">        final String number = matcher.group(1);</span>
 <span class="fc bfc" id="L240" title="All 2 branches covered.">        if(number.startsWith(&quot;1&quot;)) {</span>
-<span class="fc" id="L241">            callback = KansujiCallback.create();</span>
-            
+<span class="fc" id="L241">            callback = DBNum1.create();</span>
+
 <span class="fc bfc" id="L243" title="All 2 branches covered.">        } else if(number.startsWith(&quot;2&quot;)) {</span>
-<span class="fc" id="L244">            callback = DaijiCallback.create();</span>
-            
+<span class="fc" id="L244">            callback = DBNum2.create();</span>
+
 <span class="pc bpc" id="L246" title="1 of 2 branches missed.">        } else if(number.startsWith(&quot;3&quot;)) {</span>
-<span class="fc" id="L247">            callback = ZenkakuNumberCallback.create();</span>
+<span class="fc" id="L247">            callback = DBNum3.create();</span>
         }
-        
+
 <span class="pc bpc" id="L250" title="1 of 2 branches missed.">        if(callback != null) {</span>
 <span class="fc" id="L251">            formatter.addCallback(callback);</span>
         }
-        
+
 <span class="fc" id="L254">        return callback;</span>
     }
-    
-    
-    
+
+
+
     /**
      * {@literal '[Red]'}などの色の条件の組み立てる。
      * @param formatter 現在の組み立て中のフォーマッタのインスタンス。
@@ -264,29 +264,29 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
      * @throws IllegalArgumentException 処理対象の条件として一致しない場合
      */
     protected MSColor setupConditionColor(final ConditionFormatter formatter, final Token.Condition token) {
-        
+
         // 名前指定の場合
 <span class="fc" id="L269">        MSColor color = MSColor.valueOfKnownColor(token.getCondition());</span>
 <span class="fc bfc" id="L270" title="All 2 branches covered.">        if(color != null) {</span>
 <span class="fc" id="L271">            formatter.setColor(color);</span>
 <span class="fc" id="L272">            return color;</span>
         }
-        
+
         // インデックス指定の場合
 <span class="fc" id="L276">        final Matcher matcher = PATTERN_CONDITION_INDEX_COLOR.matcher(token.getValue());</span>
 <span class="pc bpc" id="L277" title="1 of 2 branches missed.">        if(!matcher.matches()) {</span>
 <span class="nc" id="L278">            throw new IllegalArgumentException(&quot;not match condition:&quot; + token.getValue());</span>
         }
-        
+
 //        final String prefix = matcher.group(1);
 <span class="fc" id="L282">        final String number = matcher.group(2);</span>
 <span class="fc" id="L283">        final short index = Short.valueOf(number);</span>
 <span class="fc" id="L284">        color = MSColor.valueOfIndexColor(index);</span>
-        
+
 <span class="fc" id="L286">        formatter.setColor(color);</span>
-        
+
 <span class="fc" id="L288">        return color;</span>
     }
-    
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

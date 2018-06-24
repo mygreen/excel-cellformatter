@@ -3,75 +3,77 @@
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 
 import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
 
 /**
  * POI用の数式の値を評価したセルのラッパークラス。
- * 
+ *
+ * @version 0.10
  * @since 0.8.3
  * @author T.TSUCHIE
  *
  */
 public class POIEvaluatedCell extends POICell {
-    
+
     private final CellValue value;
-    
+
     /**
      * セルと評価した結果を
      * @param cell タイプが数式のセル。
      * @param value 数式を評価した結果。
      */
     public POIEvaluatedCell(final Cell cell, final CellValue value) {
-<span class="fc" id="L27">        super(cell);</span>
-<span class="fc" id="L28">        this.value = value;</span>
-        
-<span class="fc" id="L30">    }</span>
-    
+<span class="fc" id="L29">        super(cell);</span>
+<span class="fc" id="L30">        this.value = value;</span>
+
+<span class="fc" id="L32">    }</span>
+
     /**
      * 式を評価したセルの値を取得する。
      * @return
      */
     public CellValue getCellValue() {
-<span class="nc" id="L37">        return value;</span>
+<span class="nc" id="L39">        return value;</span>
     }
-    
+
     @Override
     public boolean isText() {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        return value.getCellType() == Cell.CELL_TYPE_STRING;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.STRING;</span>
     }
-    
+
     @Override
     public String getTextCellValue() {
-<span class="fc" id="L47">        return value.getStringValue();</span>
+<span class="fc" id="L49">        return value.getStringValue();</span>
     }
-    
+
     @Override
     public boolean isBoolean() {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        return value.getCellType() == Cell.CELL_TYPE_BOOLEAN;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.BOOLEAN;</span>
     }
-    
+
     @Override
     public boolean getBooleanCellValue() {
-<span class="fc" id="L57">        return value.getBooleanValue();</span>
+<span class="fc" id="L59">        return value.getBooleanValue();</span>
     }
-    
+
     @Override
     public boolean isNumber() {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        return value.getCellType() == Cell.CELL_TYPE_NUMERIC;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.NUMERIC;</span>
     }
-    
+
     @Override
     public double getNumberCellValue() {
-<span class="fc" id="L67">        return value.getNumberValue();</span>
+<span class="fc" id="L69">        return value.getNumberValue();</span>
     }
-    
+
     @Override
     public Date getDateCellValue() {
-<span class="fc" id="L72">        return ExcelDateUtils.convertJavaDate(getNumberCellValue(), isDateStart1904());</span>
-        
+<span class="fc" id="L74">        return ExcelDateUtils.convertJavaDate(getNumberCellValue(), isDateStart1904());</span>
+
     }
-    
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
