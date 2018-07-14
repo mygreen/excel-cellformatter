@@ -66,6 +66,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 		<jexcelapi.version>2.6.10</jexcelapi.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<jacoco.include.package>com.github.mygreen.cellformatter.*</jacoco.include.package>
+
 	</properties>
 
 	<!-- ビルド環境によって、sphinxのスクリプトを切り替える -->
@@ -295,6 +296,17 @@ $(document).ready(function() {
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.5</version>
+				<configuration>
+					<onlyAnalyze>com.github.mygreen.cellformatter.*</onlyAnalyze>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<xmlOutput>true</xmlOutput>
+					<xmlOutputDirectory>target/site</xmlOutputDirectory>
+				</configuration>
+			</plugin>
 
 			<!-- pgp -->
 			<plugin>
@@ -451,7 +463,11 @@ $(document).ready(function() {
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 			</plugin>
-
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+			
 		</plugins>
 	</reporting>
 </project>
