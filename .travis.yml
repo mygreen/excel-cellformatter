@@ -1,5 +1,5 @@
 #sudo: false
-#install: true
+install: true
 language: java
 jdk:
   - oraclejdk7
@@ -16,7 +16,9 @@ jdk:
 script:
   - jdk_switcher use oraclejdk7
   - export JAVA7_HOME=$JAVA_HOME
-  - mvn clean verify -Dgpg.skip=true "-Dhttps.protocols=TLSv1.1,TLSv1.2 -Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
+  - echo "$JAVA7_HOME"
+#  - mvn clean verify -Dgpg.skip=true "-Dhttps.protocols=TLSv1.1,TLSv1.2 -Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
+  - mvn clean verify -Dgpg.skip=true "-Dhttps.protocols=TLSv1.1,TLSv1.2"
 #  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 #  mvn install -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 cache:
