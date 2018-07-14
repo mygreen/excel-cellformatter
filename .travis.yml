@@ -1,8 +1,9 @@
-#sudo: false
+sudo: false
 install: true
 language: java
 jdk:
   - oraclejdk7
+  - oraclejdk8
 #addons:
 #  apt:
 #    packages:
@@ -14,9 +15,10 @@ jdk:
 #        - LC_ALL="ja_JP.UTF-8"
 #        - TZ="Asia/Tokyo"
 script:
-#  - jdk_switcher use oraclejdk7
-#  - echo "$JAVA_HOME"
-  - mvn clean verify -Dgpg.skip=true
+  - jdk_switcher use oraclejdk7
+  - export JAVA7_HOME=$JAVA_HOME
+  - jdk_switcher use oraclejdk8
+  - mvn clean verify -Dgpg.skip=true "-Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
 #  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 #  mvn install -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 cache:
