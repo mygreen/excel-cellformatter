@@ -3,20 +3,20 @@ install: true
 language: java
 #jdk:
 #  - oraclejdk7
-addons:
-  apt:
-    packages:
-      - fonts-ipafont
-      - language-pack-ja
-env:
-    global:
-        - LANG="ja_JP.UTF-8"
-        - LC_ALL="ja_JP.UTF-8"
-        - TZ="Asia/Tokyo"
+#addons:
+#  apt:
+#    packages:
+#      - fonts-ipafont
+#      - language-pack-ja
+#env:
+#    global:
+#        - LANG="ja_JP.UTF-8"
+#        - LC_ALL="ja_JP.UTF-8"
+#        - TZ="Asia/Tokyo"
 script:
   - jdk_switcher use oraclejdk7
   - export JAVA7_HOME=$JAVA_HOME
-  - mvn clean verify -Dgpg.skip=true "-Dhttps.protocols=TLSv1.1,TLSv1.2" "-Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
+  - mvn clean verify -Dgpg.skip=true "-Dhttps.protocols=TLSv1.1,TLSv1.2 -Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
 #  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 #  mvn install -Dmaven.javadoc.skip=true -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2 -B -V
 cache:
