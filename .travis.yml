@@ -1,8 +1,8 @@
-sudo: false
-install: true
+#sudo: false
+#install: true
 language: java
-#jdk:
-#  - oraclejdk7
+jdk:
+  - oraclejdk7
 #addons:
 #  apt:
 #    packages:
