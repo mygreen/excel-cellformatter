@@ -18,7 +18,7 @@ script:
   - jdk_switcher use oraclejdk7
   - export JAVA7_HOME=$JAVA_HOME
   - jdk_switcher use oraclejdk8
-  - mvn clean verify -Dgpg.skip=true "-Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
+  - mvn clean verify -Dmaven.javadoc.skip=true -Dgpg.skip=true "-Djdk.7.rt.jar.path=$JAVA7_HOME/jre/lib/rt.jar"
 cache:
   directories:
     - $HOME/.m2
