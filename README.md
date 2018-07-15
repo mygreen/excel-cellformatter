@@ -1,5 +1,6 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/excel-cellformatter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/excel-cellformatter/)
 [![Javadocs](http://javadoc.io/badge/com.github.mygreen/excel-cellformatter.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/excel-cellformatter)
+[![Build Status](https://travis-ci.org/mygreen/excel-cellformatter.svg?branch=master)](https://travis-ci.org/mygreen/excel-cellformatter)
 
 # excel-cellformatter
 Excelのセルの書式を解析してフォーマットするJavaのライブラリ。
