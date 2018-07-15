@@ -2,6 +2,7 @@ package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -623,17 +624,31 @@ public class JXLCellFormatterTest {
 
             final Cell testCaseCell = row[2];
             final Cell testResultCell = row[3];
+            
+            final Cell spConditionCell = row.length > 6 ? row[6] : null;
 
             final String no = noCell.getContents();
             final String description = desctiptionCell.getContents();
             if(description.isEmpty()) {
                 break;
             }
+            
+            // 特殊条件 - java8のときなど
+            final String spCondition;
+            if(spConditionCell == null || spConditionCell.getType().equals(CellType.EMPTY)) {
+                spCondition = "";
+            } else {
+                spCondition = spConditionCell.getContents();
+            }
 
             final boolean startDate1904 = JXLUtils.isDateStart1904(sheet);
             final String testCase = cellFormatter.formatAsString(testCaseCell, locale, startDate1904);
-            final String testResult = testResultCell.getContents();
-
+            String testResult = testResultCell.getContents();
+            if(spCondition.startsWith("Java8=") && IS_JAVA_1_8) {
+                // Java8の環境で、値が変わる場合
+                testResult = spCondition.substring("Java8=".length());
+            }
+            
             final String test = testCase.equals(testResult) ? "○" : "×";
 
             // セルのスタイル情報の取得

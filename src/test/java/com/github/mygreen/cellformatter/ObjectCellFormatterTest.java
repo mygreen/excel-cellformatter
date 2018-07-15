@@ -2,6 +2,7 @@ package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -92,7 +93,13 @@ public class ObjectCellFormatterTest {
         CellFormatResult result = cellFormatter.format(cell);
         
         assertThat(result.getCellType(), is(FormatCellType.Number));
-        assertThat(result.getText(), is("1.235E-05"));
+        
+        if(IS_JAVA_1_8) {
+            assertThat(result.getText(), is("1.234E-05"));
+        } else {
+            assertThat(result.getText(), is("1.235E-05"));
+            
+        }
         
     }
     
