@@ -2,6 +2,7 @@ package com.github.mygreen.cellformatter;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -906,15 +908,29 @@ public class POICellFormatterTest {
 
             final Cell testCaseCell = row.getCell(2);
             final Cell testResultCell = row.getCell(3);
+            
+            final Cell spConditionCell = row.getCell(6);
 
             final String no = String.valueOf((int)noCell.getNumericCellValue());
             final String description = desctiptionCell.getRichStringCellValue().getString();
             if(description.isEmpty()) {
                 break;
             }
+            
+            // 特殊条件 - java8のときなど
+            final String spCondition;
+            if(spConditionCell == null || spConditionCell.getCellTypeEnum().equals(CellType.BLANK)) {
+                spCondition = "";
+            } else {
+                spCondition = spConditionCell.getRichStringCellValue().toString();
+            }
 
             final String testCase = cellFormatter.formatAsString(testCaseCell, locale);
-            final String testResult = testResultCell.getRichStringCellValue().getString();
+            String testResult = testResultCell.getRichStringCellValue().getString();
+            if(spCondition.startsWith("Java8=") && IS_JAVA_1_8) {
+                // Java8の環境で、値が変わる場合
+                testResult = spCondition.substring("Java8=".length());
+            }
 
             final String test = testCase.equals(testResult) ? "○" : "×";
 
