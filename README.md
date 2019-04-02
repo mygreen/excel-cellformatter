@@ -18,7 +18,7 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.10</version>
+        <version>0.11</version>
     </dependency>
     ```
 
