@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MSColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">MSColor.java</span></div><h1>MSColor.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * 書式中の色を表現するクラス。
+ * &lt;p&gt;色はパレットが指定可能。
+ * &lt;p&gt;Excelの色パレット一覧：&lt;a href=&quot;http://dmcritchie.mvps.org/excel/colors.htm&quot; target=&quot;_blank&quot;&gt;Color Palette and the 56 Excel ColorIndex Colors&lt;/a&gt;
+ * 
+ * @author T.TSUCHIE
+ *
+ */
+public class MSColor {
+    
+<span class="fc" id="L19">    private static final MessageResolver messageResolver = new MessageResolver(&quot;com.github.mygreen.cellformatter.color&quot;);</span>
+    
+    /** 名前付きの色 - 黒 */
+<span class="fc" id="L22">    public static final MSColor BLACK = new MSColor((short)1);</span>
+    
+    /** 名前付きの色 - 白 */
+<span class="fc" id="L25">    public static final MSColor WHITE = new MSColor((short)2);</span>
+    
+    /** 名前付きの色 - 赤 */
+<span class="fc" id="L28">    public static final MSColor RED = new MSColor((short)3);</span>
+    
+    /** 名前付きの色 - 緑 */
+<span class="fc" id="L31">    public static final MSColor GREEN = new MSColor((short)4);</span>
+    
+    /** 名前付きの色 - 青 */
+<span class="fc" id="L34">    public static final MSColor BLUE = new MSColor((short)5);</span>
+    
+    /** 名前付きの色 - 黄 */
+<span class="fc" id="L37">    public static final MSColor YELLOW = new MSColor((short)6);</span>
+    
+    /** 名前付きの色 - 紫 */
+<span class="fc" id="L40">    public static final MSColor MAGENTA = new MSColor((short)7);</span>
+    
+    /** 名前付きの色 - 水 */
+<span class="fc" id="L43">    public static final MSColor CYAN = new MSColor((short)8);</span>
+    
+    /**
+     * 名前付きの色のリスト
+     */
+    public static final List&lt;MSColor&gt; KNOWN_COLORS;
+    static{
+<span class="fc" id="L50">        KNOWN_COLORS = Collections.unmodifiableList(new CopyOnWriteArrayList&lt;MSColor&gt;(</span>
+                Arrays.asList(BLACK, WHITE, RED, GREEN, BLUE, YELLOW, MAGENTA, CYAN)));
+<span class="fc" id="L52">    }</span>
+    
+    /** 色のインデックス */
+    private final short index;
+    
+    /** 色の名称 */
+    private final String name;
+    
+    /**
+     * インデックスを指定してインスタンスを作成する。
+     * @param index 色のインデックス番号
+     */
+<span class="fc" id="L64">    public MSColor(final short index) {</span>
+<span class="fc" id="L65">        this.index = index;</span>
+        
+        // 色名の取得
+<span class="fc" id="L68">        this.name = messageResolver.getMessage(String.format(&quot;color.%d.name&quot;, index));</span>
+<span class="fc" id="L69">    }</span>
+    
+    /**
+     * 色のインデックス番号を取得する。
+     * @return
+     */
+    public short getIndex() {
+<span class="fc" id="L76">        return index;</span>
+    }
+    
+    /**
+     * 色の名称の取得。
+     * @return 名前がない場合は、nullを返す。
+     */
+    public String getName() {
+<span class="fc" id="L84">        return name;</span>
+    }
+    
+    /**
+     * ロケール固有の色の名称の取得。
+     * &lt;p&gt;実行環境のロケールを元に取得する。
+     * @return 別名がない場合は、nullを返す。
+     */
+    public String getLocaleName() {
+<span class="fc" id="L93">        return messageResolver.getMessage(Locale.getDefault(), String.format(&quot;color.%d.name&quot;, index));</span>
+    }
+    
+    /**
+     * ロケールを指定し固有の色の名称の取得する。
+     * @param locale ロケール
+     * @return 固有の名称がない場合は、nullを返す。
+     */
+    public String getLocaleName(final Locale locale) {
+<span class="fc" id="L102">        return messageResolver.getMessage(locale, String.format(&quot;color.%d.name&quot;, index));</span>
+    }
+    
+    /**
+     * HTMLの形式の色を取得する。
+     * &lt;p&gt;例:{@code #000000}
+     * @since 0.5
+     * @return
+     */
+    public String getHtmlColor() {
+<span class="fc" id="L112">        return messageResolver.getMessage(String.format(&quot;color.%d.html&quot;, index));</span>
+    }
+    
+    /**
+     * RGB値を取得する。
+     * @since 0.5
+     * @return 配列の0番目から準備、Red、Green、Blubeの値。
+     */
+    public short[] getRgbColor() {
+<span class="fc" id="L121">        String value = messageResolver.getMessage(String.format(&quot;color.%d.rgb&quot;, index));</span>
+<span class="fc" id="L122">        String[] split = value.split(&quot;,&quot;);</span>
+        
+<span class="fc" id="L124">        short[] rgb = new short[3];</span>
+<span class="fc" id="L125">        rgb[0] = Short.valueOf(split[0]);</span>
+<span class="fc" id="L126">        rgb[1] = Short.valueOf(split[1]);</span>
+<span class="fc" id="L127">        rgb[2] = Short.valueOf(split[2]);</span>
+        
+<span class="fc" id="L129">        return rgb;</span>
+        
+    }
+    
+    /**
+     * 既知の名前付きの色かどうか。
+     * @param name
+     * @return 不明な場合は、nullを返す。
+     */
+    public static MSColor valueOfKnownColor(final String name) {
+        
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        for(MSColor color : KNOWN_COLORS) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            if(color.name.equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L142">                return color;</span>
+                
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">            } else if(color.getLocaleName() != null &amp;&amp; color.getLocaleName().equalsIgnoreCase(name)) {</span>
+<span class="fc" id="L145">                return color;</span>
+                
+            }
+            
+<span class="fc" id="L149">        }</span>
+        
+<span class="fc" id="L151">        return null;</span>
+        
+    }
+    
+    /**
+     * インデックス番号を指定して色を作成する。
+     * &lt;p&gt;名前付きの既知の色の場合は、そのインスタンスを返す。
+     * @param index
+     * @return
+     */
+    public static MSColor valueOfIndexColor(final short index) {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        for(MSColor color : KNOWN_COLORS) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            if(color.index == index){</span>
+<span class="nc" id="L164">                return color;</span>
+            }
+            
+<span class="fc" id="L167">        }</span>
+        
+<span class="fc" id="L169">        return new MSColor(index);</span>
+    }
+    
+    @Override
+    public int hashCode() {
+<span class="nc" id="L174">        final int prime = 31;</span>
+<span class="nc" id="L175">        int result = 1;</span>
+<span class="nc" id="L176">        result = prime * result + index;</span>
+<span class="nc" id="L177">        return result;</span>
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">        if(this == obj) {</span>
+<span class="fc" id="L183">            return true;</span>
+        }
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if(obj == null) {</span>
+<span class="nc" id="L186">            return false;</span>
+        }
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if(!(obj instanceof MSColor)) {</span>
+<span class="nc" id="L189">            return false;</span>
+        }
+<span class="nc" id="L191">        MSColor other = (MSColor) obj;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if(index != other.index) {</span>
+<span class="nc" id="L193">            return false;</span>
+        }
+<span class="nc" id="L195">        return true;</span>
+    }
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

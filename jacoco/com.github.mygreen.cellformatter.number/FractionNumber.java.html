@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FractionNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.number</a> &gt; <span class="el_source">FractionNumber.java</span></div><h1>FractionNumber.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.number;
+
+
+/**
+ * 分数を表現するクラス。
+ * &lt;p&gt;POIのSimpleFraction、Commons-MathのFractionを参照。
+ * @author T.TSUCHIE
+ *
+ */
+public class FractionNumber extends FormattedNumber {
+    
+    /**
+     * 分母の部分
+     */
+    private String denominatorPart;
+    
+    /**
+     * 分子の部分
+     */
+    private String numeratorPart;
+    
+    /**
+     * 帯分数の整数部分
+     */
+    private String wholeNumberPart;
+    
+    /**
+     * 帯分数の形式かどうか。
+     */
+    private boolean wholeType;
+    
+    private FractionNumber(final double value) {
+<span class="fc" id="L33">        super(value);</span>
+        
+<span class="fc" id="L35">    }</span>
+    
+    /**
+     * 分母の値を指定した分数を作成する。その際に、仮分数として作成する。
+     * @param value
+     * @param exactDenom 分母の値
+     * @return
+     */
+    public static FractionNumber createExactDenominator(final double value, int exactDenom) {
+<span class="nc" id="L44">        return createExactDenominator(value, exactDenom, false);</span>
+    }
+    
+    /**
+     * 分母の値を指定した分数を作成する。
+     * @param value
+     * @param exactDenom 分母の値
+     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。
+     * @return
+     */
+    public static FractionNumber createExactDenominator(final double value, int exactDenom, boolean wholeType) {
+<span class="fc" id="L55">        final FractionNumber fractionNumber = new FractionNumber(value);</span>
+<span class="fc" id="L56">        fractionNumber.wholeType = wholeType;</span>
+        
+<span class="fc" id="L58">        final SimpleFraction fraction = SimpleFraction.createFractionExactDenominator(Math.abs(value), exactDenom);</span>
+<span class="fc" id="L59">        setupFractionPart(fraction, fractionNumber);</span>
+        
+<span class="fc" id="L61">        return fractionNumber;</span>
+    }
+    
+    /**
+     * 分母の最大値を指定した分数を作成する。その際に、仮分数として作成する。
+     * @param value
+     * @param maxDenom
+     * @return
+     */
+    public static FractionNumber createMaxDenominator(final double value, int maxDenom) {
+<span class="nc" id="L71">        return createMaxDenominator(value, maxDenom, false);</span>
+    }
+    
+    /**
+     * 分母の最大値を指定した分数を作成する。
+     * @param value
+     * @param maxDenom 分母の最大値。
+     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。
+     * @return
+     */
+    public static FractionNumber createMaxDenominator(final double value, int maxDenom, boolean wholeType) {
+<span class="fc" id="L82">        final FractionNumber fractionNumber = new FractionNumber(value);</span>
+<span class="fc" id="L83">        fractionNumber.wholeType = wholeType;</span>
+        
+<span class="fc" id="L85">        final SimpleFraction fraction = SimpleFraction.createFractionMaxDenominator(Math.abs(value), maxDenom);</span>
+<span class="fc" id="L86">        setupFractionPart(fraction, fractionNumber);</span>
+        
+<span class="fc" id="L88">        return fractionNumber;</span>
+    }
+    
+    /**
+     * 分数の各部品を設定する
+     * @param fraction
+     * @param fractionNumber
+     */
+    private static void setupFractionPart(final SimpleFraction fraction, final FractionNumber fractionNumber) {
+        
+<span class="fc" id="L98">        fractionNumber.denominatorPart = String.valueOf(fraction.getDenominator());</span>
+        
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if(fractionNumber.isWholeType()) {</span>
+<span class="fc" id="L101">            int wholeNumber = fraction.getNumerator() / fraction.getDenominator();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            fractionNumber.wholeNumberPart = wholeNumber == 0 ? &quot;&quot; : String.valueOf(wholeNumber);</span>
+            
+<span class="fc" id="L104">            int numerator = fraction.getNumerator() % fraction.getDenominator();</span>
+<span class="fc" id="L105">            fractionNumber.numeratorPart = String.valueOf(numerator);</span>
+            
+<span class="fc" id="L107">        } else {</span>
+<span class="fc" id="L108">            fractionNumber.wholeNumberPart = &quot;&quot;;</span>
+<span class="fc" id="L109">            fractionNumber.numeratorPart = String.valueOf(fraction.getNumerator());</span>
+            
+        }
+<span class="fc" id="L112">    }</span>
+    
+    /**
+     * 帯分数の形式かどうか。
+     * @return
+     */
+    public boolean isWholeType() {
+<span class="fc" id="L119">        return wholeType;</span>
+    }
+    
+    /**
+     * 分母の部分を取得する。
+     * @return
+     */
+    public String getDenominatorPart() {
+<span class="fc" id="L127">        return denominatorPart;</span>
+    }
+    
+    /**
+     * 分母の指定した桁の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getDenominatorPart(final int digit) {
+        
+<span class="fc" id="L137">        final int length = denominatorPart.length();</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="nc" id="L139">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L142">        return String.valueOf(denominatorPart.charAt(length - digit));</span>
+    }
+    
+    /**
+     * 分母の指定した桁以降の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getDenominatorPartAfter(final int digit) {
+        
+<span class="fc" id="L152">        final int length = denominatorPart.length();</span>
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L154">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L157">        return denominatorPart.substring(0, (length - digit + 1));</span>
+    }
+    
+    /**
+     * 分子の部分を取得する
+     * @return
+     */
+    public String getNumeratorPart() {
+<span class="fc" id="L165">        return numeratorPart;</span>
+    }
+    
+    /**
+     * 分子の指定した桁の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getNumeratorPart(final int digit) {
+        
+<span class="fc" id="L175">        final int length = numeratorPart.length();</span>
+<span class="pc bpc" id="L176" title="2 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="nc" id="L177">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L180">        return String.valueOf(numeratorPart.charAt(length - digit));</span>
+    }
+    
+    /**
+     * 分子の指定した桁以降の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getNumeratorPartAfter(final int digit) {
+        
+<span class="fc" id="L190">        final int length = numeratorPart.length();</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L192">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L195">        return numeratorPart.substring(0, (length - digit + 1));</span>
+    }
+    
+    /**
+     * 帯分数の整数部分を取得する。
+     * &lt;p&gt;整数部分が0または帯分数出ない場合は、空文字を返す。
+     * @return
+     */
+    public String getWholeNumberPart() {
+<span class="fc" id="L204">        return wholeNumberPart;</span>
+    }
+    
+    /**
+     * 帯分数の整数部分の指定した桁の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getWholeNumberPart(final int digit) {
+        
+<span class="fc" id="L214">        final int length = wholeNumberPart.length();</span>
+<span class="pc bpc" id="L215" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L216">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L219">        return String.valueOf(wholeNumberPart.charAt(length - digit));</span>
+    }
+    
+    /**
+     * 帯分数の整数部分の指定した桁以降の値を取得する。
+     * @param digit 1から始まる
+     * @return 存在しない桁の場合は空文字を返す。
+     */
+    public String getWholeNumberPartAfter(final int digit) {
+        
+<span class="fc" id="L229">        final int length = wholeNumberPart.length();</span>
+<span class="pc bpc" id="L230" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L231">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L234">        return wholeNumberPart.substring(0, (length - digit + 1));</span>
+    }
+    
+    @Override
+    public String toString() {
+        
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        if(isZero()) {</span>
+<span class="nc" id="L241">            return &quot;0&quot;;</span>
+        }
+        
+<span class="nc" id="L244">        StringBuilder sb = new StringBuilder();</span>
+        
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        if(isNegative()) {</span>
+<span class="nc" id="L247">            sb.append(&quot;-&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L250" title="All 4 branches missed.">        if(isWholeType() &amp;&amp; !getWholeNumberPart().isEmpty()) {</span>
+<span class="nc" id="L251">            sb.append(getWholeNumberPart()).append(&quot; &quot;);</span>
+        }
+        
+<span class="nc" id="L254">        sb.append(getNumeratorPart()).append(&quot;/&quot;).append(getDenominatorPart());</span>
+        
+<span class="nc" id="L256">        return sb.toString();</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

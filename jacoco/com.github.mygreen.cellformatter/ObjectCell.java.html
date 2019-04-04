@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectCell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">ObjectCell.java</span></div><h1>ObjectCell.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.Date;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+
+
+/**
+ * Javaのオブジェクトを直接フォーマットするための抽象クラス。
+ *
+ * @since 0.6
+ * @author T.TSUCHIE
+ *
+ */
+public abstract class ObjectCell&lt;T&gt; implements CommonCell {
+    
+    /**
+     * 値
+     */
+    protected final T value;
+    
+    /**
+     * フォーマットのインデックス
+     */
+    private final short formatIndex;
+    
+    /**
+     * フォーマットの書式
+     */
+    protected final String formatPattern;
+    
+    /**
+     * 値と書式のインデックス番号を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットの書式は、{@literal null}になります。
+     * @param value フォーマット対象の値。
+     * @param formatIndex 書式のインデックス番号。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * 
+     */
+<span class="nc" id="L41">    public ObjectCell(final T value, final short formatIndex) {</span>
+<span class="nc" id="L42">        ArgUtils.notNull(value, &quot;value&quot;);</span>
+<span class="nc" id="L43">        ArgUtils.notMin(formatIndex, (short)0, &quot;formatIndex&quot;);</span>
+        
+<span class="nc" id="L45">        this.value = value;</span>
+<span class="nc" id="L46">        this.formatIndex = formatIndex;</span>
+<span class="nc" id="L47">        this.formatPattern = null;</span>
+<span class="nc" id="L48">    }</span>
+    
+    /**
+     * 値とその書式を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットのインデックス番号は、存在しないことを示す{@literal -1}となります。
+     * @param value フォーマット対象の値。
+     * @param formatPattern Excelの書式。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     */
+<span class="fc" id="L58">    public ObjectCell(final T value, final String formatPattern) {</span>
+<span class="fc" id="L59">        ArgUtils.notNull(value, &quot;value&quot;);</span>
+<span class="fc" id="L60">        ArgUtils.notEmpty(formatPattern, &quot;formatPattern&quot;);</span>
+<span class="fc" id="L61">        this.value = value;</span>
+<span class="fc" id="L62">        this.formatIndex = (short)-1;</span>
+<span class="fc" id="L63">        this.formatPattern = formatPattern;</span>
+<span class="fc" id="L64">    }</span>
+    
+    /**
+     * 値と、書式のインデックス番号、書式を指定するコンストラクタ。
+     * @param value フォーマット対象の値。
+     * @param formatIndex フォーマットのインデックス番号。
+     * @param formatPattern Excelの書式。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     * 
+     */
+<span class="nc" id="L76">    public ObjectCell(final T value, final short formatIndex, final String formatPattern) {</span>
+<span class="nc" id="L77">        ArgUtils.notNull(value, &quot;value&quot;);</span>
+<span class="nc" id="L78">        ArgUtils.notMin(formatIndex, (short)0, &quot;formatIndex&quot;);</span>
+<span class="nc" id="L79">        ArgUtils.notEmpty(formatPattern, &quot;formatPattern&quot;);</span>
+        
+<span class="nc" id="L81">        this.value = value;</span>
+<span class="nc" id="L82">        this.formatIndex = formatIndex;</span>
+<span class="nc" id="L83">        this.formatPattern = formatPattern;</span>
+<span class="nc" id="L84">    }</span>
+    
+    /**
+     * 設定した値を取得します。
+     * @return コンストラクタで渡された値。
+     */
+    public T getValue() {
+<span class="fc" id="L91">        return value;</span>
+    }
+    
+    @Override
+    public short getFormatIndex() {
+<span class="fc" id="L96">        return formatIndex;</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     * &lt;p&gt;コンストラクタで指定したフォーマットを返します。
+     */
+    @Override
+    public String getFormatPattern() {
+<span class="fc" id="L105">        return formatPattern;</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isText() {
+<span class="fc" id="L113">        return false;</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBoolean() {
+<span class="fc" id="L121">        return false;</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isNumber() {
+<span class="nc" id="L129">        return false;</span>
+    }
+    
+    /**
+     * 設定した値の型と一致しない場合、このメソッドを呼ぶと{@link IllegalStateException}をスローします。
+     */
+    @Override
+    public String getTextCellValue() {
+<span class="nc" id="L137">        throw new IllegalStateException(&quot;not match value type.&quot;);</span>
+    }
+    
+    /**
+     * 設定した値の型と一致しない場合、このメソッドを呼ぶと{@link IllegalStateException}をスローします。
+     */
+    @Override
+    public boolean getBooleanCellValue() {
+<span class="nc" id="L145">        throw new IllegalStateException(&quot;not match value type.&quot;);</span>
+    }
+    
+    /**
+     * 設定した値の型と一致しない場合、このメソッドを呼ぶと{@link IllegalStateException}をスローします。
+     */
+    @Override
+    public double getNumberCellValue() {
+<span class="nc" id="L153">        throw new IllegalStateException(&quot;not match value type.&quot;);</span>
+    }
+    
+    /**
+     * 設定した値の型と一致しない場合、このメソッドを呼ぶと{@link IllegalStateException}をスローします。
+     */
+    @Override
+    public Date getDateCellValue() {
+<span class="nc" id="L161">        throw new IllegalStateException(&quot;not match value type.&quot;);</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isDateStart1904() {
+<span class="nc" id="L169">        return false;</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     * &lt;p&gt;常に、'A1'を返します。
+     */
+    @Override
+    public String getCellAddress() {
+<span class="nc" id="L178">        return &quot;A1&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

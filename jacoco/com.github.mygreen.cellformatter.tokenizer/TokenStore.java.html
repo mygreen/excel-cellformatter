@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TokenStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.tokenizer</a> &gt; <span class="el_source">TokenStore.java</span></div><h1>TokenStore.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.tokenizer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.Utils;
+
+
+/**
+ * {@link Token}を保持するクラス。
+ * &lt;p&gt;検索機能などを提供する。
+ * @author T.TSUCHIE
+ *
+ */
+public class TokenStore {
+    
+<span class="fc" id="L18">    private List&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L20">    public TokenStore() {</span>
+        
+<span class="fc" id="L22">    }</span>
+    
+    /**
+     * トークンを追加する。
+     * @param token
+     */
+    public void add(final Token token) {
+<span class="fc" id="L29">        getTokens().add(token);</span>
+<span class="fc" id="L30">    }</span>
+    
+    /**
+     * トークンを取得する。
+     * @return
+     */
+    public List&lt;Token&gt; getTokens() {
+<span class="fc" id="L37">        return tokens;</span>
+    }
+    
+    /**
+     * 記号でトークンを分割する。
+     * @param symbol 分割する記号
+     * @return
+     * @throws IllegalArgumentException symbol == null.
+     */
+    public List&lt;TokenStore&gt; split(final Token.Symbol symbol) {
+        
+<span class="fc" id="L48">        ArgUtils.notNull(symbol, &quot;symbol&quot;);</span>
+        
+<span class="fc" id="L50">        final List&lt;TokenStore&gt; list = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L52">        TokenStore store = new TokenStore();</span>
+<span class="fc" id="L53">        list.add(store);</span>
+        
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for(Token token : tokens) {</span>
+            
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if(token.equals(symbol)) {</span>
+<span class="fc" id="L58">                store = new TokenStore();</span>
+<span class="fc" id="L59">                list.add(store);</span>
+                
+            } else {
+<span class="fc" id="L62">                store.add(token);</span>
+            }
+            
+<span class="fc" id="L65">        }</span>
+        
+<span class="fc" id="L67">        return list;</span>
+    }
+    
+    /**
+     * トークンを全て結合した値を取得する。
+     * @return
+     */
+    public String getConcatenatedToken() {
+        
+<span class="fc" id="L76">        StringBuilder sb = new StringBuilder();</span>
+        
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for(Token token : tokens) {</span>
+<span class="fc" id="L79">            sb.append(token.getValue());</span>
+<span class="fc" id="L80">        }</span>
+        
+<span class="fc" id="L82">        return sb.toString();</span>
+        
+    }
+    
+    /**
+     * {@link Token.Factor}中に指定した文字列を含むかどうか。
+     * @param search
+     * @return
+     */
+    public boolean containsInFactor(final String search) {
+<span class="fc" id="L92">        return containsInFactor(search, false);</span>
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列を含むかどうか。
+     * @param search
+     * @return
+     */
+    public boolean containsInFactorIgnoreCase(final String search) {
+<span class="nc" id="L101">        return containsInFactor(search, true);</span>
+    }
+    
+    public boolean containsInFactor(final String search, final boolean ignoreCase) {
+        
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        for(Token token : tokens) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if(!(token instanceof Token.Factor)) {</span>
+<span class="fc" id="L108">                continue;</span>
+            }
+            
+<span class="fc" id="L111">            final Token.Factor factor = token.asFactor();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if(ignoreCase) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                if(Utils.containsIgnoreCase(factor.getValue(), search)) {</span>
+<span class="nc" id="L114">                    return true;</span>
+                }
+            } else {
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                if(factor.getValue().contains(search)) {</span>
+<span class="fc" id="L118">                    return true;</span>
+                }
+            }
+            
+<span class="fc" id="L122">        }</span>
+        
+<span class="fc" id="L124">        return false;</span>
+    }
+    
+    /**
+     * {@link Token.Factor}中に指定した文字列の何れかを含むかどうか。
+     * @param searchChars
+     * @return
+     */
+    public boolean containsAnyInFactor(final String[] searchChars) {
+<span class="fc" id="L133">        return containsAnyInFactor(searchChars, false);</span>
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列の何れかを含むかどうか。
+     * @param searchChars
+     * @return
+     */
+    public boolean containsAnyInFactorIgnoreCase(final String[] searchChars) {
+<span class="fc" id="L142">        return containsAnyInFactor(searchChars, true);</span>
+    }
+    
+    /**
+     * 大文字・小文字を無視して{@link Token.Factor}中に指定した文字列の何れかを含むかどうか。
+     * @param searchChars
+     * @return
+     */
+    private boolean containsAnyInFactor(final String[] searchChars, final boolean ignoreCase) {
+        
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for(Token token : tokens) {</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            if(!(token instanceof Token.Factor)) {</span>
+<span class="fc" id="L154">                continue;</span>
+            }
+            
+<span class="fc" id="L157">            final Token.Factor factor = token.asFactor();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            if(Utils.containsAny(factor.getValue(), searchChars, ignoreCase)) {</span>
+<span class="fc" id="L159">                return true;</span>
+            }
+            
+<span class="fc" id="L162">        }</span>
+        
+<span class="fc" id="L164">        return false;</span>
+    }
+    
+    @Override
+    public String toString() {
+        
+<span class="nc" id="L170">        StringBuilder sb = new StringBuilder();</span>
+        
+<span class="nc" id="L172">        final int size = tokens.size();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        for(int i=0; i &lt; size; i++) {</span>
+<span class="nc" id="L174">            final Token token = tokens.get(i);</span>
+<span class="nc" id="L175">            sb.append(String.format(&quot;[%d]%s(%s)&quot;,</span>
+                    i,
+                    token.getClass().getSimpleName(),
+                    token.getValue()));
+            
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            if(i &lt; size-1) {</span>
+<span class="nc" id="L181">                sb.append(&quot;, &quot;);</span>
+            }
+            
+        }
+        
+<span class="nc" id="L186">        return sb.toString();</span>
+        
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

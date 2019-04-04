@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JXLCellFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">JXLCellFormatter.java</span></div><h1>JXLCellFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.Locale;
+
+import com.github.mygreen.cellformatter.lang.ArgUtils;
+import com.github.mygreen.cellformatter.lang.JXLUtils;
+
+import jxl.Cell;
+import jxl.CellType;
+import jxl.ErrorCell;
+
+
+/**
+ * JExcel APIのセルのフォーマッタ。
+ * 
+ * &lt;h3 class=&quot;description&quot;&gt;基本的な使い方&lt;/h3&gt; 
+ * &lt;p&gt;{@link JXLCellFormatter}のインスタンスを生成して利用します。&lt;/p&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;結果を単純に文字列で取得したい場合は、{@link #formatAsString(Cell, boolean)}を利用します。&lt;/li&gt;
+ *   &lt;li&gt;Excelには、日時が1900年始まりか1904年始まりかの情報をもっており、その判定結果を渡す必要があります。
+ *       &lt;br&gt;1904年始まりかの判定は、{@link JXLUtils#isDateStart1904(jxl.Sheet)}や{@link JXLUtils#isDateStart1904(jxl.Workbook)}で判定します。&lt;/li&gt;
+ *   &lt;li&gt;フォーマット対象のセルの値や書式に適用された文字色などを取得したい場合は、
+ *       {@link #format(Cell, boolean)}の結果である{@link CellFormatResult}から取得します。&lt;/li&gt;
+ *   &lt;li&gt;書式「{@literal m/d/yy}」など、実行環境の言語設定によって切り替わるような場合は、
+ *       {@link #formatAsString(Cell, Locale, boolean)}でロケールを直接指定します。&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * 
+ * 
+ * &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;java&quot;&gt;
+ * // シートの読み込み
+ * final WorkbookSettings settings = new WorkbookSettings();
+ * settings.setSuppressWarnings(true);
+ * settings.setGCDisabled(true);
+ * 
+ * // 文字コードを「ISO8859_1」にしないと、会計の記号が文字化けする
+ * settings.setEncoding(&quot;ISO8859_1&quot;);
+ * 
+ * final Workbook workbook = Workbook.getWorkbook(in, settings);
+ * 
+ * // 基本的な使い方。
+ * JXLCellFormatter cellFormatter = new JXLCellFormatter();
+ * 
+ * // 1904年始まりかの判定
+ * boolean startDate1904 = JXLUtils.isDateStart1904(workbook);
+ * 
+ * Cell cell = // セルの取得
+ * String text1 = cellForrmatter.formatAsString(cell, startDate1904);
+ * 
+ * // ロケールに依存する書式の場合
+ * String text2 = cellForrmatter.formatAsString(cell, Locale.US, startDate1904);
+ *
+ * // 文字色の条件が設定されている場合
+ * CellFormatResult result = cellForrmatter.format(cell);
+ * String text3 = result.getText(); // フォーマット結果の文字列
+ * MSColor textColor = result.getTextColor(); // 書式の文字色
+ * &lt;/code&gt;&lt;/pre&gt;
+ * 
+ * &lt;h3 class=&quot;description&quot;&gt;注意事項&lt;/h3&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;日本語を含むExcelファイルの場合、文字コードを「ISO8859_1」 を指定します。
+ *       &lt;br&gt;指定しない場合は、会計の書式中の円記号 ￥ が文字化けします。
+ *       &lt;br&gt;「Windows-31j」と指定しても文字化けするため、注意してください。
+ *   &lt;/li&gt;
+ * &lt;/ul&gt; 
+ * 
+ * @version 0.6
+ * @since 0.4
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L72">public class JXLCellFormatter {</span>
+    
+<span class="fc" id="L74">    private FormatterResolver formatterResolver = new FormatterResolver();</span>
+    
+    /**
+     * パースしたフォーマッタをキャッシングするかどうか。
+     */
+<span class="fc" id="L79">    private boolean cache = true;</span>
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか。
+     */
+<span class="fc" id="L84">    private boolean errorCellAsEmpty = false;</span>
+    
+    /**
+     * セルの値をフォーマットし、文字列として取得する
+     * @param cell フォーマット対象のセル
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
+     */
+    public String formatAsString(final Cell cell, final boolean isStartDate1904) {
+<span class="nc" id="L95">        return formatAsString(cell, Locale.getDefault(), isStartDate1904);</span>
+    }
+    
+    /**
+     * ロケールを指定してセルの値をフォーマットし、文字列として取得する
+     * @param cell フォーマット対象のセル
+     * @param locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
+     */
+    public String formatAsString(final Cell cell, final Locale locale, final boolean isStartDate1904) {        
+<span class="fc" id="L109">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
+        
+<span class="fc" id="L111">        return format(cell, locale, isStartDate1904).getText();</span>
+        
+    }
+    
+    /**
+     * セルの値をフォーマットする。
+     * @since 0.3
+     * @param cell フォーマット対象のセル
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
+     */
+    public CellFormatResult format(final Cell cell, final boolean isStartDate1904) {        
+<span class="fc" id="L125">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
+<span class="fc" id="L126">        return format(cell, Locale.getDefault(), isStartDate1904);</span>
+    }
+    
+    /**
+     * ロケールを指定してセルの値をフォーマットする。
+     * @since 0.3
+     * @param cell フォーマット対象のセル
+     * @param locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @param isStartDate1904 ファイルの設定が1904年始まりかどうか。
+     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}で値を調べます。
+     * @return フォーマットしたセルの値。
+     * @throws IllegalArgumentException cell is null.
+     */
+    public CellFormatResult format(final Cell cell, final Locale locale, final boolean isStartDate1904) {        
+<span class="fc" id="L141">        ArgUtils.notNull(cell, &quot;cell&quot;);</span>
+        
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();</span>
+<span class="fc" id="L144">        final CellType cellType = cell.getType();</span>
+        
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if(cellType == CellType.EMPTY) {</span>
+<span class="fc" id="L147">            final CellFormatResult result = new CellFormatResult();</span>
+<span class="fc" id="L148">            result.setCellType(FormatCellType.Blank);</span>
+<span class="fc" id="L149">            result.setText(&quot;&quot;);</span>
+<span class="fc" id="L150">            return result;</span>
+            
+<span class="fc bfc" id="L152" title="All 4 branches covered.">        } else if(cellType == CellType.LABEL || cellType == CellType.STRING_FORMULA) {</span>
+<span class="fc" id="L153">            return getCellValue(cell, runtimeLocale, isStartDate1904);</span>
+            
+<span class="fc bfc" id="L155" title="All 4 branches covered.">        } else if(cellType == CellType.BOOLEAN || cellType == CellType.BOOLEAN_FORMULA) {</span>
+<span class="fc" id="L156">            return getCellValue(cell, runtimeLocale, isStartDate1904);</span>
+        
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">        } else if(cellType == CellType.ERROR || cellType == CellType.FORMULA_ERROR) {</span>
+<span class="fc" id="L159">            return getErrorCellValue(cell, runtimeLocale, isStartDate1904);</span>
+            
+<span class="fc bfc" id="L161" title="All 4 branches covered.">        } else if(cellType == CellType.DATE || cellType == CellType.DATE_FORMULA) {</span>
+<span class="fc" id="L162">            return getCellValue(cell, runtimeLocale, isStartDate1904);</span>
+            
+<span class="pc bpc" id="L164" title="1 of 4 branches missed.">        } else if(cellType == CellType.NUMBER || cellType == CellType.NUMBER_FORMULA) {</span>
+<span class="fc" id="L165">            return getCellValue(cell, runtimeLocale, isStartDate1904);</span>
+            
+        } else {
+<span class="nc" id="L168">            final CellFormatResult result = new CellFormatResult();</span>
+<span class="nc" id="L169">            result.setCellType(FormatCellType.Unknown);</span>
+<span class="nc" id="L170">            result.setText(&quot;&quot;);</span>
+<span class="nc" id="L171">            return result;</span>
+        }
+        
+    }
+    
+    
+    /**
+     * エラー型のセルの値を取得する。
+     * @since 0.4
+     * @param cell
+     * @param locale
+     * @param isStartDate1904
+     * @return
+     */
+    private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale, final boolean isStartDate1904) {
+        
+<span class="fc" id="L187">        final CellFormatResult result = new CellFormatResult();</span>
+<span class="fc" id="L188">        result.setCellType(FormatCellType.Error);</span>
+        
+<span class="fc" id="L190">        final ErrorCell errorCell = (ErrorCell) cell;</span>
+<span class="fc" id="L191">        final int errorCode = errorCell.getErrorCode();</span>
+<span class="fc" id="L192">        result.setValue(errorCode);</span>
+        
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if(isErrorCellAsEmpty()) {</span>
+<span class="fc" id="L195">            result.setText(&quot;&quot;);</span>
+            
+        } else {
+            /*
+             * エラーコードについては、POIクラスを参照。
+             * ・org.apache.poi.ss.usermodel.FormulaError
+             * ・org.apache.poi.ss.usermodel.ErrorConstants
+             */
+<span class="pc bpc" id="L203" title="1 of 8 branches missed.">            switch(errorCode) {</span>
+                case 7:
+                    // 0除算
+<span class="fc" id="L206">                    result.setText(&quot;#DIV/0!&quot;);</span>
+<span class="fc" id="L207">                    break;</span>
+                    
+                case 42:
+                    // 関数や数式に使用できる値がない
+<span class="fc" id="L211">                    result.setText(&quot;#N/A&quot;);</span>
+<span class="fc" id="L212">                    break;</span>
+                    
+                case 29:
+                    // 数式が参照している名称がない
+<span class="fc" id="L216">                    result.setText(&quot;#NAME?&quot;);</span>
+<span class="fc" id="L217">                    break;</span>
+                    
+                case 0:
+                    // 正しくない参照演算子または正しくないセル参照を使っている
+<span class="fc" id="L221">                    result.setText(&quot;#NULL!&quot;);</span>
+<span class="fc" id="L222">                    break;</span>
+                    
+                case 36:
+                    // 数式または関数の数値が不適切
+<span class="fc" id="L226">                    result.setText(&quot;#NUM!&quot;);</span>
+<span class="fc" id="L227">                    break;</span>
+                    
+                case 23:
+                    // 数式が参照しているセルがない
+<span class="fc" id="L231">                    result.setText(&quot;#REF!&quot;);</span>
+<span class="fc" id="L232">                    break;</span>
+                    
+                case 15:
+                    // 文字列が正しいデータ型に変換されない
+<span class="fc" id="L236">                    result.setText(&quot;#VALUE!&quot;);</span>
+<span class="fc" id="L237">                    break;</span>
+                    
+                default:
+<span class="nc" id="L240">                    result.setText(&quot;&quot;);</span>
+                    break;
+            }
+            
+        }
+        
+<span class="fc" id="L246">        return result;</span>
+        
+    }
+    
+    /**
+     * セルの値をフォーマットする。
+     * @param cell フォーマット対象のセル
+     * @param locale ロケール
+     * @param isStartDate1904 1904年始まりかどうか。
+     * @return
+     */
+    private CellFormatResult getCellValue(final Cell cell, final Locale locale, final boolean isStartDate1904) {
+        
+<span class="fc" id="L259">        final JXLCell jxlCell = new JXLCell(cell, isStartDate1904);</span>
+<span class="fc" id="L260">        final short formatIndex = jxlCell.getFormatIndex();</span>
+<span class="fc" id="L261">        final String formatPattern = jxlCell.getFormatPattern();</span>
+        
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        if(formatterResolver.canResolve(formatIndex)) {</span>
+<span class="fc" id="L264">            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);</span>
+<span class="fc" id="L265">            return cellFormatter.format(jxlCell, locale);</span>
+            
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        } else if(formatterResolver.canResolve(formatPattern)) {</span>
+<span class="fc" id="L268">            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);</span>
+<span class="fc" id="L269">            return cellFormatter.format(jxlCell, locale);</span>
+            
+        } else {
+            // キャッシュに登録する。
+<span class="fc" id="L273">            final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">            if(isCache()) {</span>
+<span class="fc" id="L275">                formatterResolver.registerFormatter(formatPattern, cellFormatter);</span>
+            }
+<span class="fc" id="L277">            return cellFormatter.format(jxlCell, locale);</span>
+            
+        }
+        
+    }
+    
+    /**
+     * {@link FormatterResolver}を取得する。
+     * @return
+     */
+    public FormatterResolver getFormatterResolver() {
+<span class="nc" id="L288">        return formatterResolver;</span>
+    }
+    
+    /**
+     * {@link FormatterResolver}を設定する。
+     * 独自のものに入れ替える際に利用します。
+     * @param formatterResolver
+     */
+    public void setFormatterResolver(FormatterResolver formatterResolver) {
+<span class="nc" id="L297">        this.formatterResolver = formatterResolver;</span>
+<span class="nc" id="L298">    }</span>
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか。
+     * 初期値はtrueです。
+     * @return
+     */
+    public boolean isCache() {
+<span class="fc" id="L306">        return cache;</span>
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか設定する。
+     * @param cache true:キャッシュする。
+     */
+    public void setCache(boolean cache) {
+<span class="fc" id="L314">        this.cache = cache;</span>
+<span class="fc" id="L315">    }</span>
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか。
+     * 初期値はfalseです。
+     * @since 0.4
+     * @return
+     */
+    public boolean isErrorCellAsEmpty() {
+<span class="fc" id="L324">        return errorCellAsEmpty;</span>
+    }
+    
+    /**
+     * エラーセルの値を空文字として取得するかどうか設定する。
+     * @since 0.4
+     * @param errorCellAsEmpty true:空文字として取得する。
+     */
+    public void setErrorCellAsEmpty(boolean errorCellAsEmpty) {
+<span class="fc" id="L333">        this.errorCellAsEmpty = errorCellAsEmpty;</span>
+<span class="fc" id="L334">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

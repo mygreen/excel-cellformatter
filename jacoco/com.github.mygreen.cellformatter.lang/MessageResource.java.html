@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">MessageResource.java</span></div><h1>MessageResource.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+
+/**
+ * メッセージソースを管理するクラス。
+ * &lt;p&gt;複数のロケールのメッセージを管理する。
+ * 
+ * @since 0.5
+ * @author T.TSUCHIE
+ *
+ */
+public class MessageResource {
+    
+    /**
+     * 存在しないメッセージソースを示すクラス。
+     * &lt;p&gt;メッセージの追加はできない、読み込み専用のメッセージ。
+     */
+<span class="fc" id="L23">    public static final MessageResource NULL_OBJECT = new MessageResource() {</span>
+        
+        {
+<span class="fc" id="L26">            this.messages = Collections.unmodifiableMap(new ConcurrentHashMap&lt;String, String&gt;());</span>
+            
+<span class="fc" id="L28">        }</span>
+        
+        @Override
+        public boolean isNullObject() {
+<span class="fc" id="L32">            return true;</span>
+        }
+    };
+    
+    /**
+     * メッセージのキャッシュされたデータセット
+     * &lt;p&gt;key = キー、value=メッセージ
+     * &lt;p&gt;読み込む度にキャッシュしていく。
+     */
+    protected Map&lt;String, String&gt; messages;
+    
+<span class="fc" id="L43">    public MessageResource() {</span>
+<span class="fc" id="L44">        this.messages = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L45">    }</span>
+    
+    /**
+     * キーを指定してメッセージを取得する。
+     * @param key
+     * @return
+     */
+    public String getMessage(final String key) {
+<span class="fc" id="L53">        return messages.get(key);</span>
+    }
+    
+    /**
+     * メッセージ定義中に含まれるキーを全て返す。
+     * @return
+     */
+    public Set&lt;String&gt; getKeys() {
+<span class="fc" id="L61">        return messages.keySet();</span>
+    }
+    
+    /**
+     * キーとメッセージを指定して登録する。
+     * @param key
+     * @param message
+     */
+    public void addMessage(final String key, final String message) {
+<span class="fc" id="L70">        messages.put(key, message);</span>
+<span class="fc" id="L71">    }</span>
+    
+    /**
+     * 既存のメッセージソースを追加する
+     * @param resource
+     */
+    public void addMessage(final MessageResource resource) {
+<span class="fc" id="L78">        this.messages.putAll(resource.messages);</span>
+        
+<span class="fc" id="L80">    }</span>
+    
+    /**
+     * 存在しないメッセージソースを示すかどうか。
+     * @return {@link #NULL_OBJECT}のインスタンスの場合、trueを返す。
+     */
+    public boolean isNullObject() {
+<span class="fc" id="L87">        return false;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

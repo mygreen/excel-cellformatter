@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectCellFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">ObjectCellFormatter.java</span></div><h1>ObjectCellFormatter.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.Date;
+import java.util.Locale;
+
+/**
+ * Javaのオブジェクト型を直接フォーマットするクラス。
+ * &lt;p&gt;Excelの基本型である「文字列型」「ブール型」「数値型」「日付型」の4つをサポートします。&lt;/p&gt;
+ * &lt;p&gt;数値型については、Javaの{@link Number}を継承している標準クラスに対応しています。&lt;/p&gt;
+ * &lt;ul&gt;
+ *  &lt;li&gt;プリミティブ型：byte/shrot/int/long/float/double&lt;/li&gt;
+ *  &lt;li&gt;ラッパークラス：Byte/Short/Integer/Long/Float/Double&lt;/li&gt;
+ *  &lt;li&gt;その他：AtomicInteger/AtomicLong/BigDecimal/BigInteger&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;java&quot;&gt;
+ * // 基本的な使い方。
+ * ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
+ * Date date = Timestamp.valueOf(&quot;2012-02-01 12:10:00.000&quot;);
+ * 
+ * // 各型に対応したインタフェースを利用します。
+ * String text = cellFormatter.formatAsString(&quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;, date);
+ * 
+ * // 細かく指定したい場合。
+ * // 仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
+ * ObejctCell cell = new DateCell(date, &quot;yyyy\&quot;年\&quot;m\&quot;月\&quot;d\&quot;日\&quot;;@&quot;, false)
+ * CellFormatResult result = cellFormatter.format(cell);
+ * String text = result.getText(); // フォーマットした文字列の取得
+ * MSColor color = result.getTextColor(); // 文字色が設定されている場合、その色の取得。
+ * &lt;/code&gt;&lt;/pre&gt;
+ * 
+ * 
+ * @since 0.6
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L37">public class ObjectCellFormatter {</span>
+    
+<span class="fc" id="L39">    private FormatterResolver formatterResolver = new FormatterResolver();</span>
+    
+    /**
+     * パースしたフォーマッタをキャッシングするかどうか。
+     */
+<span class="fc" id="L44">    private boolean cache = true;</span>
+    
+    /**
+     * 文字列型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final String value) {
+<span class="nc" id="L53">        return format(formatPattern, value).getText();</span>
+    }
+    
+    /**
+     * 文字列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final String value) {
+<span class="nc" id="L63">        return format(formatPattern, value, Locale.getDefault());</span>
+    }
+    
+    /**
+     * ロケールを指定して、文字列型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final String value, final Locale locale) {
+<span class="nc" id="L74">        return format(formatPattern, value, locale).getText();</span>
+    }
+    
+    /**
+     * ロケールを指定して、文字列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @param locale ロケール。書式にロケール条件の記述（例. {@code [$-403]}）が含まれている場合は、書式のロケールが優先されます。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final String value, final Locale locale) {
+<span class="nc" id="L85">        return format(new TextCell(value, formatPattern), locale);</span>
+    }
+    
+    /**
+     * ブール型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */    
+    public String formatAsString(final String formatPattern, final boolean value, final Locale locale) {
+<span class="nc" id="L95">        return format(formatPattern, value, locale).getText();</span>
+    }
+    
+    /**
+     * ブール型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final boolean value, final Locale locale) {
+<span class="nc" id="L105">        return format(new BooleanCell(value, formatPattern), locale);</span>
+    }
+    
+    /**
+     * ロケールを指定して、ブール型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */    
+    public String formatAsString(final String formatPattern, final boolean value) {
+<span class="nc" id="L115">        return format(formatPattern, value).getText();</span>
+    }
+    
+    /**
+     * ロケールを指定して、ブール型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final boolean value) {
+<span class="nc" id="L125">        return format(formatPattern, value, Locale.getDefault());</span>
+    }
+    
+    /**
+     * 数値型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */
+    public &lt;N extends Number&gt; String formatAsString(final String formatPattern, final N value, final Locale locale) {
+<span class="nc" id="L135">        return format(formatPattern, value, locale).getText();</span>
+    }
+    
+    /**
+     * 数値列型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public &lt;N extends Number&gt; CellFormatResult format(final String formatPattern, final N value, final Locale locale) {
+<span class="nc" id="L145">        return format(new NumberCell&lt;N&gt;(value, formatPattern), locale);</span>
+    }
+    
+    /**
+     * ロケールを指定して、数値型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果の文字列。
+     */
+    public &lt;N extends Number&gt;String formatAsString(final String formatPattern, final N value) {
+<span class="nc" id="L155">        return format(formatPattern, value).getText();</span>
+    }
+    
+    /**
+     * ロケールを指定して、数値型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。
+     * @return フォーマットした結果。
+     */
+    public &lt;N extends Number&gt; CellFormatResult format(final String formatPattern, final N value) {
+<span class="nc" id="L165">        return format(formatPattern, value, Locale.getDefault());</span>
+    }
+    
+    /**
+     * 日付型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final Date value, final Locale locale) {
+<span class="nc" id="L175">        return format(formatPattern, value, locale).getText();</span>
+    }
+    
+    /**
+     * 日付型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final Date value, final Locale locale) {
+<span class="nc" id="L185">        return format(new DateCell(value, formatPattern), locale);</span>
+    }
+    
+    /**
+     * ロケールを指定して、日付型をフォーマットし、結果を直接文字列として取得する。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果の文字列。
+     */
+    public String formatAsString(final String formatPattern, final Date value) {
+<span class="nc" id="L195">        return format(formatPattern, value).getText();</span>
+    }
+    
+    /**
+     * ロケールを指定して、日付型をフォーマットする。
+     * @param formatPattern フォーマットの書式。
+     * @param value フォーマット対象の値。タイムゾーンを含んだ値を指定します。
+     * @return フォーマットした結果。
+     */
+    public CellFormatResult format(final String formatPattern, final Date value) {
+<span class="nc" id="L205">        return format(formatPattern, value, Locale.getDefault());</span>
+    }
+    
+    /**
+     * セルの値を文字列として取得する。
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
+     * @return フォーマットしたセルの値。 cellがnullの場合、空文字を返す。
+     */
+    public String formatAsString(final ObjectCell&lt;?&gt; cell) {
+<span class="nc" id="L214">        return formatAsString(cell, Locale.getDefault());</span>
+    }
+    
+    /**
+     * ロケールを指定してセルの値を文字列として取得する
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
+     * @param locale locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @return フォーマットした文字列。cellがnullの場合、空文字を返す。
+     */
+    public String formatAsString(final ObjectCell&lt;?&gt; cell, final Locale locale) {
+<span class="nc" id="L225">        return format(cell, locale).getText();</span>
+    }
+    
+    /**
+     * 値をフォーマットする。
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
+     * @return フォーマット結果。cellがnullの場合、空セルとして値を返す。
+     */
+    public CellFormatResult format(final ObjectCell&lt;?&gt; cell) {
+<span class="fc" id="L234">        return format(cell, Locale.getDefault());</span>
+    }
+    
+    /**
+     * 値をフォーマットする。
+     * @param cell Javaの仮想的なオブジェクトを表現するセル。
+     * @param locale フォーマットしたロケール。nullでも可能。
+     *        ロケールに依存する場合、指定したロケールにより自動的に切り替わります。
+     * @return フォーマット結果。cellがnullの場合、空セルとして値を返す。
+     */
+    public CellFormatResult format(final ObjectCell&lt;?&gt; cell, final Locale locale) {
+        
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if(cell == null) {</span>
+<span class="fc" id="L247">            final CellFormatResult result = new CellFormatResult();</span>
+<span class="fc" id="L248">            result.setCellType(FormatCellType.Blank);</span>
+<span class="fc" id="L249">            result.setText(&quot;&quot;);</span>
+<span class="fc" id="L250">            return result;</span>
+        }
+        
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">        final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();</span>
+        
+<span class="fc" id="L255">        final short formatIndex = cell.getFormatIndex();</span>
+<span class="fc" id="L256">        final String formatPattern = cell.getFormatPattern();</span>
+        
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">        if(formatterResolver.canResolve(formatIndex)) {</span>
+<span class="nc" id="L259">            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatIndex);</span>
+<span class="nc" id="L260">            return cellFormatter.format(cell, runtimeLocale);</span>
+            
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        } else if(formatterResolver.canResolve(formatPattern)) {</span>
+<span class="nc" id="L263">            final CellFormatter cellFormatter = formatterResolver.getFormatter(formatPattern);</span>
+<span class="nc" id="L264">            return cellFormatter.format(cell, runtimeLocale);</span>
+            
+        } else {
+            // キャッシュに存在しない場合
+<span class="fc" id="L268">            final CellFormatter cellFormatter = formatterResolver.createFormatter(formatPattern) ;</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">            if(isCache()) {</span>
+<span class="fc" id="L270">                formatterResolver.registerFormatter(formatPattern, cellFormatter);</span>
+            }
+<span class="fc" id="L272">            return cellFormatter.format(cell, runtimeLocale);</span>
+            
+        }
+    }
+    
+    /**
+     * {@link FormatterResolver}を取得する。
+     * @since 0.9
+     * @return
+     */
+    public FormatterResolver getFormatterResolver() {
+<span class="nc" id="L283">        return formatterResolver;</span>
+    }
+    
+    /**
+     * {@link FormatterResolver}を設定する。
+     * 独自のものに入れ替える際に利用します。
+     * @since 0.9
+     * @param formatterResolver
+     */
+    public void setFormatterResolver(FormatterResolver formatterResolver) {
+<span class="nc" id="L293">        this.formatterResolver = formatterResolver;</span>
+<span class="nc" id="L294">    }</span>
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか。
+     * 初期値はtrueです。
+     * @return
+     */
+    public boolean isCache() {
+<span class="fc" id="L302">        return cache;</span>
+    }
+    
+    /**
+     * パースしたフォーマッタをキャッシュするかどうか設定する。
+     * @param cache true:キャッシュする。
+     */
+    public void setCache(boolean cache) {
+<span class="nc" id="L310">        this.cache = cache;</span>
+<span class="nc" id="L311">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

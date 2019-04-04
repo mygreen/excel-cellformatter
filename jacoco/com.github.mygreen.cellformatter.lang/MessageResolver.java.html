@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">MessageResolver.java</span></div><h1>MessageResolver.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * メッセージソースを管理するクラス。
+ * &lt;p&gt;ロケールを指定した場合、そのロケールで存在しないキーがあるときに、標準の値を返す。
+ *
+ * @version 0.10
+ * @since 0.5
+ * @author T.TSUCHIE
+ *
+ */
+public class MessageResolver {
+
+    /**
+     * 解決するリソース名。
+     * &lt;p&gt;リソースバンドル名の形式。
+     */
+    private final String resourceName;
+
+    /**
+     * デフォルトのメッセージがない場合を許可するかどうか。
+     */
+    private final boolean allowedNoDefault;
+
+    /**
+     * クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
+     */
+    private final boolean appendUserResource;
+
+    /**
+     * デフォルトのメッセージ情報
+     */
+    private MessageResource defaultResource;
+
+
+    /**
+     * ロケールごとのメッセージリソースの取得
+     */
+    private Map&lt;Locale, MessageResource&gt; resources;
+
+    /**
+     * リソース名を指定してインスタンスを生成する。
+     * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
+     */
+    public MessageResolver(final String resourceName) {
+<span class="fc" id="L58">        this(resourceName, false, false);</span>
+
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * リソース名を指定してインスタンスを生成する。
+     * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。
+     * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
+     * @param appendUserResouce クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
+     *      引数resourceNameの値が {@literal sample.SampleMessages}のとき、クラスパスのルート上にある「SampleMessages」を読み込みます。
+     */
+<span class="fc" id="L69">    public MessageResolver(final String resourceName, final boolean allowedNoDefault, final boolean appendUserResouce) {</span>
+<span class="fc" id="L70">        this.resourceName = resourceName;</span>
+<span class="fc" id="L71">        this.allowedNoDefault = allowedNoDefault;</span>
+<span class="fc" id="L72">        this.appendUserResource = appendUserResouce;</span>
+<span class="fc" id="L73">        this.defaultResource = loadDefaultResource(allowedNoDefault, appendUserResouce);</span>
+<span class="fc" id="L74">        this.resources = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L75">    }</span>
+
+    private String getPropertyPath() {
+
+<span class="fc" id="L79">        final String baseName = getResourceName().replaceAll(&quot;\\.&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L80">        String path = new StringBuilder()</span>
+                .append(&quot;/&quot;)
+                .append(baseName)
+                .append(&quot;.properties&quot;)
+                .toString();
+
+<span class="fc" id="L86">        return path;</span>
+    }
+
+    private String[] getPropertyPath(final Locale locale) {
+
+<span class="fc" id="L91">        final List&lt;String&gt; list = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L93">        final String baseName = getResourceName().replaceAll(&quot;\\.&quot;, &quot;/&quot;);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if(Utils.isNotEmpty(locale.getLanguage())) {</span>
+<span class="fc" id="L95">            String path = new StringBuilder()</span>
+                    .append(&quot;/&quot;)
+                    .append(baseName)
+                    .append(&quot;_&quot;).append(locale.getLanguage())
+                    .append(&quot;.properties&quot;)
+                    .toString();
+<span class="fc" id="L101">            list.add(path);</span>
+        }
+
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">        if(Utils.isNotEmpty(locale.getLanguage()) &amp;&amp; Utils.isNotEmpty(locale.getCountry())) {</span>
+<span class="fc" id="L105">            String path = new StringBuilder()</span>
+                    .append(&quot;/&quot;)
+                    .append(baseName)
+                    .append(&quot;_&quot;).append(locale.getLanguage())
+                    .append(&quot;_&quot;).append(locale.getCountry())
+                    .append(&quot;.properties&quot;)
+                    .toString();
+<span class="fc" id="L112">            list.add(path);</span>
+        }
+
+<span class="fc" id="L115">        Collections.reverse(list);</span>
+
+<span class="fc" id="L117">        return list.toArray(new String[list.size()]);</span>
+    }
+
+    /**
+     * プロパティファイルから取得する。
+     * &lt;p&gt;プロパティ名を補完する。
+     * @param path プロパティファイルのパス名
+     * @param allowedNoDefault デフォルトのメッセージがない場合を許可するかどうか。
+     * @param appendUserResource クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。
+     * @return
+     */
+    private MessageResource loadDefaultResource(final boolean allowedNoDefault, final boolean appendUserResource) {
+
+<span class="fc" id="L130">        final String path = getPropertyPath();</span>
+<span class="fc" id="L131">        Properties props = new Properties();</span>
+        try {
+<span class="fc" id="L133">            props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(path), &quot;UTF-8&quot;));</span>
+<span class="fc" id="L134">        } catch (NullPointerException | IOException e) {</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">            if(allowedNoDefault) {</span>
+<span class="fc" id="L136">                return MessageResource.NULL_OBJECT;</span>
+            } else {
+<span class="nc" id="L138">                throw new RuntimeException(&quot;fail default properties. :&quot; + path, e);</span>
+            }
+<span class="fc" id="L140">        }</span>
+
+<span class="fc" id="L142">        final MessageResource resource = new MessageResource();</span>
+
+<span class="fc" id="L144">        final Enumeration&lt;?&gt; keys = props.propertyNames();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        while(keys.hasMoreElements()) {</span>
+<span class="fc" id="L146">            String key = (String) keys.nextElement();</span>
+<span class="fc" id="L147">            String value = props.getProperty(key);</span>
+<span class="fc" id="L148">            resource.addMessage(key, value);</span>
+<span class="fc" id="L149">        }</span>
+
+        // ユーザのリソースの読み込み
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if(appendUserResource) {</span>
+<span class="nc" id="L153">            resource.addMessage(loadUserResource(path));</span>
+        }
+
+<span class="fc" id="L156">        return resource;</span>
+
+    }
+
+    /**
+     * 指定したロケールのリソースを取得する。
+     * &lt;p&gt;該当するロケールのリソースが存在しない場合は、デフォルトのリソースを返す。
+     * @param locale ロケールがnullの場合は、デフォルトのリソースを返す。
+     * @return
+     */
+    MessageResource loadResource(final Locale locale) {
+
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if(locale == null) {</span>
+<span class="fc" id="L169">            return defaultResource;</span>
+        }
+
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if(resources.containsKey(locale)) {</span>
+<span class="fc" id="L173">            return resources.get(locale);</span>
+        }
+
+<span class="fc" id="L176">        MessageResource localeResource = null;</span>
+<span class="fc" id="L177">        synchronized (resources) {</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            for(String path : getPropertyPath(locale)) {</span>
+
+                try {
+<span class="fc" id="L181">                    final Properties props = new Properties();</span>
+<span class="fc" id="L182">                    props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(path), &quot;UTF-8&quot;));</span>
+
+<span class="fc" id="L184">                    localeResource = new MessageResource();</span>
+
+<span class="fc" id="L186">                    final Enumeration&lt;?&gt; keys = props.propertyNames();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">                    while(keys.hasMoreElements()) {</span>
+<span class="fc" id="L188">                        String key = (String) keys.nextElement();</span>
+<span class="fc" id="L189">                        String value = props.getProperty(key);</span>
+<span class="fc" id="L190">                        localeResource.addMessage(key, value);</span>
+<span class="fc" id="L191">                    }</span>
+
+                    // ユーザのリソースの読み込み
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                    if(appendUserResource) {</span>
+<span class="fc" id="L195">                        localeResource.addMessage(loadUserResource(path));</span>
+                    }
+
+<span class="fc" id="L198">                    break;</span>
+
+<span class="fc" id="L200">                } catch(NullPointerException | IOException e) {</span>
+<span class="fc" id="L201">                    continue;</span>
+                }
+
+            }
+
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            if(localeResource == null) {</span>
+                // 該当するリソースが見つからない場合は、デフォルトの値を返す。
+<span class="fc" id="L208">                localeResource = defaultResource;</span>
+            }
+
+<span class="fc" id="L211">            resources.put(locale, localeResource);</span>
+<span class="pc" id="L212">        }</span>
+
+<span class="fc" id="L214">        return localeResource;</span>
+
+    }
+
+    /**
+     *
+     * @param basePath 基準となるプロパティファイルパス。「/」区切りで、拡張子、ロケール名が付いている。
+     * @return 読み込んだメッセージソース。存在しない場合は、{@link MessageResource#NULL_OBJECT}を返す。
+     */
+    private MessageResource loadUserResource(final String basePath) {
+
+        // ファイル名の切り出し
+<span class="fc" id="L226">        final int index = basePath.lastIndexOf(&quot;/&quot;);</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">        if(index &lt;= 0) {</span>
+<span class="nc" id="L228">            return MessageResource.NULL_OBJECT;</span>
+        }
+
+<span class="fc" id="L231">        final String userPropertyPath = &quot;/&quot; + basePath.substring(index+1);</span>
+        try {
+<span class="fc" id="L233">            Properties props = new Properties();</span>
+<span class="fc" id="L234">            props.load(new InputStreamReader(MessageResolver.class.getResourceAsStream(userPropertyPath), &quot;UTF-8&quot;));</span>
+
+<span class="fc" id="L236">            final MessageResource resource = new MessageResource();</span>
+<span class="fc" id="L237">            final Enumeration&lt;?&gt; keys = props.propertyNames();</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">            while(keys.hasMoreElements()) {</span>
+<span class="fc" id="L239">                String key = (String) keys.nextElement();</span>
+<span class="fc" id="L240">                String value = props.getProperty(key);</span>
+<span class="fc" id="L241">                resource.addMessage(key, value);</span>
+<span class="fc" id="L242">            }</span>
+
+<span class="fc" id="L244">            return resource;</span>
+
+<span class="nc" id="L246">        } catch(NullPointerException | IOException e) {</span>
+<span class="nc" id="L247">            return MessageResource.NULL_OBJECT;</span>
+        }
+
+    }
+
+    /**
+     * リソース名の取得。
+     * @return
+     */
+    public String getResourceName() {
+<span class="fc" id="L257">        return resourceName;</span>
+    }
+
+    /**
+     * デフォルトのメッセージ情報がない場合を許可するかどうか。
+     * @return
+     */
+    public boolean isAllowedNoDefault() {
+<span class="nc" id="L265">        return allowedNoDefault;</span>
+    }
+
+    /**
+     * キーを指定してメッセージを取得する。
+     * @param key メッセージキー
+     * @return 存在しないキーの場合、nullを返す。
+     */
+    public String getMessage(final String key) {
+<span class="fc" id="L274">        return defaultResource.getMessage(key);</span>
+    }
+
+    /**
+     * ロケールとキーを指定してメッセージを取得する。
+     * &lt;p&gt;ロケールに該当する値を取得する。
+     * @param locale ロケール
+     * @param key メッセージキー
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
+     */
+    public String getMessage(final MSLocale locale, final String key) {
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        if(locale == null) {</span>
+<span class="fc" id="L286">            return loadResource(null).getMessage(key);</span>
+
+        } else {
+<span class="fc" id="L289">            return loadResource(locale.getLocale()).getMessage(key);</span>
+        }
+    }
+
+    /**
+     * ロケールとキーを指定してメッセージを取得する。
+     * @param locale ロケール
+     * @param key メッセージキー
+     * @param defaultValue
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
+     */
+    public String getMessage(final MSLocale locale, final String key, final String defaultValue) {
+<span class="fc" id="L301">        String message = getMessage(locale, key);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        return message == null ? defaultValue : message;</span>
+    }
+
+    /**
+     * ロケールとキーを指定してメッセージを取得する。
+     * &lt;p&gt;ロケールに該当する値を取得する。
+     * @param locale ロケール
+     * @param key メッセージキー
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
+     */
+    public String getMessage(final Locale locale, final String key) {
+<span class="fc" id="L313">        return loadResource(locale).getMessage(key);</span>
+    }
+
+    /**
+     * 値がnullの場合、defaultValueの値を返す。
+     * @param locale ロケール
+     * @param key メッセージキー
+     * @param defaultValue
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
+     */
+    public String getMessage(final Locale locale, final String key, final String defaultValue) {
+<span class="fc" id="L324">        String message = getMessage(locale, key);</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">        return message == null ? defaultValue : message;</span>
+    }
+
+    /**
+     * 書式のロケールを優先して、キーに対するメッセージを取得する。
+     * formatLocaleがnullのとき、runtimeLocaleから値を取得する。
+     *
+     * @since 0.10
+     * @param formatLocale 書式に指定されているロケール。nullの場合がある。
+     * @param runtimeLocale 実行時のロケール。
+     * @param key メッセージキー
+     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。
+     */
+    public String getMessage(final MSLocale formatLocale, Locale runtimeLocale, final String key) {
+
+<span class="fc bfc" id="L340" title="All 2 branches covered.">        if(formatLocale != null) {</span>
+<span class="fc" id="L341">            return getMessage(formatLocale, key);</span>
+        } else {
+<span class="fc" id="L343">            return getMessage(runtimeLocale, key);</span>
+        }
+
+    }
+
+    /**
+     * 書式のロケールを優先して、キーに対するメッセージを取得する。
+     * formatLocaleがnullのとき、runtimeLocaleから値を取得する。
+     *
+     * @since 0.10
+     * @param formatLocale 書式に指定されているロケール。nullの場合がある。
+     * @param runtimeLocale 実行時のロケール。
+     * @param key メッセージキー
+     * @param defaultValue
+     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。
+     */
+    public String getMessage(final MSLocale formatLocale, Locale runtimeLocale, final String key, final String defaultValue) {
+
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        if(formatLocale != null) {</span>
+<span class="nc" id="L362">            return getMessage(formatLocale, key, defaultValue);</span>
+        } else {
+<span class="nc" id="L364">            return getMessage(runtimeLocale, key, defaultValue);</span>
+        }
+
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

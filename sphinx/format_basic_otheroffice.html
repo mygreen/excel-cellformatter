@@ -1,0 +1,295 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>他のオフィススイートの書式記号 &#8212; Excel-CellFormatter 0.11 ドキュメント</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/mytheme.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">関連リンク</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/excel-cellformatter">GitHub</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
+</ul>
+
+<h3><a href="index.html">目次</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id3">1.2. 前提環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#restriction">1.3. 制限事項</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">2. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">3.1. キャッシュの制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id5">3.2. フォーマッタの事前登録</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id6">3.3. 元号の定義の変更</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">4. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">4.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">4.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">4.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">4.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.1. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.2. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.3. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.4. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.5. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.6. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.7. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.8. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.9. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.10. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.11. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.12. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.13. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.14. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.15. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.16. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.17. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/format_basic_otheroffice.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="検索" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>他のオフィススイートの書式記号<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>OpenOffice、LibreOfficeなどの他のオフィススイートでも、Microsoft Excel形式を扱うことができますが、独自に拡張をしている書式があります。
+主に、日付の書式に対して拡張がされています。</p>
+<p>LibreOfficeはOpenOfficeから派生したので、書式も共通しています。</p>
+<p>詳細は、下記のリンクを参照してください。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">数の書式コード（LibreOfficeのマニュアル）</a></li>
+</ul>
+<table border="1" class="colwidths-given docutils" id="id2">
+<caption><span class="caption-text">OpenOffice/LibreOfficeの独自の書式記号</span><a class="headerlink" href="#id2" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col width="15%" />
+<col width="40%" />
+<col width="20%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">書式記号</th>
+<th class="head">説明</th>
+<th class="head">使用例</th>
+<th class="head">表示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>WW</td>
+<td><div class="first last line-block">
+<div class="line">1年における週番号を表示します。</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">WW</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2012/2/29 -&gt; 9</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>Q</td>
+<td><div class="first last line-block">
+<div class="line">四半期をQ1～Q4で表示します。</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">YY&quot;年 &quot;Q</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2012/2/29 -&gt; 12年 Q1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>QQ</td>
+<td><div class="first line-block">
+<div class="line">四半期を正式名で表示します。言語ごとに異なります。</div>
+</div>
+<ul class="last simple">
+<li>英語環境の場合、「1st quater～4th quater」で表示します。</li>
+<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、「第１四半期～第４四半期」で表示します。</li>
+</ul>
+</td>
+<td><div class="first last line-block">
+<div class="line">YY QQ</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2012/2/29 -&gt; 12 第１四半期</div>
+<div class="line">2012/2/29 -&gt; 12 1st quater</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td>NN</td>
+<td><div class="first line-block">
+<div class="line">英語の曜日の頭文字から 3 文字 (Sun～Sat) を表示します。</div>
+</div>
+<ul class="last simple">
+<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日の頭文字（日～土）を表示します。</li>
+<li>曜日の書式の記号「ddd」「aaa」と同じ意味です。</li>
+</ul>
+</td>
+<td><div class="first last line-block">
+<div class="line">NN</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2001/1/3 -&gt; Wed</div>
+<div class="line">2001/1/3 -&gt; 水</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>NNNN</td>
+<td><div class="first line-block">
+<div class="line">英語の曜日 (Sunday～Saturday) を表示します。</div>
+</div>
+<ul class="last simple">
+<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日（日曜日～土曜日）を表示します。</li>
+<li>曜日の書式の記号「dddd」「aaaa」と同じ意味です。</li>
+</ul>
+</td>
+<td><div class="first last line-block">
+<div class="line">NNNN</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2001/1/3 -&gt; Wednesday</div>
+<div class="line">2001/1/3 -&gt; 水曜日</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+<!-- my theme custom extrahead beacon -->
+<script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	jQuery(function () {
+		// コンテンツ用
+		$('body').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
+		
+	});
+</script>
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37313068-4', 'auto');
+  ga('send', 'pageview');
+  
+</script>
+
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, T.TSUCHIE.
+      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9 で生成しました。
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomFormatterFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">CustomFormatterFactory.java</span></div><h1>CustomFormatterFactory.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.util.List;
+
+import com.github.mygreen.cellformatter.tokenizer.CustomFormatTokenizer;
+import com.github.mygreen.cellformatter.tokenizer.Token;
+import com.github.mygreen.cellformatter.tokenizer.TokenStore;
+
+
+/**
+ * ユーザ定義の書式を解析して、{@link CustomFormatter}のインスタンスを作成するクラス。
+ * 
+ * @version 0.9.2
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L17">public class CustomFormatterFactory {</span>
+    
+<span class="fc" id="L19">    private ConditionTextFormatterFactory textFormatterFactory = new ConditionTextFormatterFactory();</span>
+    
+<span class="fc" id="L21">    private ConditionDateFormatterFactory dateFormatterFactory = new ConditionDateFormatterFactory();</span>
+    
+<span class="fc" id="L23">    private ConditionNumberFormatterFactory numberFormatterFactory = new ConditionNumberFormatterFactory();</span>
+    
+    /**
+     * 書式を元に、{@link CustomFormatter}のインスタンスを作成する。
+     * @param pattern ユーザ定義の書式
+     * @return 指定したユーザ定義に対するフォーマッタ。
+     * @throws CustomFormatterParseException 書式が不正な場合にスローされる。
+     */
+    public CustomFormatter create(final String pattern) {
+        
+<span class="fc" id="L33">        final CustomFormatTokenizer tokenizer = new CustomFormatTokenizer();</span>
+<span class="fc" id="L34">        final TokenStore allStore = tokenizer.parse(pattern);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if(allStore.getTokens().isEmpty()) {</span>
+            // 標準のフォーマッタ
+<span class="nc" id="L37">            return CustomFormatter.DEFAULT_FORMATTER;</span>
+            
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        } else if(pattern.equalsIgnoreCase(&quot;General&quot;)) {</span>
+<span class="fc" id="L40">            return CustomFormatter.DEFAULT_FORMATTER;</span>
+        }
+        
+        // セクション単位に分割し、処理していく。
+<span class="fc" id="L44">        final List&lt;TokenStore&gt; sections = allStore.split(Token.SYMBOL_SEMI_COLON);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if(sections.size() &gt; 4) {</span>
+<span class="fc" id="L46">            throw new CustomFormatterParseException(pattern,</span>
+                    String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));
+        }
+        
+<span class="fc" id="L50">        final CustomFormatter formatter = new CustomFormatter(pattern);</span>
+<span class="fc" id="L51">        boolean containsTextFormatter = false;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for(TokenStore section : sections) {</span>
+            
+            final ConditionFormatter conditionFormatter;
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            if(textFormatterFactory.isTextPattern(section)) {</span>
+<span class="fc" id="L56">                conditionFormatter = textFormatterFactory.create(section);</span>
+<span class="fc" id="L57">                containsTextFormatter = true;</span>
+                
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            } else if(dateFormatterFactory.isDatePattern(section)) {</span>
+<span class="fc" id="L60">                conditionFormatter = dateFormatterFactory.create(section);</span>
+                
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            } else if(numberFormatterFactory.isNumberPattern(section)) {</span>
+<span class="fc" id="L63">                conditionFormatter = numberFormatterFactory.create(section);</span>
+                
+            } else {
+<span class="fc" id="L66">                conditionFormatter = numberFormatterFactory.create(section);</span>
+                
+            }
+            
+<span class="fc" id="L70">            formatter.addConditionFormatter(conditionFormatter);</span>
+            
+<span class="fc" id="L72">        }</span>
+        
+        // 条件式の設定
+<span class="fc" id="L75">        int sectionSize = sections.size();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if(containsTextFormatter) {</span>
+            // 文字列の書式を含む場合は、個数から除外する。
+<span class="fc" id="L78">            sectionSize--;</span>
+        }
+        
+        // 1番目の書式がデフォルトの条件の場合
+<span class="fc" id="L82">        boolean hasConditionFirst = false;</span>
+        
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for(int i=0; i &lt; sectionSize; i++) {</span>
+            
+<span class="fc" id="L86">            final ConditionFormatter conditionFormatter = formatter.getConditionFormatters().get(i);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if(conditionFormatter.getOperator() != null) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                if(i == 0) {</span>
+<span class="fc" id="L89">                    hasConditionFirst = true;</span>
+                }
+                continue;
+            }
+            
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if(sectionSize &lt;= 1) {</span>
+                // 書式が1つしかない場合
+<span class="fc" id="L96">                conditionFormatter.setOperator(ConditionOperator.ALL);</span>
+                
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            } else if(sectionSize == 2) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">                if(i==0) {</span>
+                    // ゼロ以上の数の書式
+<span class="fc" id="L101">                    conditionFormatter.setOperator(ConditionOperator.NON_NEGATIVE);</span>
+                    
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                } else if(i==1) {</span>
+                    // その他の書式
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                    if(hasConditionFirst) {</span>
+<span class="fc" id="L106">                        conditionFormatter.setOperator(ConditionOperator.ALL);</span>
+                    } else {
+<span class="fc" id="L108">                        conditionFormatter.setOperator(ConditionOperator.NEGATIVE);</span>
+                    }
+                }
+                
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            } else if(sectionSize == 3) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">                if(i==0) {</span>
+                    // 正の書式
+<span class="fc" id="L115">                    conditionFormatter.setOperator(ConditionOperator.POSITIVE);</span>
+                    
+<span class="fc bfc" id="L117" title="All 2 branches covered.">                } else if(i==1) {</span>
+                    // 負の数の書式
+<span class="fc" id="L119">                    conditionFormatter.setOperator(ConditionOperator.NEGATIVE);</span>
+                    
+                } else {
+                    // その他の書式
+<span class="fc" id="L123">                    conditionFormatter.setOperator(ConditionOperator.ALL);</span>
+                    
+                }
+                
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">            } else if(sectionSize == 4) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                if(i==0) {</span>
+                    // 正の書式
+<span class="fc" id="L130">                    conditionFormatter.setOperator(ConditionOperator.POSITIVE);</span>
+                    
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                } else if(i==1) {</span>
+                    // 負の数の書式
+<span class="fc" id="L134">                    conditionFormatter.setOperator(ConditionOperator.NEGATIVE);</span>
+                    
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                } else if(i==2) {</span>
+                    // ゼロの書式
+<span class="fc" id="L138">                    conditionFormatter.setOperator(ConditionOperator.ZERO);</span>
+                    
+                } else {
+                    // その他の書式
+<span class="fc" id="L142">                    conditionFormatter.setOperator(ConditionOperator.ALL);</span>
+                    
+                }
+                
+            } else {
+<span class="nc" id="L147">                throw new CustomFormatterParseException(pattern,</span>
+                        String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));
+            }
+            
+        }
+        
+<span class="fc" id="L153">        return formatter;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

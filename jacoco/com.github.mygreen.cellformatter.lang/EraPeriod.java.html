@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EraPeriod.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">EraPeriod.java</span></div><h1>EraPeriod.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+
+/**
+ * 平成などの時代の期間を表すクラス。
+ * 
+ * @version 0.5
+ * @author T.TSUCHIE
+ */
+<span class="fc" id="L14">public class EraPeriod {</span>
+    
+    /**
+     * 不明な時代の期間を示すクラス。
+     * &lt;p&gt;存在しない期間を示すにも使用する。
+     * @since 0.5
+     */
+<span class="fc" id="L21">    public static final EraPeriod UNKNOWN_PERIOD = new EraPeriod() {</span>
+        
+        @Override
+        public boolean isUnknown() {
+<span class="fc" id="L25">            return true;</span>
+        }
+        
+    };
+            
+    
+    /** 省略時のローマ字名 （例：H）*/
+    private String abbrevRomanName;
+    
+    /** 省略時の名称（例：平） */
+    private String abbrevName;
+    
+    /** 正式名称（例：平成） */
+    private String name;
+    
+    /** 開始日時（期限がない場合は、nullを設定する） */
+    private Date startDate;
+    
+    /** 終了日時（期限がない場合は、nullを設定する） */
+    private Date endDate;
+    
+    /**
+     * 指定した日時が含まれているかどうか。
+     * @param date チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
+     * @return true:この時代に含まれている。
+     * @throws IllegalArgumentException {@literal date == null.}
+     */
+    public boolean contains(final Date date) {
+        
+<span class="fc" id="L54">        ArgUtils.notNull(date, &quot;date&quot;);</span>
+        
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(startDate == null) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            return endDate.compareTo(date) &gt;= 0;</span>
+            
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        } else if(endDate == null) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            return startDate.compareTo(date) &lt;= 0;</span>
+            
+        } else {
+<span class="fc bfc" id="L63" title="All 4 branches covered.">            return (endDate.compareTo(date) &gt;= 0) &amp;&amp; (startDate.compareTo(date) &lt;= 0);</span>
+        }
+        
+    }
+    
+    /**
+     * 指定した日時が、開始日時から経過した年を取得する。
+     * @param cal チェック対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
+     * @return
+     * @throws IllegalArgumentException {@literal cal == null.}
+     */
+    public int getEraYear(final Calendar cal) {
+<span class="fc" id="L75">        ArgUtils.notNull(cal, &quot;cal&quot;);</span>
+        
+<span class="fc" id="L77">        final Calendar startCal = Calendar.getInstance(TimeZone.getTimeZone(&quot;GMT-00:00&quot;));</span>
+<span class="fc" id="L78">        startCal.setTime(startDate);</span>
+        
+<span class="fc" id="L80">        final int diff = cal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR) + 1;</span>
+<span class="fc" id="L81">        return diff;</span>
+        
+    }
+    
+    @Override
+    public String toString() {
+        
+<span class="nc" id="L88">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L89">        sb.append(EraPeriod.class.getSimpleName()).append(&quot;[&quot;).append(getName()).append(&quot;]&quot;);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(startDate != null) {</span>
+<span class="nc" id="L91">            sb.append(&quot;[start=&quot;).append(ExcelDateUtils.formatDate(startDate)).append(&quot;]&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if(endDate != null) {</span>
+<span class="nc" id="L95">            sb.append(&quot;[end=&quot;).append(ExcelDateUtils.formatDate(endDate)).append(&quot;]&quot;);</span>
+        }
+        
+<span class="nc" id="L98">        return sb.toString();</span>
+        
+    }
+    
+    /**
+     * 元号のローマ字の省略名を取得する。
+     * @return
+     */
+    public String getAbbrevRomanName() {
+<span class="fc" id="L107">        return abbrevRomanName;</span>
+    }
+    
+    /**
+     * 元号のローマ字の省略名を設定する。
+     * @param abbrevRomanName
+     */
+    void setAbbrevRomanName(String abbrevRomanName) {
+<span class="fc" id="L115">        this.abbrevRomanName = abbrevRomanName;</span>
+<span class="fc" id="L116">    }</span>
+    
+    /**
+     * 元号のロケールに対する省略名を取得する。
+     * 
+     * @return 日本語の場合、「平成」だと「平」の値。
+     */
+    public String getAbbrevName() {
+<span class="fc" id="L124">        return abbrevName;</span>
+    }
+    
+    /**
+     * 元号のロケールに対する省略名を設定する。
+     * @param abbrevName ロケールに対する省略名
+     */
+    void setAbbrevName(String abbrevName) {
+<span class="fc" id="L132">        this.abbrevName = abbrevName;</span>
+<span class="fc" id="L133">    }</span>
+    
+    /**
+     * 元号の名称を取得する
+     * @return
+     */
+    public String getName() {
+<span class="fc" id="L140">        return name;</span>
+    }
+    
+    /**
+     * 元号の名称を設定する
+     * @return
+     */
+    void setName(String name) {
+<span class="fc" id="L148">        this.name = name;</span>
+<span class="fc" id="L149">    }</span>
+    
+    /**
+     * 開始日を取得する
+     * @return
+     */
+    public Date getStartDate() {
+<span class="nc" id="L156">        return startDate;</span>
+    }
+    
+    /**
+     * 開始日を設定する
+     * @param startDate
+     */
+    void setStartDate(Date startDate) {
+<span class="fc" id="L164">        this.startDate = startDate;</span>
+<span class="fc" id="L165">    }</span>
+    
+    /**
+     * 終了日を設定する
+     * @param endDate
+     */
+    void setEndDate(Date endDate) {
+<span class="fc" id="L172">        this.endDate = endDate;</span>
+<span class="fc" id="L173">    }</span>
+    
+    /**
+     * 終了日を取得する
+     * @return 終了日がない現行の元号の場合は{@literal null}を返す。
+     */
+    public Date getEndDate() {
+<span class="fc" id="L180">        return endDate;</span>
+    }
+    
+    /**
+     * 不明な期間かどうか。
+     * @since 0.5
+     * @return {@link #UNKNOWN_PERIOD}のインスタンスのとき、trueを返す。
+     */
+    public boolean isUnknown() {
+<span class="fc" id="L189">        return false;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Era.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.lang</a> &gt; <span class="el_source">Era.java</span></div><h1>Era.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.lang;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 時代情報の定義用のクラス。
+ * &lt;p&gt;複数の期間{@link EraPeriod}を持つ。
+ * 
+ * @version 0.6
+ * @since 0.5
+ * @author T.TSUCHIE
+ *
+ */
+public class Era {
+    
+    /**
+     * 不明な時代情報の場合
+     * &lt;p&gt;ロケールに対して時代情報が存在しない場合に使用する。
+     */
+<span class="fc" id="L22">    public static final Era UNKNOWN_ERA = new Era(Collections.&lt;EraPeriod&gt;emptyList()) {</span>
+        
+        @Override
+        public boolean isUnkndown() {
+<span class="fc" id="L26">            return true;</span>
+        }
+        
+    };
+    
+    private final List&lt;EraPeriod&gt; periods;
+    
+    /**
+     * 時代の期間を指定するコンストラクタ。
+     * @param periods 時代の期限。
+     * @throws IllegalArgumentException {@literal periods == null.}
+     */
+<span class="fc" id="L38">    public Era(final List&lt;EraPeriod&gt; periods) {</span>
+<span class="fc" id="L39">        ArgUtils.notNull(periods, &quot;periods&quot;);</span>
+        
+<span class="fc" id="L41">        this.periods = Collections.unmodifiableList(periods);</span>
+<span class="fc" id="L42">    }</span>
+    
+    /**
+     * 指定した日時が時代情報に含まれているかどうか。
+     * @param date 判定対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
+     * @return true:含まれている場合。
+     * @throws IllegalArgumentException {@literal date == null.}
+     */
+    public boolean contains(final Date date) {
+<span class="fc" id="L51">        ArgUtils.notNull(date, &quot;date&quot;);</span>
+        
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for(EraPeriod period : periods) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            if(period.contains(date)) {</span>
+<span class="fc" id="L55">                return true;</span>
+            }
+<span class="fc" id="L57">        }</span>
+        
+<span class="fc" id="L59">        return false;</span>
+    }
+    
+    /**
+     * 指定した日時に該当する期間情報を取得する。
+     * @param date 判定対象の日時。タイムゾーンは、{@literal GMT-00:00}である必要がある。
+     * @return 見つからない場合は、存在しない期間を示すクラス{@link EraPeriod#UNKNOWN_PERIOD}のインスタンスを返す。
+     * @throws IllegalArgumentException {@literal date == null.}
+     */
+    public EraPeriod getTargetPeriod(final Date date) {
+<span class="fc" id="L69">        ArgUtils.notNull(date, &quot;date&quot;);</span>
+        
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for(EraPeriod period : periods) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if(period.contains(date)) {</span>
+<span class="fc" id="L73">                return period;</span>
+            }
+<span class="fc" id="L75">        }</span>
+        
+<span class="fc" id="L77">        return EraPeriod.UNKNOWN_PERIOD;</span>
+    }
+    
+    /**
+     * 不明な時代情報かどうか。
+     * @return {@link #UNKNOWN_ERA}のインスタンスの場合、trueを返す。
+     */
+    public boolean isUnkndown() {
+<span class="fc" id="L85">        return false;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
