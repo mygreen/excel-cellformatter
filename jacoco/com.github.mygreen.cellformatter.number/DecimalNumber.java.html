@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DecimalNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.number</a> &gt; <span class="el_source">DecimalNumber.java</span></div><h1>DecimalNumber.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.number;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import com.github.mygreen.cellformatter.ConditionNumberFormatter;
+
+
+/**
+ * 小数表現を含む数値を表現するクラス。
+ * &lt;p&gt;{@link ConditionNumberFormatter}でフォーマットする際に利用する。
+ * 
+ * @author T.TSUCHIE
+ *
+ */
+public class DecimalNumber extends FormattedNumber {
+    
+    /**
+     * 精度（小数の精度）
+     * ・小数を持たない場合は、ゼロを設定する。
+     */
+    protected final int scale;
+    
+    /**
+     * 整数部分。
+     * ・0以下の場合は、空文字。
+     * ・符号はつかない。
+     */
+    protected String integerPart;
+    
+    /**
+     * 小数部分。
+     * ・精度が0以上場合は、空文字。
+     */
+    protected String decimalPart;
+    
+    /**
+     * 千分率（パーミル）の次数。
+     * ・0のとき、何もしない。
+     * ・1のとき、1000で割る。
+     * ・2のとき、1000^2で割る。
+     */
+    protected int permilles;
+    
+    public DecimalNumber(final double value, final int scale, final int permilles) {
+<span class="fc" id="L46">        super(value);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        this.scale = scale &gt; 0 ? scale : 0;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        this.permilles = permilles &gt; 0 ? permilles : 0;</span>
+        
+<span class="fc" id="L50">        init();</span>
+<span class="fc" id="L51">    }</span>
+    
+    public DecimalNumber(final double value, final int scale) {
+<span class="fc" id="L54">        this(value, scale, 0);</span>
+<span class="fc" id="L55">    }</span>
+    
+    /**
+     * 値を精度に従い整数部と小数部に分解する。
+     */
+    protected void init() {
+        
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(isZero()) {</span>
+<span class="fc" id="L63">            this.integerPart = &quot;&quot;;</span>
+<span class="fc" id="L64">            this.decimalPart = &quot;&quot;;</span>
+<span class="fc" id="L65">            return;</span>
+        }
+        
+<span class="fc" id="L68">        final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L69">        sb.append(&quot;#&quot;);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(scale &gt; 0) {</span>
+<span class="fc" id="L71">            sb.append(&quot;.&quot;);</span>
+        }
+        
+        // 小数の精度分、書式を追加する。
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for(int i=0; i &lt; scale; i++) {</span>
+<span class="fc" id="L76">            sb.append(&quot;#&quot;);</span>
+        }
+        
+<span class="fc" id="L79">        final DecimalFormat format = new DecimalFormat(sb.toString());</span>
+<span class="fc" id="L80">        format.setRoundingMode(RoundingMode.HALF_UP);</span>
+        
+<span class="fc" id="L82">        double num = Math.abs(getValue());</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if(getPermilles() &gt; 0) {</span>
+<span class="fc" id="L84">            num /= Math.pow(1000, getPermilles());</span>
+        }
+        
+<span class="fc" id="L87">        String str = format.format(num);</span>
+        
+        // 数値を小数部と整数部に分割する。
+<span class="fc" id="L90">        setupIntegerAndDecimalPart(str);</span>
+        
+<span class="fc" id="L92">    }</span>
+    
+    /**
+     * 文字列形式の数値を整数部と小数部に分割し、各フィールドに設定する
+     * @param str
+     */
+    protected void setupIntegerAndDecimalPart(final String str) {
+        
+<span class="fc" id="L100">        final int dotIdx = str.indexOf(&quot;.&quot;);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(dotIdx &lt; 0) {</span>
+            // 整数部のみの場合
+<span class="fc" id="L103">            this.integerPart = str;</span>
+<span class="fc" id="L104">            this.decimalPart = &quot;&quot;;</span>
+        } else {
+<span class="fc" id="L106">            this.integerPart = str.substring(0, dotIdx);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if(this.integerPart.equals(&quot;0&quot;)) {</span>
+<span class="nc" id="L108">                this.integerPart = &quot;&quot;;</span>
+            }
+            
+<span class="fc" id="L111">            this.decimalPart = str.substring(dotIdx+1);</span>
+            
+        }
+<span class="fc" id="L114">    }</span>
+    
+    /**
+     * 小数の精度を取得する。
+     * ・小数を持たない場合は、0を返す。
+     * @return
+     */
+    public int getScale() {
+<span class="fc" id="L122">        return scale;</span>
+    }
+    
+    /**
+     * 整数部のフォーマットした値を取得する。
+     * @return
+     */
+    public String getIntegerPart() {
+<span class="fc" id="L130">        return integerPart;</span>
+    }
+    
+    /**
+     * 整数部の指定した桁の値を取得する。
+     * @param digit 1から始まる。
+     * @return その桁の値がない場合は空文字を返す。
+     */
+    public String getIntegerPart(final int digit) {
+        
+<span class="fc" id="L140">        final int length = integerPart.length();</span>
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L142">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L145">        String num = String.valueOf(integerPart.charAt(length - digit));</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if(isUseSeparator()) {</span>
+<span class="pc bpc" id="L147" title="3 of 4 branches missed.">            if(digit &gt;= 4 &amp;&amp; (digit-1) % 3 == 0) {</span>
+<span class="nc" id="L148">                num += &quot;,&quot;;</span>
+            }
+        }
+        
+<span class="fc" id="L152">        return num;</span>
+        
+    }
+    
+    /**
+     * 整数部の指定した桁以降の値を取得する。
+     * @param digit 1から始まる。
+     * @return その桁の値がない場合は空文字を返す。
+     */
+    public String getIntegerPartAfter(final int digit) {
+        
+<span class="fc" id="L163">        final int length = integerPart.length();</span>
+<span class="pc bpc" id="L164" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L165">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L168">        String num = integerPart.substring(0, (length - digit + 1));</span>
+<span class="pc bpc" id="L169" title="1 of 4 branches missed.">        if(isUseSeparator() &amp;&amp; digit &gt;= 4) {</span>
+            // 区切り文字を入れるために分割する。
+<span class="fc" id="L171">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            for(int i=0; i &lt; num.length(); i++) {</span>
+<span class="fc" id="L173">                char c = num.charAt(i);</span>
+<span class="fc" id="L174">                sb.append(c);</span>
+                
+                // 現在の処理中の桁数
+<span class="fc" id="L177">                int itemDigit = length -i;</span>
+<span class="pc bpc" id="L178" title="1 of 4 branches missed.">                if((itemDigit &gt;= 3) &amp;&amp; (itemDigit -1) % 3 == 0) {</span>
+<span class="fc" id="L179">                    sb.append(&quot;,&quot;);</span>
+                }
+            }
+            
+<span class="fc" id="L183">            num = sb.toString();</span>
+        }
+        
+<span class="fc" id="L186">        return num;</span>
+        
+    }
+    
+    /**
+     * 小数部のフォーマットした値を取得する。
+     * @return
+     */
+    public String getDecimalPart() {
+<span class="fc" id="L195">        return decimalPart;</span>
+    }
+    
+    /**
+     * 小数部の指定した桁の値を取得する。
+     * @param digit 1から始まる。
+     * @return その桁の値がない場合は空文字を返す。
+     */
+    public String getDecimalPart(final int digit) {
+        
+<span class="fc" id="L205">        final int length = decimalPart.length();</span>
+<span class="pc bpc" id="L206" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L207">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L210">        return String.valueOf(decimalPart.charAt(digit-1));</span>
+        
+    }
+    
+    
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L218">        StringBuilder sb = new StringBuilder();</span>
+        
+<span class="nc bnc" id="L220" title="All 2 branches missed.">        if(isNegative()) {</span>
+<span class="nc" id="L221">            sb.append(&quot;-&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if(getIntegerPart().isEmpty()) {</span>
+<span class="nc" id="L225">            sb.append(&quot;0&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L228" title="All 2 branches missed.">        if(!getDecimalPart().isEmpty()) {</span>
+<span class="nc" id="L229">            sb.append(&quot;.&quot;).append(getDecimalPart());</span>
+        }
+        
+<span class="nc" id="L232">        return sb.toString();</span>
+    }
+    
+    /**
+     * 千分率（パーミル）の次数を取得する
+     * @return
+     */
+    public int getPermilles() {
+<span class="fc" id="L240">        return permilles;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
