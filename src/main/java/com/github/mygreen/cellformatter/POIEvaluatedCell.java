@@ -41,7 +41,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isText() {
-        return value.getCellTypeEnum() == CellType.STRING;
+        return value.getCellType() == CellType.STRING;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isBoolean() {
-        return value.getCellTypeEnum() == CellType.BOOLEAN;
+        return value.getCellType() == CellType.BOOLEAN;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isNumber() {
-        return value.getCellTypeEnum() == CellType.NUMERIC;
+        return value.getCellType() == CellType.NUMERIC;
     }
 
     @Override

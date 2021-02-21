@@ -73,7 +73,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isText() {
-        return cell.getCellTypeEnum() == CellType.STRING;
+        return cell.getCellType() == CellType.STRING;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isBoolean() {
-        return cell.getCellTypeEnum() == CellType.BOOLEAN;
+        return cell.getCellType() == CellType.BOOLEAN;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isNumber() {
-        return cell.getCellTypeEnum() == CellType.NUMERIC;
+        return cell.getCellType() == CellType.NUMERIC;
     }
 
     @Override

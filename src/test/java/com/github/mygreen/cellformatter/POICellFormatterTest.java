@@ -1,8 +1,8 @@
 package com.github.mygreen.cellformatter;
 
+import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -919,7 +919,7 @@ public class POICellFormatterTest {
             
             // 特殊条件 - java8のときなど
             final String spCondition;
-            if(spConditionCell == null || spConditionCell.getCellTypeEnum().equals(CellType.BLANK)) {
+            if(spConditionCell == null || spConditionCell.getCellType() == CellType.BLANK) {
                 spCondition = "";
             } else {
                 spCondition = spConditionCell.getRichStringCellValue().toString();
@@ -970,7 +970,7 @@ public class POICellFormatterTest {
             return false;
         }
 
-        if(style.getBorderBottomEnum() == BorderStyle.NONE) {
+        if(style.getBorderBottom() == BorderStyle.NONE) {
             return false;
         }
 
