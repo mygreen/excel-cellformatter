@@ -194,6 +194,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<configuration>
 					<nohelp>true</nohelp>
 					<charset>UTF-8</charset>
@@ -415,7 +416,7 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
+				<version>2.10.4</version>
 				<configuration>
 					<source>${java.version}</source>
 					<encoding>UTF-8</encoding>
