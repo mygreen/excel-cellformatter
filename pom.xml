@@ -23,16 +23,9 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 		<url>https://github.com/mygreen/excel-cellformatter</url>
 	</scm>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-
 	<distributionManagement>
 		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Maven Central Repository</name>
+			<id>ossrh</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
@@ -190,11 +183,18 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 							<goal>jar</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<configuration>
 					<nohelp>true</nohelp>
 					<charset>UTF-8</charset>
@@ -222,10 +222,11 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
+					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -272,8 +273,9 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
 				<configuration>
-					<argLine>${jacocoArgs}</argLine>
+					<argLine>${jacocoArgs} -Duser.language=ja -Duser.country=JP</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -293,6 +295,13 @@ $(document).ready(function() {
 								<include>${jacoco.include.package}</include>
 							</includes>
 						</configuration>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -321,6 +330,17 @@ $(document).ready(function() {
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -396,7 +416,7 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
+				<version>2.10.4</version>
 				<configuration>
 					<source>${java.version}</source>
 					<encoding>UTF-8</encoding>
@@ -423,7 +443,7 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
-
+					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -441,20 +461,6 @@ $(document).ready(function() {
 				${user.home}/.m2/green-checkstyle.xml </configLocation>
 				</configuration> </plugin>
 			-->
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-				</configuration>
-			</plugin>
-			-->
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
