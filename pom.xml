@@ -221,6 +221,7 @@ $(document).ready(function() {
 </script>
 ]]>
 					</header>
+					<additionalparam>--allow-script-in-comments</additionalparam>
 				</configuration>
 				<executions>
 					<execution>
