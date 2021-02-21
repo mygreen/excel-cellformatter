@@ -1,13 +1,13 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/excel-cellformatter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mygreen/excel-cellformatter/)
 [![Javadocs](http://javadoc.io/badge/com.github.mygreen/excel-cellformatter.svg?color=blue)](http://javadoc.io/doc/com.github.mygreen/excel-cellformatter)
-[![Build Status](https://travis-ci.org/mygreen/excel-cellformatter.svg?branch=master)](https://travis-ci.org/mygreen/excel-cellformatter)
+[![build](https://github.com/mygreen/excel-cellformatter/actions/workflows/maven.yml/badge.svg)](https://github.com/mygreen/excel-cellformatter/actions/workflows/maven.yml)
 
 # excel-cellformatter
 Excelのセルの書式を解析してフォーマットするJavaのライブラリ。
 
 # 前提条件
-+ Java1.7-1.8
-+ Apache POI v3.17
++ Java1.7+
++ Apache POI v3.17+
 + Slf4j v1.7+
 
 
