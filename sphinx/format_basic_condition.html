@@ -1,0 +1,549 @@
+
+
+<!doctype html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>条件式について &#8212; Excel-CellFormatter 0.12 ドキュメント</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/mytheme.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">条件式について</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>条件式について<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>条件式には複数の種類があり、書式を拡張するために使用します。</p>
+<ul class="simple">
+<li><p>書式は、大括弧&quot;[&quot;, &quot;]&quot;で囲みます。</p></li>
+<li><p>比較演算子（[&gt;80]）</p></li>
+<li><p>色（[色名]）</p></li>
+<li><p>ロケール（[$-&lt;ロケールコード&gt;]）(例. [$-403])</p></li>
+<li><p>記号付きロケール（[$&lt;記号&gt;-&lt;ロケールコード&gt;]） (例. [$€-407])</p></li>
+<li><p>特殊な数値表示（[DBNum&lt;値&gt;]）</p></li>
+</ul>
+<div class="section" id="id2">
+<h2>条件式（比較演算子）について<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>セクションごとに一致させる条件を比較演算子で指定することができます。</p>
+<table class="colwidths-given docutils align-default" id="id7">
+<caption><span class="caption-text">比較演算子の種類</span><a class="headerlink" href="#id7" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>演算子</p></th>
+<th class="head"><p>名称</p></th>
+<th class="head"><p>名称（英字）</p></th>
+<th class="head"><p>使用例</p></th>
+<th class="head"><p>結果</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>=</p></td>
+<td><p>等しい</p></td>
+<td><p>equal</p></td>
+<td><p>[=2]</p></td>
+<td><p>2と等しい。</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;&gt;</p></td>
+<td><p>等しくない</p></td>
+<td><p>not equal</p></td>
+<td><p>[&lt;&gt;2]</p></td>
+<td><p>2以外。</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt;</p></td>
+<td><p>大きい</p></td>
+<td><p>greater than</p></td>
+<td><p>[&gt;2]</p></td>
+<td><p>2より大きい。</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;</p></td>
+<td><p>小さい</p></td>
+<td><p>less than</p></td>
+<td><p>[&lt;2]</p></td>
+<td><p>2より小さい。</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt;=</p></td>
+<td><p>以上</p></td>
+<td><p>greater equal</p></td>
+<td><p>[&gt;=2]</p></td>
+<td><p>2以上。</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;=</p></td>
+<td><p>以下</p></td>
+<td><p>less equal</p></td>
+<td><p>[&lt;=2]</p></td>
+<td><p>2以下。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2>色の条件について<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>色は名前付きの8色の他、番号で指定可能で、全56色を指定できます。</p>
+<p>Excel2003までは、Excelでの色のパレットは56色だったことに由来します。</p>
+<table class="colwidths-given docutils align-default" id="id8">
+<caption><span class="caption-text">色の書式記号</span><a class="headerlink" href="#id8" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書式記号</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>使用例</p></th>
+<th class="head"><p>表示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[&lt;色名&gt;]</p></td>
+<td><div class="line-block">
+<div class="line">色の名前（8色）を指定します。</div>
+<div class="line">OSなどの言語環境によって色名の指定方法が変わります。日本語環境の場合は、日本語名で指定します。</div>
+<div class="line">指定可能な色の名前は、下記を参照してください。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">[青]##,###.0#</div>
+<div class="line">[赤]hh:mm a/p</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">12345.12 -&gt; 1,2345.12</div>
+<div class="line">11:45:34 -&gt; 11:45 a</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>[色&lt;番号&gt;]</p></td>
+<td><div class="line-block">
+<div class="line">色の番号（1から56番）を指定します。</div>
+<div class="line">色の見本については、外部サイトの <a class="reference external" href="http://dmcritchie.mvps.org/excel/colors.htm">Color Palette and the 56 Excel ColorIndex Colors</a> を参照してください。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">[色10]##,###.0#</div>
+<div class="line">[色7]hh:mm a/p</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">12345.12 -&gt; 1,2345.12</div>
+<div class="line">11:45:34 -&gt; 11:45 a</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default" id="id9">
+<caption><span class="caption-text">名前付きの色</span><a class="headerlink" href="#id9" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>色名（英語）</p></th>
+<th class="head"><p>色名（日本語）</p></th>
+<th class="head"><p>色番号</p></th>
+<th class="head"><p>RGB</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Black</p></td>
+<td><p>黒</p></td>
+<td><p>1</p></td>
+<td><p>#000000</p></td>
+</tr>
+<tr class="row-odd"><td><p>White</p></td>
+<td><p>白</p></td>
+<td><p>2</p></td>
+<td><p>#FFFFFF</p></td>
+</tr>
+<tr class="row-even"><td><p>Red</p></td>
+<td><p>赤</p></td>
+<td><p>3</p></td>
+<td><p>#FF0000</p></td>
+</tr>
+<tr class="row-odd"><td><p>Green</p></td>
+<td><p>緑</p></td>
+<td><p>4</p></td>
+<td><p>#00FF00</p></td>
+</tr>
+<tr class="row-even"><td><p>Blue</p></td>
+<td><p>青</p></td>
+<td><p>5</p></td>
+<td><p>#0000FF</p></td>
+</tr>
+<tr class="row-odd"><td><p>Yellow</p></td>
+<td><p>黄</p></td>
+<td><p>6</p></td>
+<td><p>#FFFF00</p></td>
+</tr>
+<tr class="row-even"><td><p>Magenta</p></td>
+<td><p>紫</p></td>
+<td><p>7</p></td>
+<td><p>#FF00FF</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cyan</p></td>
+<td><p>水</p></td>
+<td><p>8</p></td>
+<td><p>#00FFFF</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Excel内部における色の保持の仕方</p>
+<p>日本語環境のExcelでは色を書式上で指定する際には、日本語の色名で指定しますが、内部的には英字名で保持しています。</p>
+<p>そのため、POIやJExcelAPIなどのライブラリで書式を取得すると英字名で取得されます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>色で違いを表現する場合の注意事項</p>
+<p>色で違いを表現する場合は、色による違いだけなので、文字列としては区別が付かなくなり、プログラムで処理するようなときは面倒です。</p>
+<p>例えば、数値用の書式で正と負の書式を黒か赤で表現する「0_);[Red]\(0\)」は、印刷したときや文字列として取得した場合、色による違いだけなので区別がつかなくなります。</p>
+<p>また、予め用意されている名前付きの色は輝度が高く、白黒で印刷すると薄く表示されるためあまりお薦めしません。比較的輝度が低い「青」「赤」を使用する程度にした方がよいと思います。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>ロケールの条件について<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ロケールを書式に指定すると、その言語専用の表記に変換され表示されます。</p>
+<p>Miscrosoftでは、ロケールごとにIDを振り、 <em>ロケールID（LCID）</em> と呼ばれています。</p>
+<table class="colwidths-given docutils align-default" id="id10">
+<caption><span class="caption-text">ロケールの書式記号</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書式記号</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>使用例</p></th>
+<th class="head"><p>表示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[$-&lt;LCID&gt;]</p></td>
+<td><div class="line-block">
+<div class="line">LCIDは、16進数の値を指定します。</div>
+<div class="line">LCIDは、外部サイトの <a class="reference external" href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a> を参照してください。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">[$-411]dddd</div>
+<div class="line">[$-409]dddd</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2001/1/3 -&gt; 水曜日</div>
+<div class="line">2001/1/3 -&gt; Wednesday</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default" id="id11">
+<caption><span class="caption-text">よく使用するロケール</span><a class="headerlink" href="#id11" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ロケール名</p></th>
+<th class="head"><p>言語コード</p></th>
+<th class="head"><p>16進数</p></th>
+<th class="head"><p>10進数</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>英語 (U.K.)</p></td>
+<td><p>en-gb</p></td>
+<td><p>0x809</p></td>
+<td><p>2057</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (U.S.)</p></td>
+<td><p>en-us</p></td>
+<td><p>0x409</p></td>
+<td><p>1033</p></td>
+</tr>
+<tr class="row-even"><td><p>日本語</p></td>
+<td><p>ja</p></td>
+<td><p>0x411</p></td>
+<td><p>1041</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>特別なLCID</p>
+<p>Excelの中で予め用意されている書式の中で、LCIDの一覧にない <em>[$-F800]</em> と <em>[$-F400]</em> があります。
+これらは、システムの日付、時刻の書式に指定されて、OSの言語によって変わる書式です。</p>
+<p>例えば、日付用の書式「[$-F800]dddd\,\ mmmm\ dd\,\ yyyy」は、日本語環境では「yyyy&quot;年&quot;m&quot;月&quot;d&quot;日&quot;」として処理されます。
+さらに、時間用の書式「[$-F400]h:mm:ss\ AM/PM」は、日本語環境では「h:mm:ss」として処理されます。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>記号付きロケールの条件について<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>会計の書式において、単位の記号（ <code class="docutils literal notranslate"><span class="pre">￥,</span> <span class="pre">$</span></code> ）は、通常は先頭に付く。</p>
+<p>しかし、ドイツマルクの記号（ <code class="docutils literal notranslate"><span class="pre">€</span></code> ）など一部、最後尾に付く場合がある。
+そのような場合、特殊なロケールの条件式が使われる。</p>
+<p>形式は、 <code class="docutils literal notranslate"><span class="pre">[$&lt;記号&gt;-&lt;ロケールコード(LCID)&gt;]</span></code> (例. [$€-407]) であるが、記述した位置に、<code class="docutils literal notranslate"><span class="pre">&lt;記号&gt;</span></code> が出力される。</p>
+</div>
+<div class="section" id="id6">
+<h2>言語固有の数値の表現について<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>全角の数字など言語固有の数値の表現を指定することができます。</p>
+<p>これは、 <strong>Excel2002以降（Excel XP）でのみ利用可能な機能</strong> であり、Excel2000以前ではサポートされません。</p>
+<table class="colwidths-given docutils align-default" id="id12">
+<caption><span class="caption-text">日本語環境で利用可能な数値表示</span><a class="headerlink" href="#id12" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書式記号</p></th>
+<th class="head"><p>言語</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>使用例</p></th>
+<th class="head"><p>表示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[DBNum1]</p></td>
+<td><p>日本語</p></td>
+<td><p>数字を漢数字で表示します。</p></td>
+<td><div class="line-block">
+<div class="line">[DBNum1][$-411]G/標準</div>
+<div class="line">[DBNum1][$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">12345 -&gt; 一万二千三百四十五</div>
+<div class="line">1959/12/10 -&gt; 昭和三十四年十二月十日</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>[DBNum2]</p></td>
+<td><p>日本語</p></td>
+<td><p>数字を大字（だいじ）で表示します。</p></td>
+<td><div class="line-block">
+<div class="line">[DBNum2][$-411]G/標準</div>
+<div class="line">[DBNum2][$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">12345 -&gt; 壱萬弐阡参百四拾伍</div>
+<div class="line">1959/12/10 -&gt; 昭和参拾四年壱拾弐月壱拾日</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>[DBNum3]</p></td>
+<td><p>日本語</p></td>
+<td><p>数字を全角で表示します。</p></td>
+<td><div class="line-block">
+<div class="line">[DBNum3][$-411]G/標準</div>
+<div class="line">[DBNum3][$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">12345 -&gt; １２３４５</div>
+<div class="line">1959/12/10 -&gt; 昭和３４年１２月１０日</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>言語固有の数値の表示条件の注意事項</p>
+<p>数値の表示表現をする <em>[DBNumN]</em> は、言語ごとに意味が異なるため、他の言語環境でExcelファイルを開いたときを考慮して、
+通常はロケールの条件も一緒に定義します。</p>
+<p>他の言語で利用可能な数値表現は、外部サイトの <a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">Libre Officeの数の書式コード</a>
+が参考になると思います。</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">関連リンク</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/excel-cellformatter">GitHub</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
+</ul>
+
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id3">1.2. 前提環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#restriction">1.3. 制限事項</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">2. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">3.1. キャッシュの制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id5">3.2. フォーマッタの事前登録</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id6">3.3. 元号の定義の変更</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">4. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">4.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">4.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">4.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">4.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_other.html">5. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_other.html#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-12-2021-02-22">6.1. ver.0.12 - 2021-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.2. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.3. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.4. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.5. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.6. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.7. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.8. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.9. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.10. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.11. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.12. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.13. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.14. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.15. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.16. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.17. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.18. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/format_basic_condition.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">条件式について</a></li> 
+      </ul>
+    </div>
+<!-- my theme custom extrahead beacon -->
+<script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	jQuery(function () {
+		// コンテンツ用
+		$('body').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
+		
+	});
+</script>
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37313068-4', 'auto');
+  ga('send', 'pageview');
+  
+</script>
+
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2021, T.TSUCHIE.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateTerm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.term</a> &gt; <span class="el_source">DateTerm.java</span></div><h1>DateTerm.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.term;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.mygreen.cellformatter.lang.Era;
+import com.github.mygreen.cellformatter.lang.EraPeriod;
+import com.github.mygreen.cellformatter.lang.EraResolver;
+import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
+import com.github.mygreen.cellformatter.lang.MSLocale;
+import com.github.mygreen.cellformatter.lang.MessageResolver;
+import com.github.mygreen.cellformatter.lang.Utils;
+
+
+/**
+ * 日時の書式の項
+ *
+ * @version 0.5
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L27">public abstract class DateTerm implements Term&lt;Calendar&gt; {</span>
+
+<span class="fc" id="L29">    protected static final Logger logger = LoggerFactory.getLogger(DateTerm.class);</span>
+
+<span class="fc" id="L31">    protected static final MessageResolver messageResolver = new MessageResolver(&quot;com.github.mygreen.cellformatter.label&quot;);</span>
+
+<span class="fc" id="L33">    protected static final EraResolver eraResolver = new EraResolver();</span>
+
+    @Override
+    public String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale) {
+        // このメソッドは実質呼ばれない。
+<span class="nc" id="L38">        return format(value, formatLocale, runtimeLocale, false);</span>
+    }
+
+    /**
+     * 値をフォーマットする。
+     * @param value フォーマット対象の値。
+     * @param formatLocale 書式中に指定されたロケール。
+     * @param runtimeLocale 実行時にしていされたロケール。
+     * @param isStartDate1904 日時が1904年始まりかどうか。
+     * @return フォーマットされた文字列。nullは返さない。
+     */
+    public abstract String format(Calendar value, MSLocale formatLocale, Locale runtimeLocale, boolean isStartDate1904);
+
+    /**
+     * 経過時間を計算するときの基準日を取得する。
+     * ・1900/2/28までは、-1日ずれる。Excelは1900年は1月0日(=1899年12月31日)から始まるため、1日多い。
+     * ・1900/3/1以降は、-2日ずれず。Excel は、閏日ではない1900年2月29日(=1900年3月1日)が存在するため1日多い。
+     * @param date
+     * @param isStartDate1904
+     * @return
+     */
+    private static long getElapsedZeroTime(final Date date, final boolean isStartDate1904) {
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if(isStartDate1904) {</span>
+<span class="fc" id="L62">            return ExcelDateUtils.getExcelZeroDateTime(isStartDate1904);</span>
+        } else {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if(ExcelDateUtils.MILLISECONDS_19000301 &lt;= date.getTime()) {</span>
+                // 1900-03-01以降
+<span class="fc" id="L66">                return ExcelDateUtils.MILLISECONDS_19000101 - TimeUnit.DAYS.toMillis(2);</span>
+            } else {
+<span class="fc" id="L68">                return ExcelDateUtils.MILLISECONDS_19000101 - TimeUnit.DAYS.toMillis(1);</span>
+            }
+        }
+
+    }
+
+    /**
+     * [h] - 24時を超える経過時間の処理
+     */
+    public static DateTerm elapsedHour(final String format) {
+<span class="fc" id="L78">        return new ElapsedHourTerm(format);</span>
+    }
+
+
+    /**
+     * [m] - 60分を超える経過時間の処理
+     */
+    public static DateTerm elapsedMinute(final String format) {
+<span class="fc" id="L86">        return new ElapsedMinuteTerm(format);</span>
+    }
+
+    /**
+     * [s] - 60秒を超える経過時間の処理
+     */
+    public static DateTerm elapsedSecond(final String format) {
+<span class="fc" id="L93">        return new ElapsedSecondTerm(format);</span>
+    }
+
+    /**
+     * y - 年の場合の処理
+     */
+    public static DateTerm year(final String format) {
+<span class="fc" id="L100">        return new YearTerm(format);</span>
+    }
+
+    /**
+     * g - 元号の名称の場合の処理
+     */
+    public static DateTerm eraName(final String format) {
+<span class="fc" id="L107">        return new EraNameTerm(format);</span>
+    }
+
+    /**
+     * e - 元号の年の場合の処理
+     */
+    public static DateTerm eraYear(final String format) {
+<span class="fc" id="L114">        return new EraYearTerm(format);</span>
+    }
+
+    /**
+     * r - 元号の名称と年の場合の処理
+     */
+    public static DateTerm eraNameYear(final String format) {
+<span class="fc" id="L121">        return new EraNameYearTerm(format);</span>
+    }
+
+    /**
+     * m - 月の場合の処理
+     */
+    public static DateTerm month(final String format) {
+<span class="fc" id="L128">        return new MonthTerm(format);</span>
+    }
+
+    /**
+     * d - 日の場合の処理
+     */
+    public static DateTerm day(final String format) {
+<span class="fc" id="L135">        return new DayTerm(format);</span>
+    }
+
+    /**
+     * a - 曜日の名称場合の処理
+     */
+    public static DateTerm weekName(final String format) {
+<span class="fc" id="L142">        return new WeekName(format);</span>
+    }
+
+    /**
+     * n - 曜日の名称場合の処理（OpenOffice用）
+     */
+    public static DateTerm weekNameForOO(final String format) {
+<span class="nc" id="L149">        return new WeekNameForOO(format);</span>
+    }
+
+    /**
+     * ww - 年の週番号（OpenOffice用）
+     */
+    public static DateTerm weekNumber(final String format) {
+<span class="fc" id="L156">        return new WeekNumberTerm(format);</span>
+    }
+
+    /**
+     * h - 時間の場合の処理
+     * @param format
+     * @param half 12時間表示かどうか
+     */
+    public static DateTerm hour(final String format, final boolean half) {
+<span class="fc" id="L165">        return new HourTerm(format, half);</span>
+    }
+
+    /**
+     * m - 分の場合の処理
+     */
+    public static DateTerm minute(final String format) {
+<span class="fc" id="L172">        return new MinuteTerm(format);</span>
+    }
+
+    /**
+     * s - 秒の場合の処理
+     */
+    public static DateTerm second(final String format) {
+<span class="fc" id="L179">        return new SecondTerm(format);</span>
+    }
+
+    /**
+     * q - 四半期の場合の処理（OpenOffice用）
+     */
+    public static DateTerm quater(final String format) {
+<span class="fc" id="L186">        return new QuaterTerm(format);</span>
+    }
+
+    /**
+     * AM/PM - 午前／午後の場合の処理
+     */
+    public static DateTerm amPm(final String format) {
+<span class="fc" id="L193">        return new AmPmTerm(format);</span>
+    }
+
+    /**
+     * [h] - 24時を超える経過時間の処理
+     */
+    public static class ElapsedHourTerm extends DateTerm {
+
+        /** ミリ秒を時間に直すための基底 */
+        private static final long BASE = 1000*60*60;
+
+        private final String format;
+
+<span class="fc" id="L206">        public ElapsedHourTerm(final String format) {</span>
+<span class="fc" id="L207">            this.format = format;</span>
+<span class="fc" id="L208">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L213">            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">            if(logger.isInfoEnabled()) {</span>
+<span class="nc" id="L215">                logger.info(&quot;ElapsedHour:calendar={}, zeroTime={}.&quot;, ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));</span>
+            }
+
+<span class="fc" id="L218">            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);</span>
+<span class="fc" id="L219">            final int formatLength = format.length();</span>
+<span class="fc" id="L220">            return Utils.supplyZero(String.valueOf(time), formatLength);</span>
+        }
+
+        public String getFormat() {
+<span class="nc" id="L224">            return format;</span>
+        }
+
+    }
+
+    /**
+     * [m] - 60分を超える経過時間の処理
+     */
+    public static class ElapsedMinuteTerm extends DateTerm {
+
+        /** ミリ秒を分に直すための基底 */
+        private static final long BASE = 1000*60;
+
+        private final String format;
+
+<span class="fc" id="L239">        public ElapsedMinuteTerm(final String format) {</span>
+<span class="fc" id="L240">            this.format = format;</span>
+<span class="fc" id="L241">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L246">            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            if(logger.isInfoEnabled()) {</span>
+<span class="nc" id="L248">                logger.info(&quot;ElapsedMinute:calendar={}, zeroTime={}.&quot;, ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));</span>
+            }
+
+<span class="fc" id="L251">            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);</span>
+<span class="fc" id="L252">            final int formatLength = format.length();</span>
+<span class="fc" id="L253">            return Utils.supplyZero(String.valueOf(time), formatLength);</span>
+        }
+
+        public String getFormat() {
+<span class="nc" id="L257">            return format;</span>
+        }
+
+    }
+
+    /**
+     * [s] - 60秒を超える経過時間の処理
+     */
+    public static class ElapsedSecondTerm extends DateTerm {
+
+        /** ミリ秒を秒に直すための基底 */
+        private static final long BASE = 1000;
+
+        private final String format;
+
+<span class="fc" id="L272">        public ElapsedSecondTerm(final String format) {</span>
+<span class="fc" id="L273">            this.format = format;</span>
+<span class="fc" id="L274">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L279">            final long zeroTime = getElapsedZeroTime(cal.getTime(), isStartDate1904);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">            if(logger.isInfoEnabled()) {</span>
+<span class="nc" id="L281">                logger.info(&quot;ElapsedSecond:calendar={}, zeroTime={}.&quot;, ExcelDateUtils.formatDate(cal.getTime()), ExcelDateUtils.formatDate(new Date(zeroTime)));</span>
+            }
+
+<span class="fc" id="L284">            final long time = (long) ((cal.getTime().getTime() - zeroTime) / BASE);</span>
+<span class="fc" id="L285">            final int formatLength = format.length();</span>
+<span class="fc" id="L286">            return Utils.supplyZero(String.valueOf(time), formatLength);</span>
+        }
+
+        public String getFormat() {
+<span class="nc" id="L290">            return format;</span>
+        }
+
+    }
+
+    /**
+     * y - 年の場合
+     */
+    public static class YearTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L302">        public YearTerm(final String format) {</span>
+<span class="fc" id="L303">            this.format = format;</span>
+<span class="fc" id="L304">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L309">            final String value = String.valueOf(cal.get(Calendar.YEAR));</span>
+<span class="fc" id="L310">            final int formatLength = format.length();</span>
+
+            // 2桁、4桁補正する
+<span class="fc bfc" id="L313" title="All 2 branches covered.">            if(formatLength &lt;= 2) {</span>
+<span class="fc" id="L314">                return Utils.supplyZero(value, 2).substring(2);</span>
+            } else {
+<span class="fc" id="L316">                return Utils.supplyZero(value, 4);</span>
+            }
+        }
+
+        public String getFormat() {
+<span class="fc" id="L321">            return format;</span>
+        }
+
+    }
+
+    /**
+     * g - 元号の名称の場合
+     */
+    public static class EraNameTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L333">        public EraNameTerm(final String format) {</span>
+<span class="fc" id="L334">            this.format = format;</span>
+<span class="fc" id="L335">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L340">            final Date date = cal.getTime();</span>
+
+            final Era era;
+<span class="fc bfc" id="L343" title="All 2 branches covered.">            if(formatLocale != null) {</span>
+<span class="fc" id="L344">                era = eraResolver.getEra(formatLocale);</span>
+            } else {
+<span class="fc" id="L346">                era = eraResolver.getEra(runtimeLocale);</span>
+            }
+
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">            if(era.isUnkndown()) {</span>
+<span class="nc" id="L350">                return &quot;&quot;;</span>
+            }
+
+<span class="fc" id="L353">            final EraPeriod period = era.getTargetPeriod(date);</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">            if(period.isUnknown()) {</span>
+<span class="nc" id="L355">                return &quot;&quot;;</span>
+            }
+
+<span class="fc" id="L358">            final int formatLength = format.length();</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">            if(formatLength == 1) {</span>
+<span class="fc" id="L360">                return period.getAbbrevRomanName();</span>
+
+<span class="fc bfc" id="L362" title="All 2 branches covered.">            } else if(formatLength == 2) {</span>
+<span class="fc" id="L363">                return period.getAbbrevName();</span>
+
+            } else {
+<span class="fc" id="L366">                return period.getName();</span>
+            }
+        }
+
+        public String getFormat() {
+<span class="nc" id="L371">            return format;</span>
+        }
+
+    }
+
+    /**
+     * e - 元号の年の場合
+     */
+    public static class EraYearTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L383">        public EraYearTerm(final String format) {</span>
+<span class="fc" id="L384">            this.format = format;</span>
+<span class="fc" id="L385">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L390">            final int formatLength = format.length();</span>
+<span class="fc" id="L391">            final Date date = cal.getTime();</span>
+
+            final Era era;
+<span class="fc bfc" id="L394" title="All 2 branches covered.">            if(formatLocale != null) {</span>
+<span class="fc" id="L395">                era = eraResolver.getEra(formatLocale);</span>
+            } else {
+<span class="fc" id="L397">                era = eraResolver.getEra(runtimeLocale);</span>
+            }
+
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">            if(era.isUnkndown()) {</span>
+                // 該当する時代の定義がない場合
+<span class="nc" id="L402">                String value = String.valueOf(cal.get(Calendar.YEAR));</span>
+<span class="nc" id="L403">                return Utils.supplyZero(value, formatLength);</span>
+            }
+
+<span class="fc" id="L406">            final EraPeriod period = era.getTargetPeriod(date);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">            if(period.isUnknown()) {</span>
+                // 期間が不明な場合
+<span class="nc" id="L409">                String value = String.valueOf(cal.get(Calendar.YEAR));</span>
+<span class="nc" id="L410">                return Utils.supplyZero(value, formatLength);</span>
+
+            }
+
+<span class="fc" id="L414">            final String value = String.valueOf(period.getEraYear(cal));</span>
+<span class="fc" id="L415">            return Utils.supplyZero(value, formatLength);</span>
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L420">            return format;</span>
+        }
+
+    }
+
+    /**
+     * r - 元号の名称と年の場合
+     */
+    public static class EraNameYearTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L432">        public EraNameYearTerm(final String format) {</span>
+<span class="fc" id="L433">            this.format = format;</span>
+<span class="fc" id="L434">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L439">            final int formatLength = format.length();</span>
+<span class="fc" id="L440">            final Date date = cal.getTime();</span>
+
+            final Era era;
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">            if(formatLocale != null) {</span>
+<span class="nc" id="L444">                era = eraResolver.getEra(formatLocale);</span>
+            } else {
+<span class="fc" id="L446">                era = eraResolver.getEra(runtimeLocale);</span>
+            }
+
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">            if(era.isUnkndown()) {</span>
+                // 該当する時代の定義がない場合
+<span class="nc" id="L451">                String value = String.valueOf(cal.get(Calendar.YEAR));</span>
+<span class="nc" id="L452">                return Utils.supplyZero(value, formatLength);</span>
+            }
+
+<span class="fc" id="L455">            final EraPeriod period = era.getTargetPeriod(date);</span>
+<span class="pc bpc" id="L456" title="1 of 2 branches missed.">            if(period.isUnknown()) {</span>
+                // 期間が不明な場合
+<span class="nc" id="L458">                String value = String.valueOf(cal.get(Calendar.YEAR));</span>
+<span class="nc" id="L459">                return Utils.supplyZero(value, formatLength);</span>
+
+            }
+
+<span class="fc" id="L463">            StringBuilder sb = new StringBuilder();</span>
+
+            // 元号の組み立て（2桁以上の時に元号を追加）
+<span class="fc bfc" id="L466" title="All 2 branches covered.">            if(formatLength &gt;= 2) {</span>
+<span class="fc" id="L467">                sb.append(period.getName());</span>
+            }
+
+            // 年の組み立て
+<span class="fc" id="L471">            final String strYear = String.valueOf(period.getEraYear(cal));</span>
+<span class="fc" id="L472">            sb.append(Utils.supplyZero(strYear, 2));</span>
+
+<span class="fc" id="L474">            return sb.toString();</span>
+        }
+
+        public String getFormat() {
+<span class="nc" id="L478">            return format;</span>
+        }
+
+    }
+
+    /**
+     * m - 月の場合
+     */
+    public static class MonthTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L490">        public MonthTerm(final String format) {</span>
+<span class="fc" id="L491">            this.format = format;</span>
+<span class="fc" id="L492">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L497">            final int value = cal.get(Calendar.MONTH) + 1;</span>
+<span class="fc" id="L498">            final int formatLength = format.length();</span>
+
+<span class="fc bfc" id="L500" title="All 2 branches covered.">            if(formatLength == 1) {</span>
+<span class="fc" id="L501">                return String.valueOf(value);</span>
+
+<span class="fc bfc" id="L503" title="All 2 branches covered.">            } else if(formatLength == 2) {</span>
+<span class="fc" id="L504">                return Utils.supplyZero(String.valueOf(value), 2);</span>
+
+<span class="fc bfc" id="L506" title="All 2 branches covered.">            } else if(formatLength == 3) {</span>
+                // 月名の先頭3文字
+<span class="fc" id="L508">                final String key = String.format(&quot;month.%d.abbrev&quot;, value);</span>
+<span class="fc" id="L509">                return DateTerm.messageResolver.getMessage(formatLocale, key);</span>
+
+<span class="fc bfc" id="L511" title="All 2 branches covered.">            } else if(formatLength == 4) {</span>
+                // 月名
+<span class="fc" id="L513">                final String key = String.format(&quot;month.%d.name&quot;, value);</span>
+<span class="fc" id="L514">                return DateTerm.messageResolver.getMessage(formatLocale, key);</span>
+
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">            } else if(formatLength == 5) {</span>
+                // 月名の先頭1文字
+<span class="fc" id="L518">                final String key = String.format(&quot;month.%d.leading&quot;, value);</span>
+<span class="fc" id="L519">                return DateTerm.messageResolver.getMessage(formatLocale, key);</span>
+
+            } else {
+<span class="nc" id="L522">                return Utils.supplyZero(String.valueOf(value), 2);</span>
+            }
+        }
+
+        public String getFormat() {
+<span class="fc" id="L527">            return format;</span>
+        }
+
+    }
+
+    /**
+     * 曜日のインデックスを取得する。
+     * ・日曜始まりで、0から始まる。
+     * @param cal
+     * @return
+     */
+    private static int getWeekIndex(final Calendar cal) {
+<span class="fc" id="L539">        final int val = cal.get(Calendar.DAY_OF_WEEK);</span>
+<span class="pc bpc" id="L540" title="1 of 8 branches missed.">        switch(val) {</span>
+            case Calendar.SUNDAY:
+<span class="fc" id="L542">                return 0;</span>
+            case Calendar.MONDAY:
+<span class="fc" id="L544">                return 1;</span>
+            case Calendar.TUESDAY:
+<span class="fc" id="L546">                return 2;</span>
+            case Calendar.WEDNESDAY:
+<span class="fc" id="L548">                return 3;</span>
+            case Calendar.THURSDAY:
+<span class="fc" id="L550">                return 4;</span>
+            case Calendar.FRIDAY:
+<span class="fc" id="L552">                return 5;</span>
+            case Calendar.SATURDAY:
+<span class="fc" id="L554">                return 6;</span>
+        }
+
+<span class="nc" id="L557">        return 0;</span>
+    }
+
+    /**
+     * d - 日の場合
+     * ・dが3～4桁の場合は、英字の曜日。
+     */
+    public static class DayTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L568">        public DayTerm(final String format) {</span>
+<span class="fc" id="L569">            this.format = format;</span>
+<span class="fc" id="L570">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L575">            final int value = cal.get(Calendar.DAY_OF_MONTH);</span>
+<span class="fc" id="L576">            final int formatLength = format.length();</span>
+
+<span class="fc bfc" id="L578" title="All 2 branches covered.">            if(formatLength == 1) {</span>
+<span class="fc" id="L579">                return String.valueOf(value);</span>
+
+<span class="fc bfc" id="L581" title="All 2 branches covered.">            } else if(formatLength == 2) {</span>
+<span class="fc" id="L582">                return Utils.supplyZero(String.valueOf(value), 2);</span>
+
+<span class="fc bfc" id="L584" title="All 2 branches covered.">            } else if(formatLength == 3) {</span>
+                // 曜日の省略名
+<span class="fc" id="L586">                final int index = getWeekIndex(cal);</span>
+<span class="fc" id="L587">                final String key = String.format(&quot;week.%d.abbrev&quot;, index);</span>
+<span class="fc" id="L588">                return messageResolver.getMessage(formatLocale, key);</span>
+
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">            } else if(formatLength &gt;= 4) {</span>
+                // 曜日の正式名
+<span class="fc" id="L592">                final int index = getWeekIndex(cal);</span>
+<span class="fc" id="L593">                final String key = String.format(&quot;week.%d.name&quot;, index);</span>
+<span class="fc" id="L594">                return messageResolver.getMessage(formatLocale, key);</span>
+
+            } else {
+<span class="nc" id="L597">               return Utils.supplyZero(String.valueOf(value), 2);</span>
+            }
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L603">            return format;</span>
+        }
+
+    }
+
+    /**
+     * a- 日本語名称の曜日の場合
+     *
+     */
+    public static class WeekName extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L616">        public WeekName(final String format) {</span>
+<span class="fc" id="L617">            this.format = format;</span>
+<span class="fc" id="L618">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L623">            final int index = getWeekIndex(cal);</span>
+<span class="fc" id="L624">            final int formatLength = format.length();</span>
+
+<span class="fc bfc" id="L626" title="All 2 branches covered.">            if(formatLength &lt;= 3) {</span>
+<span class="fc" id="L627">                final String key = String.format(&quot;week.%d.abbrev&quot;, index);</span>
+<span class="fc" id="L628">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+            } else {
+<span class="fc" id="L630">                final String key = String.format(&quot;week.%d.name&quot;, index);</span>
+<span class="fc" id="L631">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+            }
+        }
+
+        public String getFormat() {
+<span class="nc" id="L636">            return format;</span>
+        }
+
+    }
+
+    /**
+     * n- OpenOffice用の日本語名称の曜日の場合
+     *
+     */
+    public static class WeekNameForOO extends DateTerm {
+
+        private final String format;
+
+<span class="nc" id="L649">        public WeekNameForOO(final String format) {</span>
+<span class="nc" id="L650">            this.format = format;</span>
+<span class="nc" id="L651">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="nc" id="L656">            final int index = getWeekIndex(cal);</span>
+<span class="nc" id="L657">            final int formatLength = format.length();</span>
+
+<span class="nc bnc" id="L659" title="All 2 branches missed.">            if(formatLength &lt;= 2) {</span>
+<span class="nc" id="L660">                final String key = String.format(&quot;week.%d.abbrev&quot;, index);</span>
+<span class="nc" id="L661">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+            } else {
+<span class="nc" id="L663">                final String key = String.format(&quot;week.%d.name&quot;, index);</span>
+<span class="nc" id="L664">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+            }
+        }
+
+        public String getFormat() {
+<span class="nc" id="L669">            return format;</span>
+        }
+
+    }
+
+    /**
+     * ww - 年の週番号を取得する。
+     *
+     */
+    public static class WeekNumberTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L682">        public WeekNumberTerm(final String format) {</span>
+<span class="fc" id="L683">            this.format = format;</span>
+<span class="fc" id="L684">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L689">            final int val = cal.get(Calendar.WEEK_OF_YEAR);</span>
+<span class="fc" id="L690">            return String.valueOf(val);</span>
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L695">            return format;</span>
+        }
+
+    }
+
+    /**
+     * h - 時間の場合
+     */
+    public static class HourTerm extends DateTerm {
+
+        private final String format;
+
+        /**
+         * 12時間表示かどうか。
+         */
+        private final boolean half;
+
+<span class="fc" id="L712">        public HourTerm(final String format, final boolean half) {</span>
+<span class="fc" id="L713">            this.format = format;</span>
+<span class="fc" id="L714">            this.half = half;</span>
+<span class="fc" id="L715">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+            final String value;
+<span class="fc bfc" id="L721" title="All 2 branches covered.">            if(isHalf()) {</span>
+<span class="fc" id="L722">                value = String.valueOf(cal.get(Calendar.HOUR));</span>
+            } else {
+<span class="fc" id="L724">                value = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));</span>
+            }
+
+<span class="fc" id="L727">            final int formatLength = format.length();</span>
+<span class="fc" id="L728">            return Utils.supplyZero(value, formatLength);</span>
+
+        }
+
+        public boolean isHalf() {
+<span class="fc" id="L733">            return half;</span>
+        }
+
+        public String getFormat() {
+<span class="nc" id="L737">            return format;</span>
+        }
+
+    }
+
+    /**
+     * m - 分の場合
+     */
+    public static class MinuteTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L749">        public MinuteTerm(final String format) {</span>
+<span class="fc" id="L750">            this.format = format;</span>
+<span class="fc" id="L751">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L756">            final String value = String.valueOf(cal.get(Calendar.MINUTE));</span>
+<span class="fc" id="L757">            final int formatLength = format.length();</span>
+<span class="fc" id="L758">            return Utils.supplyZero(value, formatLength);</span>
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L763">            return format;</span>
+        }
+
+    }
+
+    /**
+     * s - 秒の場合
+     */
+    public static class SecondTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L775">        public SecondTerm(final String format) {</span>
+<span class="fc" id="L776">            this.format = format;</span>
+<span class="fc" id="L777">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L782">            final String value = String.valueOf(cal.get(Calendar.SECOND));</span>
+<span class="fc" id="L783">            final int formatLength = format.length();</span>
+<span class="fc" id="L784">            return Utils.supplyZero(value, formatLength);</span>
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L789">            return format;</span>
+        }
+
+    }
+
+    /**
+     * AM/PM - 午前/午後の場合
+     */
+    public static class AmPmTerm extends DateTerm {
+
+        private final String format;
+
+        private final String am;
+
+        private final String pm;
+
+<span class="fc" id="L805">        public AmPmTerm(final String format) {</span>
+<span class="fc" id="L806">            this.format = format;</span>
+
+<span class="fc" id="L808">            String[] split = format.split(&quot;/&quot;);</span>
+<span class="pc bpc" id="L809" title="1 of 2 branches missed.">            if(split.length &gt;= 2) {</span>
+<span class="fc" id="L810">                this.am = split[0];</span>
+<span class="fc" id="L811">                this.pm = split[1];</span>
+            } else {
+<span class="nc" id="L813">                this.am = &quot;AM&quot;;</span>
+<span class="nc" id="L814">                this.pm = &quot;PM&quot;;</span>
+            }
+<span class="fc" id="L816">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L821">            final int val = cal.get(Calendar.AM_PM);</span>
+<span class="fc bfc" id="L822" title="All 2 branches covered.">            if(val == Calendar.AM) {</span>
+<span class="fc" id="L823">                return messageResolver.getMessage(formatLocale, &quot;day.am.name&quot;, am);</span>
+
+            } else {
+<span class="fc" id="L826">                return messageResolver.getMessage(formatLocale, &quot;day.pm.name&quot;, pm);</span>
+
+            }
+
+        }
+
+        public String getFormat() {
+<span class="nc" id="L833">            return format;</span>
+        }
+
+        public String getAm() {
+<span class="nc" id="L837">            return am;</span>
+        }
+
+        public String getPm() {
+<span class="nc" id="L841">            return pm;</span>
+        }
+
+    }
+
+    /**
+     * q - 四半期の場合
+     */
+    public static class QuaterTerm extends DateTerm {
+
+        private final String format;
+
+<span class="fc" id="L853">        public QuaterTerm(final String format) {</span>
+<span class="fc" id="L854">            this.format = format;</span>
+<span class="fc" id="L855">        }</span>
+
+        @Override
+        public String format(final Calendar cal, final MSLocale formatLocale, final Locale runtimeLocale, final boolean isStartDate1904) {
+
+<span class="fc" id="L860">            final int index = (cal.get(Calendar.MONTH) / 3) + 1;</span>
+
+            // Excelではなく実行環境のロケールによっても変わるため注意
+<span class="fc bfc" id="L863" title="All 2 branches covered.">            if(format.length() == 1) {</span>
+<span class="fc" id="L864">                final String key = String.format(&quot;quaterTerm.%d.abbrev&quot;, index);</span>
+<span class="fc" id="L865">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+
+            } else {
+<span class="fc" id="L868">                final String key = String.format(&quot;quaterTerm.%d.name&quot;, index);</span>
+<span class="fc" id="L869">                return messageResolver.getMessage(formatLocale, runtimeLocale, key);</span>
+            }
+
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberTerm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.term</a> &gt; <span class="el_source">NumberTerm.java</span></div><h1>NumberTerm.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.term;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Locale;
+
+import com.github.mygreen.cellformatter.lang.MSLocale;
+import com.github.mygreen.cellformatter.lang.Utils;
+import com.github.mygreen.cellformatter.number.FormattedNumber;
+import com.github.mygreen.cellformatter.number.NativeNumber;
+import com.github.mygreen.cellformatter.number.NumberPartType;
+import com.github.mygreen.cellformatter.tokenizer.Token;
+
+
+/**
+ * 数値の書式の項
+ *
+ * @version 0.10
+ * @author T.TSUCHIE
+ *
+ */
+<span class="fc" id="L23">public abstract class NumberTerm implements Term&lt;FormattedNumber&gt; {</span>
+
+    public static GeneralTerm general() {
+<span class="fc" id="L26">        return new GeneralTerm();</span>
+    }
+
+    public static ZeroTerm zero() {
+<span class="fc" id="L30">        return new ZeroTerm();</span>
+    }
+
+    public static SharpTerm sharp() {
+<span class="fc" id="L34">        return new SharpTerm();</span>
+    }
+
+    public static QuestionTerm question() {
+<span class="fc" id="L38">        return new QuestionTerm();</span>
+    }
+
+    public static ExponentTerm exponnet(final Token token) {
+<span class="fc" id="L42">        return new ExponentTerm(token);</span>
+    }
+
+    public static SeparatorTerm separator(final Token.Symbol token) {
+<span class="fc" id="L46">        return new SeparatorTerm(token);</span>
+    }
+
+    public static SymbolTerm symbol(final Token.Symbol token) {
+<span class="fc" id="L50">        return new SymbolTerm(token);</span>
+    }
+
+    public static DigitsTerm digits(final Token.Digits token) {
+<span class="fc" id="L54">        return new DigitsTerm(token);</span>
+    }
+
+    /**
+     * フォーマットの書式&quot;General&quot;を表現する項
+     *
+     */
+<span class="fc" id="L61">    public static class GeneralTerm extends NumberTerm {</span>
+
+        @Override
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
+
+<span class="fc" id="L66">            final double unsingedValue = Math.abs(number.getValue());</span>
+
+            /*
+             * NativeNumberの場合、そのまま返す。
+             * ・DBNumXがあると、指数表現などしない。
+             */
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if(number instanceof NativeNumber) {</span>
+<span class="fc" id="L73">                return new BigDecimal(unsingedValue).toPlainString();</span>
+            }
+
+            // 指数表記の場合
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if(isNumberAsExponent(unsingedValue)) {</span>
+<span class="fc" id="L78">                final DecimalFormat format = new DecimalFormat(&quot;0.#####E0&quot;);</span>
+<span class="fc" id="L79">                format.setRoundingMode(RoundingMode.HALF_UP);</span>
+
+<span class="fc" id="L81">                String str = format.format(unsingedValue);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                if(unsingedValue &gt;= 1) {</span>
+                    // 指数に符号を付ける
+<span class="fc" id="L84">                    str = str.replace(&quot;E&quot;, &quot;E+&quot;);</span>
+                }
+
+<span class="fc" id="L87">                return str;</span>
+
+            }
+
+<span class="fc" id="L91">            final BigDecimal num = new BigDecimal(unsingedValue);</span>
+<span class="fc" id="L92">            final String strNum = num.toPlainString();</span>
+
+            /*
+             * 小数部がない場合
+             * ・小数点で判断
+             */
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if(!strNum.contains(&quot;.&quot;)) {</span>
+<span class="fc" id="L99">                return strNum;</span>
+            }
+
+            /*
+             * 小数部がある場合、整数部の桁数によって精度を変える
+             * ・整数部が10桁以上ある場合は、小数部は省略される。
+             * ・整数部が10桁未満の場合、有効桁数が10桁になるように少数の精度が増える。
+             */
+<span class="fc" id="L107">            final String strIntPart = strNum.substring(0, strNum.indexOf(&quot;.&quot;));</span>
+<span class="fc" id="L108">            final int intLength = strIntPart.length();</span>
+
+            final String pattern;
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if(intLength &lt; 10) {</span>
+<span class="fc" id="L112">                StringBuilder f = new StringBuilder();</span>
+<span class="fc" id="L113">                f.append(&quot;0.&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                for(int i=0; i &lt; 10-intLength; i++) {</span>
+<span class="fc" id="L115">                    f.append(&quot;#&quot;);</span>
+                }
+
+<span class="fc" id="L118">                pattern = f.toString();</span>
+
+<span class="fc" id="L120">            } else {</span>
+<span class="fc" id="L121">                pattern = &quot;0&quot;;</span>
+            }
+
+<span class="fc" id="L124">            final DecimalFormat format = new DecimalFormat(pattern);</span>
+<span class="fc" id="L125">            format.setRoundingMode(RoundingMode.HALF_UP);</span>
+<span class="fc" id="L126">            return format.format(unsingedValue);</span>
+
+
+        }
+
+        /**
+         * 指数表示すべき数値を判定する
+         * @param unsingedValue 符号なしの数値
+         * @return true 指数表示する。
+         */
+        private boolean isNumberAsExponent(final double unsingedValue) {
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            if(unsingedValue == 0.0d) {</span>
+<span class="fc" id="L139">                return false;</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            } else if(unsingedValue &gt;= 100000000000.0d) {</span>
+<span class="fc" id="L142">                return true;</span>
+
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            } else if(unsingedValue &lt;= 0.0000000001d) {</span>
+<span class="fc" id="L145">                return true;</span>
+
+            } else {
+<span class="fc" id="L148">                return false;</span>
+            }
+
+        }
+    }
+
+    /**
+     * 数値のフォーマット部分の項を表す抽象クラス。
+     *
+     */
+<span class="fc" id="L158">    public static abstract class FormattedTerm extends NumberTerm {</span>
+
+        /** 桁のインデックス */
+        protected int index;
+
+        /** 書式の部分 */
+        protected NumberPartType partType;
+
+        /** 書式の部分の最後かどうか */
+        protected boolean lastPart;
+
+        /** 桁の区切り文字を出力するかどうか */
+        protected boolean outSepearator;
+
+        public FormattedTerm index(final int index) {
+<span class="nc" id="L173">            this.index = index;</span>
+<span class="nc" id="L174">            return this;</span>
+        }
+
+        public FormattedTerm partType(final NumberPartType partType) {
+<span class="nc" id="L178">            this.partType = partType;</span>
+<span class="nc" id="L179">            return this;</span>
+        }
+
+        public FormattedTerm lastPart(final boolean lastPart) {
+<span class="nc" id="L183">            this.lastPart = lastPart;</span>
+<span class="nc" id="L184">            return this;</span>
+        }
+
+        /**
+         * 数値の部分に対する桁の値を取得する。
+         * @param number
+         * @return
+         */
+        protected String getNumber(final FormattedNumber number) {
+
+<span class="pc bpc" id="L194" title="1 of 7 branches missed.">            switch(partType) {</span>
+                case Integer:
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                    if(isLastPart()) {</span>
+<span class="fc" id="L197">                        return number.asDecimal().getIntegerPartAfter(getIndex());</span>
+                    } else {
+<span class="fc" id="L199">                        return number.asDecimal().getIntegerPart(getIndex());</span>
+                    }
+
+                case Decimal:
+<span class="fc" id="L203">                    return number.asDecimal().getDecimalPart(getIndex());</span>
+
+                case Exponent:
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                    if(isLastPart()) {</span>
+<span class="fc" id="L207">                        return number.asExponent().getExponentPartAfter(getIndex());</span>
+                    } else {
+<span class="fc" id="L209">                        return number.asExponent().getExponentPart(getIndex());</span>
+                    }
+                case Denominator:
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                    if(isLastPart()) {</span>
+<span class="fc" id="L213">                        return number.asFraction().getDenominatorPartAfter(getIndex());</span>
+                    } else {
+<span class="fc" id="L215">                        return number.asFraction().getDenominatorPart(getIndex());</span>
+                    }
+
+                case Numerator:
+
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                    if(isLastPart()) {</span>
+<span class="fc" id="L221">                        return number.asFraction().getNumeratorPartAfter(getIndex());</span>
+                    } else {
+<span class="fc" id="L223">                        return number.asFraction().getNumeratorPart(getIndex());</span>
+                    }
+
+                case WholeNumber:
+<span class="fc bfc" id="L227" title="All 2 branches covered.">                    if(isLastPart()) {</span>
+<span class="fc" id="L228">                        return number.asFraction().getWholeNumberPartAfter(getIndex());</span>
+                    } else {
+<span class="fc" id="L230">                        return number.asFraction().getWholeNumberPart(getIndex());</span>
+                    }
+
+                default:
+<span class="nc" id="L234">                    return &quot;&quot;;</span>
+            }
+
+
+        }
+
+        public int getIndex() {
+<span class="fc" id="L241">            return index;</span>
+        }
+
+        public void setIndex(int index) {
+<span class="fc" id="L245">            this.index = index;</span>
+<span class="fc" id="L246">        }</span>
+
+        public NumberPartType getPartType() {
+<span class="fc" id="L249">            return partType;</span>
+        }
+
+        public void setPart(NumberPartType partType) {
+<span class="fc" id="L253">            this.partType = partType;</span>
+<span class="fc" id="L254">        }</span>
+
+        public boolean isLastPart() {
+<span class="fc" id="L257">            return lastPart;</span>
+        }
+
+        public void setLastPart(boolean lastPart) {
+<span class="fc" id="L261">            this.lastPart = lastPart;</span>
+<span class="fc" id="L262">        }</span>
+
+        public boolean isOutSepearator() {
+<span class="nc" id="L265">            return outSepearator;</span>
+        }
+
+        public void setOutSepearator(boolean outSepearator) {
+<span class="nc" id="L269">            this.outSepearator = outSepearator;</span>
+<span class="nc" id="L270">        }</span>
+
+    }
+
+    /**
+     * フォーマットの書式&quot;0&quot;の記号。
+     * ・出力する項がない場合は、0を出力する。
+     */
+<span class="fc" id="L278">    public static class ZeroTerm extends FormattedTerm {</span>
+
+        private static final String ZERO = &quot;0&quot;;
+
+        @Override
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
+
+<span class="fc" id="L285">            String num = getNumber(number);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            if(num.isEmpty()) {</span>
+<span class="fc" id="L287">                return ZERO;</span>
+            }
+
+<span class="fc" id="L290">            return num;</span>
+        }
+
+    }
+
+    /**
+     * フォーマットの書式&quot;#&quot;の記号。
+     * ・出力する項がない場合は、何も出力しない。
+     *
+     */
+<span class="fc" id="L300">    public static class SharpTerm extends FormattedTerm {</span>
+
+        @Override
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
+<span class="fc" id="L304">            String num = getNumber(number);</span>
+<span class="fc" id="L305">            return num;</span>
+        }
+
+    }
+
+    /**
+     * フォーマットの書式&quot;?&quot;の記号。
+     * ・出力する項がない場合は、半角スペースを出力する。
+     *
+     */
+<span class="fc" id="L315">    public static class QuestionTerm extends FormattedTerm {</span>
+
+        private static final String SPACE = &quot; &quot;;
+
+        @Override
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
+<span class="fc" id="L321">            String num = getNumber(number);</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">            if(num.isEmpty()) {</span>
+<span class="fc" id="L323">                return SPACE;</span>
+            }
+
+<span class="fc" id="L326">            return num;</span>
+        }
+
+    }
+
+    /**
+     * フォーマットの書式の指数&quot;E&quot;を表現する項。
+     * ・指数部の符号も出力する。
+     *
+     */
+    public static class ExponentTerm extends NumberTerm {
+
+        /**
+         * 符号
+         * ・ただし、符号がない場合がある。
+         * ・出力するときには、設定された符号は無視する。
+         */
+        private final Token token;
+
+        /**
+         * 指数の記号。
+         * ・パターンによって、大文字、小文字がある。
+         */
+        private final String exponentSymbol;
+
+<span class="fc" id="L351">        public ExponentTerm(final Token token) {</span>
+<span class="fc" id="L352">            this.token = token;</span>
+
+<span class="fc" id="L354">            final String vale = token.getValue();</span>
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">            if(vale.startsWith(&quot;E&quot;)) {</span>
+<span class="fc" id="L356">                this.exponentSymbol = &quot;E&quot;;</span>
+            } else {
+<span class="nc" id="L358">                this.exponentSymbol = &quot;e&quot;;</span>
+            }
+<span class="fc" id="L360">        }</span>
+
+        @Override
+        public String format(final FormattedNumber number, final MSLocale formatLocale, final Locale runtimeLocale) {
+
+<span class="fc bfc" id="L365" title="All 2 branches covered.">            if(number.asExponent().isExponentPositive()) {</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">                if(Utils.startsWithIgnoreCase(getToken().getValue(), &quot;E-&quot;)) {</span>
+                    // 指数がマイナスの場合は、正の時に符号は付与しない。
+<span class="nc" id="L368">                    return exponentSymbol;</span>
+                } else {
+<span class="fc" id="L370">                    return exponentSymbol + &quot;+&quot;;</span>
+                }
+            } else {
+<span class="fc" id="L373">                return exponentSymbol + &quot;-&quot;;</span>
+            }
+        }
+
+        public Token getToken() {
+<span class="fc" id="L378">            return token;</span>
+        }
+
+        public String getExponentSymbol() {
+<span class="nc" id="L382">            return exponentSymbol;</span>
+        }
+
+    }
+
+    /**
+     * 桁区切り文字の処理
+     * ・区切り文字の挿入は、数値の出力時の行う。
+     */
+    public static class SeparatorTerm extends NumberTerm {
+
+        private final Token.Symbol token;
+
+<span class="fc" id="L395">        public SeparatorTerm(final Token.Symbol token) {</span>
+<span class="fc" id="L396">            this.token = token;</span>
+<span class="fc" id="L397">        }</span>
+
+        @Override
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
+<span class="fc" id="L401">            return &quot;&quot;;</span>
+        }
+
+        public Token.Symbol getToken() {
+<span class="nc" id="L405">            return token;</span>
+        }
+
+    }
+
+    /**
+     * 記号の処理
+     *
+     * @author T.TSUCHIE
+     *
+     */
+    public static class SymbolTerm extends NumberTerm {
+
+        private final Token.Symbol token;
+
+<span class="fc" id="L420">        public SymbolTerm(final Token.Symbol token) {</span>
+<span class="fc" id="L421">            this.token = token;</span>
+<span class="fc" id="L422">        }</span>
+
+        @Override
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
+<span class="fc" id="L426">            return token.getValue();</span>
+        }
+
+        public Token.Symbol getToken() {
+<span class="fc" id="L430">            return token;</span>
+        }
+
+    }
+
+    public static class DigitsTerm extends NumberTerm {
+
+        private final Token.Digits token;
+
+<span class="fc" id="L439">        public DigitsTerm(Token.Digits token) {</span>
+<span class="fc" id="L440">            this.token = token;</span>
+<span class="fc" id="L441">        }</span>
+
+        @Override
+        public String format(final FormattedNumber value, final MSLocale formatLocale, final Locale runtimeLocale) {
+<span class="fc" id="L445">            return token.getValue();</span>
+        }
+
+        public Token.Digits getToken() {
+<span class="fc" id="L449">            return token;</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

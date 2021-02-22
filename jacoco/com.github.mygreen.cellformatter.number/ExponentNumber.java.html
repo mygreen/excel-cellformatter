@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExponentNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter.number</a> &gt; <span class="el_source">ExponentNumber.java</span></div><h1>ExponentNumber.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter.number;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+
+/**
+ * 指数表現の数値。
+ * @author T.TSUCHIE
+ *
+ */
+public class ExponentNumber extends DecimalNumber {
+    
+    /**
+     * 指数部分。
+     * ・0以下の場合は、空文字。
+     * ・符号はつかない。
+     */
+    private String exponentPart;
+    
+    /**
+     * 指数部分の符号。
+     * ・0の時にはプラス。
+     */
+    private int exponentSign;
+    
+    /**
+     * 
+     * @param value
+     * @param decimalScale
+     */
+    public ExponentNumber(final double value, final int decimalScale) {
+<span class="fc" id="L33">        super(value, decimalScale);</span>
+<span class="fc" id="L34">    }</span>
+    
+    @Override
+    protected void init() {
+        
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(isZero()) {</span>
+<span class="fc" id="L40">            this.integerPart = &quot;&quot;;</span>
+<span class="fc" id="L41">            this.decimalPart = &quot;&quot;;</span>
+<span class="fc" id="L42">            this.exponentPart = &quot;0&quot;;</span>
+<span class="fc" id="L43">            this.exponentSign = 1;</span>
+<span class="fc" id="L44">            return;</span>
+        }
+        
+<span class="fc" id="L47">        final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L48">        sb.append(&quot;#&quot;);</span>
+        
+        // 指数の場合、小数部分の桁がなくても&quot;.&quot;を追加する。
+<span class="fc" id="L51">        sb.append(&quot;.&quot;);</span>
+        
+        // 小数の精度分、書式を追加する。
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for(int i=0; i &lt; getScale(); i++) {</span>
+<span class="fc" id="L55">            sb.append(&quot;#&quot;);</span>
+        }
+        
+        // 指数の精度分、書式を追加する。
+<span class="fc" id="L59">        sb.append(&quot;E0&quot;);</span>
+        
+<span class="fc" id="L61">        final DecimalFormat format = new DecimalFormat(sb.toString());</span>
+<span class="fc" id="L62">        format.setRoundingMode(RoundingMode.HALF_UP);</span>
+<span class="fc" id="L63">        String str = format.format(Math.abs(getValue()));</span>
+        
+        // 指数部とその他に分割する
+<span class="fc" id="L66">        final int exponentIdx = str.indexOf(&quot;E&quot;);</span>
+<span class="fc" id="L67">        final String numberPart = str.substring(0, exponentIdx);</span>
+<span class="fc" id="L68">        final String exponentPart = str.substring(exponentIdx+1);</span>
+        
+<span class="fc" id="L70">        setupIntegerAndDecimalPart(numberPart);</span>
+        
+        // 指数部の解析
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if(exponentPart.startsWith(&quot;-&quot;)) {</span>
+            // 負の符号から始まる場合
+<span class="fc" id="L75">            this.exponentSign = -1;</span>
+<span class="fc" id="L76">            this.exponentPart = exponentPart.substring(1);</span>
+        } else {
+<span class="fc" id="L78">            this.exponentSign = 1;</span>
+<span class="fc" id="L79">            this.exponentPart = exponentPart;</span>
+        }
+        
+<span class="fc" id="L82">    }</span>
+    
+    /**
+     * 指数の符号が正かどうか。
+     * ・指数が0の場合も正と判断する。
+     * @return
+     */
+    public boolean isExponentPositive() {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        return exponentSign &gt;= 0;</span>
+    }
+    
+    /**
+     * 指数の符号が負かどうか。
+     * ・指数が0の場合も正と判断する。
+     * @return
+     */
+    public boolean isExponentNegative() {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        return exponentSign &lt; 0;</span>
+    }
+    
+    /**
+     * 指数部のフォーマットした値を取得する。
+     * @return
+     */
+    public String getExponentPart() {
+<span class="fc" id="L107">        return exponentPart;</span>
+    }
+    
+    /**
+     * 指数部の指定した桁の値を取得する。
+     * @param digit 1から始まる。
+     * @return その桁の値がない場合は空文字を返す。
+     */
+    public String getExponentPart(final int digit) {
+        
+<span class="fc" id="L117">        final int length = exponentPart.length();</span>
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="nc" id="L119">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L122">        return String.valueOf(exponentPart.charAt(length - digit));</span>
+        
+    }
+    
+    /**
+     * 指数部の指定した桁以降の値を取得する。
+     * @param digit 1から始まる。
+     * @return その桁の値がない場合は空文字を返す。
+     */
+    public String getExponentPartAfter(final int digit) {
+        
+<span class="fc" id="L133">        final int length = exponentPart.length();</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">        if(length &lt; digit || digit &lt;= 0) {</span>
+<span class="fc" id="L135">            return &quot;&quot;;</span>
+        }
+        
+<span class="fc" id="L138">        return exponentPart.substring(0, length - digit + 1);</span>
+        
+    }
+    
+    @Override
+    public String toString() {
+        
+<span class="nc" id="L145">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L146">        sb.append(super.toString());</span>
+        
+<span class="nc" id="L148">        sb.append(&quot;E&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if(isExponentPositive()) {</span>
+<span class="nc" id="L150">            sb.append(&quot;+&quot;);</span>
+        } else {
+<span class="nc" id="L152">            sb.append(&quot;-&quot;);</span>
+        }
+        
+<span class="nc" id="L155">        sb.append(getExponentPart());</span>
+        
+<span class="nc" id="L157">        return sb.toString();</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

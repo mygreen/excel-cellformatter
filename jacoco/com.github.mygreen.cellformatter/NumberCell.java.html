@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ja"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberCell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Excel-CellFormatter</a> &gt; <a href="index.source.html" class="el_package">com.github.mygreen.cellformatter</a> &gt; <span class="el_source">NumberCell.java</span></div><h1>NumberCell.java</h1><pre class="source lang-java linenums">package com.github.mygreen.cellformatter;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import com.github.mygreen.cellformatter.lang.ExcelDateUtils;
+
+/**
+ * 数値型の値を直接扱うための仮想的なセル。
+ * &lt;p&gt;Javaの数値型のクラスに対応しています。&lt;/p&gt;
+ * &lt;ul&gt;
+ *  &lt;li&gt;プリミティブ型：byte/shrot/int/long/float/double&lt;/li&gt;
+ *  &lt;li&gt;ラッパークラス：Byte/Short/Integer/Long/Float/Double&lt;/li&gt;
+ *  &lt;li&gt;その他：AtomicInteger/AtomicLong/BigDecimal/BigInteger&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * @since 0.6
+ * @param &lt;T&gt; Javaの数値クラス。
+ * @author T.TSUCHIE
+ *
+ */
+public class NumberCell&lt;T extends Number&gt; extends ObjectCell&lt;T&gt; {
+    
+    /** 日付の始まりが1904年開始かどうか */
+    private final boolean dateStart1904;
+    
+    /**
+     * コンストラクタで渡した値の数値表現。
+     */
+    private double number;
+    
+    /**
+     * 値と書式のインデックス番号を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットの書式は、{@literal null}になります。
+     * @param value フォーマット対象の値。
+     * @param formatIndex 書式のインデックス番号。
+     * @throws IllegalArgumentException {@literal value == null}.
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * 
+     */
+    public NumberCell(final T value, final short formatIndex) {
+<span class="nc" id="L45">        this(value, formatIndex, false);</span>
+<span class="nc" id="L46">    }</span>
+    
+    /**
+     * 値とその書式を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットのインデックス番号は、{@literal 0}となります。
+     * @param value フォーマット対象の値。
+     * @param formatPattern Excelの書式。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     */
+    public NumberCell(final T value, final String formatPattern) {
+<span class="fc" id="L57">        this(value, formatPattern, false);</span>
+<span class="fc" id="L58">    }</span>
+    
+    /**
+     * 値と、書式のインデックス番号、書式を指定するコンストラクタ。
+     * @param value フォーマット対象の値。
+     * @param formatIndex フォーマットのインデックス番号。
+     * @param formatPattern Excelの書式。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     * 
+     */
+    public NumberCell(final T value, final short formatIndex, final String formatPattern) {
+<span class="nc" id="L71">        this(value, formatIndex, formatPattern, false);</span>
+<span class="nc" id="L72">    }</span>
+    
+    /**
+     * 値と書式のインデックス番号を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットの書式は、{@literal null}になります。
+     * @param value フォーマット対象の値。
+     * @param formatIndex 書式のインデックス番号。
+     * @param dateStart1904 1904年始まりかどうか。
+     * @throws IllegalArgumentException {@literal value == null}.
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * 
+     */
+    public NumberCell(final T value, final short formatIndex, final boolean dateStart1904) {
+<span class="nc" id="L85">        super(value, formatIndex);</span>
+<span class="nc" id="L86">        this.number = toDouble(value);</span>
+<span class="nc" id="L87">        this.dateStart1904 = dateStart1904;</span>
+<span class="nc" id="L88">    }</span>
+    
+    /**
+     * 値とその書式を指定するコンストラクタ。
+     * &lt;p&gt;フォーマットのインデックス番号は、{@literal 0}となります。
+     * @param value フォーマット対象の値。
+     * @param formatPattern Excelの書式。
+     * @param dateStart1904 1904年始まりかどうか。
+     * @param dateStart1904 1904年始まりかどうか。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     */
+    public NumberCell(final T value, final String formatPattern, final boolean dateStart1904) {
+<span class="fc" id="L101">        super(value, formatPattern);</span>
+<span class="fc" id="L102">        this.number = toDouble(value);</span>
+<span class="fc" id="L103">        this.dateStart1904 = dateStart1904;</span>
+<span class="fc" id="L104">    }</span>
+    
+    /**
+     * 値と、書式のインデックス番号、書式を指定するコンストラクタ。
+     * @param value フォーマット対象の値。
+     * @param formatIndex フォーマットのインデックス番号。
+     * @param formatPattern Excelの書式。
+     * @throws IllegalArgumentException {@literal value == null}
+     * @throws IllegalArgumentException {@literal formatIndex &lt; 0}
+     * @throws IllegalArgumentException {@literal formatPattern == null || formatPatter.length() == 0}.
+     * 
+     */
+    public NumberCell(final T value, final short formatIndex, final String formatPattern, final boolean dateStart1904) {
+<span class="nc" id="L117">        super(value, formatIndex, formatPattern);</span>
+<span class="nc" id="L118">        this.number = toDouble(value);</span>
+<span class="nc" id="L119">        this.dateStart1904 = dateStart1904;</span>
+<span class="nc" id="L120">    }</span>
+    
+    private double toDouble(final Object value) {
+        
+<span class="fc" id="L124">        final Class&lt;?&gt; clazz = value.getClass();</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if(clazz.isPrimitive()) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            if(clazz.equals(Byte.TYPE)) {</span>
+<span class="nc" id="L127">                return new BigDecimal((byte) value).doubleValue();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            } else if(clazz.equals(Short.TYPE)) {</span>
+<span class="nc" id="L129">                return new BigDecimal((short) value).doubleValue();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">            } else if(clazz.equals(Integer.TYPE)) {</span>
+<span class="nc" id="L131">                return new BigDecimal((int) value).doubleValue();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            } else if(clazz.equals(Long.TYPE)) {</span>
+<span class="nc" id="L133">                return new BigDecimal((long) value).doubleValue();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            } else if(clazz.equals(Float.TYPE)) {</span>
+<span class="nc" id="L135">                return new BigDecimal((float) value).doubleValue();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">            } else if(clazz.equals(Double.TYPE)) {</span>
+<span class="nc" id="L137">                return new BigDecimal((double) value).doubleValue();</span>
+            } 
+        }
+        
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if(value instanceof Byte) {</span>
+<span class="nc" id="L142">            return new BigDecimal((byte) value).doubleValue();</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        } else if(value instanceof Short) {</span>
+<span class="nc" id="L144">            return new BigDecimal((short) value).doubleValue();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        } else if(value instanceof Integer) {</span>
+<span class="fc" id="L146">            return new BigDecimal((int) value).doubleValue();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        } else if(value instanceof Long) {</span>
+<span class="nc" id="L148">            return new BigDecimal((long) value).doubleValue();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        } else if(value instanceof Float) {</span>
+<span class="nc" id="L150">            return new BigDecimal((float) value).doubleValue();</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        } else if(value instanceof Double) {</span>
+<span class="fc" id="L152">            return new BigDecimal((double) value).doubleValue();</span>
+        }
+        
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if(value instanceof AtomicInteger) {</span>
+<span class="nc" id="L156">            return new BigDecimal(((AtomicInteger) value).get()).doubleValue();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        } else if(value instanceof AtomicLong) {</span>
+<span class="nc" id="L158">            return new BigDecimal(((AtomicLong) value).get()).doubleValue();</span>
+        }
+        
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if(value instanceof BigDecimal) {</span>
+<span class="nc" id="L162">            return ((BigDecimal) value).doubleValue();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        } else if(value instanceof BigInteger) {</span>
+<span class="nc" id="L164">            return ((BigInteger) value).doubleValue();</span>
+        }
+        
+<span class="nc" id="L167">        throw new IllegalArgumentException(&quot;not support type class : &quot; + clazz.getName());</span>
+    }
+    
+    /**
+     * {@inheritDoc}
+     * &lt;p&gt;常に{@literal true}を返します。
+     */
+    @Override
+    public boolean isNumber() {
+<span class="fc" id="L176">        return true;</span>
+    }
+    
+    @Override
+    public double getNumberCellValue() {
+<span class="fc" id="L181">        return number;</span>
+    }
+    
+    @Override
+    public Date getDateCellValue() {
+<span class="nc" id="L186">        return ExcelDateUtils.convertJavaDate(number, isDateStart1904());</span>
+    }
+    
+    @Override
+    public boolean isDateStart1904() {
+<span class="nc" id="L191">        return dateStart1904;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
