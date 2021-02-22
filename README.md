@@ -43,6 +43,7 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
 3. Sphinxのインストール（マニュアルのビルドに使用）
 
     a. Pythonのインストール
+
     b. SphinxとJanomeのインストール
     ```console
     # pip install sphinx
@@ -143,4 +144,4 @@ MSColor textColor = result.getTextColor(); // フォーマットした文字色
 
 
 # ドキュメント
-http://mygreen.github.io/excel-cellformatter/sphinx/howtouse.html
+https://mygreen.github.io/excel-cellformatter/sphinx/howtouse.html
