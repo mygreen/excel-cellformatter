@@ -1,7 +1,6 @@
 package com.github.mygreen.cellformatter.number;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
