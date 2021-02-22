@@ -132,7 +132,7 @@ public class POICellFormatter {
 
         final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();
 
-        switch(cell.getCellTypeEnum()) {
+        switch(cell.getCellType()) {
             case BLANK:
                 if(isConsiderMergedCell()) {
                     // 結合しているセルの場合、左上のセル以外に値が設定されている場合がある。
@@ -184,7 +184,7 @@ public class POICellFormatter {
      */
     private CellFormatResult getFormulaCellValue(final Cell cell, final Locale locale) {
 
-        final CellType cellType = cell.getCellTypeEnum();
+        final CellType cellType = cell.getCellType();
         assert cellType == CellType.FORMULA;
 
         final Workbook workbook = cell.getSheet().getWorkbook();
@@ -195,7 +195,7 @@ public class POICellFormatter {
             final CellValue value = evaluator.evaluate(cell);
             final POIEvaluatedCell evaluatedCell = new POIEvaluatedCell(cell, value);
 
-            switch(value.getCellTypeEnum()) {
+            switch(value.getCellType()) {
 
                 case BOOLEAN:
                     return getCellValue(evaluatedCell, locale);
@@ -235,7 +235,7 @@ public class POICellFormatter {
      */
     private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale) {
 
-        final CellType cellType = cell.getCellTypeEnum();
+        final CellType cellType = cell.getCellType();
         assert cellType == CellType.ERROR;
 
         return getErrorCellValue(cell.getErrorCellValue(), locale);
@@ -293,7 +293,7 @@ public class POICellFormatter {
 
                 for(int colIdx=range.getFirstColumn(); colIdx <= range.getLastColumn(); colIdx++) {
                     final Cell valueCell = row.getCell(colIdx);
-                    if(valueCell == null || valueCell.getCellTypeEnum() == CellType.BLANK) {
+                    if(valueCell == null || valueCell.getCellType() == CellType.BLANK) {
                         continue;
                     }
 
