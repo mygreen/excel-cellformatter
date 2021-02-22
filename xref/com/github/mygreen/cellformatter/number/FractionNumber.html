@@ -15,7 +15,7 @@
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FormattedNumber.html">FormattedNumber</a> {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> <strong class="jxr_keyword">extends</strong> <a name="FormattedNumber" href="../../../../../com/github/mygreen/cellformatter/number/FormattedNumber.html#FormattedNumber">FormattedNumber</a> {
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>      
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment">     * 分母の部分</em>
@@ -37,7 +37,7 @@
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> wholeType;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>      
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a>(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value) {
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a>(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value) {
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">super</strong>(value);
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>          
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      }
@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     * @param exactDenom 分母の値</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> createExactDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> exactDenom) {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> createExactDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> exactDenom) {
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">return</strong> createExactDenominator(value, exactDenom, false);
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      
@@ -59,11 +59,11 @@
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment">     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> createExactDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> exactDenom, <strong class="jxr_keyword">boolean</strong> wholeType) {
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> fractionNumber = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a>(value);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> createExactDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> exactDenom, <strong class="jxr_keyword">boolean</strong> wholeType) {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">final</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellform<a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a>ractionNumber.html#FractionNumber">FractionNumber</a> fractionNumber = <strong class="jxr_keyword">new</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a>(value);
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          fractionNumber.wholeType = wholeType;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html">SimpleFraction</a> fraction = SimpleFraction.createFractionExactDenominator(Math.abs(value), exactDenom);
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">final</strong> <a name="SimpleFraction" href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html#SimpleFraction">SimpleFraction</a> fraction = SimpleFraction.createFractionExactDenominator(Math.abs(value), exactDenom);
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          setupFractionPart(fraction, fractionNumber);
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">return</strong> fractionNumber;
@@ -75,7 +75,7 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * @param maxDenom</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> createMaxDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> maxDenom) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> createMaxDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> maxDenom) {
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">return</strong> createMaxDenominator(value, maxDenom, false);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      }
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      
@@ -86,11 +86,11 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * @param wholeType 'true'のとき帯分数として作成する。'false'のとき仮分数として作成する。</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> createMaxDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> maxDenom, <strong class="jxr_keyword">boolean</strong> wholeType) {
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> fractionNumber = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a>(value);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> createMaxDenominator(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> value, <strong class="jxr_keyword">int</strong> maxDenom, <strong class="jxr_keyword">boolean</strong> wholeType) {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">final</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellform<a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a>ractionNumber.html#FractionNumber">FractionNumber</a> fractionNumber = <strong class="jxr_keyword">new</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a>(value);
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          fractionNumber.wholeType = wholeType;
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html">SimpleFraction</a> fraction = SimpleFraction.createFractionMaxDenominator(Math.abs(value), maxDenom);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">final</strong> <a name="SimpleFraction" href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html#SimpleFraction">SimpleFraction</a> fraction = SimpleFraction.createFractionMaxDenominator(Math.abs(value), maxDenom);
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          setupFractionPart(fraction, fractionNumber);
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">return</strong> fractionNumber;
@@ -101,7 +101,7 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     * @param fraction</em>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     * @param fractionNumber</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupFractionPart(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html">SimpleFraction</a> fraction, <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html">FractionNumber</a> fractionNumber) {
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupFractionPart(<strong class="jxr_keyword">final</strong> <a name="SimpleFraction" href="../../../../../com/github/mygreen/cellformatter/number/SimpleFraction.html#SimpleFraction">SimpleFraction</a> fraction, <strong class="jxr_keyword">final</strong> <a name="FractionNumber" href="../../../../../com/github/mygreen/cellformatter/number/FractionNumber.html#FractionNumber">FractionNumber</a> fractionNumber) {
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          fractionNumber.denominatorPart = String.valueOf(fraction.getDenominator());
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          
@@ -268,6 +268,6 @@
 <a class="jxr_linenumber" name="L260" href="#L260">260</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

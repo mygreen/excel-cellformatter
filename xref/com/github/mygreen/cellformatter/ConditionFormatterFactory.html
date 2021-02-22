@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment">     * @param store</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> F create(<a href="../../../../com/github/mygreen/cellformatter/tokenizer/TokenStore.html">TokenStore</a> store);
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> F create(<a name="TokenStore" href="../../../../com/github/mygreen/cellformatter/tokenizer/TokenStore.html#TokenStore">TokenStore</a> store);
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * 演算子を使用した条件式のパターン</em>
@@ -127,7 +127,7 @@
 <a class="jxr_linenumber" name="L119" href="#L119">119</a> <em class="jxr_javadoccomment">     * @return 演算子の条件式。</em>
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException 処理対象の条件として一致しない場合</em>
 <a class="jxr_linenumber" name="L121" href="#L121">121</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html">ConditionOperator</a> setupConditionOperator(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">protected</strong> <a name="ConditionOperator" href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html#ConditionOperator">ConditionOperator</a> setupConditionOperator(<strong class="jxr_keyword">final</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
 <a class="jxr_linenumber" name="L123" href="#L123">123</a> 
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>         <strong class="jxr_keyword">final</strong> Matcher matcher = PATTERN_CONDITION_OPERATOR.matcher(token.getValue());
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>         <strong class="jxr_keyword">if</strong>(!matcher.matches()) {
@@ -138,7 +138,7 @@
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">final</strong> String number = matcher.group(2);
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> condition = Double.valueOf(number);
 <a class="jxr_linenumber" name="L132" href="#L132">132</a> 
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html">ConditionOperator</a> conditionOperator;
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">final</strong> <a name="ConditionOperator" href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html#ConditionOperator">ConditionOperator</a> conditionOperator;
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         <strong class="jxr_keyword">switch</strong>(<strong class="jxr_keyword">operator</strong>) {
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>             <strong class="jxr_keyword">case</strong> <span class="jxr_string">"="</span>:
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>                 conditionOperator = <strong class="jxr_keyword">new</strong> ConditionOperator.Equal(condition);
@@ -176,7 +176,7 @@
 <a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     * @return ロケールの条件式。</em>
 <a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException 処理対象の条件として一致しない場合</em>
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> setupConditionLocale(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <strong class="jxr_keyword">protected</strong> <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> setupConditionLocale(<strong class="jxr_keyword">final</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
 <a class="jxr_linenumber" name="L172" href="#L172">172</a> 
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         <strong class="jxr_keyword">final</strong> Matcher matcher = PATTERN_CONDITION_LOCALE.matcher(token.getValue());
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>         <strong class="jxr_keyword">if</strong>(!matcher.matches()) {
@@ -187,9 +187,9 @@
 <a class="jxr_linenumber" name="L179" href="#L179">179</a> 
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         <em class="jxr_comment">// 16進数=&gt;10進数に直す</em>
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value = Integer.valueOf(number, 16);
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale = MSLocale.createKnownLocale(value);
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale = MSLocale.createKnownLocale(value);
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">if</strong>(locale == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>             locale = <strong class="jxr_keyword">new</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a>(value);
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>             locale = <strong class="jxr_keyword">new</strong> <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a>(value);
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>         }
 <a class="jxr_linenumber" name="L186" href="#L186">186</a> 
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>         formatter.setLocale(locale);
@@ -206,7 +206,7 @@
 <a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * @return 記号付きロケールの条件式。</em>
 <a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException 処理対象の条件として一致しない場合</em>
 <a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/LocaleSymbol.html">LocaleSymbol</a> setupConditionLocaleSymbol(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>     <strong class="jxr_keyword">protected</strong> <a name="LocaleSymbol" href="../../../../com/github/mygreen/cellformatter/LocaleSymbol.html#LocaleSymbol">LocaleSymbol</a> setupConditionLocaleSymbol(<strong class="jxr_keyword">final</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
 <a class="jxr_linenumber" name="L202" href="#L202">202</a> 
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>         <strong class="jxr_keyword">final</strong> Matcher matcher = PATTERN_CONDITION_LOCALE_SYMBOL.matcher(token.getValue());
 <a class="jxr_linenumber" name="L204" href="#L204">204</a>         <strong class="jxr_keyword">if</strong>(!matcher.matches()) {
@@ -218,14 +218,14 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a> 
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         <em class="jxr_comment">// 16進数=&gt;10進数に直す</em>
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value = Integer.valueOf(number, 16);
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale = MSLocale.createKnownLocale(value);
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale = MSLocale.createKnownLocale(value);
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>         <strong class="jxr_keyword">if</strong>(locale == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>             locale = <strong class="jxr_keyword">new</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a>(value);
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>             locale = <strong class="jxr_keyword">new</strong> <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a>(value);
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>         }
 <a class="jxr_linenumber" name="L217" href="#L217">217</a> 
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>         formatter.setLocale(locale);
 <a class="jxr_linenumber" name="L219" href="#L219">219</a> 
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../com/github/mygreen/cellformatter/LocaleSymbol.html">LocaleSymbol</a>(locale, symbol);
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="LocaleSymbol" href="../../../../com/github/mygreen/cellformatter/LocaleSymbol.html#LocaleSymbol">LocaleSymbol</a>(locale, symbol);
 <a class="jxr_linenumber" name="L221" href="#L221">221</a> 
 <a class="jxr_linenumber" name="L222" href="#L222">222</a>     }
 <a class="jxr_linenumber" name="L223" href="#L223">223</a> 
@@ -236,7 +236,7 @@
 <a class="jxr_linenumber" name="L228" href="#L228">228</a> <em class="jxr_javadoccomment">     * @return 組み込みの条件式。</em>
 <a class="jxr_linenumber" name="L229" href="#L229">229</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException 処理対象の条件として一致しない場合</em>
 <a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>     <strong class="jxr_keyword">protected</strong> Callback&lt;?&gt; setupConditionDbNum(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>     <strong class="jxr_keyword">protected</strong> Callback&lt;?&gt; setupConditionDbNum(<strong class="jxr_keyword">final</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
 <a class="jxr_linenumber" name="L232" href="#L232">232</a> 
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>         <strong class="jxr_keyword">final</strong> Matcher matcher = PATTERN_CONDITION_DBNUM.matcher(token.getValue());
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>         <strong class="jxr_keyword">if</strong>(!matcher.matches()) {
@@ -271,10 +271,10 @@
 <a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">     * @return 色の条件式。</em>
 <a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">     * @throws IllegalArgumentException 処理対象の条件として一致しない場合</em>
 <a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html">MSColor</a> setupConditionColor(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>     <strong class="jxr_keyword">protected</strong> <a name="MSColor" href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html#MSColor">MSColor</a> setupConditionColor(<strong class="jxr_keyword">final</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> formatter, <strong class="jxr_keyword">final</strong> Token.Condition token) {
 <a class="jxr_linenumber" name="L267" href="#L267">267</a> 
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>         <em class="jxr_comment">// 名前指定の場合</em>
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <a href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html">MSColor</a> color = MSColor.valueOfKnownColor(token.getCondition());
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <a name="MSColor" href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html#MSColor">MSColor</a> color = MSColor.valueOfKnownColor(token.getCondition());
 <a class="jxr_linenumber" name="L270" href="#L270">270</a>         <strong class="jxr_keyword">if</strong>(color != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L271" href="#L271">271</a>             formatter.setColor(color);
 <a class="jxr_linenumber" name="L272" href="#L272">272</a>             <strong class="jxr_keyword">return</strong> color;
@@ -299,6 +299,6 @@
 <a class="jxr_linenumber" name="L291" href="#L291">291</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

@@ -54,11 +54,11 @@
      - 備考
      
    * - Java
-     - Java7 (ver.1.7)以上
+     - Java8 (ver.1.8)以上
      - 
 
    * - Apaceh POI
-     - | ver. 3.17 以上。
+     - | ver. 4.0 以上。
        | Apaceh POIは現在も開発が続けられているため、随時動作確認していきます。
      - | Excel2007で追加されたOffice Open XML（OOXML）形式に対応しています。
        | POIの内部の形式である、HSSF(従来のバイナリ形式)、XSSF（OOXML形式）に対応しています。
@@ -70,7 +70,7 @@
      - | JExcel API自体は、Excel2007で追加されたOffice Open XML（OOXML）形式に対応していません。
 
    * - Microsoft Excel
-     - | ver. 2000/2007/2010
+     - | ver. 2000/2007/2010/2016
      - | ver. 2007/2010 で互換モードで保存したファイルにも対応しています。
    
    * - 他のオフィスイート

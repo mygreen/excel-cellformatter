@@ -23,9 +23,9 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html">LocaleSwitchFormatter</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatter.html">CellFormatter</a> {
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="LocaleSwitchFormatter" href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html#LocaleSwitchFormatter">LocaleSwitchFormatter</a> <strong class="jxr_keyword">extends</strong> <a name="CellFormatter" href="../../../../com/github/mygreen/cellformatter/CellFormatter.html#CellFormatter">CellFormatter</a> {
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatter.html">CellFormatter</a> defaultFormatter;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="CellFormatter" href="../../../../com/github/mygreen/cellformatter/CellFormatter.html#CellFormatter">CellFormatter</a> defaultFormatter;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;Locale, CellFormatter&gt; formatterMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
@@ -34,13 +34,13 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment">     * @param defaultFormatter 標準のフォーマッタ。</em>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal defaultFormatter == null.}</em>
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html">LocaleSwitchFormatter</a>(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatter.html">CellFormatter</a> defaultFormatter) {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <a name="LocaleSwitchFormatter" href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html#LocaleSwitchFormatter">LocaleSwitchFormatter</a>(<strong class="jxr_keyword">final</strong> <a name="CellFormatter" href="../../../../com/github/mygreen/cellformatter/CellFormatter.html#CellFormatter">CellFormatter</a> defaultFormatter) {
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>          ArgUtils.notNull(defaultFormatter, <span class="jxr_string">"defaultFormatter"</span>);
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">this</strong>.defaultFormatter = defaultFormatter;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>      }
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Override
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale locale) {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>          ArgUtils.notNull(cell, <span class="jxr_string">"cell"</span>);
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  
@@ -52,7 +52,7 @@
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     * @param locale ロケール</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * @return ロケールに対応するセルフォーマッタ。ロケールがnullの場合は、デフォルトのフォーマッタを返す。</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatter.html">CellFormatter</a> getCellFormatter(<strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">private</strong> <a name="CellFormatter" href="../../../../com/github/mygreen/cellformatter/CellFormatter.html#CellFormatter">CellFormatter</a> getCellFormatter(<strong class="jxr_keyword">final</strong> Locale locale) {
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          <strong class="jxr_keyword">if</strong>(locale == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              <strong class="jxr_keyword">return</strong> defaultFormatter;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
@@ -71,7 +71,7 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal cellFormatter == null.}</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal locales == null || locales.length == 0.}</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html">LocaleSwitchFormatter</a> register(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatter.html">CellFormatter</a> cellFormatter, <strong class="jxr_keyword">final</strong> Locale... locales) {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">public</strong> <a name="LocaleSwitchFormatter" href="../../../../com/github/mygreen/cellformatter/LocaleSwitchFormatter.html#LocaleSwitchFormatter">LocaleSwitchFormatter</a> register(<strong class="jxr_keyword">final</strong> <a name="CellFormatter" href="../../../../com/github/mygreen/cellformatter/CellFormatter.html#CellFormatter">CellFormatter</a> cellFormatter, <strong class="jxr_keyword">final</strong> Locale... locales) {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          ArgUtils.notNull(cellFormatter, <span class="jxr_string">"cellFormatter"</span>);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          ArgUtils.notEmpty(locales, <span class="jxr_string">"locales"</span>);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
@@ -90,6 +90,6 @@
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

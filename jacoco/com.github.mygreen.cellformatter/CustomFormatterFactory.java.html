@@ -44,7 +44,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
 <span class="fc" id="L44">        final List&lt;TokenStore&gt; sections = allStore.split(Token.SYMBOL_SEMI_COLON);</span>
 <span class="fc bfc" id="L45" title="All 2 branches covered.">        if(sections.size() &gt; 4) {</span>
 <span class="fc" id="L46">            throw new CustomFormatterParseException(pattern,</span>
-                    String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));
+<span class="fc" id="L47">                    String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));</span>
         }
         
 <span class="fc" id="L50">        final CustomFormatter formatter = new CustomFormatter(pattern);</span>
@@ -145,7 +145,7 @@ import com.github.mygreen.cellformatter.tokenizer.TokenStore;
                 
             } else {
 <span class="nc" id="L147">                throw new CustomFormatterParseException(pattern,</span>
-                        String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));
+<span class="nc" id="L148">                        String.format(&quot;section size over 4. but '%s' number of %d secitions.&quot;, pattern, sections.size()));</span>
             }
             
         }

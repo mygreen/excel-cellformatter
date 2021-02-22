@@ -2,28 +2,29 @@
 
 <!doctype html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html lang="ja">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>1. はじめに &#8212; Excel-CellFormatter 0.11 ドキュメント</title>
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. はじめに &#8212; Excel-CellFormatter 0.12 ドキュメント</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="_static/mytheme.js"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/mytheme.js"></script>
+    <script src="_static/bizstyle.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="next" title="2. 基本的な使い方" href="howtouse.html" />
     <link rel="prev" title="Welcome to Excel-CellFormatter" href="index.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <script src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -38,9 +39,141 @@
         <li class="right" >
           <a href="index.html" title="Welcome to Excel-CellFormatter"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>はじめに</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">1. </span>はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">1.1. </span>このライブラリの位置付け及び目的<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このライブラリは、JavaのExcelライブラリである、Apache POI、JExcel APIにて、セルの値を正しくフォーマットして文字列として取得するための物です。</p>
+<p>両ライブラリとも、セルの値を取得する機能を持っていますが、一部、Excel上とは異なる値で取得されます。
+特に、次の点に問題があります。</p>
+<ul class="simple">
+<li><p>日付、特に和暦は対応していない。 Javaの <code class="docutils literal notranslate"><span class="pre">java.text.SimpleDateFormat</span></code> では対応していない書式がある。</p>
+<ul>
+<li><p>セルの値を取得するときに、ライブラリの内部では、Excelの書式をJavaの <code class="docutils literal notranslate"><span class="pre">java.text.SimpleDateFormat</span></code> の書式に変換してフォーマットしているが、Javaにはない書式記号があるため、正確な値が取得できない。</p></li>
+<li><p>元号などを出力する際にはJavaではLocaleを渡す必要があるが、Excelでは書式に条件式としてロケール情報が設定でき、書式ごとにロケールを切り替えることができる。</p></li>
+<li><p>Javaは月のMと分のmは大文字／小文字で区別しているが、Excelは大文字/小文字の区別がなく、前後の関連する日時の記号を含むかで判断している。</p></li>
+<li><p>経過時間の書式に対応していない。</p></li>
+</ul>
+</li>
+<li><p>数値の書式の場合、Javaの <code class="docutils literal notranslate"><span class="pre">java.text.DecimalFormat</span></code> に対応していない書式がある。</p>
+<ul>
+<li><p>セルの値を取得するときに、ライブラリの内部では、Excelの書式をJavaの <code class="docutils literal notranslate"><span class="pre">java.text.DecimalFormat</span></code> の書式に変換してフォーマットしているが、Javaにはない書式記号があるため、正確な値が取得できない。</p></li>
+<li><p>Excelの場合、最大4つのセクションが定義できるが、Javaの場合、正・負の2つのセクションの定義しかできない。</p></li>
+<li><p>分数表示には対応していない。</p></li>
+</ul>
+</li>
+<li><p>セルの値が数値か日時なのかの区別が正確にできない。</p>
+<ul>
+<li><p>Excelの内部では、数値と日時は同じデータ型の数値（Javaでいうdouble型）で保持している。
+そのため、書式から判定する必要があるが、上記のようにJavaでは利用できない書式記号があるので正確に判定できていない。</p></li>
+<li><p>Excel上のセルの書式は取得できるため独自に判定できるが、書式記号は多いため対応が大変である。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2. </span>前提環境<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このライブラリは、以下の環境で利用できます。</p>
+<table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-text">動作確認環境</span><a class="headerlink" href="#id5" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ライブラリ</p></th>
+<th class="head"><p>バージョン</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Java</p></td>
+<td><p>Java8 (ver.1.8)以上</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Apaceh POI</p></td>
+<td><div class="line-block">
+<div class="line">ver. 4.0 以上。</div>
+<div class="line">Apaceh POIは現在も開発が続けられているため、随時動作確認していきます。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Excel2007で追加されたOffice Open XML（OOXML）形式に対応しています。</div>
+<div class="line">POIの内部の形式である、HSSF(従来のバイナリ形式)、XSSF（OOXML形式）に対応しています。</div>
+<div class="line">ver. 3.8で追加された、書き込み専用のSXSSF(ストリーム形式)には対応していません。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>JExcel API</p></td>
+<td><div class="line-block">
+<div class="line">ver. 2.6.10 以上。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">JExcel API自体は、Excel2007で追加されたOffice Open XML（OOXML）形式に対応していません。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft Excel</p></td>
+<td><div class="line-block">
+<div class="line">ver. 2000/2007/2010/2016</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">ver. 2007/2010 で互換モードで保存したファイルにも対応しています。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>他のオフィスイート</p></td>
+<td><div class="line-block">
+<div class="line">Libre Office Calc ver. 4.4</div>
+</div>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="restriction">
+<span id="id4"></span><h2><span class="section-number">1.3. </span>制限事項<a class="headerlink" href="#restriction" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>Excelの書式記号 <cite>*(アスタリスク)</cite> には対応していません。</p>
+<ul>
+<li><p>この書式はセルの幅により繰り返し特定の文字を表示するために利用されますが、Excel上の文字サイズ、セル幅によって変わりプログラムでは判別しづらいため対応していません。</p></li>
+<li><p>本ライブラリで、セルの値をフォーマットした場合、この記号は無視され処理されます。</p></li>
+</ul>
+</li>
+<li><p>現在のバージョンでは、Excelの書式は、英語、日本語のロケールのみサポートしています。</p>
+<ul>
+<li><p>今後、他の言語のロケールも追加していく予定です。</p></li>
+</ul>
+</li>
+<li><p>1900年始まりの場合、Excelの日付として <em>1900年1月0日</em> を設定している場合、本ライブラリでは <em>1899年12月31日</em> として処理します。</p>
+<ul>
+<li><p>また、1900年2月29日* を設定している場合、 <em>1900年3月1日</em> として処理します。</p></li>
+</ul>
+</li>
+<li><p>Excelの <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">数値の標準書式</span></a> において、<code class="docutils literal notranslate"><span class="pre">100,000,000,000</span></code> 以上の値、または <code class="docutils literal notranslate"><span class="pre">0.0000000001</span></code> 以下の値の時、指数表現となりますが、セルの幅が小さいと小数部の有効桁数が変わりますが、本ライブラリは小数部の有効桁数は5桁で固定となります。</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
 <h3><a href="../index.html">関連リンク</a></h3>
@@ -51,7 +184,7 @@
 	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
 </ul>
 
-<h3><a href="index.html">目次</a></h3>
+<h3><a href="index.html">Table Of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">1. はじめに</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">1.1. このライブラリの位置付け及び目的</a></li>
@@ -93,23 +226,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.1. ver.0.11 - 2019-04-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.2. ver.0.10 - 2018-06-24</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.3. ver.0.9.2 - 2017-09-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.4. ver.0.9.1 - 2016-12-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.5. ver.0.9 - 2016-12-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.6. ver.0.8.3 - 2016-07-02</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.7. ver.0.8.2 - 2016-05-21</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.8. ver.0.8.1 - 2016-05-07</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.9. ver.0.8 - 2016-04-29</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.10. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.11. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.12. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.13. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.14. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.15. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.16. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.17. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-12-2021-02-22">6.1. ver.0.12 - 2021-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.2. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.3. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.4. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.5. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.6. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.7. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.8. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.9. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.10. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.11. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.12. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.13. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.14. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.15. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.16. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.17. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.18. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -121,7 +255,7 @@
                         title="前の章へ">Welcome to Excel-CellFormatter</a></p>
   <h4>次のトピックへ</h4>
   <p class="topless"><a href="howtouse.html"
-                        title="次の章へ">2. 基本的な使い方</a></p>
+                        title="次の章へ"><span class="section-number">2. </span>基本的な使い方</a></p>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
@@ -130,141 +264,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>クイック検索</h3>
+  <h3 id="searchlabel">クイック検索</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="検索" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="id1">
-<h1>1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="id2">
-<h2>1.1. このライブラリの位置付け及び目的<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>このライブラリは、JavaのExcelライブラリである、Apache POI、JExcel APIにて、セルの値を正しくフォーマットして文字列として取得するための物です。</p>
-<p>両ライブラリとも、セルの値を取得する機能を持っていますが、一部、Excel上とは異なる値で取得されます。
-特に、次の点に問題があります。</p>
-<ul class="simple">
-<li>日付、特に和暦は対応していない。 Javaの <code class="docutils literal notranslate"><span class="pre">java.text.SimpleDateFormat</span></code> では対応していない書式がある。<ul>
-<li>セルの値を取得するときに、ライブラリの内部では、Excelの書式をJavaの <code class="docutils literal notranslate"><span class="pre">java.text.SimpleDateFormat</span></code> の書式に変換してフォーマットしているが、Javaにはない書式記号があるため、正確な値が取得できない。</li>
-<li>元号などを出力する際にはJavaではLocaleを渡す必要があるが、Excelでは書式に条件式としてロケール情報が設定でき、書式ごとにロケールを切り替えることができる。</li>
-<li>Javaは月のMと分のmは大文字／小文字で区別しているが、Excelは大文字/小文字の区別がなく、前後の関連する日時の記号を含むかで判断している。</li>
-<li>経過時間の書式に対応していない。</li>
-</ul>
-</li>
-<li>数値の書式の場合、Javaの <code class="docutils literal notranslate"><span class="pre">java.text.DecimalFormat</span></code> に対応していない書式がある。<ul>
-<li>セルの値を取得するときに、ライブラリの内部では、Excelの書式をJavaの <code class="docutils literal notranslate"><span class="pre">java.text.DecimalFormat</span></code> の書式に変換してフォーマットしているが、Javaにはない書式記号があるため、正確な値が取得できない。</li>
-<li>Excelの場合、最大4つのセクションが定義できるが、Javaの場合、正・負の2つのセクションの定義しかできない。</li>
-<li>分数表示には対応していない。</li>
-</ul>
-</li>
-<li>セルの値が数値か日時なのかの区別が正確にできない。<ul>
-<li>Excelの内部では、数値と日時は同じデータ型の数値（Javaでいうdouble型）で保持している。
-そのため、書式から判定する必要があるが、上記のようにJavaでは利用できない書式記号があるので正確に判定できていない。</li>
-<li>Excel上のセルの書式は取得できるため独自に判定できるが、書式記号は多いため対応が大変である。</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="id3">
-<h2>1.2. 前提環境<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>このライブラリは、以下の環境で利用できます。</p>
-<table border="1" class="colwidths-given docutils" id="id5">
-<caption><span class="caption-text">動作確認環境</span><a class="headerlink" href="#id5" title="このテーブルへのパーマリンク">¶</a></caption>
-<colgroup>
-<col width="15%" />
-<col width="30%" />
-<col width="55%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">ライブラリ</th>
-<th class="head">バージョン</th>
-<th class="head">備考</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Java</td>
-<td>Java7 (ver.1.7)以上</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>Apaceh POI</td>
-<td><div class="first last line-block">
-<div class="line">ver. 3.17 以上。</div>
-<div class="line">Apaceh POIは現在も開発が続けられているため、随時動作確認していきます。</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">Excel2007で追加されたOffice Open XML（OOXML）形式に対応しています。</div>
-<div class="line">POIの内部の形式である、HSSF(従来のバイナリ形式)、XSSF（OOXML形式）に対応しています。</div>
-<div class="line">ver. 3.8で追加された、書き込み専用のSXSSF(ストリーム形式)には対応していません。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td>JExcel API</td>
-<td><div class="first last line-block">
-<div class="line">ver. 2.6.10 以上。</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">JExcel API自体は、Excel2007で追加されたOffice Open XML（OOXML）形式に対応していません。</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td>Microsoft Excel</td>
-<td><div class="first last line-block">
-<div class="line">ver. 2000/2007/2010</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">ver. 2007/2010 で互換モードで保存したファイルにも対応しています。</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td>他のオフィスイート</td>
-<td><div class="first last line-block">
-<div class="line">Libre Office Calc ver. 4.4</div>
-</div>
-</td>
-<td>&#160;</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="restriction">
-<span id="id4"></span><h2>1.3. 制限事項<a class="headerlink" href="#restriction" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>Excelの書式記号 <cite>*(アスタリスク)</cite> には対応していません。<ul>
-<li>この書式はセルの幅により繰り返し特定の文字を表示するために利用されますが、Excel上の文字サイズ、セル幅によって変わりプログラムでは判別しづらいため対応していません。</li>
-<li>本ライブラリで、セルの値をフォーマットした場合、この記号は無視され処理されます。</li>
-</ul>
-</li>
-<li>現在のバージョンでは、Excelの書式は、英語、日本語のロケールのみサポートしています。<ul>
-<li>今後、他の言語のロケールも追加していく予定です。</li>
-</ul>
-</li>
-<li>1900年始まりの場合、Excelの日付として <em>1900年1月0日</em> を設定している場合、本ライブラリでは <em>1899年12月31日</em> として処理します。<ul>
-<li>また、1900年2月29日* を設定している場合、 <em>1900年3月1日</em> として処理します。</li>
-</ul>
-</li>
-<li>Excelの <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">数値の標準書式</span></a> において、<code class="docutils literal notranslate"><span class="pre">100,000,000,000</span></code> 以上の値、または <code class="docutils literal notranslate"><span class="pre">0.0000000001</span></code> 以下の値の時、指数表現となりますが、セルの幅が小さいと小数部の有効桁数が変わりますが、本ライブラリは小数部の有効桁数は5桁で固定となります。</li>
-</ul>
-</div>
-</div>
-
-
-          </div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -281,7 +289,8 @@
         <li class="right" >
           <a href="index.html" title="Welcome to Excel-CellFormatter"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>はじめに</a></li> 
       </ul>
     </div>
 <!-- my theme custom extrahead beacon -->
@@ -307,8 +316,8 @@
 
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015-2019, T.TSUCHIE.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9 で生成しました。
+        &#169; Copyright 2015-2021, T.TSUCHIE.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
 
   </body>

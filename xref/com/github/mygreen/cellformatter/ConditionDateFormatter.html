@@ -32,7 +32,7 @@
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionDateFormatter.html">ConditionDateFormatter</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> {
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ConditionDateFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionDateFormatter.html#ConditionDateFormatter">ConditionDateFormatter</a> <strong class="jxr_keyword">extends</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> {
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger logger = LoggerFactory.getLogger(ConditionDateFormatter.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
@@ -41,12 +41,12 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">private</strong> List&lt;Term&lt;Calendar&gt;&gt; terms = <strong class="jxr_keyword">new</strong> CopyOnWriteArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionDateFormatter.html">ConditionDateFormatter</a>(<strong class="jxr_keyword">final</strong> String pattern) {
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <a name="ConditionDateFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionDateFormatter.html#ConditionDateFormatter">ConditionDateFormatter</a>(<strong class="jxr_keyword">final</strong> String pattern) {
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>          <strong class="jxr_keyword">super</strong>(pattern);
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      }
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      @Override
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/FormatterType.html">FormatterType</a> getType() {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <a name="FormatterType" href="../../../../com/github/mygreen/cellformatter/FormatterType.html#FormatterType">FormatterType</a> getType() {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">return</strong> FormatterType.Date;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      }
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      @Override
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isMatch(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isMatch(<strong class="jxr_keyword">final</strong> <a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">if</strong>(!cell.isNumber()) {
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>              <strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          }
@@ -75,7 +75,7 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      @Override
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale runtimeLocale) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a> format(<strong class="jxr_keyword">final</strong> <a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell, <strong class="jxr_keyword">final</strong> Locale runtimeLocale) {
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          ArgUtils.notNull(cell, <span class="jxr_string">"date"</span>);
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">final</strong> Date date = cell.getDateCellValue();
@@ -86,8 +86,8 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">for</strong>(Term&lt;Calendar&gt; term : terms) {
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>              <strong class="jxr_keyword">final</strong> String formatValue;
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">if</strong>(term instanceof <a href="../../../../com/github/mygreen/cellformatter/term/DateTerm.html">DateTerm</a>) {
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  formatValue = ((DateTerm) term).format(cal, getLocale(), runtimeLocale, cell.isDateStart1904());
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">if</strong>(term instanceof <a name="DateTerm" href="../../../../com/github/mygreen/cellformatter/term/DateTerm.html#DateTerm">DateTerm</a>) {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  formatValue = ((<a name="DateTerm" href="../../../../com/github/mygreen/cellformatter/term/DateTerm.html#DateTerm">DateTerm</a>) term).format(cal, getLocale(), runtimeLocale, cell.isDateStart1904());
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>              } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                  formatValue = term.format(cal, getLocale(), runtimeLocale);
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              }
@@ -96,7 +96,7 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          String value = sb.toString();
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> result = <strong class="jxr_keyword">new</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a>();
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">final</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cel<a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a>ormatResult.html#CellFormatResult">CellFormatResult</a> result = <strong class="jxr_keyword">new</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a>();
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          result.setValue(date);
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          result.setText(value);
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          result.setTextColor(getColor());
@@ -111,7 +111,7 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> 
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>         String value = str;
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> 
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">for</strong>(<a href="../../../../com/github/mygreen/cellformatter/callback/Callback.html">Callback</a> callback : getCallbacks()) {
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">for</strong>(<a name="Callback" href="../../../../com/github/mygreen/cellformatter/callback/Callback.html#Callback">Callback</a> callback : getCallbacks()) {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a> 
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>             <strong class="jxr_keyword">final</strong> Locale locale;
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>             <strong class="jxr_keyword">if</strong>(getLocale() != <strong class="jxr_keyword">null</strong>) {
@@ -157,6 +157,6 @@
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

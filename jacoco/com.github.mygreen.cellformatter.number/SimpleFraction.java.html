@@ -110,8 +110,8 @@ public class SimpleFraction {
 <span class="fc" id="L110">            p2 = (a1 * p1) + p0;</span>
 <span class="fc" id="L111">            q2 = (a1 * q1) + q0;</span>
             //MATH-996/POI-55419
-<span class="pc bpc" id="L113" title="3 of 8 branches missed.">            if (epsilon == 0.0f &amp;&amp; maxDenominator &gt; 0 &amp;&amp; Math.abs(q2) &gt; maxDenominator &amp;&amp;</span>
-                    Math.abs(q1) &lt; maxDenominator){
+<span class="pc bpc" id="L113" title="2 of 6 branches missed.">            if (epsilon == 0.0f &amp;&amp; maxDenominator &gt; 0 &amp;&amp; Math.abs(q2) &gt; maxDenominator &amp;&amp;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">                    Math.abs(q1) &lt; maxDenominator){</span>
 
 <span class="fc" id="L116">                return new SimpleFraction((int)p1, (int)q1);</span>
             }

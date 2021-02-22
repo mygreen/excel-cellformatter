@@ -39,7 +39,7 @@
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/github/mygreen/cellformatter/JXLCell.html">JXLCell</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="JXLCell" href="../../../../com/github/mygreen/cellformatter/JXLCell.html#JXLCell">JXLCell</a> <strong class="jxr_keyword">implements</strong> <a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_javadoccomment">/** 日付の始まりが1904年開始かどうか */</em>
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dateStart1904;
@@ -85,7 +85,7 @@
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     *        {@link JXLUtils#isDateStart1904(jxl.Sheet)}を使用して、Workbookまたはシートから取得する。</em>
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * @throws IllegalArgumentException {@literal cell == null.}</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/JXLCell.html">JXLCell</a>(<strong class="jxr_keyword">final</strong> Cell cell, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dateStart1904) {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> <a name="JXLCell" href="../../../../com/github/mygreen/cellformatter/JXLCell.html#JXLCell">JXLCell</a>(<strong class="jxr_keyword">final</strong> Cell cell, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dateStart1904) {
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          ArgUtils.notNull(cell, <span class="jxr_string">"cell"</span>);
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">this</strong>.cell = cell;
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">this</strong>.dateStart1904 = dateStart1904;
@@ -188,7 +188,7 @@
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">final</strong> CellType type = cell.getType();
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">if</strong>(type == CellType.BOOLEAN || type == CellType.BOOLEAN_FORMULA) {
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>             <strong class="jxr_keyword">return</strong> ((BooleanCell) cell).getValue();
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>             <strong class="jxr_keyword">return</strong> ((<a name="BooleanCell" href="../../../../com/github/mygreen/cellformatter/BooleanCell.html#BooleanCell">BooleanCell</a>) cell).getValue();
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>             
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>         } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>             <strong class="jxr_keyword">return</strong> false;
@@ -208,10 +208,10 @@
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>         <strong class="jxr_keyword">final</strong> CellType type = cell.getType();
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">if</strong>(type == CellType.NUMBER || type == CellType.NUMBER_FORMULA) {
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>             <strong class="jxr_keyword">return</strong> ((NumberCell) cell).getValue();
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>             <strong class="jxr_keyword">return</strong> ((<a name="NumberCell" href="../../../../com/github/mygreen/cellformatter/NumberCell.html#NumberCell">NumberCell</a>) cell).getValue();
 <a class="jxr_linenumber" name="L204" href="#L204">204</a>             
 <a class="jxr_linenumber" name="L205" href="#L205">205</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(type == CellType.DATE || type == CellType.DATE_FORMULA) {
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>             <strong class="jxr_keyword">final</strong> Date  date = ((DateCell) cell).getDate();
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>             <strong class="jxr_keyword">final</strong> Date  date = ((<a name="DateCell" href="../../../../com/github/mygreen/cellformatter/DateCell.html#DateCell">DateCell</a>) cell).getDate();
 <a class="jxr_linenumber" name="L207" href="#L207">207</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">double</strong> num = ExcelDateUtils.convertExcelNumber(date, isDateStart1904());
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>             <strong class="jxr_keyword">return</strong> num;
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>             
@@ -224,7 +224,7 @@
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">public</strong> Date getDateCellValue() {
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>         
 <a class="jxr_linenumber" name="L218" href="#L218">218</a>         <strong class="jxr_keyword">if</strong>(cell.getType() == CellType.DATE || cell.getType() == CellType.DATE_FORMULA) {
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>             Date date = ((DateCell) cell).getDate();
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>             Date date = ((<a name="DateCell" href="../../../../com/github/mygreen/cellformatter/DateCell.html#DateCell">DateCell</a>) cell).getDate();
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>             <strong class="jxr_keyword">return</strong> adjustDate(date);
 <a class="jxr_linenumber" name="L221" href="#L221">221</a>             
 <a class="jxr_linenumber" name="L222" href="#L222">222</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(cell.getType() == CellType.NUMBER || cell.getType() == CellType.NUMBER_FORMULA) {
@@ -266,6 +266,6 @@
 <a class="jxr_linenumber" name="L258" href="#L258">258</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

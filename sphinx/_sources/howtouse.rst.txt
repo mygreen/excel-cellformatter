@@ -15,7 +15,7 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.11</version>
+        <version>0.12</version>
     </dependency>
 
 本ライブラリは、ロギングライブラリ `SLF4j <https://www.slf4j.org/>`_ を使用しているため、好きな実装を追加してください。
@@ -32,7 +32,7 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
+        <version>1.2.17</version>
     </dependency>
 
 

@@ -132,7 +132,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 <span class="fc bfc" id="L133" title="All 2 branches covered.">        final Locale runtimeLocale = locale != null ? locale : Locale.getDefault();</span>
 
-<span class="pc bpc" id="L135" title="2 of 7 branches missed.">        switch(cell.getCellTypeEnum()) {</span>
+<span class="pc bpc" id="L135" title="2 of 7 branches missed.">        switch(cell.getCellType()) {</span>
             case BLANK:
 <span class="fc bfc" id="L137" title="All 2 branches covered.">                if(isConsiderMergedCell()) {</span>
                     // 結合しているセルの場合、左上のセル以外に値が設定されている場合がある。
@@ -184,7 +184,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
      */
     private CellFormatResult getFormulaCellValue(final Cell cell, final Locale locale) {
 
-<span class="fc" id="L187">        final CellType cellType = cell.getCellTypeEnum();</span>
+<span class="fc" id="L187">        final CellType cellType = cell.getCellType();</span>
 <span class="pc bpc" id="L188" title="2 of 4 branches missed.">        assert cellType == CellType.FORMULA;</span>
 
 <span class="fc" id="L190">        final Workbook workbook = cell.getSheet().getWorkbook();</span>
@@ -195,7 +195,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 <span class="fc" id="L195">            final CellValue value = evaluator.evaluate(cell);</span>
 <span class="fc" id="L196">            final POIEvaluatedCell evaluatedCell = new POIEvaluatedCell(cell, value);</span>
 
-<span class="pc bpc" id="L198" title="1 of 5 branches missed.">            switch(value.getCellTypeEnum()) {</span>
+<span class="pc bpc" id="L198" title="1 of 5 branches missed.">            switch(value.getCellType()) {</span>
 
                 case BOOLEAN:
 <span class="fc" id="L201">                    return getCellValue(evaluatedCell, locale);</span>
@@ -235,7 +235,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
      */
     private CellFormatResult getErrorCellValue(final Cell cell, final Locale locale) {
 
-<span class="nc" id="L238">        final CellType cellType = cell.getCellTypeEnum();</span>
+<span class="nc" id="L238">        final CellType cellType = cell.getCellType();</span>
 <span class="nc bnc" id="L239" title="All 4 branches missed.">        assert cellType == CellType.ERROR;</span>
 
 <span class="nc" id="L241">        return getErrorCellValue(cell.getErrorCellValue(), locale);</span>
@@ -293,7 +293,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 <span class="fc bfc" id="L294" title="All 2 branches covered.">                for(int colIdx=range.getFirstColumn(); colIdx &lt;= range.getLastColumn(); colIdx++) {</span>
 <span class="fc" id="L295">                    final Cell valueCell = row.getCell(colIdx);</span>
-<span class="pc bpc" id="L296" title="1 of 4 branches missed.">                    if(valueCell == null || valueCell.getCellTypeEnum() == CellType.BLANK) {</span>
+<span class="pc bpc" id="L296" title="1 of 4 branches missed.">                    if(valueCell == null || valueCell.getCellType() == CellType.BLANK) {</span>
 <span class="fc" id="L297">                        continue;</span>
                     }
 

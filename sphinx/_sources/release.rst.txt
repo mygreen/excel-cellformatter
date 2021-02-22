@@ -3,6 +3,22 @@
 ======================================
 
 ------------------------
+ver.0.12 - 2021-02-22
+------------------------
+
+* `#26 <https://github.com/mygreen/excel-cellformatter/issues/26>`_ / `#29 <https://github.com/mygreen/excel-cellformatter/issues/29>`_ : テスト時のライブラリのバージョンを変更。
+
+  * JUnitのバージョンを 4.11 → 4.13.1 に変更。
+  * log4jのバージョンを 1.2.14 → 1.2.17 に変更。
+
+* `#27 <https://github.com/mygreen/excel-cellformatter/issues/27>`_ : 前提となるApache POIのバージョンを 3.17 → 4.0以上に変更。
+  
+  * それに伴い、Javaのバージョンを1.7 → 1.8に変更。
+
+* `#28 <https://github.com/mygreen/excel-cellformatter/issues/28>`_ : テスト用のソースで使用していないパッケージのインポートを整理。
+
+
+------------------------
 ver.0.11 - 2019-04-03
 ------------------------
 

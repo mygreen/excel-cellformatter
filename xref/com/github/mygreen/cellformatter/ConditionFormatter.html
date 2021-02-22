@@ -26,19 +26,19 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a> {
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">class</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a> {
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>      
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>      <em class="jxr_javadoccomment">/** 元の書式のパターン */</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> String pattern;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>      
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      <em class="jxr_javadoccomment">/** 一致する条件   */</em>
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html">ConditionOperator</a> <strong class="jxr_keyword">operator</strong>;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">protected</strong> <a name="ConditionOperator" href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html#ConditionOperator">ConditionOperator</a> <strong class="jxr_keyword">operator</strong>;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>      
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      <em class="jxr_javadoccomment">/** ロケール  */</em>
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">protected</strong> <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>      
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>      <em class="jxr_javadoccomment">/** 条件の色 */</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html">MSColor</a> color;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">protected</strong> <a name="MSColor" href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html#MSColor">MSColor</a> color;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      <em class="jxr_javadoccomment">/** 全ての条件式 */</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">protected</strong> List&lt;String&gt; conditions = <strong class="jxr_keyword">new</strong> CopyOnWriteArrayList&lt;&gt;();
@@ -46,7 +46,7 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/** 処理後のコールバック */</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">protected</strong> List&lt;Callback&lt;?&gt;&gt; callbacks = <strong class="jxr_keyword">new</strong> CopyOnWriteArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html">ConditionFormatter</a>(<strong class="jxr_keyword">final</strong> String pattern) {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> <a name="ConditionFormatter" href="../../../../com/github/mygreen/cellformatter/ConditionFormatter.html#ConditionFormatter">ConditionFormatter</a>(<strong class="jxr_keyword">final</strong> String pattern) {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">this</strong>.pattern = pattern;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      }
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      
@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     * フォーマッタの種類を取得する。</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../../com/github/mygreen/cellformatter/FormatterType.html">FormatterType</a> getType();
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a name="FormatterType" href="../../../../com/github/mygreen/cellformatter/FormatterType.html#FormatterType">FormatterType</a> getType();
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     * 値が条件に一致するかどうか。</em>
@@ -62,14 +62,14 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">     * @param cell 判定対象のセル。</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * @return true:一致する。</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">boolean</strong> isMatch(<a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell);
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">boolean</strong> isMatch(<a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell);
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * 値をフォーマットする。</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * @param cell フォーマット対象のセル。</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     * @return true:一致する。</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell) {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">public</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a> format(<a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell) {
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">return</strong> format(cell, Locale.getDefault());
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      
@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * @param runtimeLocale 実行時のロケール。nullの場合は、実行環境のロケールが指定される。</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @return フォーマット結果。</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html">CellFormatResult</a> format(<a href="../../../../com/github/mygreen/cellformatter/CommonCell.html">CommonCell</a> cell, Locale runtimeLocale);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a name="CellFormatResult" href="../../../../com/github/mygreen/cellformatter/CellFormatResult.html#CellFormatResult">CellFormatResult</a> format(<a name="CommonCell" href="../../../../com/github/mygreen/cellformatter/CommonCell.html#CommonCell">CommonCell</a> cell, Locale runtimeLocale);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * 種類が'日時'のフォーマッタかどうか。</em>
@@ -141,14 +141,14 @@
 <a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * 色を取得する。</em>
 <a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     * @return 値を持たない場合は、nullを返す。</em>
 <a class="jxr_linenumber" name="L135" href="#L135">135</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html">MSColor</a> getColor() {
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>     <strong class="jxr_keyword">public</strong> <a name="MSColor" href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html#MSColor">MSColor</a> getColor() {
 <a class="jxr_linenumber" name="L137" href="#L137">137</a>         <strong class="jxr_keyword">return</strong> color;
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>     }
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_javadoccomment">     * 色を設定する。</em>
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setColor(<a href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html">MSColor</a> color) {
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setColor(<a name="MSColor" href="../../../../com/github/mygreen/cellformatter/lang/MSColor.html#MSColor">MSColor</a> color) {
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">this</strong>.color = color;
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>     }
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>     
@@ -156,7 +156,7 @@
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     * 一致条件を取得する。</em>
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html">ConditionOperator</a> getOperator() {
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> <a name="ConditionOperator" href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html#ConditionOperator">ConditionOperator</a> getOperator() {
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">operator</strong>;
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>     
@@ -164,7 +164,7 @@
 <a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     * 一致条件を設定する。</em>
 <a class="jxr_linenumber" name="L157" href="#L157">157</a> <em class="jxr_javadoccomment">     * @param operator 一致条件</em>
 <a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setOperator(<a href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html">ConditionOperator</a> <strong class="jxr_keyword">operator</strong>) {
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setOperator(<a name="ConditionOperator" href="../../../../com/github/mygreen/cellformatter/ConditionOperator.html#ConditionOperator">ConditionOperator</a> <strong class="jxr_keyword">operator</strong>) {
 <a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">this</strong>.<strong class="jxr_keyword">operator</strong> = <strong class="jxr_keyword">operator</strong>;
 <a class="jxr_linenumber" name="L161" href="#L161">161</a>     }
 <a class="jxr_linenumber" name="L162" href="#L162">162</a>     
@@ -172,7 +172,7 @@
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * ロケールを取得する。</em>
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @return 値を持たない場合は、nullを返す。</em>
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> getLocale() {
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">public</strong> <a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> getLocale() {
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">return</strong> locale;
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>     }
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>     
@@ -180,7 +180,7 @@
 <a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * ロケールを設定する。</em>
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * @param locale</em>
 <a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setLocale(<a href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale) {
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setLocale(<a name="MSLocale" href="../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale) {
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">this</strong>.locale = locale;
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>     }
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>     
@@ -216,6 +216,6 @@
 <a class="jxr_linenumber" name="L208" href="#L208">208</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

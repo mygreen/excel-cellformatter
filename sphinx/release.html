@@ -2,27 +2,28 @@
 
 <!doctype html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html lang="ja">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>6. リリースノート &#8212; Excel-CellFormatter 0.11 ドキュメント</title>
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6. リリースノート &#8212; Excel-CellFormatter 0.12 ドキュメント</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="_static/mytheme.js"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/mytheme.js"></script>
+    <script src="_static/bizstyle.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="prev" title="5. Excelの書式のその他の情報" href="format_other.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <script src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -34,9 +35,210 @@
         <li class="right" >
           <a href="format_other.html" title="5. Excelの書式のその他の情報"
              accesskey="P">前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>リリースノート</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6. </span>リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="ver-0-12-2021-02-22">
+<h2><span class="section-number">6.1. </span>ver.0.12 - 2021-02-22<a class="headerlink" href="#ver-0-12-2021-02-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/26">#26</a> / <a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/29">#29</a> : テスト時のライブラリのバージョンを変更。</p>
+<ul>
+<li><p>JUnitのバージョンを 4.11 → 4.13.1 に変更。</p></li>
+<li><p>log4jのバージョンを 1.2.14 → 1.2.17 に変更。</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/27">#27</a> : 前提となるApache POIのバージョンを 3.17 → 4.0以上に変更。</p>
+<ul>
+<li><p>それに伴い、Javaのバージョンを1.7 → 1.8に変更。</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/28">#28</a> : テスト用のソースで使用していないパッケージのインポートを整理。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-11-2019-04-03">
+<h2><span class="section-number">6.2. </span>ver.0.11 - 2019-04-03<a class="headerlink" href="#ver-0-11-2019-04-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/24">#24</a> : 新元号「令和」に対応。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-10-2018-06-24">
+<h2><span class="section-number">6.3. </span>ver.0.10 - 2018-06-24<a class="headerlink" href="#ver-0-10-2018-06-24" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>前提となるApache POIのバージョンを、v3.17に変更。</p></li>
+<li><p>CellFormatterのインタフェースとして、書式を取得するメソッド <code class="docutils literal notranslate"><span class="pre">getPattern()</span></code> を追加。</p></li>
+<li><p>中国語、韓国語に対応。ただし、元号は非対応。</p></li>
+<li><p>漢数字、大字などの変換を行うDBNumXの条件式の内部処理を多国語に対応できるよう変更。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-9-2-2017-09-22">
+<h2><span class="section-number">6.4. </span>ver.0.9.2 - 2017-09-22<a class="headerlink" href="#ver-0-9-2-2017-09-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/22">#22</a> : ４つ目のセクションが文字列以外の場合に対応。</p></li>
+<li><p>FindBugsによる指摘による、無駄なコードの修正。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-9-1-2016-12-22">
+<h2><span class="section-number">6.5. </span>ver.0.9.1 - 2016-12-22<a class="headerlink" href="#ver-0-9-1-2016-12-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/20">#20</a> : <code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> のテスタにおいて、不明な数式の場合、テストに失敗する事象を修正しました。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-9-2016-12-19">
+<h2><span class="section-number">6.6. </span>ver.0.9 - 2016-12-19<a class="headerlink" href="#ver-0-9-2016-12-19" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/18">#18</a> : <code class="docutils literal notranslate"><span class="pre">ObejctCellFormatter</span></code> に formatterResolverのアクセッサメソッドを追加しました。</p></li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/19">#19</a> : 元号をカスタマイズできるようにしました。
+詳細は、 <a class="reference internal" href="customize.html"><span class="doc">カスタマイズ方法</span></a> を参照してください。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-8-3-2016-07-02">
+<h2><span class="section-number">6.7. </span>ver.0.8.3 - 2016-07-02<a class="headerlink" href="#ver-0-8-3-2016-07-02" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/17">#17</a> : 数式を含んだセルの値を評価する際にCellの値を更新しないように修正。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-8-2-2016-05-21">
+<h2><span class="section-number">6.8. </span>ver.0.8.2 - 2016-05-21<a class="headerlink" href="#ver-0-8-2-2016-05-21" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/15">#15</a> : <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">標準書式</span></a> で、 整数部が10桁未満の小数の場合、精度を動的に変更するよう修正。</p></li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/16">#16</a> : Excel2000で作成した記号付きの会計書式で、エスケープ処理が正しく行われないケースを修正。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-8-1-2016-05-07">
+<h2><span class="section-number">6.9. </span>ver.0.8.1 - 2016-05-07<a class="headerlink" href="#ver-0-8-1-2016-05-07" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>ビルドしたバイナリに、関係のないCoverturaのリンクが張られおり、コンパイルエラーとなったためビルドし直しました。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NumberCell</span></code> クラスで、環境によりコンパイルエラーとなる事象を修正しました。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-8-2016-04-29">
+<h2><span class="section-number">6.10. </span>ver.0.8 - 2016-04-29<a class="headerlink" href="#ver-0-8-2016-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/13">#13</a> : 会計書式でドイツマルクなどの <a class="reference internal" href="format_basic_condition.html"><span class="doc">記号付きのロケールの条件式</span></a> (例 <code class="docutils literal notranslate"><span class="pre">[$-€407]</span></code> )に対応。</p></li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/14">#14</a> : <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">標準書式</span></a> で、 <code class="docutils literal notranslate"><span class="pre">100000000000</span></code> 以上または、<code class="docutils literal notranslate"><span class="pre">0.0000000001</span></code> 以下の数値の場合、指数表示になるよう修正。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-7-2016-03-20">
+<h2><span class="section-number">6.11. </span>ver.0.7 - 2016-03-20<a class="headerlink" href="#ver-0-7-2016-03-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/12">#12</a> : <code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、結合したセルの値を取得するときに、非ブランクセルが左上にない場合に正しく値が取得できない事象を修正。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、式が設定されているセルの評価に失敗したときに、例外をスローするかどうかのプロパティ <code class="docutils literal notranslate"><span class="pre">throwFailEvaluateFormula</span></code> を追加しました。</p>
+<ul>
+<li><p>初期値はfalseで、例外はスローされず、エラーセルとして扱われます。</p></li>
+<li><p>値をtrueにした場合、例外 <code class="docutils literal notranslate"><span class="pre">FormulaEvaluateException</span></code> がスローされます。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、結合されてるセルを考慮するかどうかのプロパティ <code class="docutils literal notranslate"><span class="pre">considerMergedCell</span></code> を追加しました。</p>
+<ul>
+<li><p>POIの場合、結合されている領域は、左上のセル以外はブランクセルとなるため、値が設定してあるセルを走査する必要があるためです。</p></li>
+<li><p>初期値はtrueで、結合セルを考慮します。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ver-0-6-2016-02-20">
+<h2><span class="section-number">6.12. </span>ver.0.6 - 2016-02-20<a class="headerlink" href="#ver-0-6-2016-02-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/10">#10</a> : Javaオブジェクトを直接フォーマットできるクラス <a class="reference internal" href="howtouse.html#howobjectcellformatter"><span class="std std-ref">ObjectCellFormatter</span></a>  を追加。</p></li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/11">#11</a> : ビルドインフォーマット(組み込み書式)の実装方法と英語環境での書式の修正。</p>
+<ul>
+<li><p>組み込み書式の実装方法をプロパティファイル「format.properties」に定義するよう変更。</p></li>
+<li><p><a class="reference internal" href="format_other_buiitinformat.html"><span class="doc">英語環境の組み込み書式</span></a> を見直し。</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ver-0-5-1-2016-01-31">
+<h2><span class="section-number">6.13. </span>ver.0.5.1 - 2016-01-31<a class="headerlink" href="#ver-0-5-1-2016-01-31" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/9">#9</a> : <code class="docutils literal notranslate"><span class="pre">MSLocale</span></code> クラス内の綴り間違いを修正。</p>
+<ul>
+<li><p>MSLocale.MSLocale.GERMAY → MSLocale.GERMAN</p></li>
+<li><p>MSLocale.isUnkownById(int) → MSLocale.isKnownById(int)</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ver-0-5-2016-01-16">
+<h2><span class="section-number">6.14. </span>ver.0.5 - 2016-01-16<a class="headerlink" href="#ver-0-5-2016-01-16" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/1">#1</a> : プログラム内部での書式の定義をプロパティファイルに定義するようにしました。</p>
+<ul>
+<li><p>現在、英語、日本語のロケールのみサポートですが、今後、他の言語も追加していく予定です。</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/8">#8</a> : 値がゼロの時の漢数字、大字の変換処理結果が空文字になる不良を修正しました。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-4-2015-04-19">
+<h2><span class="section-number">6.15. </span>ver.0.4 - 2015-04-19<a class="headerlink" href="#ver-0-4-2015-04-19" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/4">#4</a> : セルの値とセクションが一致しない場合にも値が取得できるようにしました。</p>
+<ul>
+<li><p>今までは、例外、 <cite>NoMatchConditionFormatterException</cite> がスローされていましたが、デフォルトのフォーマッタを利用して処理をするよう改善しました。</p></li>
+<li><p>例えば、整数を入れて、セルの書式（属性）は文字列形式に設定した場合。</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/5">#5</a> : セルの値がエラーの場合、Excel上で表示される文字 <cite>#VALUE!</cite> と同様に表示するようにしました。</p>
+<ul>
+<li><p>POICellFormatter/JXLCellFormatterのプロパティに、<cite>errorCellAsEmpty</cite> を追加し、値falseの時エラーのときに <cite>#VALUE!</cite> などの値を返します。trueの場合は空文字を返す。</p></li>
+<li><p>ただし、POIの場合は正しくエラー情報が取得できない場合があります。</p>
+<ul>
+<li><p>POIの場合、xlsの古い形式の場合、全て「#VALUE!」となる。xlsxの形式だと種類ごとに値が取得できる。</p></li>
+<li><p>POIの場合、「#NUM!」の場合、「=DATE(50000,1,1)」でも正常に計算ができる。これは、Javaの日付の表示範囲がExcelよりも広いため。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/6">#6</a> : 結合してしている空白のセルの場合StackOverFlowが発生する事象修正。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-3-2015-04-11">
+<h2><span class="section-number">6.16. </span>ver.0.3 - 2015-04-11<a class="headerlink" href="#ver-0-3-2015-04-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/2">#2</a> : フォーマットの戻り値として色などの詳細な情報 <cite>CellFormatResult</cite> を取得できるよにしました。</p>
+<ul>
+<li><p>この修正に伴い、既存のメソッド <cite>POICellFormatter#format(...)</cite> 、<cite>JXLCellFormatter#format(...)</cite> の名称を、<cite>#formatAsString(...)</cite> に変更しました。</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/3">#3</a> : エスケープ文字としてクエスチョン（!）に対応しました。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-2-2015-04-04">
+<h2><span class="section-number">6.17. </span>ver.0.2 - 2015-04-04<a class="headerlink" href="#ver-0-2-2015-04-04" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>セクションの判定条件を修正。</p>
+<ul>
+<li><p>セクションが2つの場合、1つめのセクションが「ゼロ以上」の条件になるよう修正。</p></li>
+<li><p>セクションが5個以上あるとき、例外 <em>CustomFormatterParseException</em> をスローするよう修正。</p></li>
+</ul>
+</li>
+<li><p>Javadocの修正。</p></li>
+<li><p>マニュアルの整備。</p></li>
+</ul>
+</div>
+<div class="section" id="ver-0-1-2015-03-22">
+<h2><span class="section-number">6.18. </span>ver.0.1 - 2015-03-22<a class="headerlink" href="#ver-0-1-2015-03-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>初期リリース。</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
 <h3><a href="../index.html">関連リンク</a></h3>
@@ -47,7 +249,7 @@
 	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
 </ul>
 
-<h3><a href="index.html">目次</a></h3>
+<h3><a href="index.html">Table Of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
@@ -89,23 +291,24 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-11-2019-04-03">6.1. ver.0.11 - 2019-04-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-10-2018-06-24">6.2. ver.0.10 - 2018-06-24</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-2-2017-09-22">6.3. ver.0.9.2 - 2017-09-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-1-2016-12-22">6.4. ver.0.9.1 - 2016-12-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-2016-12-19">6.5. ver.0.9 - 2016-12-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-3-2016-07-02">6.6. ver.0.8.3 - 2016-07-02</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-2-2016-05-21">6.7. ver.0.8.2 - 2016-05-21</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-1-2016-05-07">6.8. ver.0.8.1 - 2016-05-07</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-2016-04-29">6.9. ver.0.8 - 2016-04-29</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-7-2016-03-20">6.10. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-6-2016-02-20">6.11. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-5-1-2016-01-31">6.12. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-5-2016-01-16">6.13. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-4-2015-04-19">6.14. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-3-2015-04-11">6.15. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-2-2015-04-04">6.16. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ver-0-1-2015-03-22">6.17. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-12-2021-02-22">6.1. ver.0.12 - 2021-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-11-2019-04-03">6.2. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-10-2018-06-24">6.3. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-2-2017-09-22">6.4. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-1-2016-12-22">6.5. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-9-2016-12-19">6.6. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-3-2016-07-02">6.7. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-2-2016-05-21">6.8. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-1-2016-05-07">6.9. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-8-2016-04-29">6.10. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-7-2016-03-20">6.11. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-6-2016-02-20">6.12. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-5-1-2016-01-31">6.13. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-5-2016-01-16">6.14. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-4-2015-04-19">6.15. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-3-2015-04-11">6.16. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-2-2015-04-04">6.17. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ver-0-1-2015-03-22">6.18. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -114,7 +317,7 @@
 </div>
   <h4>前のトピックへ</h4>
   <p class="topless"><a href="format_other.html"
-                        title="前の章へ">5. Excelの書式のその他の情報</a></p>
+                        title="前の章へ"><span class="section-number">5. </span>Excelの書式のその他の情報</a></p>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
@@ -123,189 +326,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>クイック検索</h3>
+  <h3 id="searchlabel">クイック検索</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="検索" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="id1">
-<h1>6. リリースノート<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<div class="section" id="ver-0-11-2019-04-03">
-<h2>6.1. ver.0.11 - 2019-04-03<a class="headerlink" href="#ver-0-11-2019-04-03" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/24">#24</a> : 新元号「令和」に対応。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-10-2018-06-24">
-<h2>6.2. ver.0.10 - 2018-06-24<a class="headerlink" href="#ver-0-10-2018-06-24" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>前提となるApache POIのバージョンを、v3.17に変更。</li>
-<li>CellFormatterのインタフェースとして、書式を取得するメソッド <code class="docutils literal notranslate"><span class="pre">getPattern()</span></code> を追加。</li>
-<li>中国語、韓国語に対応。ただし、元号は非対応。</li>
-<li>漢数字、大字などの変換を行うDBNumXの条件式の内部処理を多国語に対応できるよう変更。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-9-2-2017-09-22">
-<h2>6.3. ver.0.9.2 - 2017-09-22<a class="headerlink" href="#ver-0-9-2-2017-09-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/22">#22</a> : ４つ目のセクションが文字列以外の場合に対応。</li>
-<li>FindBugsによる指摘による、無駄なコードの修正。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-9-1-2016-12-22">
-<h2>6.4. ver.0.9.1 - 2016-12-22<a class="headerlink" href="#ver-0-9-1-2016-12-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/20">#20</a> : <code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> のテスタにおいて、不明な数式の場合、テストに失敗する事象を修正しました。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-9-2016-12-19">
-<h2>6.5. ver.0.9 - 2016-12-19<a class="headerlink" href="#ver-0-9-2016-12-19" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/18">#18</a> : <code class="docutils literal notranslate"><span class="pre">ObejctCellFormatter</span></code> に formatterResolverのアクセッサメソッドを追加しました。</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/19">#19</a> : 元号をカスタマイズできるようにしました。
-詳細は、 <a class="reference internal" href="customize.html"><span class="doc">カスタマイズ方法</span></a> を参照してください。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-8-3-2016-07-02">
-<h2>6.6. ver.0.8.3 - 2016-07-02<a class="headerlink" href="#ver-0-8-3-2016-07-02" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/17">#17</a> : 数式を含んだセルの値を評価する際にCellの値を更新しないように修正。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-8-2-2016-05-21">
-<h2>6.7. ver.0.8.2 - 2016-05-21<a class="headerlink" href="#ver-0-8-2-2016-05-21" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/15">#15</a> : <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">標準書式</span></a> で、 整数部が10桁未満の小数の場合、精度を動的に変更するよう修正。</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/16">#16</a> : Excel2000で作成した記号付きの会計書式で、エスケープ処理が正しく行われないケースを修正。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-8-1-2016-05-07">
-<h2>6.8. ver.0.8.1 - 2016-05-07<a class="headerlink" href="#ver-0-8-1-2016-05-07" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>ビルドしたバイナリに、関係のないCoverturaのリンクが張られおり、コンパイルエラーとなったためビルドし直しました。</li>
-<li><code class="docutils literal notranslate"><span class="pre">NumberCell</span></code> クラスで、環境によりコンパイルエラーとなる事象を修正しました。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-8-2016-04-29">
-<h2>6.9. ver.0.8 - 2016-04-29<a class="headerlink" href="#ver-0-8-2016-04-29" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/13">#13</a> : 会計書式でドイツマルクなどの <a class="reference internal" href="format_basic_condition.html"><span class="doc">記号付きのロケールの条件式</span></a> (例 <code class="docutils literal notranslate"><span class="pre">[$-€407]</span></code> )に対応。</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/14">#14</a> : <a class="reference internal" href="format_other_defaultformat.html"><span class="doc">標準書式</span></a> で、 <code class="docutils literal notranslate"><span class="pre">100000000000</span></code> 以上または、<code class="docutils literal notranslate"><span class="pre">0.0000000001</span></code> 以下の数値の場合、指数表示になるよう修正。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-7-2016-03-20">
-<h2>6.10. ver.0.7 - 2016-03-20<a class="headerlink" href="#ver-0-7-2016-03-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/12">#12</a> : <code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、結合したセルの値を取得するときに、非ブランクセルが左上にない場合に正しく値が取得できない事象を修正。</li>
-<li><code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、式が設定されているセルの評価に失敗したときに、例外をスローするかどうかのプロパティ <code class="docutils literal notranslate"><span class="pre">throwFailEvaluateFormula</span></code> を追加しました。<ul>
-<li>初期値はfalseで、例外はスローされず、エラーセルとして扱われます。</li>
-<li>値をtrueにした場合、例外 <code class="docutils literal notranslate"><span class="pre">FormulaEvaluateException</span></code> がスローされます。</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">POICellFormatter</span></code> において、結合されてるセルを考慮するかどうかのプロパティ <code class="docutils literal notranslate"><span class="pre">considerMergedCell</span></code> を追加しました。<ul>
-<li>POIの場合、結合されている領域は、左上のセル以外はブランクセルとなるため、値が設定してあるセルを走査する必要があるためです。</li>
-<li>初期値はtrueで、結合セルを考慮します。</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="ver-0-6-2016-02-20">
-<h2>6.11. ver.0.6 - 2016-02-20<a class="headerlink" href="#ver-0-6-2016-02-20" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/10">#10</a> : Javaオブジェクトを直接フォーマットできるクラス <a class="reference internal" href="howtouse.html#howobjectcellformatter"><span class="std std-ref">ObjectCellFormatter</span></a>  を追加。</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/11">#11</a> : ビルドインフォーマット(組み込み書式)の実装方法と英語環境での書式の修正。<ul>
-<li>組み込み書式の実装方法をプロパティファイル「format.properties」に定義するよう変更。</li>
-<li><a class="reference internal" href="format_other_buiitinformat.html"><span class="doc">英語環境の組み込み書式</span></a> を見直し。</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="ver-0-5-1-2016-01-31">
-<h2>6.12. ver.0.5.1 - 2016-01-31<a class="headerlink" href="#ver-0-5-1-2016-01-31" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/9">#9</a> : <code class="docutils literal notranslate"><span class="pre">MSLocale</span></code> クラス内の綴り間違いを修正。<ul>
-<li>MSLocale.MSLocale.GERMAY → MSLocale.GERMAN</li>
-<li>MSLocale.isUnkownById(int) → MSLocale.isKnownById(int)</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="ver-0-5-2016-01-16">
-<h2>6.13. ver.0.5 - 2016-01-16<a class="headerlink" href="#ver-0-5-2016-01-16" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/1">#1</a> : プログラム内部での書式の定義をプロパティファイルに定義するようにしました。<ul>
-<li>現在、英語、日本語のロケールのみサポートですが、今後、他の言語も追加していく予定です。</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/8">#8</a> : 値がゼロの時の漢数字、大字の変換処理結果が空文字になる不良を修正しました。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-4-2015-04-19">
-<h2>6.14. ver.0.4 - 2015-04-19<a class="headerlink" href="#ver-0-4-2015-04-19" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/4">#4</a> : セルの値とセクションが一致しない場合にも値が取得できるようにしました。<ul>
-<li>今までは、例外、 <cite>NoMatchConditionFormatterException</cite> がスローされていましたが、デフォルトのフォーマッタを利用して処理をするよう改善しました。</li>
-<li>例えば、整数を入れて、セルの書式（属性）は文字列形式に設定した場合。</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/5">#5</a> : セルの値がエラーの場合、Excel上で表示される文字 <cite>#VALUE!</cite> と同様に表示するようにしました。<ul>
-<li>POICellFormatter/JXLCellFormatterのプロパティに、<cite>errorCellAsEmpty</cite> を追加し、値falseの時エラーのときに <cite>#VALUE!</cite> などの値を返します。trueの場合は空文字を返す。</li>
-<li>ただし、POIの場合は正しくエラー情報が取得できない場合があります。<ul>
-<li>POIの場合、xlsの古い形式の場合、全て「#VALUE!」となる。xlsxの形式だと種類ごとに値が取得できる。</li>
-<li>POIの場合、「#NUM!」の場合、「=DATE(50000,1,1)」でも正常に計算ができる。これは、Javaの日付の表示範囲がExcelよりも広いため。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/6">#6</a> : 結合してしている空白のセルの場合StackOverFlowが発生する事象修正。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-3-2015-04-11">
-<h2>6.15. ver.0.3 - 2015-04-11<a class="headerlink" href="#ver-0-3-2015-04-11" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/2">#2</a> : フォーマットの戻り値として色などの詳細な情報 <cite>CellFormatResult</cite> を取得できるよにしました。<ul>
-<li>この修正に伴い、既存のメソッド <cite>POICellFormatter#format(...)</cite> 、<cite>JXLCellFormatter#format(...)</cite> の名称を、<cite>#formatAsString(...)</cite> に変更しました。</li>
-</ul>
-</li>
-<li><a class="reference external" href="https://github.com/mygreen/excel-cellformatter/issues/3">#3</a> : エスケープ文字としてクエスチョン（!）に対応しました。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-2-2015-04-04">
-<h2>6.16. ver.0.2 - 2015-04-04<a class="headerlink" href="#ver-0-2-2015-04-04" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>セクションの判定条件を修正。<ul>
-<li>セクションが2つの場合、1つめのセクションが「ゼロ以上」の条件になるよう修正。</li>
-<li>セクションが5個以上あるとき、例外 <em>CustomFormatterParseException</em> をスローするよう修正。</li>
-</ul>
-</li>
-<li>Javadocの修正。</li>
-<li>マニュアルの整備。</li>
-</ul>
-</div>
-<div class="section" id="ver-0-1-2015-03-22">
-<h2>6.17. ver.0.1 - 2015-03-22<a class="headerlink" href="#ver-0-1-2015-03-22" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<ul class="simple">
-<li>初期リリース。</li>
-</ul>
-</div>
-</div>
-
-
-          </div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -319,7 +348,8 @@
         <li class="right" >
           <a href="format_other.html" title="5. Excelの書式のその他の情報"
              >前へ</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>リリースノート</a></li> 
       </ul>
     </div>
 <!-- my theme custom extrahead beacon -->
@@ -345,8 +375,8 @@
 
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015-2019, T.TSUCHIE.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9 で生成しました。
+        &#169; Copyright 2015-2021, T.TSUCHIE.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
 
   </body>

@@ -2,26 +2,27 @@
 
 <!doctype html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html lang="ja">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>他のオフィススイートの書式記号 &#8212; Excel-CellFormatter 0.11 ドキュメント</title>
-    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>他のオフィススイートの書式記号 &#8212; Excel-CellFormatter 0.12 ドキュメント</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/translations.js"></script>
-    <script type="text/javascript" src="_static/mytheme.js"></script>
-    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/mytheme.js"></script>
+    <script src="_static/bizstyle.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <script src="_static/css3-mediaqueries.js"></script>
     <![endif]-->
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -30,9 +31,135 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">他のオフィススイートの書式記号</a></li> 
       </ul>
-    </div>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>他のオフィススイートの書式記号<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>OpenOffice、LibreOfficeなどの他のオフィススイートでも、Microsoft Excel形式を扱うことができますが、独自に拡張をしている書式があります。
+主に、日付の書式に対して拡張がされています。</p>
+<p>LibreOfficeはOpenOfficeから派生したので、書式も共通しています。</p>
+<p>詳細は、下記のリンクを参照してください。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">数の書式コード（LibreOfficeのマニュアル）</a></p></li>
+</ul>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-text">OpenOffice/LibreOfficeの独自の書式記号</span><a class="headerlink" href="#id2" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 40%" />
+<col style="width: 20%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>書式記号</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>使用例</p></th>
+<th class="head"><p>表示例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>WW</p></td>
+<td><div class="line-block">
+<div class="line">1年における週番号を表示します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">WW</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2012/2/29 -&gt; 9</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Q</p></td>
+<td><div class="line-block">
+<div class="line">四半期をQ1～Q4で表示します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">YY&quot;年 &quot;Q</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2012/2/29 -&gt; 12年 Q1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>QQ</p></td>
+<td><div class="line-block">
+<div class="line">四半期を正式名で表示します。言語ごとに異なります。</div>
+</div>
+<ul class="simple">
+<li><p>英語環境の場合、「1st quater～4th quater」で表示します。</p></li>
+<li><p>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、「第１四半期～第４四半期」で表示します。</p></li>
+</ul>
+</td>
+<td><div class="line-block">
+<div class="line">YY QQ</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2012/2/29 -&gt; 12 第１四半期</div>
+<div class="line">2012/2/29 -&gt; 12 1st quater</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>NN</p></td>
+<td><div class="line-block">
+<div class="line">英語の曜日の頭文字から 3 文字 (Sun～Sat) を表示します。</div>
+</div>
+<ul class="simple">
+<li><p>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日の頭文字（日～土）を表示します。</p></li>
+<li><p>曜日の書式の記号「ddd」「aaa」と同じ意味です。</p></li>
+</ul>
+</td>
+<td><div class="line-block">
+<div class="line">NN</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2001/1/3 -&gt; Wed</div>
+<div class="line">2001/1/3 -&gt; 水</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>NNNN</p></td>
+<td><div class="line-block">
+<div class="line">英語の曜日 (Sunday～Saturday) を表示します。</div>
+</div>
+<ul class="simple">
+<li><p>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日（日曜日～土曜日）を表示します。</p></li>
+<li><p>曜日の書式の記号「dddd」「aaaa」と同じ意味です。</p></li>
+</ul>
+</td>
+<td><div class="line-block">
+<div class="line">NNNN</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">2001/1/3 -&gt; Wednesday</div>
+<div class="line">2001/1/3 -&gt; 水曜日</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
 <h3><a href="../index.html">関連リンク</a></h3>
@@ -43,7 +170,7 @@
 	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
 </ul>
 
-<h3><a href="index.html">目次</a></h3>
+<h3><a href="index.html">Table Of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
@@ -85,23 +212,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.1. ver.0.11 - 2019-04-03</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.2. ver.0.10 - 2018-06-24</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.3. ver.0.9.2 - 2017-09-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.4. ver.0.9.1 - 2016-12-22</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.5. ver.0.9 - 2016-12-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.6. ver.0.8.3 - 2016-07-02</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.7. ver.0.8.2 - 2016-05-21</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.8. ver.0.8.1 - 2016-05-07</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.9. ver.0.8 - 2016-04-29</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.10. ver.0.7 - 2016-03-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.11. ver.0.6 - 2016-02-20</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.12. ver.0.5.1 - 2016-01-31</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.13. ver.0.5 - 2016-01-16</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.14. ver.0.4 - 2015-04-19</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.15. ver.0.3 - 2015-04-11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.16. ver.0.2 - 2015-04-04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.17. ver.0.1 - 2015-03-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-12-2021-02-22">6.1. ver.0.12 - 2021-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.2. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.3. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.4. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.5. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.6. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.7. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.8. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.9. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.10. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.11. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.12. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.13. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.14. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.15. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.16. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.17. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.18. ver.0.1 - 2015-03-22</a></li>
 </ul>
 </li>
 </ul>
@@ -116,141 +244,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>クイック検索</h3>
+  <h3 id="searchlabel">クイック検索</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="検索" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="id1">
-<h1>他のオフィススイートの書式記号<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>OpenOffice、LibreOfficeなどの他のオフィススイートでも、Microsoft Excel形式を扱うことができますが、独自に拡張をしている書式があります。
-主に、日付の書式に対して拡張がされています。</p>
-<p>LibreOfficeはOpenOfficeから派生したので、書式も共通しています。</p>
-<p>詳細は、下記のリンクを参照してください。</p>
-<ul class="simple">
-<li><a class="reference external" href="https://help.libreoffice.org/Common/Number_Format_Codes/ja">数の書式コード（LibreOfficeのマニュアル）</a></li>
-</ul>
-<table border="1" class="colwidths-given docutils" id="id2">
-<caption><span class="caption-text">OpenOffice/LibreOfficeの独自の書式記号</span><a class="headerlink" href="#id2" title="このテーブルへのパーマリンク">¶</a></caption>
-<colgroup>
-<col width="15%" />
-<col width="40%" />
-<col width="20%" />
-<col width="25%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">書式記号</th>
-<th class="head">説明</th>
-<th class="head">使用例</th>
-<th class="head">表示例</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>WW</td>
-<td><div class="first last line-block">
-<div class="line">1年における週番号を表示します。</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">WW</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">2012/2/29 -&gt; 9</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td>Q</td>
-<td><div class="first last line-block">
-<div class="line">四半期をQ1～Q4で表示します。</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">YY&quot;年 &quot;Q</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">2012/2/29 -&gt; 12年 Q1</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td>QQ</td>
-<td><div class="first line-block">
-<div class="line">四半期を正式名で表示します。言語ごとに異なります。</div>
-</div>
-<ul class="last simple">
-<li>英語環境の場合、「1st quater～4th quater」で表示します。</li>
-<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、「第１四半期～第４四半期」で表示します。</li>
-</ul>
-</td>
-<td><div class="first last line-block">
-<div class="line">YY QQ</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">2012/2/29 -&gt; 12 第１四半期</div>
-<div class="line">2012/2/29 -&gt; 12 1st quater</div>
-</div>
-</td>
-</tr>
-<tr class="row-odd"><td>NN</td>
-<td><div class="first line-block">
-<div class="line">英語の曜日の頭文字から 3 文字 (Sun～Sat) を表示します。</div>
-</div>
-<ul class="last simple">
-<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日の頭文字（日～土）を表示します。</li>
-<li>曜日の書式の記号「ddd」「aaa」と同じ意味です。</li>
-</ul>
-</td>
-<td><div class="first last line-block">
-<div class="line">NN</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">2001/1/3 -&gt; Wed</div>
-<div class="line">2001/1/3 -&gt; 水</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td>NNNN</td>
-<td><div class="first line-block">
-<div class="line">英語の曜日 (Sunday～Saturday) を表示します。</div>
-</div>
-<ul class="last simple">
-<li>ただし、日本語環境や日本語ロケール <em>[$-411]</em> を指定すると、漢字の曜日（日曜日～土曜日）を表示します。</li>
-<li>曜日の書式の記号「dddd」「aaaa」と同じ意味です。</li>
-</ul>
-</td>
-<td><div class="first last line-block">
-<div class="line">NNNN</div>
-</div>
-</td>
-<td><div class="first last line-block">
-<div class="line">2001/1/3 -&gt; Wednesday</div>
-<div class="line">2001/1/3 -&gt; 水曜日</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-          </div>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -261,7 +263,8 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="総合索引"
              >索引</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.11 ドキュメント</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">他のオフィススイートの書式記号</a></li> 
       </ul>
     </div>
 <!-- my theme custom extrahead beacon -->
@@ -287,8 +290,8 @@
 
 
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2015-2019, T.TSUCHIE.
-      このドキュメントは <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9 で生成しました。
+        &#169; Copyright 2015-2021, T.TSUCHIE.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
 
   </body>

@@ -8,9 +8,9 @@
 <div id="overview"><a href="../../../../../testapidocs/com/github/mygreen/cellformatter/POICellFormatterTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.github.mygreen.cellformatter;
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.hamcrest.CoreMatchers.*;
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.cellformatter.lang.TestUtils.*;
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> com.github.mygreen.cellformatter.lang.TestUtils.*;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.hamcrest.CoreMatchers.*;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.io.File;
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.io.FileInputStream;
@@ -47,7 +47,7 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../com/github/mygreen/cellformatter/POICellFormatterTest.html">POICellFormatterTest</a> {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="POICellFormatterTest" href="../../../../com/github/mygreen/cellformatter/POICellFormatterTest.html#POICellFormatterTest">POICellFormatterTest</a> {
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * 引数がnullの場合のテスト</em>
@@ -927,7 +927,7 @@
 <a class="jxr_linenumber" name="L919" href="#L919">919</a>             
 <a class="jxr_linenumber" name="L920" href="#L920">920</a>             <em class="jxr_comment">// 特殊条件 - java8のときなど</em>
 <a class="jxr_linenumber" name="L921" href="#L921">921</a>             <strong class="jxr_keyword">final</strong> String spCondition;
-<a class="jxr_linenumber" name="L922" href="#L922">922</a>             <strong class="jxr_keyword">if</strong>(spConditionCell == <strong class="jxr_keyword">null</strong> || spConditionCell.getCellTypeEnum().equals(CellType.BLANK)) {
+<a class="jxr_linenumber" name="L922" href="#L922">922</a>             <strong class="jxr_keyword">if</strong>(spConditionCell == <strong class="jxr_keyword">null</strong> || spConditionCell.getCellType() == CellType.BLANK) {
 <a class="jxr_linenumber" name="L923" href="#L923">923</a>                 spCondition = <span class="jxr_string">""</span>;
 <a class="jxr_linenumber" name="L924" href="#L924">924</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L925" href="#L925">925</a>                 spCondition = spConditionCell.getRichStringCellValue().toString();
@@ -978,7 +978,7 @@
 <a class="jxr_linenumber" name="L970" href="#L970">970</a>             <strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="L971" href="#L971">971</a>         }
 <a class="jxr_linenumber" name="L972" href="#L972">972</a> 
-<a class="jxr_linenumber" name="L973" href="#L973">973</a>         <strong class="jxr_keyword">if</strong>(style.getBorderBottomEnum() == BorderStyle.NONE) {
+<a class="jxr_linenumber" name="L973" href="#L973">973</a>         <strong class="jxr_keyword">if</strong>(style.getBorderBottom() == BorderStyle.NONE) {
 <a class="jxr_linenumber" name="L974" href="#L974">974</a>             <strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="L975" href="#L975">975</a>         }
 <a class="jxr_linenumber" name="L976" href="#L976">976</a> 
@@ -987,6 +987,6 @@
 <a class="jxr_linenumber" name="L979" href="#L979">979</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>

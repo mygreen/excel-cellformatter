@@ -73,7 +73,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isText() {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        return cell.getCellTypeEnum() == CellType.STRING;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        return cell.getCellType() == CellType.STRING;</span>
     }
 
     @Override
@@ -83,7 +83,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isBoolean() {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        return cell.getCellTypeEnum() == CellType.BOOLEAN;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        return cell.getCellType() == CellType.BOOLEAN;</span>
     }
 
     @Override
@@ -93,7 +93,7 @@ public class POICell implements CommonCell {
 
     @Override
     public boolean isNumber() {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">        return cell.getCellTypeEnum() == CellType.NUMERIC;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        return cell.getCellType() == CellType.NUMERIC;</span>
     }
 
     @Override

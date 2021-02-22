@@ -41,7 +41,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isText() {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.STRING;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        return value.getCellType() == CellType.STRING;</span>
     }
 
     @Override
@@ -51,7 +51,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isBoolean() {
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.BOOLEAN;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        return value.getCellType() == CellType.BOOLEAN;</span>
     }
 
     @Override
@@ -61,7 +61,7 @@ public class POIEvaluatedCell extends POICell {
 
     @Override
     public boolean isNumber() {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        return value.getCellTypeEnum() == CellType.NUMERIC;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        return value.getCellType() == CellType.NUMERIC;</span>
     }
 
     @Override

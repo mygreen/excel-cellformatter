@@ -29,7 +29,7 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> * @author T.TSUCHIE</em>
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html">MessageResolver</a> {
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MessageResolver" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html#MessageResolver">MessageResolver</a> {
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment">     * 解決するリソース名。</em>
@@ -50,7 +50,7 @@
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * デフォルトのメッセージ情報</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> defaultResource;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">private</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a> defaultResource;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <em class="jxr_javadoccomment">/**</em>
@@ -62,7 +62,7 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">     * リソース名を指定してインスタンスを生成する。</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * @param resourceName リソース名。形式は、{@link ResourceBundle}の名称。</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html">MessageResolver</a>(<strong class="jxr_keyword">final</strong> String resourceName) {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <a name="MessageResolver" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html#MessageResolver">MessageResolver</a>(<strong class="jxr_keyword">final</strong> String resourceName) {
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">this</strong>(resourceName, false, false);
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      }
@@ -74,7 +74,7 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * @param appendUserResouce クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     *      引数resourceNameの値が {@literal sample.SampleMessages}のとき、クラスパスのルート上にある「SampleMessages」を読み込みます。</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html">MessageResolver</a>(<strong class="jxr_keyword">final</strong> String resourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> allowedNoDefault, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> appendUserResouce) {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a name="MessageResolver" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResolver.html#MessageResolver">MessageResolver</a>(<strong class="jxr_keyword">final</strong> String resourceName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> allowedNoDefault, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> appendUserResouce) {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>.resourceName = resourceName;
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">this</strong>.allowedNoDefault = allowedNoDefault;
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">this</strong>.appendUserResource = appendUserResouce;
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_javadoccomment">     * @param appendUserResource クラスパスのルートにあるユーザ定義のメッセージソースも読み込むかどうか指定します。</em>
 <a class="jxr_linenumber" name="L126" href="#L126">126</a> <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L127" href="#L127">127</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> loadDefaultResource(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> allowedNoDefault, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> appendUserResource) {
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">private</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a> loadDefaultResource(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> allowedNoDefault, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> appendUserResource) {
 <a class="jxr_linenumber" name="L129" href="#L129">129</a> 
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">final</strong> String path = getPropertyPath();
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         Properties props = <strong class="jxr_keyword">new</strong> Properties();
@@ -147,7 +147,7 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>             }
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         }
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> 
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> resource = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a>();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">final</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/ce<a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a>g/MessageResource.html#MessageResource">MessageResource</a> resource = <strong class="jxr_keyword">new</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a>();
 <a class="jxr_linenumber" name="L143" href="#L143">143</a> 
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">final</strong> Enumeration&lt;?&gt; keys = props.propertyNames();
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">while</strong>(keys.hasMoreElements()) {
@@ -171,7 +171,7 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * @param locale ロケールがnullの場合は、デフォルトのリソースを返す。</em>
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * @return</em>
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> loadResource(<strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a> loadResource(<strong class="jxr_keyword">final</strong> Locale locale) {
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> 
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">if</strong>(locale == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>             <strong class="jxr_keyword">return</strong> defaultResource;
@@ -181,7 +181,7 @@
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>             <strong class="jxr_keyword">return</strong> resources.get(locale);
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>         }
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> 
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> localeResource = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a> localeResource = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         <strong class="jxr_keyword">synchronized</strong> (resources) {
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>             <strong class="jxr_keyword">for</strong>(String path : getPropertyPath(locale)) {
 <a class="jxr_linenumber" name="L179" href="#L179">179</a> 
@@ -189,7 +189,7 @@
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>                     <strong class="jxr_keyword">final</strong> Properties props = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>                     props.load(<strong class="jxr_keyword">new</strong> InputStreamReader(MessageResolver.<strong class="jxr_keyword">class</strong>.getResourceAsStream(path), <span class="jxr_string">"UTF-8"</span>));
 <a class="jxr_linenumber" name="L183" href="#L183">183</a> 
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>                     localeResource = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a>();
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>                     localeResource = <strong class="jxr_keyword">new</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a>();
 <a class="jxr_linenumber" name="L185" href="#L185">185</a> 
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>                     <strong class="jxr_keyword">final</strong> Enumeration&lt;?&gt; keys = props.propertyNames();
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>                     <strong class="jxr_keyword">while</strong>(keys.hasMoreElements()) {
@@ -228,7 +228,7 @@
 <a class="jxr_linenumber" name="L220" href="#L220">220</a> <em class="jxr_javadoccomment">     * @param basePath 基準となるプロパティファイルパス。「/」区切りで、拡張子、ロケール名が付いている。</em>
 <a class="jxr_linenumber" name="L221" href="#L221">221</a> <em class="jxr_javadoccomment">     * @return 読み込んだメッセージソース。存在しない場合は、{@link MessageResource#NULL_OBJECT}を返す。</em>
 <a class="jxr_linenumber" name="L222" href="#L222">222</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> loadUserResource(<strong class="jxr_keyword">final</strong> String basePath) {
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <strong class="jxr_keyword">private</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a> loadUserResource(<strong class="jxr_keyword">final</strong> String basePath) {
 <a class="jxr_linenumber" name="L224" href="#L224">224</a> 
 <a class="jxr_linenumber" name="L225" href="#L225">225</a>         <em class="jxr_comment">// ファイル名の切り出し</em>
 <a class="jxr_linenumber" name="L226" href="#L226">226</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> index = basePath.lastIndexOf(<span class="jxr_string">"/"</span>);
@@ -241,7 +241,7 @@
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>             Properties props = <strong class="jxr_keyword">new</strong> Properties();
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>             props.load(<strong class="jxr_keyword">new</strong> InputStreamReader(MessageResolver.<strong class="jxr_keyword">class</strong>.getResourceAsStream(userPropertyPath), <span class="jxr_string">"UTF-8"</span>));
 <a class="jxr_linenumber" name="L235" href="#L235">235</a> 
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>             <strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a> resource = <strong class="jxr_keyword">new</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html">MessageResource</a>();
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>             <strong class="jxr_keyword">final</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/ce<a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a>g/MessageResource.html#MessageResource">MessageResource</a> resource = <strong class="jxr_keyword">new</strong> <a name="MessageResource" href="../../../../../com/github/mygreen/cellformatter/lang/MessageResource.html#MessageResource">MessageResource</a>();
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>             <strong class="jxr_keyword">final</strong> Enumeration&lt;?&gt; keys = props.propertyNames();
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>             <strong class="jxr_keyword">while</strong>(keys.hasMoreElements()) {
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>                 String key = (String) keys.nextElement();
@@ -289,7 +289,7 @@
 <a class="jxr_linenumber" name="L281" href="#L281">281</a> <em class="jxr_javadoccomment">     * @param key メッセージキー</em>
 <a class="jxr_linenumber" name="L282" href="#L282">282</a> <em class="jxr_javadoccomment">     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。</em>
 <a class="jxr_linenumber" name="L283" href="#L283">283</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale, <strong class="jxr_keyword">final</strong> String key) {
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a name="MSLocale" href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale, <strong class="jxr_keyword">final</strong> String key) {
 <a class="jxr_linenumber" name="L285" href="#L285">285</a>         <strong class="jxr_keyword">if</strong>(locale == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L286" href="#L286">286</a>             <strong class="jxr_keyword">return</strong> loadResource(<strong class="jxr_keyword">null</strong>).getMessage(key);
 <a class="jxr_linenumber" name="L287" href="#L287">287</a> 
@@ -305,7 +305,7 @@
 <a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     * @param defaultValue</em>
 <a class="jxr_linenumber" name="L298" href="#L298">298</a> <em class="jxr_javadoccomment">     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。</em>
 <a class="jxr_linenumber" name="L299" href="#L299">299</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> locale, <strong class="jxr_keyword">final</strong> String key, <strong class="jxr_keyword">final</strong> String defaultValue) {
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a name="MSLocale" href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> locale, <strong class="jxr_keyword">final</strong> String key, <strong class="jxr_keyword">final</strong> String defaultValue) {
 <a class="jxr_linenumber" name="L301" href="#L301">301</a>         String message = getMessage(locale, key);
 <a class="jxr_linenumber" name="L302" href="#L302">302</a>         <strong class="jxr_keyword">return</strong> message == <strong class="jxr_keyword">null</strong> ? defaultValue : message;
 <a class="jxr_linenumber" name="L303" href="#L303">303</a>     }
@@ -343,7 +343,7 @@
 <a class="jxr_linenumber" name="L335" href="#L335">335</a> <em class="jxr_javadoccomment">     * @param key メッセージキー</em>
 <a class="jxr_linenumber" name="L336" href="#L336">336</a> <em class="jxr_javadoccomment">     * @return 該当するロケールのメッセージが見つからない場合は、デフォルトのリソースから取得する。</em>
 <a class="jxr_linenumber" name="L337" href="#L337">337</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> formatLocale, Locale runtimeLocale, <strong class="jxr_keyword">final</strong> String key) {
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a name="MSLocale" href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> formatLocale, Locale runtimeLocale, <strong class="jxr_keyword">final</strong> String key) {
 <a class="jxr_linenumber" name="L339" href="#L339">339</a> 
 <a class="jxr_linenumber" name="L340" href="#L340">340</a>         <strong class="jxr_keyword">if</strong>(formatLocale != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L341" href="#L341">341</a>             <strong class="jxr_keyword">return</strong> getMessage(formatLocale, key);
@@ -364,7 +364,7 @@
 <a class="jxr_linenumber" name="L356" href="#L356">356</a> <em class="jxr_javadoccomment">     * @param defaultValue</em>
 <a class="jxr_linenumber" name="L357" href="#L357">357</a> <em class="jxr_javadoccomment">     * @return 該当するロケールのメッセージが見つからない場合は、引数で指定した'defaultValue'の値を返す。</em>
 <a class="jxr_linenumber" name="L358" href="#L358">358</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html">MSLocale</a> formatLocale, Locale runtimeLocale, <strong class="jxr_keyword">final</strong> String key, <strong class="jxr_keyword">final</strong> String defaultValue) {
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>     <strong class="jxr_keyword">public</strong> String getMessage(<strong class="jxr_keyword">final</strong> <a name="MSLocale" href="../../../../../com/github/mygreen/cellformatter/lang/MSLocale.html#MSLocale">MSLocale</a> formatLocale, Locale runtimeLocale, <strong class="jxr_keyword">final</strong> String key, <strong class="jxr_keyword">final</strong> String defaultValue) {
 <a class="jxr_linenumber" name="L360" href="#L360">360</a> 
 <a class="jxr_linenumber" name="L361" href="#L361">361</a>         <strong class="jxr_keyword">if</strong>(formatLocale != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L362" href="#L362">362</a>             <strong class="jxr_keyword">return</strong> getMessage(formatLocale, key, defaultValue);
@@ -378,6 +378,6 @@
 <a class="jxr_linenumber" name="L370" href="#L370">370</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2019 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2021 <a href="http://mygreen.github.io/excel-cellformatter/">mygreen</a>. All rights reserved.</div>
 </body>
 </html>
