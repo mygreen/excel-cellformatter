@@ -3,15 +3,16 @@
 %~d0
 cd %~p0
 
-if NOT "%JAVA_HOME_7%" == "" (
-    set JAVA_HOME="%JAVA_HOME_7%"
-)
+call env.bat
 
-set MAVEN_OPTS=-Dhttps.protocols=TLSv1.1,TLSv1.2
+call mvn -version
 
 call mvn clean
 mkdir target
-call mvn site -Dgpg.skip=true > target/site.log 2>&1 
+call mvn site -Dgpg.skip=true -Dfile.encoding=UTF-8 > target/site.log 2>&1
+
+REM github-pages‚Ì‘Î‰
+echo "" > .\target\site\.nojekyll
 
 start target/site.log
 

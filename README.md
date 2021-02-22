@@ -6,8 +6,8 @@
 Excelのセルの書式を解析してフォーマットするJavaのライブラリ。
 
 # 前提条件
-+ Java1.7+
-+ Apache POI v3.17+
++ Java1.8+
++ Apache POI v4.0+
 + Slf4j v1.7+
 
 
@@ -18,7 +18,7 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
     <dependency>
         <groupId>com.github.mygreen</groupId>
         <artifactId>excel-cellformatter</artifactId>
-        <version>0.11</version>
+        <version>0.12</version>
     </dependency>
     ```
 
@@ -38,9 +38,10 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
 
 # ビルド方法
 
-1. Java SE 7をインストール
+1. Java SE 8をインストール
 2. Mavenのインストール
 3. Sphinxのインストール（マニュアルのビルドに使用）
+
     a. Pythonのインストール
     b. SphinxとJanomeのインストール
     ```console
@@ -48,13 +49,14 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
     # pip install janome
     ```
 4. Mavenによるビルド
+
     a. jarの作成
     ```console
-    # mvn clean package -Dhttps.protocols=TLSv1.1,TLSv1.2
+    # mvn clean package
     ```
     b.サイト生成
     ```console
-    # mvn site -Dgpg.skip=true -Dhttps.protocols=TLSv1.1,TLSv1.2
+    # mvn site -Dgpg.skip=true
     ```
 
 # 簡単な使い方
