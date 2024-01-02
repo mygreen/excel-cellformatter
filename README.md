@@ -40,20 +40,14 @@ Excelのセルの書式を解析してフォーマットするJavaのライブ�
 
 1. Java SE 8をインストール
 2. Mavenのインストール
-3. Sphinxのインストール（マニュアルのビルドに使用）
-
-    a. Pythonのインストール
-
-    b. SphinxとJanomeのインストール
-    ```console
-    # pip install sphinx
-    # pip install janome
-    ```
-4. Mavenによるビルド
-
-    a. jarの作成
+3. jarの作成
     ```console
     # mvn clean package
+    ```
+3. サイトの生成。(要Docker)
+    a. sphinxのdockerビルド。
+    ```console
+    # docker build -t xlsmapper/sphinx ./docker/sphinx
     ```
     b.サイト生成
     ```console
