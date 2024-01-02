@@ -128,13 +128,40 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 				</plugins>
 			</build>
 		</profile>
-
+		<profile>
+			<id>deploy</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<!-- Prevent `gpg` from using pinentry programs -->
+									<gpgArguments>
+										<arg>--pinentry-mode</arg>
+										<arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<build>
-		<extensions>
-
-		</extensions>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -163,6 +190,60 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 				</excludes>
 			</testResource>
 		</testResources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-eclipse-plugin</artifactId>
+				    <version>2.10</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-compiler-plugin</artifactId>
+				    <version>3.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.5</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.4</version>
+				</plugin>
+				<plugin>
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-maven-plugin</artifactId>
+					<version>4.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>3.2.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jxr-plugin</artifactId>
+					<version>3.3.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.12.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -194,7 +275,6 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
 				<configuration>
 					<nohelp>true</nohelp>
 					<charset>UTF-8</charset>
@@ -248,32 +328,9 @@ $(document).ready(function() {
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<executions>
-					<execution>
-						<id>sphinx-doc</id>
-						<phase>site</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>make_sphinx_html.bat</executable>
-							<arguments>
-								<argument>${project.version}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
 				<configuration>
 					<argLine>${jacocoArgs} -Duser.language=ja -Duser.country=JP</argLine>
 				</configuration>
@@ -281,7 +338,6 @@ $(document).ready(function() {
 			<plugin>
 		        <groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.9</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -308,7 +364,6 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.2.0</version>
 				<dependencies>
 					<dependency>
 						<groupId>com.github.spotbugs</groupId>
@@ -318,20 +373,6 @@ $(document).ready(function() {
 				</dependencies>
 			</plugin>
 
-			<!-- pgp -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -417,7 +458,6 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
 				<configuration>
 					<source>${java.version}</source>
 					<encoding>UTF-8</encoding>
@@ -450,7 +490,6 @@ $(document).ready(function() {
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>3.0.0</version>
 				<configuration>
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
