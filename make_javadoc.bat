@@ -5,10 +5,10 @@ cd %~p0
 
 call env.bat
 
-call mvn -version
+call mvnw -version
 
 mkdir target
-call mvn javadoc:javadoc > target/javadoc.log 2>&1 
+call mvnw javadoc:javadoc > target/javadoc.log 2>&1 
 
 start target/javadoc.log
 
