@@ -1,8 +1,9 @@
 package com.github.mygreen.cellformatter;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
 import static com.github.mygreen.cellformatter.lang.TestUtils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.github.mygreen.cellformatter.lang.JXLUtils;
+import com.github.mygreen.cellformatter.lang.MSColor;
+
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
@@ -26,14 +35,6 @@ import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import com.github.mygreen.cellformatter.lang.JXLUtils;
-import com.github.mygreen.cellformatter.lang.MSColor;
 
 /**
  * JExcelAPI用のフォーマッタのテスタ

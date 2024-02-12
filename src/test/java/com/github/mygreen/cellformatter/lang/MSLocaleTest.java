@@ -1,7 +1,7 @@
 package com.github.mygreen.cellformatter.lang;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.util.Locale;
 

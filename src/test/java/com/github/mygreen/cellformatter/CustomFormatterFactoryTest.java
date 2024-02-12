@@ -1,5 +1,6 @@
 package com.github.mygreen.cellformatter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 

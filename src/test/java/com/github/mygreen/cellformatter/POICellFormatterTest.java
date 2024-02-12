@@ -2,6 +2,7 @@ package com.github.mygreen.cellformatter;
 
 import static com.github.mygreen.cellformatter.lang.TestUtils.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 import java.io.File;
