@@ -1,8 +1,8 @@
 package com.github.mygreen.cellformatter;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
 import static com.github.mygreen.cellformatter.lang.TestUtils.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
