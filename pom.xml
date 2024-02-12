@@ -55,7 +55,7 @@ Excelのセルの書式を解析してフォーマットするライブラリ。
 
 	<properties>
 		<java.version>1.8</java.version>
-		<poi.version>4.1.2</poi.version>
+		<poi.version>5.2.5</poi.version>
 		<jexcelapi.version>2.6.12</jexcelapi.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<jacoco.include.package>com.github.mygreen.cellformatter.*</jacoco.include.package>
