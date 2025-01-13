@@ -2,9 +2,14 @@
 基本的な使い方
 ======================================
 
------------------
+本ライブラリは、Excelファイルをアノテーションを用いてJavaBeansにマッピングするライブラリ「`XLSBeans <http://amateras.osdn.jp/cgi-bin/fswiki/wiki.cgi?page=XLSBeans>`_」を拡張し、機能を追加したものです。
+
+違いの詳細は、「:doc:`XLSBeansとの違い <diff_xlsbeans>`」を参照してください。
+
+
+----------------------------
 ダウンロード
------------------
+----------------------------
 
 Mavenを使用する場合は *pom.xml* に以下の記述を追加してください。
 
@@ -14,201 +19,418 @@ Mavenを使用する場合は *pom.xml* に以下の記述を追加してくだ�
     
     <dependency>
         <groupId>com.github.mygreen</groupId>
-        <artifactId>excel-cellformatter</artifactId>
-        <version>0.12</version>
+        <artifactId>xlsmapper</artifactId>
+        <version>2.3</version>
     </dependency>
+
 
 本ライブラリは、ロギングライブラリ `SLF4j <https://www.slf4j.org/>`_ を使用しているため、好きな実装を追加してください。
 
 .. sourcecode:: xml
     :linenos:
-    :caption: ロギングライブラリの実装の追加（Log4jの場合）
+    :caption: ロギングライブラリの実装の追加（Logbackの場合）
     
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.1</version>
-    </dependency>
-    <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.10</version>
     </dependency>
 
 
------------------
-Apaceh POIの場合
------------------
+.. _dependencyEnv:
 
-`Apache POI <http://poi.apache.org/>`_ を利用する場合は、 *POICellFormatter* を利用します。
+----------------------------------------
+前提条件
+----------------------------------------
 
-* 書式が「m/d/yy」の時など、実行環境の言語設定によって異なる場合は、ロケールを指定します。
+本ライブラリの前提条件を以下に示します。
+
+
+.. list-table:: 前提条件
+   :widths: 50 50
+   :header-rows: 1
+   
+   * - 項目
+     - 値
+     
+   * - Java
+     - ver.1.8
+     
+   * - `Apache POI <https://poi.apache.org/>`_
+     - ver.4.0+。ver.5.1.0推奨。
+
+   * - `Spring Framework <https://projects.spring.io/spring-framework/>`_ (option)
+     - ver.3.0+
+
+   * - | Bean Validation  (option)
+       | ( `Hibernate Validator <http://hibernate.org/validator/>`_ )
+     - | ver.1.0/1.1/2.0
+       | (Hibernate Validator 4.x/5.x/6.x)
+
+   * - | Jakarta Bean Validation  (option)
+       | ( `Hibernate Validator <http://hibernate.org/validator/>`_ )
+     - | ver.3.0/3.1
+       | (Hibernate Validator 8.x)
+
+
+.. _howtouseSheetLoad:
+
+
+----------------------------
+マッピングの基本
+----------------------------
+
+次のような表のExcelシートをマッピングする例を説明します。
+
+.. figure:: ./_static/howto_load.png
+   :align: center
+   
+   基本的なマッピング
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+読み込み方の基本
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+まず、シート1つに対して、POJOクラスを作成します。
+
+* シート名を指定するために、アノテーション :doc:`@XlsSheet <annotation_mapping_sheet>` をクラスに付与します。
+* 見出し付きのセル「Date」をマッピングするフィールドに、アノテーション :doc:`@XlsLabelledCell <annotation_mapping_labelledcell>` に付与します。
+* 表「User List」をマッピングするListのフィールドに、アノテーション :doc:`@XlsHorizontalRecords <annotation_mapping_horizontalrecords>` を付与します。
+
+.. sourcecode:: java
+    :linenos:
+    :caption: シート用のPOJOクラスの定義
+    
+    @XlsSheet(name="List")
+    public class UserSheet {
+        
+        @XlsLabelledCell(label="Date", type=LabelledCellType.Right)
+        Date createDate;
+        
+        @XlsHorizontalRecords(tableLabel="User List")
+        List<UserRecord> users;
+        
+    }
+    
+
+
+続いて、表「User List」の1レコードをマッピングするための、POJOクラスを作成します。
+
+* レコードの列をマッピングするために、アノテーション :doc:`@XlsColumn <annotation_mapping_column>` をフィールドに付与します。
+
+* フィールドのクラスタイプが、intや列挙型の場合もマッピングできます。
+
+.. sourcecode:: java
+    :linenos:
+    :caption: レコード用のPOJOクラスの定義
+    
+    public class UserRecord {
+        
+        @XlsColumn(columnName="ID")
+        int no;
+        
+        @XlsColumn(columnName="Class", merged=true)
+        String className;
+        
+        @XlsColumn(columnName="Name")
+        String name;
+        
+        @XlsColumn(columnName="Gender")
+        Gender gender;
+        
+    }
+    
+    // 性別を表す列挙型の定義
+    public enum Gender {
+        male, female;
+    }
+
+
+
+作成したPOJOを使ってシートを読み込むときは、 ``XlsMapper#load`` メソッドを利用します。
+
+.. sourcecode:: java
+    :linenos:
+    :caption: シートの読み込み
+    
+    XlsMapper xlsMapper = new XlsMapper();
+    UserSheet sheet = xlsMapper.load(
+        new FileInputStream("example.xlsx"), // 読み込むExcelファイル。
+        UserSheet.class                      // シートマッピング用のPOJOクラス。
+        );
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+書き込み方の基本
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+同じシートの形式を使って、書き込み方を説明します。
+
+まず、書き込み先のテンプレートとなるExcelシートを用意します。
+レコードなどは空を設定します。
+
+.. figure:: ./_static/howto_save.png
+   :align: center
+   
+   データが空のテンプレートファイル
+
+
+続いて、読み込み時に作成したシート用のマッピングクラスに、書き込み時の設定を付け加えるために修正します。
+
+* セル「Date」の書き込み時の書式を指定するために、アノテーション :doc:`@XlsDateTimeConverter <annotation_converter_datetime>` に付与します。
+
+  * 属性 ``excelPattern`` でExcelのセルの書式を設定します。
+
+* 表「User List」のレコードを追加する操作を指定するために、アノテーション :doc:`@XlsRecordOption <annotation_mapping_recordoption>` を付与し、その属性 ``overOperation`` を指定します。
   
-  * ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などのでは注意してください。
-
-* Cellのインスタンスがnullの場合、空（Blank）セルとして扱います。
-
-  * POIの場合、データの入力がない領域のセルは、nullとなるためです。
-  * これはJExcelAPIの仕様に合わせるためです。
-
-* 結合されたセルの場合、結合領域を走査し、非空セルがそのセルの値を評価します。
-
-  * POIの場合、結合されたセルの領域は、基本的に左上のセルに値が設定され、それ以外のセルは空セルとなるためです。
+  * テンプレート上は、レコードが1行分しかないですが、実際に書き込むレコード数が2つ以上の場合、足りなくなるため、その際のシートの操作方法を指定します。
   
-  * ただし、古いバージョンのExcelだったり、プログラムから出力したExcelファイルの場合、
-    必ずしも左上のセルに値が入っているとは限らないため、結合した全ての領域を走査します。
-  
-  * これはJExcelAPIの仕様に合わせるためです。
-  
-* 数式や関数が設定されたセルの場合、それらを評価した結果を返します。
-
-  * POIが対応していない数式や関数の場合、Excel上では正しく表示されていても、エラーセルの扱いとなります。
-  * 使用するPOIのバージョンによって対応する関数も異なります。
-
+  * 今回の ``OverOperation#Insert`` は、行の挿入を行います。
 
 
 .. sourcecode:: java
     
-    Cell cell = /* セルの値の取得 */;
-    
-    final POICellFormatter cellFormatter = new POICellFormatter();
-    
-    String contents = cellForrmatter.formatAsString(cell);
-    
-    // ロケールを指定してフォーマットする。
-    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE);
-
-
-
-* 書式に色の条件式など指定されている場合、詳細の結果を取得することもできます。
-
-.. sourcecode:: java
-    
-    final POICellFormatter cellFormatter = new POICellFormatter();
-    
-    // フォーマット結果の詳細を取得する
-    CellFormatResult result = cellForrmatter.format(cell);
-    
-    // フォーマットした文字列の取得
-    String text = result.getText();
-    
-    // 文字色が設定されている場合、その色の取得。
-    // 色が設定されていない場合は、nullを返す。
-    MSColor color = result.getTextColor();
-    
-    // フォーマット対象の値を取得します。
-    // どのタイプの書式として処理されたかによって、値の取得方法がことなります。
-    if(result.isDate()) {
-        Date dateValue = result.getValueAsDate();
+    // シート用のPOJOクラスの定義
+    @XlsSheet(name="List")
+    public class UserSheet {
         
-    } else if(result.isNumber()) {
-        double numberValue = result.getValueAsDouble();
-    
-    } else if(result.isText()) {
-        String stringValue = rsult.getValueAsString();
+        @XlsLabelledCell(label="Date", type=LabelledCellType.Right)
+        @XlsDateTimeConverter(excelPattern="yyyy/m/d")
+        Date createDate;
         
-    } else {
-        // エラー用セルやブランクセルの場合
+        @XlsHorizontalRecords(tableLabel="User List")
+        @XlsRecordOption(overOperation=OverOperation.Insert)
+        List<UserRecord> users;
         
     }
 
 
------------------
-JExcelAPIの場合
------------------
-
-`JExcelAPI <http://jexcelapi.sourceforge.net/>`_ を利用する場合は、 *JXLCellFormatter* を利用します。
-
-* 日本語を含むExcelファイルの場合、文字コードを *ISO8859_1* を指定します。
-  
-  * 指定しない場合は、会計の書式中の円記号 *￥* が文字化けします。
-  
-  * *Windows-31j* と指定しても文字化けするため、注意してください。
-  
-* 1904年始まりの設定がされているExelファイルの設定かどうか、メソッド *JXLUtils.isDateStart1904(...)* で調べた値を渡します。
-  
-  * 通常は1899年12月31日（Excel表記上は 1900年1月0日）が基準です。
-  
-  * JXLUtils.isDateStart1904(...)メソッドには、Sheetオブジェクトを引数にとるメソッドも用意されています。
-
-* 書式が「m/d/yy」の時など、実行環境の言語設定によって切り替わる場合は、ロケールを指定します。
-  
-  * ロケールを指定しない場合は、デフォルトのロケールになるため、Linux環境などでは注意してください。
+修正したPOJOを使ってシートを書き込むときは、 ``XlsMapper#save`` メソッドを利用します。
 
 .. sourcecode:: java
     
-    // シートの読み込み
-    final WorkbookSettings settings = new WorkbookSettings();
-    settings.setSuppressWarnings(true);
-    settings.setGCDisabled(true);
+    // 書き込むシート情報の作成
+    UserSheet sheet = new UserSheet();
+    sheet.createDate = new Date();
     
-    // 文字コードを「ISO8859_1」にしないと、一部の文字が文字化けします。
-    settings.setEncoding("ISO8859_1");
+    List<UserRecord> users = new ArrayList<>();
     
-    final Workbook workbook = Workbook.getWorkbook(in, settings);
+    // 1レコード分の作成
+    UserRecord record1 = new UserRecord();
+    record1.no = 1;
+    record1.className = "A";
+    record1.name = "Ichiro";
+    record1.gender = Gender.male;
+    users.add(record1);
     
-    // 1904年始まりのシートか調べる。
-    boolean startDate1904 = JXLUtils.isDateStart1904(workbook);
+    UserRecord record2 = new UserRecord();
+    // ... 省略
+    users.add(record2);
     
-    Cell cell = /* セルの値の取得 */;
+    sheet.users = users;
     
-    final JXLCellFormatter cellFormatter = new JXLCellFormatter();
-    
-    // セルの値を文字列として取得
-    String contents = cellForrmatter.formatAsString(cell, startDate1904);
-    
-    // ロケールを指定してフォーマットする。
-    contents = cellForrmatter.formatAsString(cell, Locale.JAPANESE, startDate1904);
+    // シートの書き込み
+    XlsMapper xlsMapper = new XlsMapper();
+    xlsMapper.save(
+        new FileInputStream("template.xlsx"), // テンプレートのExcelファイル
+        new FileOutputStream("out.xlsx"),     // 書き込むExcelファイル
+        sheet                                // 作成したデータ
+        );
 
 
-.. _howObjectCellFormatter:
+----------------------------
+読み込み方
+----------------------------
 
-----------------------------------
-Javaオブジェクトの場合
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+単一のシートを読み込む場合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Javaのオブジェクトを直接フォーマットすることもできます。
-
-直接フォーマットをする場合、``ObjectCellFormatter`` (**ver0.6から利用可能**)を使用します。
-
-* フォーマットするには、``ObjectCellFormatter#formatAsString(<書式>, <値>)`` を利用します。
-
-* フォーマット可能なクラスは、Excelの型に対応する次のクラスになります。
-
-  * 文字列値： ``String``
-  * ブール値： ``boolean/Boolean``
-  * 数値
-    
-    * プリミティブ型 ``byte/short/int/long/float/double`` 
-    * プリミティブ型のラッパークラス ``Byte/Short/Integer/Long/Float/Double`` 。
-    * ``java.math.Number`` のサブクラス ``AtomicInteger/AtomicLong/BigDecimal/BigInteger`` 。
-    
-  * 日時： ``java.util.Date`` とそのサブクラス ``java.sql.Date/java.sql.Time/java.sql.Timestamp`` 。
+XlsMapperはアノテーションを付与してJavaBeansとExcelをマッピングするライブラリです。
+アノテーション :doc:`@XlsSheet <annotation_mapping_sheet>` を付与したJavaBeanを作成したうえで以下のようにして読み込みを行います。
 
 .. sourcecode:: java
+    
+    XlsMapper xlsMapper = new XlsMapper();
+    SampleSheet sheet = xlsMapper.load(
+        new FileInputStream("example.xls"), // 読み込むExcelファイル
+        SampleSheet.class                   // アノテーションを付与したクラス。
+        );
 
-    // 各型に対応したインタフェースを利用します。
-    ObjectCellFormatter cellFormatter = new ObjectCellFormatter();
-    String text = cellFormatter.formatAsString("yyyy\"年\"m\"月\"d\"日\";@", Timestamp.valueOf("2012-02-01 12:10:00.000"));
+なお、:doc:`@XlsCell <annotation_mapping_cell>`、 :doc:`@XlsLabelledCell <annotation_mapping_labelledcell>`、 :doc:`@XlsColumn <annotation_mapping_column>` アノテーションでマッピングするプロパティにおいて、マッピングできる型は、 :doc:`型変換用アノテーション <annotation_converter>` を使用することでカスタマイズできます。
+
+より具体的な使用例はXlsMapperのディストリビューションに同梱されているテストケースのソースコードをご覧ください。
 
 
-* 細かく設定を行いたい場合は、仮想的なセル ``ObjectCell`` のサブクラスのインスタンスを引数に渡します。
+XlsMapperは、Apache POIを使用してExcelのシートの読み込みと書き込みを行います。
+拡張子がxlsのExcel2003形式、xlsxのExcel2007形式と特に区別なく読み込むことができます。
 
-  * 文字列型を表すセル： ``TextCell``
-  * ブール型を表すセル： ``BooleanCell``
-  * 数値型を表すセル： ``NumberCell``
-  * 日時型を表すセル： ``DateCell`` 。1904年始まりなどの設定ができます。
+Apache POIは、ver.3.5以上に対応しています。
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+複数のシートを読み込む場合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+複数のシートを読み込む場合、``XlsMapper#loadMultplue(...)`` を使用します。
+ 
+シートの読み込み先のJavaBeansが異なる場合、クラスタイプを配列として渡します。
+戻り値は配列Object[]として返されます。
+ 
+ 
+.. sourcecode:: java
+    
+    XlsMapper xlsMapper = new XlsMapper();
+    Object[] sheets = xlsMapper.loadMultiple(
+        new FileInputStream("example.xls"),                  // 読み込むExcelファイル
+        new Class[]{SampleSheet1.class, SampleSheet2.class}  // アノテーションを付与したクラス。
+        );
+
+アノテーション ``@XlsSheet(regex="正規表現+")`` のように、シート名を正規表現で指定した場合、
+シート内の表の形式は同じですが、名前が異なる複数のシートとしを読み込むことができます。
+
 
 .. sourcecode:: java
+    
+    XlsMapper xlsMapper = new XlsMapper();
+    SampleSheet[] sheets = new XlsMapper().loadMultiple(
+        new FileInputStream("example.xls"),  // 読み込むExcelファイル
+        SampleSheet.class                    // アノテーションを付与したクラス。
+        );
 
-    //仮想的なセルのクラス「ObejctCell」の、型に合った具象クラスを利用します。
-    ObejctCell cell = new DateCell(Timestamp.valueOf("2012-02-01 12:10:00.000"), "yyyy\"年\"m\"月\"d\"日\";@", false)
-    CellFormatResult result = cellFormatter.format(cell);
+.. _howtouseSheetSave:
+
+----------------------------
+書き込み方
+----------------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+単一のシートの書き込む場合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+書き込む際には、:doc:`@XlsSheet <annotation_mapping_sheet>` アノテーションを付与したJavaBeansのクラスのインスタンスを渡します。
+また、雛形となるテンプレートのシートを記述しているExcelファイルを引数に渡します。
+
+.. sourcecode:: java
     
-    // フォーマットした文字列の取得
-    String text = result.getText();
+    SampleSheet sheet = //... POJOのインスタンス。
     
-    // 文字色が設定されている場合、その色の取得。
-    MSColor color = result.getTextColor();
+    XlsMapper xlsMapper = new XlsMapper();
+    xlsMapper.save(
+        new FileInputStream("template.xls"), // テンプレートのExcelファイル
+        new FileOutputStream("example.xls"), // 書き込むExcelファイル
+        sheet                                // JavaBeansのインスタンス
+        );
+
+
+書き込むExcelファイルの形式は、テンプレートとなるExcelファイルと同じ形式になります。
+そのため、テンプレートファイルのExcelファイルがxls(Excel2003形式)で、
+書き込むExcelファイルの拡張子をxlsx(2007形式)を指定しても、xls(Excel2003形式)となります。
+
+アノテーション ``@XlsSheet(regexp="正規表現*")`` のようにシート名を正規表現で定義している場合、
+書き込み先のシート名はアノテーション ``@XlsSheetName`` を付与したフィールドを元に決定します。
+
+そのため、書き込むシート名を予め設定しておく必要があります。
+
+.. sourcecode:: java
+    
+    /** 正規表現で指定する場合 */
+    @XlsSheet(regex="Sheet_[0-9]+")
+    public class SampleSheet {
+      @XlsSheetName
+      public String sheetName;
+    }
+    
+    SampleSheet sheet = //... POJOのインスタンス。
+    sheet.sheetName = "Sheet_1"; // 予めシート名を設定しておく必要があります。
+    
+    XlsMapper xlsMapper = new XlsMapper();
+    xlsMapper.save(
+        new FileInputStream("template.xls"), // テンプレートのExcelファイル
+        new FileOutputStream("example.xls"), // 書き込むExcelファイル
+        sheet         // JavaBeansのインスタンス
+        );
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+複数のシートを書き込む場合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+複数のシートを読み込む場合、``XlsMapper#saveMultplue(...)`` を使用します。
+書き込むJavaBeansのクラスのインスタンスは、アノテーション :doc:`@XlsSheet <annotation_mapping_sheet>` を付与する必要があります。
+シートのオブジェクトは配列として渡します。
+
+.. sourcecode:: java
+    
+    SheetSheet1 sheet1 = //... POJOのインスタンス。
+    SheetSheet2 sheet2 = //... POJOのインスタンス。
+    
+    new XlsMapper().saveMultiple(
+        new FileInputStream("template.xls"), // テンプレートのExcelファイル
+        new FileOutputStream("example.xls"), // 書き込むExcelファイル
+        new Object[]{sheet1, sheet2}         // JavaBeansのインスタンスの配列
+        );
+
+
+.. note::
+    アノテーション ``@XlsSheet(regexp="正規表現*")`` のようにシート名を正規表現で定義している場合、
+    書き込み先のシート名はアノテーション :doc:`@XlsSheetName <annotation_mapping_sheetname>` を付与したフィールドを元に決定します。
+    
+テンプレートのExcelファイル中にシートが1つしかない場合、書き込む個数分コピーしておく必要があります。
+このような場合、書き込み対象のテンプレートファイルを事前に処理しておきます。
+
+.. sourcecode:: java
+    
+    // 正規表現で指定する場合
+    @XlsSheet(regex="Sheet_[0-9]+")
+    public class SampleSheet {
+        
+        // シート名をマッピングするフィールド
+        @XlsSheetName
+        private String sheetName;
+        ...
+    }
+    
+    
+    // 正規表現による複数のシートを出力する場合。
+    // 書き込み時に、シート名を設定して、一意に関連づけます。
+    SampleSheet sheet1 = new SampleSheet();
+    sheet1.sheetName = "Sheet_1"; // シート名の設定
+    
+    SampleSheet sheet2 = new SampleSheet();
+    sheet2.sheetName = "Sheet_2"; // シート名の設定
+    
+    SampleSheet sheet3 = new SampleSheet();
+    sheet3.sheetName = "Sheet_3"; // シート名の設定
+    
+    SampleSheet[] sheets = new SampleSheet[]{sheet1, sheet2, sheet3};
+    
+    // シートのクローン
+    Workbook workbook = WorkbookFactory.create(new FileInputStream("template.xlsx"));
+    Sheet templateSheet = workbook.getSheet("XlsSheet(regexp)");
+    for(SampleSheet sheetObj : sheets) {
+        int sheetIndex = workbook.getSheetIndex(templateSheet);
+        Sheet cloneSheet = workbook.cloneSheet(sheetIndex);
+        workbook.setSheetName(workbook.getSheetIndex(cloneSheet), sheetObj.sheetName);
+    }
+    
+    // コピー元のシートを削除する
+    workbook.removeSheetAt(workbook.getSheetIndex(templateSheet));
+    
+    // クローンしたシートファイルを、一時ファイルに一旦出力する。
+    File cloneTemplateFile = File.createTempFile("template", ".xlsx");
+    workbook.write(new FileOutputStream(cloneTemplateFile));
+    
+    // 複数のシートの書き込み
+    XlsMapper xlsMapper = new XlsMapper();
+    xlsMapper.saveMultiple(
+            new FileInputStream(cloneTemplateFile), // クローンしたシートを持つファイルを指定する
+            new FileOutputStream("out.xlsx"),
+            sheets);
+
 
 
