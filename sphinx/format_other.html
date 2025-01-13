@@ -1,0 +1,1843 @@
+
+
+<!doctype html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Excelの書式のその他の情報 &#8212; Excel-CellFormatter 0.12 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css?v=c92c1228" />
+    <link rel="stylesheet" href="_static/mycustom.css" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=de4ed725"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/translations.js?v=4dbe4bdc"></script>
+    <script src="_static/mytheme.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="6. リリースノート" href="release.html" />
+    <link rel="prev" title="4. Excelの書式の基本について" href="format_basic.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="release.html" title="6. リリースノート"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="format_basic.html" title="4. Excelの書式の基本について"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Excelの書式のその他の情報</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="excel">
+<h1><span class="section-number">5. </span>Excelの書式のその他の情報<a class="headerlink" href="#excel" title="この見出しへのパーマリンク">¶</a></h1>
+<section id="id1">
+<h2><span class="section-number">5.1. </span>標準書式について<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h2>
+<p>標準書式の場合、特に数値の場合、値によってフォーマットが変わります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">100,000,000,000</span></code> 以上の値、または <code class="docutils literal notranslate"><span class="pre">0.0000000001</span></code> 以下の値の時、指数の書式 <code class="docutils literal notranslate"><span class="pre">0.#####E-0</span></code> となります。
+ただし、Excelのセルの幅が小さいと、表示される有効桁数が自動的に変わります。</p>
+<p>さらに、それ以外の値の場合は、整数部の桁数によって、小数部の精度が変わります。
+整数部の桁数が10桁以上のときは小数部はなく、整数部が10桁未満の場合は小数部が1桁づつ増えます。
+例えば、 <code class="docutils literal notranslate"><span class="pre">12345678.12345</span></code> の場合、書式は <code class="docutils literal notranslate"><span class="pre">0.##</span></code> となります。</p>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-text">数値の標準書式の表示例</span><a class="headerlink" href="#id10" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>Excel上の表記</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>100000000000</p></td>
+<td><p>1E+11</p></td>
+</tr>
+<tr class="row-odd"><td><p>99999999999</p></td>
+<td><p>99999999999</p></td>
+</tr>
+<tr class="row-even"><td><p>12345678901234</p></td>
+<td><p>1.23457E+13</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.0000000001</p></td>
+<td><p>1E-10</p></td>
+</tr>
+<tr class="row-even"><td><p>0.999999999</p></td>
+<td><p>0.999999999</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.000000000001234567</p></td>
+<td><p>1.23457E-12</p></td>
+</tr>
+<tr class="row-even"><td><p>1234567890.12345</p></td>
+<td><p>1234567890</p></td>
+</tr>
+<tr class="row-odd"><td><p>123456789.12345</p></td>
+<td><p>123456789.1</p></td>
+</tr>
+<tr class="row-even"><td><p>12345678.12345</p></td>
+<td><p>12345678.12</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id2">
+<h2><span class="section-number">5.2. </span>ファイル内部の日付の基準日の設定<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Excelは、日付情報をファイル内部では数値型として値を保持しており、値が0の場合は基準日として、通常は <strong>「1899年12月31日（Excel表記上は1900年1月0日）」</strong> を表します。</p>
+<p>この基準日は、設定によって変更することができ、ファイルごとに設定を持ちます。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://support.microsoft.com/ja-jp/kb/180162/ja">Miscrosoftのサポートページ</a></p></li>
+</ul>
+<section id="excel1904">
+<h3><span class="section-number">5.2.1. </span>Excelの1904年始まりの設定変更方法<a class="headerlink" href="#excel1904" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Excelのバージョンによって設定方法は変わります。</p>
+<ul class="simple">
+<li><p>Excel2000～2003の場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のタブ「計算方法」から設定できます。</p></li>
+<li><p>Excel2007の場合、Officeボタンの「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</p></li>
+<li><p>Excel2010の場合、メニュー「ファイル」の「オプション」から表示されるダイアログ中のペイン「詳細設定」から設定できます。</p></li>
+<li><p>LibreOfficeの場合、メニュー「ツール」-「オプション」から表示されるダイアログ中のペイン「LibreOffice Calc」-「計算式」から設定できます。</p></li>
+</ul>
+<figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_2002.png"><img alt="_images/excel_settings_date1904_2002.png" src="_images/excel_settings_date1904_2002.png" style="width: 460.5px; height: 286.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">Excel2002(XP)の場合の1904年始まりの設定</span><a class="headerlink" href="#id11" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_2010.png"><img alt="_images/excel_settings_date1904_2010.png" src="_images/excel_settings_date1904_2010.png" style="width: 428.0px; height: 182.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">Excel2010の場合の1904年始まりの設定</span><a class="headerlink" href="#id12" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="_images/excel_settings_date1904_libre.png"><img alt="_images/excel_settings_date1904_libre.png" src="_images/excel_settings_date1904_libre.png" style="width: 565.0px; height: 233.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">LibreOfficeの場合の1904年始まりの設定</span><a class="headerlink" href="#id13" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id3">
+<h3><span class="section-number">5.2.2. </span>ライブラリによる1904年始まりの判定方法<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
+<section id="apache-poi1904">
+<h4><span class="section-number">5.2.2.1. </span>Apache POIにおける1904年始まりの判定方法<a class="headerlink" href="#apache-poi1904" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Apache POIの場合、ファイルのフォーマットによって取得方法が変わります。</p>
+<ul class="simple">
+<li><p>公開されていないメソッドなのでリフレクションを使用して取得します。</p></li>
+<li><p>本ライブラリでは、 <em>POICell#isDateStart1904()</em> 中のメソッドで実装されています。</p></li>
+<li><p>1904年始まりかどうかの設定はファイル単位に持つため、Workbookを取得して判定を行います。</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="n">Workbook</span><span class="w"> </span><span class="n">workbook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cell</span><span class="p">.</span><span class="na">getSheet</span><span class="p">().</span><span class="na">getWorkbook</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">workbook</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">HSSFWorkbook</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 拡張子がxlsの場合</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HSSFWorkbook</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&quot;getWorkbook&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">method</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">InternalWorkbook</span><span class="w"> </span><span class="n">iw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">InternalWorkbook</span><span class="p">)</span><span class="w"> </span><span class="n">method</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">workbook</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">iw</span><span class="p">.</span><span class="na">isUsing1904DateWindowing</span><span class="p">();</span>
+
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SecurityException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail access method HSSFWorkbook.getWorkbook.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">InvocationTargetException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail invoke method HSSFWorkbook.getWorkbook.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">workbook</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">XSSFWorkbook</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 拡張子がxlsxの場合</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XSSFWorkbook</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredMethod</span><span class="p">(</span><span class="s">&quot;isDate1904&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">method</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">boolean</span><span class="p">)</span><span class="w"> </span><span class="n">method</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="n">workbook</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SecurityException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail access method XSSFWorkbook.isDate1904.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">InvocationTargetException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail invoke method XSSFWorkbook.isDate1904.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="jexcelapi1904">
+<h4><span class="section-number">5.2.2.2. </span>JExcelAPIにおける1904年始まりの判定方法<a class="headerlink" href="#jexcelapi1904" title="この見出しへのパーマリンク">¶</a></h4>
+<p>JExcel APIの場合も同様にWorkbookから取得しますが、セルクラスから上位のSheetクラスなどを取得できないため不便です。</p>
+<ul class="simple">
+<li><p>公開されていないメソッドなのでリフレクションを使用して取得します。</p></li>
+<li><p>本ライブラリでは、 <em>JXLUtils#isDateStart1904(...)</em> 中のメソッドで実装されています。</p></li>
+<li><p>1904年始まりかどうかの設定はシートにも引き継がれるため、Sheet、Wookbookのどちらからも判定できます。</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Workbookを元に判定を行う場合</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isDateStart1904</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Workbook</span><span class="w"> </span><span class="n">workbook</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ArgUtils</span><span class="p">.</span><span class="na">notNull</span><span class="p">(</span><span class="n">workbook</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;workbook&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">workbook</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">WorkbookParser</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Field</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WorkbookParser</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&quot;nineteenFour&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">field</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">field</span><span class="p">.</span><span class="na">getBoolean</span><span class="p">(</span><span class="n">workbook</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchFieldException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SecurityException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail access field WrokbookParser#nineteenFour&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail invoke field WrokbookParser#nineteenFour&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Sheetを元に判定を行う場合</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isDateStart1904</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">Sheet</span><span class="w"> </span><span class="n">sheet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ArgUtils</span><span class="p">.</span><span class="na">notNull</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sheet&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">sheet</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">SheetImpl</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Field</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SheetImpl</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&quot;nineteenFour&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">field</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">field</span><span class="p">.</span><span class="na">getBoolean</span><span class="p">(</span><span class="n">sheet</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchFieldException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SecurityException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail access field SheetImpl#nineteenFour&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">IllegalAccessException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;fail invoke field SheetImpl#nineteenFour&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h3><span class="section-number">5.2.3. </span>日時の内部表現<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Excelの場合、日時ファイル内部では数値として値を保持し、次の仕様となっています。</p>
+<ul class="simple">
+<li><p>整数部が日付情報。</p>
+<ul>
+<li><p>1日は、値は1.0。</p></li>
+</ul>
+</li>
+<li><p>小数部が時刻情報。</p>
+<ul>
+<li><p>1秒は、 <code class="docutils literal notranslate"><span class="pre">1/(24*60*60)≒1.15741e-5</span></code> 。</p></li>
+<li><p>Excelは、秒までの精度しか持たない。</p></li>
+</ul>
+</li>
+<li><p>タイムゾーンは持たない。</p>
+<ul>
+<li><p>タイムゾーンは持たないため、OSの言語環境など変わっても、表示される時間は変わりません。</p></li>
+</ul>
+</li>
+<li><p>基準日の値は、 <code class="docutils literal notranslate"><span class="pre">0.0</span></code> となる。</p>
+<ul>
+<li><p>ファイルの基準日の設定により、値が <code class="docutils literal notranslate"><span class="pre">0.0</span></code> のとき、1900年1月0日始まりか1904年1月1日始まりか変わります。</p></li>
+</ul>
+</li>
+<li><p>内部的な値が負の数とる基準日より前の日時は表現できない。</p></li>
+<li><p>1900年始まりの場合、他のオフィスアプリと互換性を持たすために、以下の不良のような仕様を引き継いでる。</p>
+<ul>
+<li><p>1900年1月0日から始まる。</p></li>
+<li><p>グレゴリオ歴上は閏年でないのに、1900年2月29日が存在する。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>グレゴリオ歴の閏年の定義</p>
+<p><a class="reference external" href="https://ja.wikipedia.org/wiki/%E9%96%8F%E5%B9%B4">グレゴリオ暦</a> では、次の規則に従って400年間に（100回ではなく）97回の閏年を設ける。</p>
+<ol class="arabic simple">
+<li><p>西暦年が4で割り切れる年は閏年。</p></li>
+<li><p>ただし、西暦年が100で割り切れる年は平年（閏年でない）。</p></li>
+<li><p>ただし、西暦年が400で割り切れる年は閏年。</p></li>
+</ol>
+</div>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-text">Excelの日付の内部表現</span><a class="headerlink" href="#id14" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Excel表記上の日時</p></th>
+<th class="head"><div class="line-block">
+<div class="line">数値表現</div>
+<div class="line">1900年始まり</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">数値表現</div>
+<div class="line">1904年始まり</div>
+</div>
+</th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1900年01月00日 00時00分00秒</p></td>
+<td><p>0.00000000000</p></td>
+<td></td>
+<td><p>1900年始まりの基準日。</p></td>
+</tr>
+<tr class="row-odd"><td><p>1900年01月01日 00時00分00秒</p></td>
+<td><p>1.00000000000</p></td>
+<td></td>
+<td><p>基準日から1日進む。</p></td>
+</tr>
+<tr class="row-even"><td><p>1900年02月29日 00時00分00秒</p></td>
+<td><p>60.00000000000</p></td>
+<td></td>
+<td><p>正しくない閏日。</p></td>
+</tr>
+<tr class="row-odd"><td><p>1900年03月01日 00時00分00秒</p></td>
+<td><p>61.00000000000</p></td>
+<td></td>
+<td><p>正しくない閏日の翌日。</p></td>
+</tr>
+<tr class="row-even"><td><p>1904年01月01日 00時00分00秒</p></td>
+<td><p>1462.00000000000</p></td>
+<td><p>0.00000000000</p></td>
+<td><p>1904年始まりの基準日。</p></td>
+</tr>
+<tr class="row-odd"><td><p>1970年01月01日 00時00分00秒</p></td>
+<td><p>25569.00000000000</p></td>
+<td><p>24107.00000000000</p></td>
+<td><p>UTCの基準日。</p></td>
+</tr>
+<tr class="row-even"><td><p>YYYY年MM月DD日 00時00分01秒</p></td>
+<td><p>0.0000115741</p></td>
+<td><p>0.0000115741</p></td>
+<td><p>基準日から1秒経過</p></td>
+</tr>
+<tr class="row-odd"><td><p>YYYY年MM月DD日 00時01分00秒</p></td>
+<td><p>0.00069444444444</p></td>
+<td><p>0.00069444444444</p></td>
+<td><p>基準日から1分経過</p></td>
+</tr>
+<tr class="row-even"><td><p>YYYY年MM月DD日 00時01分00秒</p></td>
+<td><p>0.04166666666667</p></td>
+<td><p>0.04166666666667</p></td>
+<td><p>基準日から1時間経過</p></td>
+</tr>
+<tr class="row-odd"><td><p>YYYY年MM月DD日 23時59分59秒</p></td>
+<td><p>0.99998842592593</p></td>
+<td><p>0.99998842592593</p></td>
+<td><p>基準日から23時間59分59秒経過</p></td>
+</tr>
+</tbody>
+</table>
+<section id="excelutc">
+<h4><span class="section-number">5.2.3.1. </span>Excel上の日時の値をUTC表記に変換する方法<a class="headerlink" href="#excelutc" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Excelは日時は内部では数値で保持しており、Javaの <code class="docutils literal notranslate"><span class="pre">java.util.Date</span></code> に渡す形式であるUTC表現とは異なります。
+また、基準日が複数あるため、UTC形式に変換するには次の計算を行う。</p>
+<ol class="arabic simple">
+<li><p>1904年始まりの場合。</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>24107の値を足す。(1970年1月1日から見て、1904年1月1日の経過日数を足す。)</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>1900年始まりの場合。</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>値が61.0以上ならば、1.0を引く。(1900年2月29日はUTC上存在しないため、1900年3月1日（=61.0）以降は、1日多くなるので調整する。)</p></li>
+<li><p>25568.0の値を足す。(1970年1月1日から見て、1900年1月0日(=1899年12月31日)の経過日数を足す。)</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>値に24*60*60*1000を掛ける。(Excelは時刻が小数部なので、24*60*60で整数1桁目の精度を秒にする。UTCはミリ秒精度なので、さらに1000を掛ける。)</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Excelの日時をUTCに返還する際の注意事項</p>
+<ul class="simple">
+<li><p>本ライブラリでは、 <code class="docutils literal notranslate"><span class="pre">ExcelDateUtils#convertJavaDate(...)</span></code> メソッドで提供されています。</p></li>
+<li><p>1900年始まりの場合、1900年1月0日は、1899年12月31日と表現します。</p></li>
+<li><p>1900年始まりの場合、1900年2月29日は、1900年3月1日と表現します。、</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">5.3. </span>ビルトインフォーマット（組み込み書式）について<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Excelの書式は、ファイル内部では <em>インデックス番号</em> に対して、 <em>書式のパターン</em> が割り振られています。</p>
+<p>その中で、インデックス番号が 0～49は予め固定のフォーマットを持ち、ビルトインフォーマット（組み込み書式）と呼ばれます。</p>
+<ul class="simple">
+<li><p>Excelのバージョンによっては、インデックス番号だけ持ち、書式を持たない場合があります。</p></li>
+<li><p>50番以降は、ユーザ定義用書式として、ファイルによって異なります。</p></li>
+<li><p>ただし、50～59番は、Excelの言語環境によって予約された番号で、インデックス番号だけ持ち、書式を持たない場合があります。</p></li>
+<li><p>ビルインフォーマットは、JExcelAPIの場合とApaceh POIでは一部異なっています。</p></li>
+<li><p>OSの言語環境によって変わるものがあります。</p>
+<ul>
+<li><p>日時、通貨記号を含む書式は、環境によって変わる可能性があります。</p></li>
+<li><p>JExcelAPI/Apache POIとも英語環境の値で固定で定義されており、日本語の書式には対応していません。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ビルトインフォーマットは、各ライブラリでプログラムで固定長の文字列として記述されています。</p>
+<ul class="simple">
+<li><p>Apache POIの場合、 <code class="docutils literal notranslate"><span class="pre">org.apache.poi.ss.usermodel.BuiltinFormats</span></code> (<a class="reference external" href="https://poi.apache.org/apidocs/org/apache/poi/ss/usermodel/BuiltinFormats.html">Javadoc</a> ) で定義されています。</p></li>
+<li><p>JExcel APIの場合、 非公開のクラス <code class="docutils literal notranslate"><span class="pre">jxl.biff.BuiltInFormat</span></code> で定義されています。</p></li>
+</ul>
+</div>
+<p>本ライブラリでは、OSの言語によって変わるような書式や間違っている書式は、
+予め <code class="docutils literal notranslate"><span class="pre">FormatterResolver#registerDefaultFormat()</span></code> メソッド内で登録し、正しい書式で取得できるようにしています。</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（0～49）</span><a class="headerlink" href="#id15" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><div class="line-block">
+<div class="line">index</div>
+<div class="line">16進</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">index</div>
+<div class="line">10進</div>
+</div>
+</th>
+<th class="head"><p>英語環境</p></th>
+<th class="head"><div class="line-block">
+<div class="line">日本語環境</div>
+<div class="line">(英語環境と同じ場合は省略)</div>
+</div>
+</th>
+<th class="head"><p>例</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">General</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">標準/G</span></code></p></td>
+<td></td>
+<td><p>標準の設定。日本語の場合、内部的には英語環境と同じ。</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123</span></code></p></td>
+<td><p>小数なしの数値の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.00</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123.45</span></code></p></td>
+<td><p>小数ありの数値の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-12,345</span></code></p></td>
+<td><p>桁区切りの数値の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0.00</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-12,345.67</span></code></p></td>
+<td><p>小数あり、桁区切りの数値の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$#,##0_);($#,##0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\#,##0;\-#,##0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\-123</span></code></p></td>
+<td><p>会計用の書式。通貨の単位や括弧が異なる。</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$#,##0_);[Red]($#,##0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\#,##0;[Red]\-#,##0</span></code></p></td>
+<td><p>-123</p></td>
+<td><p>会計用の書式。通貨の単位や括弧が異なる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$#,##0.00);($#,##0.00)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\#,##0.00;\-#,##0.00</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\-123.46</span></code></p></td>
+<td><p>会計用の書式。通貨の単位や括弧が異なる。</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>8</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$#,##0.00_);[Red]($#,##0.00)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\#,##0.00;[Red]\-#,##0.00</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\-123.46</span></code></p></td>
+<td><p>会計用の書式。通貨の単位や括弧が異なる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>9</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0%</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12%</span></code></p></td>
+<td><p>100分率の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>a</p></td>
+<td><p>10</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.00%</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12.34%</span></code></p></td>
+<td><p>100分率の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>b</p></td>
+<td><p>11</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.00E+00</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.23E-02</span></code></p></td>
+<td><p>指数用の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>c</p></td>
+<td><p>12</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">?/?</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">1/3</span></code></p></td>
+<td><p>分数の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>d</p></td>
+<td><p>13</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">??/??</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">10/29</span></code></p></td>
+<td><p>分数の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>e</p></td>
+<td><p>14</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy/m/d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000/2/29</span></code></p></td>
+<td><p>日付の書式。年の桁数、順番が異なる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>f</p></td>
+<td><p>15</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">d-mmm-yy</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">29-Feb-00</span></code></p></td>
+<td><p>日付の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>16</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">d-mmm</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">29-Feb</span></code></p></td>
+<td><p>日付の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>17</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mmm-yy</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Feb-00</span></code></p></td>
+<td><p>日付の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>18</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm</span> <span class="pre">AM/PM</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19</span> <span class="pre">AM</span></code></p></td>
+<td><p>時刻の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>19</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span> <span class="pre">AM/PM</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19:23</span> <span class="pre">AM</span></code></p></td>
+<td><p>時刻の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>20</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19</span></code></p></td>
+<td><p>時刻の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>21</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19:23</span></code></p></td>
+<td><p>時刻の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>22</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span> <span class="pre">h:mm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy/m/d</span> <span class="pre">h:mm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000/2/29</span> <span class="pre">10:19</span></code></p></td>
+<td><p>日時の書式。年の桁数、順番が異なる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>23</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\$#,##0_);\(\$#,##0\)</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$36,585</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>24</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\$#,##0_);[Red]\(\$#,##0\)</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$36,585</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>25</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\$#,##0.00_);\(\$#,##0.00\)</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$36,585.43</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>1a</p></td>
+<td><p>26</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\$#,##0.00_);[Red]\(\$#,##0.00\)</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">$36,585.43</span></code></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1b</p></td>
+<td><p>27</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ge.m.d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H12.2.29</span></code></p></td>
+<td><div class="line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを保存すると、57番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1c</p></td>
+<td><p>28</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">平成12年2月29日</span></code></p></td>
+<td><div class="line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを保存すると、58番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1d</p></td>
+<td><p>29</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">平成12年2月29日</span></code></p></td>
+<td><div class="line-block">
+<div class="line">日付の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを保存すると、58番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1e</p></td>
+<td><p>30</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2/29/00</span></code></p></td>
+<td><p>日付の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>1f</p></td>
+<td><p>31</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000年2月29日</span></code></p></td>
+<td><p>日付の書式。日本語環境の場合、和暦表示。</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>32</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h&quot;時&quot;mm&quot;分&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10時19分</span></code></p></td>
+<td><p>時間の書式。日本語環境の場合、区切りが異なる。</p></td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>33</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h&quot;時&quot;mm&quot;分&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10時19分</span></code></p></td>
+<td><p>時間の書式。日本語環境の場合、区切りが異なる。</p></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>34</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000年2月</span></code></p></td>
+<td><div class="line-block">
+<div class="line">時刻の書式。日本語環境の場合、日付の書式。</div>
+<div class="line">ファイルを保存すると、55番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>35</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2月29日</span></code></p></td>
+<td><div class="line-block">
+<div class="line">時刻の書式。日本語環境の場合、日付の書式。</div>
+<div class="line">ファイルを保存すると、56番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>36</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ge.m.d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H12.2.29</span></code></p></td>
+<td><div class="line-block">
+<div class="line">時刻の書式。日本語環境の場合、和暦表示。</div>
+<div class="line">ファイルを保存すると、57番に割り振られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>37</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0_);(#,##0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0;-#,##0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>38</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0_);[Red](#,##0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0;[Red]-#,##0</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>39</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0.00_);(#,##0.00)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0.00;-#,##0.00</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123.46</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>40</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0.00_);[Red](#,##0.00)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#,##0.00;[Red]-#,##0.00</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123.46</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>41</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_(*</span> <span class="pre">#,##0_);_(*</span> <span class="pre">(#,##0);_(*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-even"><td><p>2a</p></td>
+<td><p>42</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_($*</span> <span class="pre">#,##0_);_($*</span> <span class="pre">(#,##0);_($*</span> <span class="pre">&quot;-&quot;_);_(&#64;_)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\-123</span></code></p></td>
+<td><p>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-odd"><td><p>2b</p></td>
+<td><p>43</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_(*</span> <span class="pre">#,##0.00_);_(*</span> <span class="pre">(#,##0.00);_(*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_</span> <span class="pre">*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-123.46</span></code></p></td>
+<td><p>数値の書式。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-even"><td><p>2c</p></td>
+<td><p>44</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_($*</span> <span class="pre">#,##0.00_);_($*</span> <span class="pre">(#,##0.00);_($*</span> <span class="pre">&quot;-&quot;??_);_(&#64;_)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">_</span> <span class="pre">\*</span> <span class="pre">#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">-#,##0.00_</span> <span class="pre">;_</span> <span class="pre">\*</span> <span class="pre">&quot;-&quot;??_</span> <span class="pre">;_</span> <span class="pre">&#64;_</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">\-123.46</span></code></p></td>
+<td><p>会計の書式。通貨が異なる。日本語の場合、負の表現に括弧が付かない。</p></td>
+</tr>
+<tr class="row-odd"><td><p>2d</p></td>
+<td><p>45</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mm:ss</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19</span></code></p></td>
+<td><p>時刻の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>2e</p></td>
+<td><p>46</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[h]:mm:ss</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">30:10:19</span></code></p></td>
+<td><p>時間時間の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>2f</p></td>
+<td><p>47</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mm:ss.0</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19.0</span></code></p></td>
+<td><p>時間の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>48</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">##0.0E+0</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">12.3E+0</span></code></p></td>
+<td><p>指数の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>41</p></td>
+<td><p>49</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&#64;</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">テキスト</span></code></p></td>
+<td><p>文字列の書式。</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-text">ビルドインフォーマットの一覧（50～）</span><a class="headerlink" href="#id16" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><div class="line-block">
+<div class="line">index</div>
+<div class="line">16進</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">index</div>
+<div class="line">10進</div>
+</div>
+</th>
+<th class="head"><p>英語環境</p></th>
+<th class="head"><div class="line-block">
+<div class="line">日本語環境</div>
+<div class="line">(英語環境と同じ場合は省略)</div>
+</div>
+</th>
+<th class="head"><p>例</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>37</p></td>
+<td><p>55</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000年2月</span></code></p></td>
+<td><p>時刻の書式。日本語の場合、日付の書式。</p></td>
+</tr>
+<tr class="row-odd"><td><p>38</p></td>
+<td><p>56</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2月29日</span></code></p></td>
+<td><p>時刻の書式。日本語の場合、日付の書式。</p></td>
+</tr>
+<tr class="row-even"><td><p>39</p></td>
+<td><p>57</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ge.m.d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H12.2.29</span></code></p></td>
+<td><p>日付の書式。日本語の場合、和暦表示。</p></td>
+</tr>
+<tr class="row-odd"><td><p>3A</p></td>
+<td><p>58</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[$-411]ggge&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">平成12年2月29日</span></code></p></td>
+<td><p>日付の書式。日本語の場合、和暦表示。</p></td>
+</tr>
+</tbody>
+</table>
+<p>組み込み書式以外で、OSの言語環境によって変わる書式があります。
+Excel上では、書式の前にアスタリスク（*）が付いている書式です。</p>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-text">言語によって書式が変わる</span><a class="headerlink" href="#id17" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>英語環境</p></th>
+<th class="head"><p>日本の語環境</p></th>
+<th class="head"><p>例</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m/d/yy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy/m/d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000/2/29</span></code></p></td>
+<td><div class="line-block">
+<div class="line">日付の書式。Excelの表記上は、「* 2001/3/14」と表示されます。</div>
+<div class="line">インデックス番号14の組み込み書式です。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[$-F800]dddd\,\</span> <span class="pre">mmmm\</span> <span class="pre">dd\,\</span> <span class="pre">yyyy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yyyy&quot;年&quot;m&quot;月&quot;d&quot;日&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2000年2月29日</span></code></p></td>
+<td><p>日付の書式。Excelの表記上は、「* 2001年3月14日」と表示されます。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[$-F400]h:mm:ss\</span> <span class="pre">AM/PM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">h:mm:ss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10:19:23</span></code></p></td>
+<td><p>日付の書式。Excelの表記上は、「* 13:30:55」と表示されます。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="jexcelapi">
+<h3><span class="section-number">5.3.1. </span>JExcelAPIによる書式のインデックスの取得<a class="headerlink" href="#jexcelapi" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>JExcelAPIでは、書式のインデックスの取得は <code class="docutils literal notranslate"><span class="pre">DisplayFormat#getFormatIndex()</span></code> から取得します。</p></li>
+<li><p>ビルトインフォーマットの定義は、非公開のクラス <code class="docutils literal notranslate"><span class="pre">jxl.biff.BuiltInfFomrat</span></code> で定義されています。</p></li>
+<li><p>本ライブラリでは、 <code class="docutils literal notranslate"><span class="pre">JXLCell#getFormatIndex()</span></code> で実装されている。</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">final</span><span class="w"> </span><span class="n">CellFormat</span><span class="w"> </span><span class="n">cellStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cell</span><span class="p">.</span><span class="na">getCellFormat</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">cellStyle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 書式を持たない場合</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">final</span><span class="w"> </span><span class="n">Format</span><span class="w"> </span><span class="n">cellFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cellStyle</span><span class="p">.</span><span class="na">getFormat</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">cellFormat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cellStyle</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">XFRecord</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">XFRecord</span><span class="w"> </span><span class="n">record</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">XFRecord</span><span class="p">)</span><span class="w"> </span><span class="n">cellStyle</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="w"> </span><span class="n">record</span><span class="p">.</span><span class="na">formatIndex</span><span class="p">;</span>
+
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">cellFormat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 書式を持たない場合</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">cellFormat</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">DisplayFormat</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">DisplayFormat</span><span class="w"> </span><span class="n">displayFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">DisplayFormat</span><span class="p">)</span><span class="n">cellFormat</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="w"> </span><span class="n">displayFormat</span><span class="p">.</span><span class="na">getFormatIndex</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// 不明な場合</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="apache-poi">
+<h3><span class="section-number">5.3.2. </span>Apache POIによる書式のインデックスの取得<a class="headerlink" href="#apache-poi" title="この見出しへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p>Apache POIの書式のインデックスは、 <code class="docutils literal notranslate"><span class="pre">CellSyle#getDataFormat()</span></code> から取得します。</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">short</span><span class="w"> </span><span class="n">formatIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cell</span><span class="p">.</span><span class="na">getCellStyle</span><span class="p">().</span><span class="na">getDataFormat</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">5.4. </span>エラーのセルについて<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Excelの計算結果などによって、エラー値が表示されます。</p>
+<p>エラー値は数種類あり、ライブラリではコード値から判断します。</p>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-text">Excelのエラー値の一覧</span><a class="headerlink" href="#id18" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 10%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><div class="line-block">
+<div class="line">エラーコード</div>
+<div class="line">（10進数）</div>
+</div>
+</th>
+<th class="head"><div class="line-block">
+<div class="line">エラーコード</div>
+<div class="line">（16進数）</div>
+</div>
+</th>
+<th class="head"><p>表示</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#NULL!</span></code></p></td>
+<td><div class="line-block">
+<div class="line">正しくない参照演算子または正しくないセル参照を使っている場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=SUM(A1:A3</span> <span class="pre">C1:C3)</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#DIV/0!</span></code></p></td>
+<td><div class="line-block">
+<div class="line">数式や関数が0（ゼロ）または空白のセルで割られている場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=200/0</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>15</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#VALUE!</span></code></p></td>
+<td><div class="line-block">
+<div class="line">関数の引数の形式が間違っている場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=MAX(&quot;Dekiru&quot;)</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>17</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#REF!</span></code></p></td>
+<td><div class="line-block">
+<div class="line">数式内で無効なセルが参照されている</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=INT(A1)</span></code> とセルA1を移動または削除してしまった場合に表示されます。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td><p>1d</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#NAME?</span></code></p></td>
+<td><div class="line-block">
+<div class="line">Excelの関数では利用できない名前が使用されている場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=HEIKIN(A1:C1)</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>36</p></td>
+<td><p>24</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#NUM!</span></code></p></td>
+<td><div class="line-block">
+<div class="line">数式または関数の数値が不適切な場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=SMALL(A1:A3,C1)</span></code> と入力して第2引数の値を数値以外のセルを指定した場合に表示されます。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>2a</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">#N/A</span></code></p></td>
+<td><div class="line-block">
+<div class="line">計算や処理の対象となるデータがない、または正当な結果が得られない場合に表示されます。</div>
+<div class="line">例 <code class="docutils literal notranslate"><span class="pre">=MODE(10,20,30,40)</span></code></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>Apache POIでエラー値を取得する場合の注意事項。</p>
+<p>POIでエラー値が正しく取得できない場合があります。</p>
+<ol class="arabic simple">
+<li><p>ファイルの形式がxls(HSSF)の場合、全て「#VALUE!」となります。ただし、ファイルの形式がxlsx(XSSF)だと各種類が取得できます。</p>
+<ul class="simple">
+<li><p>xlsx(XSSF)形式の場合でも場合によっては異なるコード値となります。</p></li>
+</ul>
+</li>
+<li><p>関数「=DATE(50000,1,1)」はExcelでは「#NUM!」と表示され計算できないが、POIの場合は正常に計算ができます。</p>
+<ul class="simple">
+<li><p>これは、Javaの日付の表示範囲がExcelよりも広いため。</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</section>
+<section id="id-lcid">
+<h2><span class="section-number">5.5. </span>ロケールID(LCID)の一覧<a class="headerlink" href="#id-lcid" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Excelで指定可能なロケールの一覧は、外部サイトの <a class="reference external" href="https://msdn.microsoft.com/ja-jp/library/cc392381.aspx">ロケール ID (LCID) の一覧</a> で確認できます。</p>
+<p>Excelの書式で指定する際には、16進数表記の値で指定します。</p>
+<p>日本語の場合、LCIDは0x0411であるため、書式上では <code class="docutils literal notranslate"><span class="pre">[$-411]</span></code> と指定します。</p>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-text">LCIDの一覧</span><a class="headerlink" href="#id19" title="このテーブルへのパーマリンク">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 20%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ロケール名</p></th>
+<th class="head"><p>言語コード</p></th>
+<th class="head"><p>16進値</p></th>
+<th class="head"><p>10進数</p></th>
+<th class="head"><p>ロケール名</p></th>
+<th class="head"><p>言語コード</p></th>
+<th class="head"><p>16進値</p></th>
+<th class="head"><p>10進数</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>アフリカーンス語</p></td>
+<td><p>af</p></td>
+<td><p>0x0436</p></td>
+<td><p>1078</p></td>
+<td><p>ヒンズー語</p></td>
+<td><p>hi</p></td>
+<td><p>0x0439</p></td>
+<td><p>1081</p></td>
+</tr>
+<tr class="row-odd"><td><p>アルバニア語</p></td>
+<td><p>sq</p></td>
+<td><p>0x041C</p></td>
+<td><p>1052</p></td>
+<td><p>ハンガリー語</p></td>
+<td><p>hu</p></td>
+<td><p>0x040E</p></td>
+<td><p>1038</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (U.A.E.)</p></td>
+<td><p>ar-ae</p></td>
+<td><p>0x3801</p></td>
+<td><p>14337</p></td>
+<td><p>アイスランド語</p></td>
+<td><p>is</p></td>
+<td><p>0x040F</p></td>
+<td><p>1039</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (バーレーン)</p></td>
+<td><p>ar-bh</p></td>
+<td><p>0x3C01</p></td>
+<td><p>15361</p></td>
+<td><p>インドネシア語</p></td>
+<td><p>in</p></td>
+<td><p>0x0421</p></td>
+<td><p>1057</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (アルジェリア)</p></td>
+<td><p>ar-dz</p></td>
+<td><p>0x1401</p></td>
+<td><p>5121</p></td>
+<td><p>イタリア語 (イタリア)</p></td>
+<td><p>it</p></td>
+<td><p>0x0410</p></td>
+<td><p>1040</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (エジプト)</p></td>
+<td><p>ar-eg</p></td>
+<td><p>0x0C01</p></td>
+<td><p>3073</p></td>
+<td><p>イタリア語 (スイス)</p></td>
+<td><p>it-ch</p></td>
+<td><p>0x0810</p></td>
+<td><p>2064</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (イラク)</p></td>
+<td><p>ar-iq</p></td>
+<td><p>0x0801</p></td>
+<td><p>2049</p></td>
+<td><p>日本語</p></td>
+<td><p>ja</p></td>
+<td><p>0x0411</p></td>
+<td><p>1041</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (ヨルダン)</p></td>
+<td><p>ar-jo</p></td>
+<td><p>0x2C01</p></td>
+<td><p>11265</p></td>
+<td><p>韓国語</p></td>
+<td><p>ko</p></td>
+<td><p>0x0412</p></td>
+<td><p>1042</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (クウェート)</p></td>
+<td><p>ar-kw</p></td>
+<td><p>0x3401</p></td>
+<td><p>13313</p></td>
+<td><p>ラトビア語</p></td>
+<td><p>lv</p></td>
+<td><p>0x0426</p></td>
+<td><p>1062</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (レバノン)</p></td>
+<td><p>ar-lb</p></td>
+<td><p>0x3001</p></td>
+<td><p>12289</p></td>
+<td><p>リトアニア語</p></td>
+<td><p>lt</p></td>
+<td><p>0x0427</p></td>
+<td><p>1063</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (リビア)</p></td>
+<td><p>ar-ly</p></td>
+<td><p>0x1001</p></td>
+<td><p>4097</p></td>
+<td><p>マケドニア語 (FYROM)</p></td>
+<td><p>mk</p></td>
+<td><p>0x042F</p></td>
+<td><p>1071</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (モロッコ)</p></td>
+<td><p>ar-ma</p></td>
+<td><p>0x1801</p></td>
+<td><p>6145</p></td>
+<td><p>マレー語 (マレーシア)</p></td>
+<td><p>ms</p></td>
+<td><p>0x043E</p></td>
+<td><p>1086</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (オマーン)</p></td>
+<td><p>ar-om</p></td>
+<td><p>0x2001</p></td>
+<td><p>8193</p></td>
+<td><p>マルタ語</p></td>
+<td><p>mt</p></td>
+<td><p>0x043A</p></td>
+<td><p>1082</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (カタール)</p></td>
+<td><p>ar-qa</p></td>
+<td><p>0x4001</p></td>
+<td><p>16385</p></td>
+<td><p>ノルウェー語 (ブークモール)</p></td>
+<td><p>no</p></td>
+<td><p>0x0414</p></td>
+<td><p>1044</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (サウジアラビア)</p></td>
+<td><p>ar-sa</p></td>
+<td><p>0x0401</p></td>
+<td><p>1025</p></td>
+<td><p>ポーランド語</p></td>
+<td><p>pl</p></td>
+<td><p>0x0415</p></td>
+<td><p>1045</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (シリア)</p></td>
+<td><p>ar-sy</p></td>
+<td><p>0x2801</p></td>
+<td><p>10241</p></td>
+<td><p>ポルトガル語 (ポルトガル)</p></td>
+<td><p>pt</p></td>
+<td><p>0x0816</p></td>
+<td><p>2070</p></td>
+</tr>
+<tr class="row-even"><td><p>アラビア語 (チュニジア)</p></td>
+<td><p>ar-tn</p></td>
+<td><p>0x1C01</p></td>
+<td><p>7169</p></td>
+<td><p>ポルトガル語 (ブラジル)</p></td>
+<td><p>pt-br</p></td>
+<td><p>0x0416</p></td>
+<td><p>1046</p></td>
+</tr>
+<tr class="row-odd"><td><p>アラビア語 (イエメン)</p></td>
+<td><p>ar-ye</p></td>
+<td><p>0x2401</p></td>
+<td><p>9217</p></td>
+<td><p>レトロマン語</p></td>
+<td><p>rm</p></td>
+<td><p>0x0417</p></td>
+<td><p>1047</p></td>
+</tr>
+<tr class="row-even"><td><p>バスク語</p></td>
+<td><p>eu</p></td>
+<td><p>0x042D</p></td>
+<td><p>1069</p></td>
+<td><p>ルーマニア語</p></td>
+<td><p>ro</p></td>
+<td><p>0x0418</p></td>
+<td><p>1048</p></td>
+</tr>
+<tr class="row-odd"><td><p>ベラルーシ語</p></td>
+<td><p>be</p></td>
+<td><p>0x0423</p></td>
+<td><p>1059</p></td>
+<td><p>ルーマニア語 (モルドバ)</p></td>
+<td><p>ro-mo</p></td>
+<td><p>0x0818</p></td>
+<td><p>2072</p></td>
+</tr>
+<tr class="row-even"><td><p>ブルガリア語</p></td>
+<td><p>bg</p></td>
+<td><p>0x0402</p></td>
+<td><p>1026</p></td>
+<td><p>ロシア語</p></td>
+<td><p>ru</p></td>
+<td><p>0x0419</p></td>
+<td><p>1049</p></td>
+</tr>
+<tr class="row-odd"><td><p>カタロニア語</p></td>
+<td><p>ca</p></td>
+<td><p>0x0403</p></td>
+<td><p>1027</p></td>
+<td><p>ロシア語 (モルドバ)</p></td>
+<td><p>ru-mo</p></td>
+<td><p>0x0819</p></td>
+<td><p>2073</p></td>
+</tr>
+<tr class="row-even"><td><p>中国語 (中華人民共和国)</p></td>
+<td><p>zh-cn</p></td>
+<td><p>0x0804</p></td>
+<td><p>2052</p></td>
+<td><p>セルビア語 (キリル文字)</p></td>
+<td><p>sr</p></td>
+<td><p>0x0C1A</p></td>
+<td><p>3098</p></td>
+</tr>
+<tr class="row-odd"><td><p>中国語 (香港)</p></td>
+<td><p>zh-hk</p></td>
+<td><p>0x0C04</p></td>
+<td><p>3076</p></td>
+<td><p>ツワナ語</p></td>
+<td><p>tn</p></td>
+<td><p>0x0432</p></td>
+<td><p>1074</p></td>
+</tr>
+<tr class="row-even"><td><p>中国語 (シンガポール)</p></td>
+<td><p>zh-sg</p></td>
+<td><p>0x1004</p></td>
+<td><p>4100</p></td>
+<td><p>スロベニア語</p></td>
+<td><p>sl</p></td>
+<td><p>0x0424</p></td>
+<td><p>1060</p></td>
+</tr>
+<tr class="row-odd"><td><p>中国語 (台湾)</p></td>
+<td><p>zh-tw</p></td>
+<td><p>0x0404</p></td>
+<td><p>1028</p></td>
+<td><p>スロバキア語</p></td>
+<td><p>sk</p></td>
+<td><p>0x041B</p></td>
+<td><p>1051</p></td>
+</tr>
+<tr class="row-even"><td><p>クロアチア語</p></td>
+<td><p>hr</p></td>
+<td><p>0x041A</p></td>
+<td><p>1050</p></td>
+<td><p>ソルビア語</p></td>
+<td><p>sb</p></td>
+<td><p>0x042E</p></td>
+<td><p>1070</p></td>
+</tr>
+<tr class="row-odd"><td><p>チェコ語</p></td>
+<td><p>cs</p></td>
+<td><p>0x0405</p></td>
+<td><p>1029</p></td>
+<td><p>スペイン語 (スペイン)</p></td>
+<td><p>es</p></td>
+<td><p>0x040A</p></td>
+<td><p>1034</p></td>
+</tr>
+<tr class="row-even"><td><p>デンマーク語</p></td>
+<td><p>da</p></td>
+<td><p>0x0406</p></td>
+<td><p>1030</p></td>
+<td><p>スペイン語 (アルゼンチン)</p></td>
+<td><p>es-ar</p></td>
+<td><p>0x2C0A</p></td>
+<td><p>11274</p></td>
+</tr>
+<tr class="row-odd"><td><p>オランダ語</p></td>
+<td><p>nl</p></td>
+<td><p>0x0413</p></td>
+<td><p>1043</p></td>
+<td><p>スペイン語 (ボリビア)</p></td>
+<td><p>es-bo</p></td>
+<td><p>0x400A</p></td>
+<td><p>16394</p></td>
+</tr>
+<tr class="row-even"><td><p>オランダ語 (ベルギー)</p></td>
+<td><p>nl-be</p></td>
+<td><p>0x0813</p></td>
+<td><p>2067</p></td>
+<td><p>スペイン語 (チリ)</p></td>
+<td><p>es-cl</p></td>
+<td><p>0x340A</p></td>
+<td><p>13322</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (オーストラリア)</p></td>
+<td><p>en-au</p></td>
+<td><p>0x0C09</p></td>
+<td><p>3081</p></td>
+<td><p>スペイン語 (コロンビア)</p></td>
+<td><p>es-co</p></td>
+<td><p>0x240A</p></td>
+<td><p>9226</p></td>
+</tr>
+<tr class="row-even"><td><p>英語 (ベリーズ)</p></td>
+<td><p>en-bz</p></td>
+<td><p>0x2809</p></td>
+<td><p>10249</p></td>
+<td><p>スペイン語 (コスタリカ)</p></td>
+<td><p>es-cr</p></td>
+<td><p>0x140A</p></td>
+<td><p>5130</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (カナダ)</p></td>
+<td><p>en-ca</p></td>
+<td><p>0x1009</p></td>
+<td><p>4105</p></td>
+<td><p>スペイン語 (ドミニカ共和国)</p></td>
+<td><p>es-do</p></td>
+<td><p>0x1C0A</p></td>
+<td><p>7178</p></td>
+</tr>
+<tr class="row-even"><td><p>英語 (アイルランド)</p></td>
+<td><p>en-ie</p></td>
+<td><p>0x1809</p></td>
+<td><p>6153</p></td>
+<td><p>スペイン語 (エクアドル)</p></td>
+<td><p>es-ec</p></td>
+<td><p>0x300A</p></td>
+<td><p>12298</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (ジャマイカ)</p></td>
+<td><p>en-jm</p></td>
+<td><p>0x2009</p></td>
+<td><p>8201</p></td>
+<td><p>スペイン語 (グアテマラ)</p></td>
+<td><p>es-gt</p></td>
+<td><p>0x100A</p></td>
+<td><p>4106</p></td>
+</tr>
+<tr class="row-even"><td><p>英語 (ニュージーランド)</p></td>
+<td><p>en-nz</p></td>
+<td><p>0x1409</p></td>
+<td><p>5129</p></td>
+<td><p>スペイン語 (ホンジュラス)</p></td>
+<td><p>es-hn</p></td>
+<td><p>0x480A</p></td>
+<td><p>18442</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (南アフリカ)</p></td>
+<td><p>en-za</p></td>
+<td><p>0x1C09</p></td>
+<td><p>7177</p></td>
+<td><p>スペイン語 (メキシコ)</p></td>
+<td><p>es-mx</p></td>
+<td><p>0x080A</p></td>
+<td><p>2058</p></td>
+</tr>
+<tr class="row-even"><td><p>英語 (トリニダード)</p></td>
+<td><p>en-tt</p></td>
+<td><p>0x2C09</p></td>
+<td><p>11273</p></td>
+<td><p>スペイン語 (ニカラグア)</p></td>
+<td><p>es-ni</p></td>
+<td><p>0x4C0A</p></td>
+<td><p>19466</p></td>
+</tr>
+<tr class="row-odd"><td><p>英語 (U.K.)</p></td>
+<td><p>en-gb</p></td>
+<td><p>0x0809</p></td>
+<td><p>2057</p></td>
+<td><p>スペイン語 (パナマ)</p></td>
+<td><p>es-pa</p></td>
+<td><p>0x180A</p></td>
+<td><p>6154</p></td>
+</tr>
+<tr class="row-even"><td><p>英語 (U.S.)</p></td>
+<td><p>en-us</p></td>
+<td><p>0x0409</p></td>
+<td><p>1033</p></td>
+<td><p>スペイン語 (ペルー)</p></td>
+<td><p>es-pe</p></td>
+<td><p>0x280A</p></td>
+<td><p>10250</p></td>
+</tr>
+<tr class="row-odd"><td><p>エストニア語</p></td>
+<td><p>et</p></td>
+<td><p>0x0425</p></td>
+<td><p>1061</p></td>
+<td><p>スペイン語 (プエルトリコ)</p></td>
+<td><p>es-pr</p></td>
+<td><p>0x500A</p></td>
+<td><p>20490</p></td>
+</tr>
+<tr class="row-even"><td><p>ペルシャ語</p></td>
+<td><p>fa</p></td>
+<td><p>0x0429</p></td>
+<td><p>1065</p></td>
+<td><p>スペイン語 (パラグアイ)</p></td>
+<td><p>es-py</p></td>
+<td><p>0x3C0A</p></td>
+<td><p>15370</p></td>
+</tr>
+<tr class="row-odd"><td><p>フィンランド語</p></td>
+<td><p>fi</p></td>
+<td><p>0x040B</p></td>
+<td><p>1035</p></td>
+<td><p>スペイン語 (エルサルバドル)</p></td>
+<td><p>es-sv</p></td>
+<td><p>0x440A</p></td>
+<td><p>17418</p></td>
+</tr>
+<tr class="row-even"><td><p>フェロー語</p></td>
+<td><p>fo</p></td>
+<td><p>0x0438</p></td>
+<td><p>1080</p></td>
+<td><p>スペイン語 (ウルグアイ)</p></td>
+<td><p>es-uy</p></td>
+<td><p>0x380A</p></td>
+<td><p>14346</p></td>
+</tr>
+<tr class="row-odd"><td><p>フランス語 (フランス)</p></td>
+<td><p>fr</p></td>
+<td><p>0x040C</p></td>
+<td><p>1036</p></td>
+<td><p>スペイン語 (ベネズエラ)</p></td>
+<td><p>es-ve</p></td>
+<td><p>0x200A</p></td>
+<td><p>8202</p></td>
+</tr>
+<tr class="row-even"><td><p>フランス語 (ベルギー)</p></td>
+<td><p>fr-be</p></td>
+<td><p>0x080C</p></td>
+<td><p>2060</p></td>
+<td><p>ソト語</p></td>
+<td><p>sx</p></td>
+<td><p>0x0430</p></td>
+<td><p>1072</p></td>
+</tr>
+<tr class="row-odd"><td><p>フランス語 (カナダ)</p></td>
+<td><p>fr-ca</p></td>
+<td><p>0x0C0C</p></td>
+<td><p>3084</p></td>
+<td><p>スウェーデン語</p></td>
+<td><p>sv</p></td>
+<td><p>0x041D</p></td>
+<td><p>1053</p></td>
+</tr>
+<tr class="row-even"><td><p>フランス語 (ルクセンブルグ)</p></td>
+<td><p>fr-lu</p></td>
+<td><p>0x140C</p></td>
+<td><p>5132</p></td>
+<td><p>スウェーデン語 (フィンランド)</p></td>
+<td><p>sv-fi</p></td>
+<td><p>0x081D</p></td>
+<td><p>2077</p></td>
+</tr>
+<tr class="row-odd"><td><p>フランス語 (スイス)</p></td>
+<td><p>fr-ch</p></td>
+<td><p>0x100C</p></td>
+<td><p>4108</p></td>
+<td><p>タイ語</p></td>
+<td><p>th</p></td>
+<td><p>0x041E</p></td>
+<td><p>1054</p></td>
+</tr>
+<tr class="row-even"><td><p>ゲール語 (スコットランド)</p></td>
+<td><p>gd</p></td>
+<td><p>0x043C</p></td>
+<td><p>1084</p></td>
+<td><p>トルコ語</p></td>
+<td><p>tr</p></td>
+<td><p>0x041F</p></td>
+<td><p>1055</p></td>
+</tr>
+<tr class="row-odd"><td><p>ドイツ語 (ドイツ)</p></td>
+<td><p>de</p></td>
+<td><p>0x0407</p></td>
+<td><p>1031</p></td>
+<td><p>ツォンガ語</p></td>
+<td><p>ts</p></td>
+<td><p>0x0431</p></td>
+<td><p>1073</p></td>
+</tr>
+<tr class="row-even"><td><p>ドイツ語 (オーストリア)</p></td>
+<td><p>de-at</p></td>
+<td><p>0x0C07</p></td>
+<td><p>3079</p></td>
+<td><p>ウクライナ語</p></td>
+<td><p>uk</p></td>
+<td><p>0x0422</p></td>
+<td><p>1058</p></td>
+</tr>
+<tr class="row-odd"><td><p>ドイツ語 (リヒテンシュタイン)</p></td>
+<td><p>de-li</p></td>
+<td><p>0x1407</p></td>
+<td><p>5127</p></td>
+<td><p>ウルドゥー語 (パキスタン)</p></td>
+<td><p>ur</p></td>
+<td><p>0x0420</p></td>
+<td><p>1056</p></td>
+</tr>
+<tr class="row-even"><td><p>ドイツ語 (ルクセンブルグ)</p></td>
+<td><p>de-lu</p></td>
+<td><p>0x1007</p></td>
+<td><p>4103</p></td>
+<td><p>ベトナム語</p></td>
+<td><p>vi</p></td>
+<td><p>0x042A</p></td>
+<td><p>1066</p></td>
+</tr>
+<tr class="row-odd"><td><p>ドイツ語 (スイス)</p></td>
+<td><p>de-ch</p></td>
+<td><p>0x0807</p></td>
+<td><p>2055</p></td>
+<td><p>コーサ語</p></td>
+<td><p>xh</p></td>
+<td><p>0x0434</p></td>
+<td><p>1076</p></td>
+</tr>
+<tr class="row-even"><td><p>ギリシャ語</p></td>
+<td><p>el</p></td>
+<td><p>0x0408</p></td>
+<td><p>1032</p></td>
+<td><p>イディッシュ語</p></td>
+<td><p>ji</p></td>
+<td><p>0x043D</p></td>
+<td><p>1085</p></td>
+</tr>
+<tr class="row-odd"><td><p>ヘブライ語</p></td>
+<td><p>he</p></td>
+<td><p>0x040D</p></td>
+<td><p>1037</p></td>
+<td><p>ズールー語</p></td>
+<td><p>zu</p></td>
+<td><p>0x0435</p></td>
+<td><p>1077</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id9">
+<h2><span class="section-number">5.6. </span>漢数字／大字変換のアルゴリズム<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h2>
+<p>漢数字や大字への変換は、下記のように行います。</p>
+<ol class="arabic simple">
+<li><p>値が0の時は、値を〇（ゼロ）として処理を終了。</p></li>
+<li><p>下の桁から4桁ごとに分割する。</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>実装方式としては、数値形式の場合は、10,000で割っていった余りに対して処理する。</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>分割した内容を漢数字に変換する。</p></li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p>0の場合は省略する。</p></li>
+<li><div class="line-block">
+<div class="line">1の場合は、桁数において数値を省略し、単位のみを付与する。</div>
+<div class="line">例えば、1の位の場合は数値を省略しない。</div>
+<div class="line">十の位は、「十」と数値を省略して単位を付与する。</div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>分割した変換結果に、4桁区切りの単位を付けて、結合する。</p></li>
+</ol>
+<figure class="align-center" id="id20">
+<a class="reference internal image-reference" href="_images/convert_kansuji.png"><img alt="_images/convert_kansuji.png" src="_images/convert_kansuji.png" style="width: 929.5999999999999px; height: 492.79999999999995px;" /></a>
+<figcaption>
+<p><span class="caption-text">漢数字の変換の概要</span><a class="headerlink" href="#id20" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div id="toc" class="sidebarRow">
+<h3><a href="../index.html">関連リンク</a></h3>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="../apidocs/index.html">JavaDoc</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="https://github.com/mygreen/excel-cellformatter">GitHub</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-info.html">プロジェクト情報</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="../project-reports.html">プロジェクトレポート</a></li>
+</ul>
+
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="biginning.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id2">1.1. このライブラリの位置付け及び目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#id3">1.2. 前提環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="biginning.html#restriction">1.3. 制限事項</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">2. 基本的な使い方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#id2">2.1. ダウンロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#apaceh-poi">2.2. Apaceh POIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#jexcelapi">2.3. JExcelAPIの場合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#java">2.4. Javaオブジェクトの場合</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customize.html">3. カスタマイズ方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id2">3.1. キャッシュの制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id5">3.2. フォーマッタの事前登録</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customize.html#id6">3.3. 元号の定義の変更</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="format_basic.html">4. Excelの書式の基本について</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id1">4.1. 参考リンク</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id2">4.2. 表示形式の構造</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id6">4.3. 共通の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id7">4.4. 数値用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id12">4.5. 日時用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id16">4.6. 文字列用の書式記号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id17">4.7. 条件式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="format_basic.html#id23">4.8. 他のオフィススイートの書式記号</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Excelの書式のその他の情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">5.1. 標準書式について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">5.2. ファイル内部の日付の基準日の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">5.3. ビルトインフォーマット（組み込み書式）について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">5.4. エラーのセルについて</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id-lcid">5.5. ロケールID(LCID)の一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">5.6. 漢数字／大字変換のアルゴリズム</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">6. リリースノート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-12-2021-02-22">6.1. ver.0.12 - 2021-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-11-2019-04-03">6.2. ver.0.11 - 2019-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-10-2018-06-24">6.3. ver.0.10 - 2018-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2-2017-09-22">6.4. ver.0.9.2 - 2017-09-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-1-2016-12-22">6.5. ver.0.9.1 - 2016-12-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-9-2016-12-19">6.6. ver.0.9 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-3-2016-07-02">6.7. ver.0.8.3 - 2016-07-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2-2016-05-21">6.8. ver.0.8.2 - 2016-05-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-1-2016-05-07">6.9. ver.0.8.1 - 2016-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-8-2016-04-29">6.10. ver.0.8 - 2016-04-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-7-2016-03-20">6.11. ver.0.7 - 2016-03-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-6-2016-02-20">6.12. ver.0.6 - 2016-02-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-1-2016-01-31">6.13. ver.0.5.1 - 2016-01-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-5-2016-01-16">6.14. ver.0.5 - 2016-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-4-2015-04-19">6.15. ver.0.4 - 2015-04-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-3-2015-04-11">6.16. ver.0.3 - 2015-04-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-2-2015-04-04">6.17. ver.0.2 - 2015-04-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release.html#ver-0-1-2015-03-22">6.18. ver.0.1 - 2015-03-22</a></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="format_basic.html"
+                          title="前の章へ"><span class="section-number">4. </span>Excelの書式の基本について</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="release.html"
+                          title="次の章へ"><span class="section-number">6. </span>リリースノート</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/format_other.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="release.html" title="6. リリースノート"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="format_basic.html" title="4. Excelの書式の基本について"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Excel-CellFormatter 0.12 ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>Excelの書式のその他の情報</a></li> 
+      </ul>
+    </div>
+<!-- my theme custom extrahead beacon -->
+<script type="text/javascript" src="_static/jquery.externallink.js" charset="UTF-8"></script>
+<script type="text/javascript">
+	jQuery(function () {
+		// コンテンツ用
+		$('body').externalLink({cssClass : 'externalink', iconUrl:'', startUrl:'../apidocs/'});
+		
+	});
+</script>
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37313068-4', 'auto');
+  ga('send', 'pageview');
+  
+</script>
+
+
+    <div class="footer" role="contentinfo">
+    &#169; 著作権 2015-2021, T.TSUCHIE.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    </div>
+
+  </body>
+</html>
